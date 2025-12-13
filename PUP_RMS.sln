@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.35906.104 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUP_RMS", "PUP_RMS\PUP_RMS.csproj", "{468BA450-B81F-441A-B9E1-7141A4E7178F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{468BA450-B81F-441A-B9E1-7141A4E7178F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{468BA450-B81F-441A-B9E1-7141A4E7178F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{468BA450-B81F-441A-B9E1-7141A4E7178F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{468BA450-B81F-441A-B9E1-7141A4E7178F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50B061FE-B7BF-450F-AB28-66AAE11B805C}
+	EndGlobalSection
+EndGlobal
