@@ -12,8 +12,6 @@ CREATE TABLE Course(
 	CourseID INT IDENTITY(1,1) PRIMARY KEY,
 	CourseCode VARCHAR(10) NOT NULL,
 	CourseDecription VARCHAR(50) NOT NULL,
-	SchoolYear VARCHAR(20) NOT NULL,
-	Semester INT
 );
 
 CREATE TABLE Professor(
@@ -23,17 +21,11 @@ CREATE TABLE Professor(
 	LastName VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE CourseProfessor(
-	CourseID INT NOT NULL,
-	ProfessorID INT NOT NULL,
-
-	CONSTRAINT FK_CourseID_CourseProfessor FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
-	CONSTRAINT FK_ProfessorID_CourseProfessor FOREIGN KEY (ProfessorID) REFERENCES Professor(ProfessorID)
-);
-
 CREATE TABLE GradeSheet(
 	GradeSheetID INT IDENTITY(1,1) PRIMARY KEY,
 	Filename VARCHAR(100) UNIQUE NOT NULL,
+	SchoolYear VARCHAR(20) NOT NULL,
+	Semester INT,
 	CourseID INT,
 	AdminID INT,
 
@@ -55,13 +47,12 @@ INSERT INTO Professor(FirstName, MiddleName, LastName) VALUES('Marie Andrea', 'E
 INSERT INTO Professor(FirstName, MiddleName, LastName) VALUES('Tito Ernesto', 'Z' , 'Loreto');
 
 -- COURSE
-INSERT INTO Course(CourseCode, CourseDecription, SchoolYear, Semester) VALUES('COMP 015', 'Fundamentals of Research', '2025-2026', 1);
-INSERT INTO Course(CourseCode, CourseDecription, SchoolYear, Semester) VALUES('COMP 016', 'Web Development', '2025-2026', 2);
-INSERT INTO Course(CourseCode, CourseDecription, SchoolYear, Semester) VALUES('COMP 017', 'Multimedia', '2024-2025', 1);
-INSERT INTO Course(CourseCode, CourseDecription, SchoolYear, Semester) VALUES('COMP 018', 'Database Administration', '2025-2026', 2);
-INSERT INTO Course(CourseCode, CourseDecription, SchoolYear, Semester) VALUES('	INTE 301', 'Systems Integration and Architecture 1', '2024-2025', 2);
+INSERT INTO Course(CourseCode, CourseDecription) VALUES('COMP 015', 'Fundamentals of Research');
+INSERT INTO Course(CourseCode, CourseDecription) VALUES('COMP 016', 'Web Development');
+INSERT INTO Course(CourseCode, CourseDecription) VALUES('COMP 017', 'Multimedia');
+INSERT INTO Course(CourseCode, CourseDecription) VALUES('COMP 018', 'Database Administration');
+INSERT INTO Course(CourseCode, CourseDecription) VALUES('INTE 301', 'Systems Integration and Architecture 1');
 
 SELECT * FROM Admin;
 SELECT * FROM Course;
 SELECT * FROM Professor;
-
