@@ -27,9 +27,11 @@ CREATE TABLE GradeSheet(
 	SchoolYear VARCHAR(20) NOT NULL,
 	Semester INT,
 	CourseID INT,
+	ProfessorID INT,
 	AdminID INT,
 
 	CONSTRAINT FK_CourseID_GradeSheet FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
+	CONSTRAINT FK_ProfessorID_GradeSheet FOREIGN KEY (ProfessorID) REFERENCES Professor(ProfessorID),
 	CONSTRAINT FK_AdminID_GradeSheet FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
 );
 
