@@ -82,6 +82,9 @@
     <Compile Include="CustomControls\DashboardCard.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CustomControls\GradientLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CustomControls\iconButton.cs">
       <SubType>Component</SubType>
     </Compile>
