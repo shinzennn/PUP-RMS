@@ -145,8 +145,8 @@ namespace PUP_RMS.Forms
         // ======================================================
         private void AdjustSidebarLayout()
         {
-            btnPrint.Top = flowLayoutPanelUpload.Bottom + BUTTON_GAP;
-            btnLogout.Top = btnPrint.Bottom + BUTTON_GAP;
+            btnProfessor.Top = flowLayoutPanelUpload.Bottom + BUTTON_GAP;
+            btnLogout.Top = btnProfessor.Bottom + BUTTON_GAP;
         }
 
         // --------------------------------------------------------
@@ -281,12 +281,20 @@ namespace PUP_RMS.Forms
             ShowForm(new frmIndividualUpload());
         }
 
-        private void btnPrint_Click(object sender, EventArgs e)
+        private void btnCourse_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
             if (uploadExpand) CollapseUploadMenu();
             ActivateButton(sender);
-            ShowForm(new frmPrint());
+            ShowForm(new frmCourse());
+        }
+
+        private void btnProfessor_Click(object sender, EventArgs e)
+        {
+            if (currentActiveButton == sender) return;
+            if (uploadExpand) CollapseUploadMenu();
+            ActivateButton(sender);
+            ShowForm(new frmProfessor());
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -313,7 +321,7 @@ namespace PUP_RMS.Forms
 
         private void tmrUploadTransition_Tick(object sender, EventArgs e)
         {
-            int step = 20;
+            int step = 10;
 
             if (!uploadExpand)
             {
@@ -340,5 +348,7 @@ namespace PUP_RMS.Forms
         }
 
         private void label1_Click(object sender, EventArgs e) { }
+
+        
     }
 }

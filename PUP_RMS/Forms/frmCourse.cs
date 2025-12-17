@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PUP_RMS.Forms
 {
-    public partial class frmPrint : Form
+    public partial class frmCourse : Form
     {
-        public frmPrint()
+        public frmCourse()
         {
             InitializeComponent();
         }

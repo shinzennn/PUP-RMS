@@ -88,6 +88,12 @@
     <Compile Include="CustomControls\iconButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\frmCourse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmCourse.Designer.cs">
+      <DependentUpon>frmCourse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,11 +106,11 @@
     <Compile Include="Forms\frmIndividualUpload.Designer.cs">
       <DependentUpon>frmIndividualUpload.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmPrint.cs">
+    <Compile Include="Forms\frmProfessor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmPrint.Designer.cs">
-      <DependentUpon>frmPrint.cs</DependentUpon>
+    <Compile Include="Forms\frmProfessor.Designer.cs">
+      <DependentUpon>frmProfessor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmSearch.cs">
       <SubType>Form</SubType>
@@ -159,14 +165,17 @@
     <EmbeddedResource Include="CustomControls\CustomMsgBox.resx">
       <DependentUpon>CustomMsgBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmCourse.resx">
+      <DependentUpon>frmCourse.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDashboard.resx">
       <DependentUpon>frmDashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmIndividualUpload.resx">
       <DependentUpon>frmIndividualUpload.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmPrint.resx">
-      <DependentUpon>frmPrint.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\frmProfessor.resx">
+      <DependentUpon>frmProfessor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmSearch.resx">
       <DependentUpon>frmSearch.cs</DependentUpon>

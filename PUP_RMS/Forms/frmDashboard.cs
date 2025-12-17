@@ -57,7 +57,6 @@ namespace PUP_RMS.Forms
             if (btnQuickSingle != null) ForceDoubleBuffer(btnQuickSingle);
             if (btnQuickBatch != null) ForceDoubleBuffer(btnQuickBatch);
             if (btnQuickBrowse != null) ForceDoubleBuffer(btnQuickBrowse);
-            if (btnQuickPrint != null) ForceDoubleBuffer(btnQuickPrint);
 
             // 5. GLOBAL RECURSIVE BUFFERING
             ApplyDoubleBufferingRecursively(this.Controls);
@@ -185,7 +184,6 @@ namespace PUP_RMS.Forms
             AttachHoverEffects(btnQuickSingle);
             AttachHoverEffects(btnQuickBatch);
             AttachHoverEffects(btnQuickBrowse);
-            AttachHoverEffects(btnQuickPrint);
 
             if (btnQuickSingle != null)
             {
@@ -205,11 +203,6 @@ namespace PUP_RMS.Forms
                 btnQuickBrowse.Click += BtnQuickBrowse_Click;
             }
 
-            if (btnQuickPrint != null)
-            {
-                btnQuickPrint.Click -= BtnQuickPrint_Click;
-                btnQuickPrint.Click += BtnQuickPrint_Click;
-            }
         }
 
         private void BtnQuickSingle_Click(object sender, EventArgs e)
@@ -227,12 +220,6 @@ namespace PUP_RMS.Forms
         private void BtnQuickBrowse_Click(object sender, EventArgs e)
         {
             frmSearch frm = new frmSearch();
-            frm.Show();
-        }
-
-        private void BtnQuickPrint_Click(object sender, EventArgs e)
-        {
-            frmPrint frm = new frmPrint();
             frm.Show();
         }
 

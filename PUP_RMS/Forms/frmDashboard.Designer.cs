@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.timerStorageUpdate = new System.Windows.Forms.Timer(this.components);
             this.roundedPanel6 = new PUP_RMS.RoundedPanel();
-            this.btnQuickPrint = new PUP_RMS.Controls.iconButton();
             this.btnQuickBrowse = new PUP_RMS.Controls.iconButton();
             this.btnQuickBatch = new PUP_RMS.Controls.iconButton();
             this.btnQuickSingle = new PUP_RMS.Controls.iconButton();
@@ -97,7 +96,6 @@
             this.roundedPanel6.BorderColor = System.Drawing.Color.Transparent;
             this.roundedPanel6.BorderRadius = 20;
             this.roundedPanel6.BorderSize = 0;
-            this.roundedPanel6.Controls.Add(this.btnQuickPrint);
             this.roundedPanel6.Controls.Add(this.btnQuickBrowse);
             this.roundedPanel6.Controls.Add(this.btnQuickBatch);
             this.roundedPanel6.Controls.Add(this.btnQuickSingle);
@@ -111,31 +109,6 @@
             this.roundedPanel6.ShadowOffset = 5;
             this.roundedPanel6.Size = new System.Drawing.Size(391, 195);
             this.roundedPanel6.TabIndex = 12;
-            // 
-            // btnQuickPrint
-            // 
-            this.btnQuickPrint.ActiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnQuickPrint.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnQuickPrint.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnQuickPrint.BorderRadius = 10;
-            this.btnQuickPrint.BorderSize = 0;
-            this.btnQuickPrint.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnQuickPrint.FlatAppearance.BorderSize = 0;
-            this.btnQuickPrint.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
-            this.btnQuickPrint.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
-            this.btnQuickPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuickPrint.ForeColor = System.Drawing.Color.White;
-            this.btnQuickPrint.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnQuickPrint.IconSize = 27;
-            this.btnQuickPrint.IndentLevel = 0;
-            this.btnQuickPrint.IsActive = false;
-            this.btnQuickPrint.Location = new System.Drawing.Point(205, 112);
-            this.btnQuickPrint.Name = "btnQuickPrint";
-            this.btnQuickPrint.Size = new System.Drawing.Size(173, 42);
-            this.btnQuickPrint.TabIndex = 14;
-            this.btnQuickPrint.Text = "Print Grade Sheets";
-            this.btnQuickPrint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQuickPrint.UseVisualStyleBackColor = false;
             // 
             // btnQuickBrowse
             // 
@@ -260,7 +233,7 @@
             this.cpDriveUsage.BarWidth = 30;
             this.cpDriveUsage.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.cpDriveUsage.FontSize = 10;
-            this.cpDriveUsage.GradientEnd = System.Drawing.Color.LightCoral;
+            this.cpDriveUsage.GradientEnd = System.Drawing.Color.Maroon;
             this.cpDriveUsage.GradientStart = System.Drawing.Color.Maroon;
             this.cpDriveUsage.Location = new System.Drawing.Point(136, 41);
             this.cpDriveUsage.Maximum = 100;
@@ -765,7 +738,6 @@
         private System.Windows.Forms.Timer timerStorageUpdate;
         private RoundedPanel roundedPanel6;
         private System.Windows.Forms.Label label16;
-        private Controls.iconButton btnQuickPrint;
         private Controls.iconButton btnQuickBrowse;
         private Controls.iconButton btnQuickBatch;
         private Controls.iconButton btnQuickSingle;
