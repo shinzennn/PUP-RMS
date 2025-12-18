@@ -191,7 +191,6 @@
             this.textBoxConfirmPassword.Location = new System.Drawing.Point(42, 15);
             this.textBoxConfirmPassword.Multiline = true;
             this.textBoxConfirmPassword.Name = "textBoxConfirmPassword";
-           
             this.textBoxConfirmPassword.Size = new System.Drawing.Size(249, 20);
             this.textBoxConfirmPassword.TabIndex = 1;
             // 
@@ -311,7 +310,7 @@
             // pictureBoxHidePassword
             // 
             this.pictureBoxHidePassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxHidePassword.Image")));
-            this.pictureBoxHidePassword.Location = new System.Drawing.Point(263, 15);
+            this.pictureBoxHidePassword.Location = new System.Drawing.Point(297, 10);
             this.pictureBoxHidePassword.Name = "pictureBoxHidePassword";
             this.pictureBoxHidePassword.Size = new System.Drawing.Size(28, 36);
             this.pictureBoxHidePassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;

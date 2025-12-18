@@ -29,11 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDashboard));
             this.timerStorageUpdate = new System.Windows.Forms.Timer(this.components);
             this.roundedPanel6 = new PUP_RMS.RoundedPanel();
-            this.btnQuickBrowse = new PUP_RMS.Controls.iconButton();
-            this.btnQuickBatch = new PUP_RMS.Controls.iconButton();
-            this.btnQuickSingle = new PUP_RMS.Controls.iconButton();
+            this.pnlBySubject = new PUP_RMS.RecordDistributionPanelCard();
+            this.pnlByYear_Sem = new PUP_RMS.RecordDistributionPanelCard();
+            this.pnlByProfessor = new PUP_RMS.RecordDistributionPanelCard();
+            this.pnlByProgram = new PUP_RMS.RecordDistributionPanelCard();
             this.label16 = new System.Windows.Forms.Label();
             this.roundedPanel5 = new PUP_RMS.RoundedPanel();
             this.lblStorageUsageDetails = new System.Windows.Forms.Label();
@@ -96,94 +98,118 @@
             this.roundedPanel6.BorderColor = System.Drawing.Color.Transparent;
             this.roundedPanel6.BorderRadius = 20;
             this.roundedPanel6.BorderSize = 0;
-            this.roundedPanel6.Controls.Add(this.btnQuickBrowse);
-            this.roundedPanel6.Controls.Add(this.btnQuickBatch);
-            this.roundedPanel6.Controls.Add(this.btnQuickSingle);
+            this.roundedPanel6.Controls.Add(this.pnlBySubject);
+            this.roundedPanel6.Controls.Add(this.pnlByYear_Sem);
+            this.roundedPanel6.Controls.Add(this.pnlByProfessor);
+            this.roundedPanel6.Controls.Add(this.pnlByProgram);
             this.roundedPanel6.Controls.Add(this.label16);
+            this.roundedPanel6.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.roundedPanel6.HoverBorderColor = System.Drawing.Color.Maroon;
-            this.roundedPanel6.Location = new System.Drawing.Point(717, 498);
+            this.roundedPanel6.Location = new System.Drawing.Point(715, 523);
             this.roundedPanel6.Name = "roundedPanel6";
             this.roundedPanel6.ShadowBlur = 15;
             this.roundedPanel6.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.roundedPanel6.ShadowEnabled = true;
             this.roundedPanel6.ShadowOffset = 5;
-            this.roundedPanel6.Size = new System.Drawing.Size(391, 195);
+            this.roundedPanel6.Size = new System.Drawing.Size(391, 214);
             this.roundedPanel6.TabIndex = 12;
             // 
-            // btnQuickBrowse
+            // pnlBySubject
             // 
-            this.btnQuickBrowse.ActiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnQuickBrowse.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnQuickBrowse.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnQuickBrowse.BorderRadius = 10;
-            this.btnQuickBrowse.BorderSize = 0;
-            this.btnQuickBrowse.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnQuickBrowse.FlatAppearance.BorderSize = 0;
-            this.btnQuickBrowse.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
-            this.btnQuickBrowse.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
-            this.btnQuickBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuickBrowse.ForeColor = System.Drawing.Color.White;
-            this.btnQuickBrowse.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnQuickBrowse.IconSize = 27;
-            this.btnQuickBrowse.IndentLevel = 0;
-            this.btnQuickBrowse.IsActive = false;
-            this.btnQuickBrowse.Location = new System.Drawing.Point(23, 112);
-            this.btnQuickBrowse.Name = "btnQuickBrowse";
-            this.btnQuickBrowse.Size = new System.Drawing.Size(173, 42);
-            this.btnQuickBrowse.TabIndex = 12;
-            this.btnQuickBrowse.Text = "Browse Grade Sheets";
-            this.btnQuickBrowse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQuickBrowse.UseVisualStyleBackColor = false;
+            this.pnlBySubject.BackColor = System.Drawing.Color.White;
+            this.pnlBySubject.BorderColor = System.Drawing.Color.LightGray;
+            this.pnlBySubject.BorderRadius = 15;
+            this.pnlBySubject.BorderSize = 2;
+            this.pnlBySubject.CardIcon = ((System.Drawing.Image)(resources.GetObject("pnlBySubject.CardIcon")));
+            this.pnlBySubject.CardLabel = "By Subject";
+            this.pnlBySubject.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(243)))), ((int)(((byte)(209)))));
+            this.pnlBySubject.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
+            this.pnlBySubject.HoverCardBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
+            this.pnlBySubject.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
+            this.pnlBySubject.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.pnlBySubject.Location = new System.Drawing.Point(206, 120);
+            this.pnlBySubject.Name = "pnlBySubject";
+            this.pnlBySubject.NormalCardBorderColor = System.Drawing.Color.LightGray;
+            this.pnlBySubject.ShadowBlur = 15;
+            this.pnlBySubject.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.pnlBySubject.ShadowEnabled = true;
+            this.pnlBySubject.ShadowOffset = 5;
+            this.pnlBySubject.Size = new System.Drawing.Size(156, 80);
+            this.pnlBySubject.TabIndex = 11;
+            this.pnlBySubject.Click += new System.EventHandler(this.pnlBySubject_Click);
+            this.pnlBySubject.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlBySubject_Paint);
             // 
-            // btnQuickBatch
+            // pnlByYear_Sem
             // 
-            this.btnQuickBatch.ActiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnQuickBatch.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnQuickBatch.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnQuickBatch.BorderRadius = 10;
-            this.btnQuickBatch.BorderSize = 0;
-            this.btnQuickBatch.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnQuickBatch.FlatAppearance.BorderSize = 0;
-            this.btnQuickBatch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
-            this.btnQuickBatch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
-            this.btnQuickBatch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuickBatch.ForeColor = System.Drawing.Color.White;
-            this.btnQuickBatch.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnQuickBatch.IconSize = 24;
-            this.btnQuickBatch.IndentLevel = 0;
-            this.btnQuickBatch.IsActive = false;
-            this.btnQuickBatch.Location = new System.Drawing.Point(205, 46);
-            this.btnQuickBatch.Name = "btnQuickBatch";
-            this.btnQuickBatch.Size = new System.Drawing.Size(173, 42);
-            this.btnQuickBatch.TabIndex = 11;
-            this.btnQuickBatch.Text = "Batch Upload";
-            this.btnQuickBatch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQuickBatch.UseVisualStyleBackColor = false;
+            this.pnlByYear_Sem.BackColor = System.Drawing.Color.White;
+            this.pnlByYear_Sem.BorderColor = System.Drawing.Color.LightGray;
+            this.pnlByYear_Sem.BorderRadius = 15;
+            this.pnlByYear_Sem.BorderSize = 2;
+            this.pnlByYear_Sem.CardIcon = ((System.Drawing.Image)(resources.GetObject("pnlByYear_Sem.CardIcon")));
+            this.pnlByYear_Sem.CardLabel = "By Year/Sem";
+            this.pnlByYear_Sem.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(243)))), ((int)(((byte)(209)))));
+            this.pnlByYear_Sem.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
+            this.pnlByYear_Sem.HoverCardBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
+            this.pnlByYear_Sem.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
+            this.pnlByYear_Sem.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.pnlByYear_Sem.Location = new System.Drawing.Point(25, 120);
+            this.pnlByYear_Sem.Name = "pnlByYear_Sem";
+            this.pnlByYear_Sem.NormalCardBorderColor = System.Drawing.Color.LightGray;
+            this.pnlByYear_Sem.ShadowBlur = 15;
+            this.pnlByYear_Sem.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.pnlByYear_Sem.ShadowEnabled = true;
+            this.pnlByYear_Sem.ShadowOffset = 5;
+            this.pnlByYear_Sem.Size = new System.Drawing.Size(156, 80);
+            this.pnlByYear_Sem.TabIndex = 11;
+            this.pnlByYear_Sem.Click += new System.EventHandler(this.pnlByYear_Sem_Click);
             // 
-            // btnQuickSingle
+            // pnlByProfessor
             // 
-            this.btnQuickSingle.ActiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnQuickSingle.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnQuickSingle.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnQuickSingle.BorderRadius = 10;
-            this.btnQuickSingle.BorderSize = 0;
-            this.btnQuickSingle.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnQuickSingle.FlatAppearance.BorderSize = 0;
-            this.btnQuickSingle.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
-            this.btnQuickSingle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
-            this.btnQuickSingle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuickSingle.ForeColor = System.Drawing.Color.White;
-            this.btnQuickSingle.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnQuickSingle.IconSize = 24;
-            this.btnQuickSingle.IndentLevel = 0;
-            this.btnQuickSingle.IsActive = false;
-            this.btnQuickSingle.Location = new System.Drawing.Point(23, 46);
-            this.btnQuickSingle.Name = "btnQuickSingle";
-            this.btnQuickSingle.Size = new System.Drawing.Size(173, 42);
-            this.btnQuickSingle.TabIndex = 10;
-            this.btnQuickSingle.Text = "Single Upload";
-            this.btnQuickSingle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQuickSingle.UseVisualStyleBackColor = false;
+            this.pnlByProfessor.BackColor = System.Drawing.Color.White;
+            this.pnlByProfessor.BorderColor = System.Drawing.Color.LightGray;
+            this.pnlByProfessor.BorderRadius = 15;
+            this.pnlByProfessor.BorderSize = 2;
+            this.pnlByProfessor.CardIcon = ((System.Drawing.Image)(resources.GetObject("pnlByProfessor.CardIcon")));
+            this.pnlByProfessor.CardLabel = "By Professor";
+            this.pnlByProfessor.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(243)))), ((int)(((byte)(209)))));
+            this.pnlByProfessor.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
+            this.pnlByProfessor.HoverCardBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
+            this.pnlByProfessor.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
+            this.pnlByProfessor.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.pnlByProfessor.Location = new System.Drawing.Point(206, 34);
+            this.pnlByProfessor.Name = "pnlByProfessor";
+            this.pnlByProfessor.NormalCardBorderColor = System.Drawing.Color.LightGray;
+            this.pnlByProfessor.ShadowBlur = 15;
+            this.pnlByProfessor.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.pnlByProfessor.ShadowEnabled = true;
+            this.pnlByProfessor.ShadowOffset = 5;
+            this.pnlByProfessor.Size = new System.Drawing.Size(156, 80);
+            this.pnlByProfessor.TabIndex = 11;
+            this.pnlByProfessor.Click += new System.EventHandler(this.pnlByProfessor_Click);
+            // 
+            // pnlByProgram
+            // 
+            this.pnlByProgram.BackColor = System.Drawing.Color.White;
+            this.pnlByProgram.BorderColor = System.Drawing.Color.LightGray;
+            this.pnlByProgram.BorderRadius = 15;
+            this.pnlByProgram.BorderSize = 2;
+            this.pnlByProgram.CardIcon = ((System.Drawing.Image)(resources.GetObject("pnlByProgram.CardIcon")));
+            this.pnlByProgram.CardLabel = "By Program";
+            this.pnlByProgram.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(243)))), ((int)(((byte)(209)))));
+            this.pnlByProgram.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
+            this.pnlByProgram.HoverCardBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
+            this.pnlByProgram.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
+            this.pnlByProgram.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.pnlByProgram.Location = new System.Drawing.Point(25, 34);
+            this.pnlByProgram.Name = "pnlByProgram";
+            this.pnlByProgram.NormalCardBorderColor = System.Drawing.Color.LightGray;
+            this.pnlByProgram.ShadowBlur = 15;
+            this.pnlByProgram.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.pnlByProgram.ShadowEnabled = true;
+            this.pnlByProgram.ShadowOffset = 5;
+            this.pnlByProgram.Size = new System.Drawing.Size(156, 80);
+            this.pnlByProgram.TabIndex = 10;
+            this.pnlByProgram.Click += new System.EventHandler(this.pnlByProgram_Click);
             // 
             // label16
             // 
@@ -192,9 +218,9 @@
             this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
             this.label16.Location = new System.Drawing.Point(18, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(130, 25);
+            this.label16.Size = new System.Drawing.Size(178, 25);
             this.label16.TabIndex = 9;
-            this.label16.Text = "Quick Actions";
+            this.label16.Text = "Record Distribution";
             // 
             // roundedPanel5
             // 
@@ -205,6 +231,7 @@
             this.roundedPanel5.Controls.Add(this.lblStorageUsageDetails);
             this.roundedPanel5.Controls.Add(this.cpDriveUsage);
             this.roundedPanel5.Controls.Add(this.label14);
+            this.roundedPanel5.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.roundedPanel5.HoverBorderColor = System.Drawing.Color.Maroon;
             this.roundedPanel5.Location = new System.Drawing.Point(717, 297);
             this.roundedPanel5.Name = "roundedPanel5";
@@ -212,7 +239,7 @@
             this.roundedPanel5.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.roundedPanel5.ShadowEnabled = true;
             this.roundedPanel5.ShadowOffset = 5;
-            this.roundedPanel5.Size = new System.Drawing.Size(391, 195);
+            this.roundedPanel5.Size = new System.Drawing.Size(391, 214);
             this.roundedPanel5.TabIndex = 10;
             // 
             // lblStorageUsageDetails
@@ -266,14 +293,15 @@
             this.roundedPanel4.BorderSize = 0;
             this.roundedPanel4.Controls.Add(this.dgvRecentActivityLog);
             this.roundedPanel4.Controls.Add(this.label12);
+            this.roundedPanel4.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.roundedPanel4.HoverBorderColor = System.Drawing.Color.Maroon;
-            this.roundedPanel4.Location = new System.Drawing.Point(12, 498);
+            this.roundedPanel4.Location = new System.Drawing.Point(12, 523);
             this.roundedPanel4.Name = "roundedPanel4";
             this.roundedPanel4.ShadowBlur = 15;
             this.roundedPanel4.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.roundedPanel4.ShadowEnabled = true;
             this.roundedPanel4.ShadowOffset = 5;
-            this.roundedPanel4.Size = new System.Drawing.Size(697, 195);
+            this.roundedPanel4.Size = new System.Drawing.Size(697, 214);
             this.roundedPanel4.TabIndex = 9;
             // 
             // dgvRecentActivityLog
@@ -331,6 +359,7 @@
             this.roundedPanel3.BorderSize = 0;
             this.roundedPanel3.Controls.Add(this.gradientLabel1);
             this.roundedPanel3.Controls.Add(this.label10);
+            this.roundedPanel3.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.roundedPanel3.HoverBorderColor = System.Drawing.Color.Maroon;
             this.roundedPanel3.Location = new System.Drawing.Point(12, 4);
             this.roundedPanel3.Name = "roundedPanel3";
@@ -373,6 +402,7 @@
             this.roundedPanel2.BorderSize = 0;
             this.roundedPanel2.Controls.Add(this.dgvRecentUploads);
             this.roundedPanel2.Controls.Add(this.label11);
+            this.roundedPanel2.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.roundedPanel2.HoverBorderColor = System.Drawing.Color.Maroon;
             this.roundedPanel2.Location = new System.Drawing.Point(12, 297);
             this.roundedPanel2.Name = "roundedPanel2";
@@ -380,7 +410,7 @@
             this.roundedPanel2.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.roundedPanel2.ShadowEnabled = true;
             this.roundedPanel2.ShadowOffset = 5;
-            this.roundedPanel2.Size = new System.Drawing.Size(697, 195);
+            this.roundedPanel2.Size = new System.Drawing.Size(697, 214);
             this.roundedPanel2.TabIndex = 4;
             // 
             // dgvRecentUploads
@@ -448,6 +478,7 @@
             this.pnlTotalRecentlyUploaded.Controls.Add(this.pnlTotalProfessors);
             this.pnlTotalRecentlyUploaded.Controls.Add(this.pnlTotalRecentlyUploads);
             this.pnlTotalRecentlyUploaded.Controls.Add(this.pnlTotalGradesSheets);
+            this.pnlTotalRecentlyUploaded.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.pnlTotalRecentlyUploaded.HoverBorderColor = System.Drawing.Color.Maroon;
             this.pnlTotalRecentlyUploaded.Location = new System.Drawing.Point(12, 83);
             this.pnlTotalRecentlyUploaded.Name = "pnlTotalRecentlyUploaded";
@@ -738,11 +769,12 @@
         private System.Windows.Forms.Timer timerStorageUpdate;
         private RoundedPanel roundedPanel6;
         private System.Windows.Forms.Label label16;
-        private Controls.iconButton btnQuickBrowse;
-        private Controls.iconButton btnQuickBatch;
-        private Controls.iconButton btnQuickSingle;
         private System.Windows.Forms.Label lblStorageUsageDetails;
         private GradientLabel gradientLabel1;
         private CircularProgressBar cpDriveUsage;
+        private RecordDistributionPanelCard pnlByProgram;
+        private RecordDistributionPanelCard pnlBySubject;
+        private RecordDistributionPanelCard pnlByYear_Sem;
+        private RecordDistributionPanelCard pnlByProfessor;
     }
 }

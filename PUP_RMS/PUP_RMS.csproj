@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DbControl.cs" />
+    <Compile Include="CustomControls\ChartSegment.cs" />
     <Compile Include="CustomControls\CircularProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -85,8 +86,29 @@
     <Compile Include="CustomControls\GradientLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CustomControls\GradientProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CustomControls\iconButton.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\RecordDistributionPanelCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\SubjectTile.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDistributionProfessor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDistributionProfessor.Designer.cs">
+      <DependentUpon>frmDistributionProfessor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmDistributionProgram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDistributionProgram.Designer.cs">
+      <DependentUpon>frmDistributionProgram.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmCourse.cs">
       <SubType>Form</SubType>
@@ -99,6 +121,18 @@
     </Compile>
     <Compile Include="Forms\frmDashboard.Designer.cs">
       <DependentUpon>frmDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmDistributionSubject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDistributionSubject.Designer.cs">
+      <DependentUpon>frmDistributionSubject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmDistributionYear_Sem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDistributionYear_Sem.Designer.cs">
+      <DependentUpon>frmDistributionYear_Sem.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmIndividualUpload.cs">
       <SubType>Form</SubType>
@@ -123,6 +157,12 @@
     </Compile>
     <Compile Include="Forms\frmBatchUpload.Designer.cs">
       <DependentUpon>frmBatchUpload.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmSubjectDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSubjectDetails.Designer.cs">
+      <DependentUpon>frmSubjectDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -165,11 +205,23 @@
     <EmbeddedResource Include="CustomControls\CustomMsgBox.resx">
       <DependentUpon>CustomMsgBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDistributionProfessor.resx">
+      <DependentUpon>frmDistributionProfessor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDistributionProgram.resx">
+      <DependentUpon>frmDistributionProgram.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmCourse.resx">
       <DependentUpon>frmCourse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDashboard.resx">
       <DependentUpon>frmDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDistributionSubject.resx">
+      <DependentUpon>frmDistributionSubject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDistributionYear_Sem.resx">
+      <DependentUpon>frmDistributionYear_Sem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmIndividualUpload.resx">
       <DependentUpon>frmIndividualUpload.cs</DependentUpon>
@@ -182,6 +234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmBatchUpload.resx">
       <DependentUpon>frmBatchUpload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSubjectDetails.resx">
+      <DependentUpon>frmSubjectDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

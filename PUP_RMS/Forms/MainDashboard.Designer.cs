@@ -37,16 +37,16 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.flowLayoutPanelUpload = new System.Windows.Forms.FlowLayoutPanel();
-            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
             this.btnDashboard = new PUP_RMS.Controls.iconButton();
             this.btnSearch = new PUP_RMS.Controls.iconButton();
+            this.flowLayoutPanelUpload = new System.Windows.Forms.FlowLayoutPanel();
             this.btnUpload = new PUP_RMS.Controls.iconButton();
             this.btnBatchUpload = new PUP_RMS.Controls.iconButton();
             this.btnIndividUpload = new PUP_RMS.Controls.iconButton();
-            this.btnLogout = new PUP_RMS.Controls.iconButton();
             this.btnCourse = new PUP_RMS.Controls.iconButton();
             this.btnProfessor = new PUP_RMS.Controls.iconButton();
+            this.btnLogout = new PUP_RMS.Controls.iconButton();
+            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
             this.pnlContent.SuspendLayout();
             this.flowLayoutPanelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -130,22 +130,6 @@
             this.panel2.Size = new System.Drawing.Size(247, 29);
             this.panel2.TabIndex = 12;
             // 
-            // flowLayoutPanelUpload
-            // 
-            this.flowLayoutPanelUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.flowLayoutPanelUpload.Controls.Add(this.btnUpload);
-            this.flowLayoutPanelUpload.Controls.Add(this.btnBatchUpload);
-            this.flowLayoutPanelUpload.Controls.Add(this.btnIndividUpload);
-            this.flowLayoutPanelUpload.Location = new System.Drawing.Point(3, 353);
-            this.flowLayoutPanelUpload.Name = "flowLayoutPanelUpload";
-            this.flowLayoutPanelUpload.Size = new System.Drawing.Size(244, 60);
-            this.flowLayoutPanelUpload.TabIndex = 0;
-            // 
-            // tmrUploadTransition
-            // 
-            this.tmrUploadTransition.Interval = 10;
-            this.tmrUploadTransition.Tick += new System.EventHandler(this.tmrUploadTransition_Tick);
-            // 
             // btnDashboard
             // 
             this.btnDashboard.ActiveColor = System.Drawing.Color.Goldenrod;
@@ -199,6 +183,17 @@
             this.btnSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // flowLayoutPanelUpload
+            // 
+            this.flowLayoutPanelUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
+            this.flowLayoutPanelUpload.Controls.Add(this.btnUpload);
+            this.flowLayoutPanelUpload.Controls.Add(this.btnBatchUpload);
+            this.flowLayoutPanelUpload.Controls.Add(this.btnIndividUpload);
+            this.flowLayoutPanelUpload.Location = new System.Drawing.Point(3, 353);
+            this.flowLayoutPanelUpload.Name = "flowLayoutPanelUpload";
+            this.flowLayoutPanelUpload.Size = new System.Drawing.Size(244, 60);
+            this.flowLayoutPanelUpload.TabIndex = 0;
             // 
             // btnUpload
             // 
@@ -284,33 +279,6 @@
             this.btnIndividUpload.UseVisualStyleBackColor = false;
             this.btnIndividUpload.Click += new System.EventHandler(this.btnIndividUpload_Click);
             // 
-            // btnLogout
-            // 
-            this.btnLogout.ActiveColor = System.Drawing.Color.Goldenrod;
-            this.btnLogout.BackColor = System.Drawing.Color.Maroon;
-            this.btnLogout.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnLogout.BorderRadius = 10;
-            this.btnLogout.BorderSize = 0;
-            this.btnLogout.FlatAppearance.BorderSize = 0;
-            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogout.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.HoverColor = System.Drawing.Color.Goldenrod;
-            this.btnLogout.IconSize = 30;
-            this.btnLogout.Image = ((System.Drawing.Image)(resources.GetObject("btnLogout.Image")));
-            this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLogout.IndentLevel = 0;
-            this.btnLogout.IsActive = false;
-            this.btnLogout.Location = new System.Drawing.Point(3, 551);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(244, 60);
-            this.btnLogout.TabIndex = 8;
-            this.btnLogout.Text = "Logout";
-            this.btnLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLogout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnLogout.UseVisualStyleBackColor = false;
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
-            // 
             // btnCourse
             // 
             this.btnCourse.ActiveColor = System.Drawing.Color.Goldenrod;
@@ -364,6 +332,38 @@
             this.btnProfessor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnProfessor.UseVisualStyleBackColor = false;
             this.btnProfessor.Click += new System.EventHandler(this.btnProfessor_Click);
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.ActiveColor = System.Drawing.Color.Goldenrod;
+            this.btnLogout.BackColor = System.Drawing.Color.Maroon;
+            this.btnLogout.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnLogout.BorderRadius = 10;
+            this.btnLogout.BorderSize = 0;
+            this.btnLogout.FlatAppearance.BorderSize = 0;
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogout.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnLogout.ForeColor = System.Drawing.Color.White;
+            this.btnLogout.HoverColor = System.Drawing.Color.Goldenrod;
+            this.btnLogout.IconSize = 30;
+            this.btnLogout.Image = ((System.Drawing.Image)(resources.GetObject("btnLogout.Image")));
+            this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLogout.IndentLevel = 0;
+            this.btnLogout.IsActive = false;
+            this.btnLogout.Location = new System.Drawing.Point(3, 551);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(244, 60);
+            this.btnLogout.TabIndex = 8;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLogout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // tmrUploadTransition
+            // 
+            this.tmrUploadTransition.Interval = 10;
+            this.tmrUploadTransition.Tick += new System.EventHandler(this.tmrUploadTransition_Tick);
             // 
             // MainDashboard
             // 

@@ -53,23 +53,17 @@ namespace PUP_RMS.Forms
             ForceDoubleBuffer(pnlTotalProfessors);
             ForceDoubleBuffer(pnlTotalRecentlyUploads);
 
-            // 4. TARGETED BUFFERING (Quick Actions)
-            if (btnQuickSingle != null) ForceDoubleBuffer(btnQuickSingle);
-            if (btnQuickBatch != null) ForceDoubleBuffer(btnQuickBatch);
-            if (btnQuickBrowse != null) ForceDoubleBuffer(btnQuickBrowse);
-
-            // 5. GLOBAL RECURSIVE BUFFERING
+            // 4. GLOBAL RECURSIVE BUFFERING
             ApplyDoubleBufferingRecursively(this.Controls);
 
-            // 6. SETUP LOGIC
+            // 5. SETUP LOGIC
             ApplyDashboardDesign();
-            InitializeQuickActions();
             InitializeFadeTimer();
 
-            // 7. HOOK EVENTS
+            // 6. HOOK EVENTS
             this.Load += FrmDashboard_Load;
 
-            // 8. SETUP STORAGE TIMER
+            // 7. SETUP STORAGE TIMER
             if (this.timerStorageUpdate != null)
             {
                 this.timerStorageUpdate.Interval = 5000; // Update every 5 seconds
@@ -174,53 +168,6 @@ namespace PUP_RMS.Forms
             if (timerStorageUpdate != null) timerStorageUpdate.Stop();
 
             base.OnFormClosing(e);
-        }
-
-        // =========================================================================
-        // SECTION: QUICK ACTIONS LOGIC
-        // =========================================================================
-        private void InitializeQuickActions()
-        {
-            AttachHoverEffects(btnQuickSingle);
-            AttachHoverEffects(btnQuickBatch);
-            AttachHoverEffects(btnQuickBrowse);
-
-            if (btnQuickSingle != null)
-            {
-                btnQuickSingle.Click -= BtnQuickSingle_Click;
-                btnQuickSingle.Click += BtnQuickSingle_Click;
-            }
-
-            if (btnQuickBatch != null)
-            {
-                btnQuickBatch.Click -= BtnQuickBatch_Click;
-                btnQuickBatch.Click += BtnQuickBatch_Click;
-            }
-
-            if (btnQuickBrowse != null)
-            {
-                btnQuickBrowse.Click -= BtnQuickBrowse_Click;
-                btnQuickBrowse.Click += BtnQuickBrowse_Click;
-            }
-
-        }
-
-        private void BtnQuickSingle_Click(object sender, EventArgs e)
-        {
-            frmIndividualUpload frm = new frmIndividualUpload();
-            frm.Show();
-        }
-
-        private void BtnQuickBatch_Click(object sender, EventArgs e)
-        {
-            frmBatchUpload frm = new frmBatchUpload();
-            frm.Show();
-        }
-
-        private void BtnQuickBrowse_Click(object sender, EventArgs e)
-        {
-            frmSearch frm = new frmSearch();
-            frm.Show();
         }
 
         // =========================================================================
@@ -508,5 +455,36 @@ namespace PUP_RMS.Forms
         private void timerStorageUpdate_Tick_1(object sender, EventArgs e) { }
         private void frmDashboard_Load_1(object sender, EventArgs e) { }
         private void cpDriveUsage_Click(object sender, EventArgs e) { }
+
+        private void pnlBySubject_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pnlBySubject_Click(object sender, EventArgs e)
+        {
+
+
+            frmDistributionSubject frm = new frmDistributionSubject();
+            frmDistributionSubject.ShowWithDimmer(this, frm);
+        }
+
+        private void pnlByProgram_Click(object sender, EventArgs e)
+        {
+            frmDistributionProgram frm = new frmDistributionProgram();
+            frmDistributionProgram.ShowWithDimmer(this, frm);
+        }
+
+        private void pnlByProfessor_Click(object sender, EventArgs e)
+        {
+            frmDistributionProfessor frm = new frmDistributionProfessor();
+            frmDistributionProfessor.ShowWithDimmer(this, frm);
+        }
+
+        private void pnlByYear_Sem_Click(object sender, EventArgs e)
+        {
+            frmDistributionYear_Sem frm = new frmDistributionYear_Sem();
+            frmDistributionYear_Sem.ShowWithDimmer(this, frm);
+        }
     }
 }
