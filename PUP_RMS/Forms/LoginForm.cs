@@ -234,5 +234,15 @@ namespace PUP_RMS
         private void textBox3_TextChanged(object sender, EventArgs e) { }
         private void textBox4_TextChanged(object sender, EventArgs e) { }
         private void textBox4_TextChanged_1(object sender, EventArgs e) { }
+
+        private void roundedPanel2_Click(object sender, EventArgs e)
+        {
+            textBox3.Focus();
+        }
+
+        private void roundedPanel3_Click(object sender, EventArgs e)
+        {
+            textBox4.Focus();
+        }
     }
 }

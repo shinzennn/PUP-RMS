@@ -89,6 +89,9 @@
     <Compile Include="CustomControls\GradientProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CustomControls\HeaderPanelCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CustomControls\iconButton.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -87,6 +87,19 @@ namespace PUP_RMS.Forms
             pictureBoxShowConfirmPass.Visible = true;
             pictureBoxHideConfirmPass.Visible = false;
 
+            // --- IMPORTANT: CONNECT THE EVENTS HERE ---
+            // 1. Username Events
+            textBoxUsername.Enter += textBoxUsername_Enter;
+            textBoxUsername.Leave += textBoxUsername_Leave;
+
+            // 2. Password Events
+            textBoxPassword.Enter += textBoxPassword_Enter;
+            textBoxPassword.Leave += textBoxPassword_Leave;
+
+            // 3. Confirm Password Events
+            textBoxConfirmPassword.Enter += textBoxConfirmPassword_Enter;
+            textBoxConfirmPassword.Leave += textBoxConfirmPassword_Leave;
+
             AttachClickEvent(this);
             this.MouseDown += Background_Click;
 
@@ -179,27 +192,50 @@ namespace PUP_RMS.Forms
 
         private void ResetBorders()
         {
+            // Reset ALL borders to normal
             if (roundedPanelUser != null) roundedPanelUser.SetBorderHover(false);
             if (roundedPanelPass != null) roundedPanelPass.SetBorderHover(false);
             if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(false);
         }
 
+        // ======================================================
+        // FOCUS EVENTS - BORDER COLOR CHANGE LOGIC
+        // ======================================================
+
+        // --- USERNAME ---
         private void textBoxUsername_Enter(object sender, EventArgs e)
         {
             ResetBorders();
-            if (roundedPanelUser != null) roundedPanelUser.SetBorderHover(true);
+            if (roundedPanelUser != null) roundedPanelUser.SetBorderHover(true); // Turn Maroon ON
         }
 
+        private void textBoxUsername_Leave(object sender, EventArgs e)
+        {
+            if (roundedPanelUser != null) roundedPanelUser.SetBorderHover(false); // Turn Maroon OFF
+        }
+
+        // --- PASSWORD ---
         private void textBoxPassword_Enter(object sender, EventArgs e)
         {
             ResetBorders();
-            if (roundedPanelPass != null) roundedPanelPass.SetBorderHover(true);
+            if (roundedPanelPass != null) roundedPanelPass.SetBorderHover(true); // Turn Maroon ON
         }
 
+        private void textBoxPassword_Leave(object sender, EventArgs e)
+        {
+            if (roundedPanelPass != null) roundedPanelPass.SetBorderHover(false); // Turn Maroon OFF
+        }
+
+        // --- CONFIRM PASSWORD ---
         private void textBoxConfirmPassword_Enter(object sender, EventArgs e)
         {
             ResetBorders();
-            if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(true);
+            if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(true); // Turn Maroon ON
+        }
+
+        private void textBoxConfirmPassword_Leave(object sender, EventArgs e)
+        {
+            if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(false); // Turn Maroon OFF
         }
 
         private void pictureBoxUsername_Click(object sender, EventArgs e) { textBoxUsername.Focus(); }
@@ -219,6 +255,8 @@ namespace PUP_RMS.Forms
         {
             if (sender is Button || sender is CheckBox || sender is LinkLabel || sender is TextBox || sender is PictureBox) return;
             if (sender is Panel pnl) { foreach (Control child in pnl.Controls) if (child.Focused) return; }
+
+            // If background clicked, remove focus and reset borders
             ResetBorders();
             this.ActiveControl = null;
         }
@@ -228,5 +266,47 @@ namespace PUP_RMS.Forms
         private void textBoxUsername_TextChanged(object sender, EventArgs e) { }
         private void textBoxPassword_TextChanged(object sender, EventArgs e) { }
         private void textBoxConfirmPassword_TextChanged(object sender, EventArgs e) { }
+        private void roundedPanelUser_Paint(object sender, PaintEventArgs e) { }
+        private void roundedPanelPass_Paint(object sender, PaintEventArgs e) { }
+        private void roundedPanelConfirmPass_Paint(object sender, PaintEventArgs e) { }
+
+
+        private void lblUsername_Click(object sender, EventArgs e){textBoxUsername.Focus(); }
+
+        private void pictureBoxUsername_Click_1(object sender, EventArgs e){textBoxUsername.Focus(); }
+
+        private void lblPassword_Click(object sender, EventArgs e)
+        {
+            textBoxPassword.Focus();
+        }
+        private void pictureBoxPassword_Click_1(object sender, EventArgs e)
+        {
+            textBoxPassword.Focus();
+        }
+
+        private void lblConfirmPassword_Click(object sender, EventArgs e)
+        {
+            textBoxConfirmPassword.Focus();
+        }
+
+        private void pictureBoxConfirmPassword_Click_1(object sender, EventArgs e)
+        {
+            textBoxConfirmPassword.Focus();
+        }
+
+        private void roundedPanelUser_Click(object sender, EventArgs e)
+        {
+            textBoxUsername.Focus();
+        }
+
+        private void roundedPanelPass_Click(object sender, EventArgs e)
+        {
+            textBoxPassword.Focus();
+        }
+
+        private void roundedPanelConfirmPass_Click(object sender, EventArgs e)
+        {
+            textBoxConfirmPassword.Focus();
+        }
     }
 }

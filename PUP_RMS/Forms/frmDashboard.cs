@@ -47,11 +47,11 @@ namespace PUP_RMS.Forms
 
             InitializeComponent();
 
-            // 3. TARGETED BUFFERING (Top Cards)
-            ForceDoubleBuffer(pnlTotalGradesSheets);
-            ForceDoubleBuffer(pnlTotalSubjects);
-            ForceDoubleBuffer(pnlTotalProfessors);
-            ForceDoubleBuffer(pnlTotalRecentlyUploads);
+            //// 3. TARGETED BUFFERING (Top Cards)
+            //ForceDoubleBuffer(pnlTotalGradesSheets);
+            //ForceDoubleBuffer(pnlTotalSubjects);
+            //ForceDoubleBuffer(pnlTotalProfessors);
+            //ForceDoubleBuffer(pnlTotalRecentlyUploads);
 
             // 4. GLOBAL RECURSIVE BUFFERING
             ApplyDoubleBufferingRecursively(this.Controls);
@@ -195,11 +195,7 @@ namespace PUP_RMS.Forms
                 this.lblStorageUsageDetails.TextAlign = ContentAlignment.MiddleCenter;
             }
 
-            // --- HOVER EFFECTS ---
-            AttachHoverEffects(this.pnlTotalGradesSheets);
-            AttachHoverEffects(this.pnlTotalSubjects);
-            AttachHoverEffects(this.pnlTotalProfessors);
-            AttachHoverEffects(this.pnlTotalRecentlyUploads);
+       
         }
 
         private void AttachHoverEffects(Control control)
