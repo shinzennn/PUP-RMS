@@ -28,31 +28,110 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.dgvCourse = new System.Windows.Forms.DataGridView();
+            this.btnSearch = new PUP_RMS.RoundedButton();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCourse)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // txtSearch
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(475, 332);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(214, 37);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Course Page";
+            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(138, 35);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(507, 22);
+            this.txtSearch.TabIndex = 0;
+            // 
+            // dgvCourse
+            // 
+            this.dgvCourse.AllowUserToAddRows = false;
+            this.dgvCourse.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvCourse.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCourse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvCourse.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCourse.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvCourse.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvCourse.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCourse.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvCourse.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCourse.GridColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvCourse.Location = new System.Drawing.Point(83, 115);
+            this.dgvCourse.Name = "dgvCourse";
+            this.dgvCourse.ReadOnly = true;
+            this.dgvCourse.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCourse.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCourse.RowHeadersVisible = false;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Goldenrod;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCourse.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvCourse.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCourse.Size = new System.Drawing.Size(945, 508);
+            this.dgvCourse.TabIndex = 2;
+            this.dgvCourse.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourse_CellMouseEnter);
+            this.dgvCourse.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourse_CellMouseLeave);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.Maroon;
+            this.btnSearch.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSearch.BorderRadius = 20;
+            this.btnSearch.BorderSize = 0;
+            this.btnSearch.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnSearch.FlatAppearance.BorderSize = 0;
+            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch.ForeColor = System.Drawing.Color.White;
+            this.btnSearch.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnSearch.Location = new System.Drawing.Point(663, 26);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(150, 40);
+            this.btnSearch.TabIndex = 1;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.TextColor = System.Drawing.Color.White;
+            this.btnSearch.UseVisualStyleBackColor = false;
             // 
             // frmCourse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 749);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.dgvCourse);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.txtSearch);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmCourse";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.Text = "frmCourse";
+            this.Load += new System.EventHandler(this.frmCourse_Load);
+            this.Shown += new System.EventHandler(this.frmCourse_Shown);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCourse)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -60,6 +139,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtSearch;
+        private RoundedButton btnSearch;
+        private System.Windows.Forms.DataGridView dgvCourse;
     }
 }
