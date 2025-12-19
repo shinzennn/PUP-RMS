@@ -18,7 +18,7 @@ namespace PUP_RMS.Forms
         private readonly Color StatusGreen = Color.FromArgb(40, 167, 69);
         private readonly Color BackgroundLight = Color.FromArgb(240, 240, 240);
         private readonly Color ControlBaseColor = Color.White;
-        private const int LIFT_OFFSET = 5;
+        private const int ZOOM_OFFSET = 4;
 
         // --- STORAGE MONITOR SETTINGS ---
         // Thresholds for changing color
@@ -194,8 +194,12 @@ namespace PUP_RMS.Forms
             {
                 this.lblStorageUsageDetails.TextAlign = ContentAlignment.MiddleCenter;
             }
+            // Attach zoom effect to your DashboardCards
+            AttachHoverEffects(dcTotalGradesheets);
+            AttachHoverEffects(dcTotalSubjects);
+            AttachHoverEffects(dcTotalProfessors);
+            AttachHoverEffects(dcRecentlyUploaded);
 
-       
         }
 
         private void AttachHoverEffects(Control control)
@@ -340,8 +344,17 @@ namespace PUP_RMS.Forms
         {
             if (sender is Control control)
             {
-                control.Location = new Point(control.Location.X, control.Location.Y - LIFT_OFFSET);
+                // 1. Move it up and left slightly
+                control.Location = new Point(control.Location.X - (ZOOM_OFFSET / 2), control.Location.Y - ZOOM_OFFSET);
+
+                // 2. Make it slightly larger
+                control.Size = new Size(control.Width + ZOOM_OFFSET, control.Height + ZOOM_OFFSET);
+
+                // 3. Bring it to the front so it overlaps other cards
                 control.BringToFront();
+
+                // 4. If your card has a shadow property, you can deepen it here
+                // Example: if (control is DashboardCard dc) dc.ShadowDepth += 2;
             }
         }
 
@@ -349,10 +362,16 @@ namespace PUP_RMS.Forms
         {
             if (sender is Control control)
             {
-                control.Location = new Point(control.Location.X, control.Location.Y + LIFT_OFFSET);
-            }
-        }
+                // 1. Restore original size
+                control.Size = new Size(control.Width - ZOOM_OFFSET, control.Height - ZOOM_OFFSET);
 
+                // 2. Restore original position
+                control.Location = new Point(control.Location.X + (ZOOM_OFFSET / 2), control.Location.Y + ZOOM_OFFSET);
+
+                // Example: if (control is DashboardCard dc) dc.ShadowDepth -= 2;
+            }
+
+        }
         // =========================================================================
         // SECTION E: REAL-TIME STORAGE UPDATE LOGIC
         // =========================================================================
@@ -481,6 +500,26 @@ namespace PUP_RMS.Forms
         {
             frmDistributionYear_Sem frm = new frmDistributionYear_Sem();
             frmDistributionYear_Sem.ShowWithDimmer(this, frm);
+        }
+
+        private void dcTotalGradesheets_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dcTotalSubjects_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dcTotalProfessors_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dcRecentlyUploaded_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

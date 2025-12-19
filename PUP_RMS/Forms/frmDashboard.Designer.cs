@@ -31,6 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDashboard));
             this.timerStorageUpdate = new System.Windows.Forms.Timer(this.components);
+            this.headerPanelCard5 = new PUP_RMS.CustomControls.HeaderPanelCard();
+            this.dcRecentlyUploaded = new PUP_RMS.CustomControls.DashboardCard();
+            this.dcTotalGradesheets = new PUP_RMS.CustomControls.DashboardCard();
+            this.dcTotalProfessors = new PUP_RMS.CustomControls.DashboardCard();
+            this.dcTotalSubjects = new PUP_RMS.CustomControls.DashboardCard();
             this.headerPanelCard4 = new PUP_RMS.CustomControls.HeaderPanelCard();
             this.lblStorageUsageDetails = new System.Windows.Forms.Label();
             this.cpDriveUsage = new CircularProgressBar();
@@ -55,11 +60,7 @@
             this.roundedPanel3 = new PUP_RMS.RoundedPanel();
             this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
-            this.headerPanelCard5 = new PUP_RMS.CustomControls.HeaderPanelCard();
-            this.dashboardCard4 = new PUP_RMS.CustomControls.DashboardCard();
-            this.dashboardCard1 = new PUP_RMS.CustomControls.DashboardCard();
-            this.dashboardCard3 = new PUP_RMS.CustomControls.DashboardCard();
-            this.dashboardCard2 = new PUP_RMS.CustomControls.DashboardCard();
+            this.headerPanelCard5.SuspendLayout();
             this.headerPanelCard4.SuspendLayout();
             this.headerPanelCard3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentUploads)).BeginInit();
@@ -67,22 +68,155 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentActivityLog)).BeginInit();
             this.headerPanelCard1.SuspendLayout();
             this.roundedPanel3.SuspendLayout();
-            this.headerPanelCard5.SuspendLayout();
             this.SuspendLayout();
             // 
             // timerStorageUpdate
             // 
             this.timerStorageUpdate.Tick += new System.EventHandler(this.timerStorageUpdate_Tick_1);
             // 
+            // headerPanelCard5
+            // 
+            this.headerPanelCard5.BackColor = System.Drawing.Color.Transparent;
+            this.headerPanelCard5.BorderColor = System.Drawing.Color.Gainsboro;
+            this.headerPanelCard5.BorderRadius = 20;
+            this.headerPanelCard5.BorderThickness = 1;
+            this.headerPanelCard5.ContentBackColor = System.Drawing.Color.WhiteSmoke;
+            this.headerPanelCard5.Controls.Add(this.dcRecentlyUploaded);
+            this.headerPanelCard5.Controls.Add(this.dcTotalGradesheets);
+            this.headerPanelCard5.Controls.Add(this.dcTotalProfessors);
+            this.headerPanelCard5.Controls.Add(this.dcTotalSubjects);
+            this.headerPanelCard5.EnableHoverEffect = false;
+            this.headerPanelCard5.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
+            this.headerPanelCard5.HeaderFontSize = 15F;
+            this.headerPanelCard5.HeaderForeColor = System.Drawing.Color.Maroon;
+            this.headerPanelCard5.HeaderHeight = 40;
+            this.headerPanelCard5.HeaderLabel = "System Dashboard";
+            this.headerPanelCard5.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard5.IconHeader")));
+            this.headerPanelCard5.IconSize = 30;
+            this.headerPanelCard5.Location = new System.Drawing.Point(2, 80);
+            this.headerPanelCard5.Name = "headerPanelCard5";
+            this.headerPanelCard5.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.headerPanelCard5.ShadowDepth = 4;
+            this.headerPanelCard5.ShadowPadding = 5;
+            this.headerPanelCard5.ShowHeaderDivider = false;
+            this.headerPanelCard5.ShowShadow = true;
+            this.headerPanelCard5.Size = new System.Drawing.Size(1114, 165);
+            this.headerPanelCard5.TabIndex = 12;
+            // 
+            // dcRecentlyUploaded
+            // 
+            this.dcRecentlyUploaded.BackColor = System.Drawing.Color.Transparent;
+            this.dcRecentlyUploaded.BorderRadius = 15;
+            this.dcRecentlyUploaded.HeaderFontSize = 9F;
+            this.dcRecentlyUploaded.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
+            this.dcRecentlyUploaded.HeaderText = "RECENTLY UPLOADED";
+            this.dcRecentlyUploaded.IconBackColor = System.Drawing.Color.Goldenrod;
+            this.dcRecentlyUploaded.IconCircleSize = 50;
+            this.dcRecentlyUploaded.IconImage = ((System.Drawing.Image)(resources.GetObject("dcRecentlyUploaded.IconImage")));
+            this.dcRecentlyUploaded.Location = new System.Drawing.Point(843, 54);
+            this.dcRecentlyUploaded.Name = "dcRecentlyUploaded";
+            this.dcRecentlyUploaded.PanelBackColor = System.Drawing.Color.White;
+            this.dcRecentlyUploaded.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.dcRecentlyUploaded.ShadowDepth = 15;
+            this.dcRecentlyUploaded.ShadowPadding = 10;
+            this.dcRecentlyUploaded.ShowShadow = true;
+            this.dcRecentlyUploaded.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
+            this.dcRecentlyUploaded.SideBarWidth = 5;
+            this.dcRecentlyUploaded.Size = new System.Drawing.Size(225, 105);
+            this.dcRecentlyUploaded.TabIndex = 9;
+            this.dcRecentlyUploaded.ValueFontSize = 24F;
+            this.dcRecentlyUploaded.ValueForeColor = System.Drawing.Color.Black;
+            this.dcRecentlyUploaded.ValueText = "0";
+            this.dcRecentlyUploaded.Paint += new System.Windows.Forms.PaintEventHandler(this.dcRecentlyUploaded_Paint);
+            // 
+            // dcTotalGradesheets
+            // 
+            this.dcTotalGradesheets.BackColor = System.Drawing.Color.Transparent;
+            this.dcTotalGradesheets.BorderRadius = 15;
+            this.dcTotalGradesheets.HeaderFontSize = 9F;
+            this.dcTotalGradesheets.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
+            this.dcTotalGradesheets.HeaderText = "TOTAL GRADE SHEETS";
+            this.dcTotalGradesheets.IconBackColor = System.Drawing.Color.Goldenrod;
+            this.dcTotalGradesheets.IconCircleSize = 50;
+            this.dcTotalGradesheets.IconImage = ((System.Drawing.Image)(resources.GetObject("dcTotalGradesheets.IconImage")));
+            this.dcTotalGradesheets.Location = new System.Drawing.Point(29, 54);
+            this.dcTotalGradesheets.Name = "dcTotalGradesheets";
+            this.dcTotalGradesheets.PanelBackColor = System.Drawing.Color.White;
+            this.dcTotalGradesheets.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.dcTotalGradesheets.ShadowDepth = 15;
+            this.dcTotalGradesheets.ShadowPadding = 10;
+            this.dcTotalGradesheets.ShowShadow = true;
+            this.dcTotalGradesheets.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
+            this.dcTotalGradesheets.SideBarWidth = 5;
+            this.dcTotalGradesheets.Size = new System.Drawing.Size(225, 105);
+            this.dcTotalGradesheets.TabIndex = 8;
+            this.dcTotalGradesheets.ValueFontSize = 24F;
+            this.dcTotalGradesheets.ValueForeColor = System.Drawing.Color.Black;
+            this.dcTotalGradesheets.ValueText = "0";
+            this.dcTotalGradesheets.Paint += new System.Windows.Forms.PaintEventHandler(this.dcTotalGradesheets_Paint);
+            // 
+            // dcTotalProfessors
+            // 
+            this.dcTotalProfessors.BackColor = System.Drawing.Color.Transparent;
+            this.dcTotalProfessors.BorderRadius = 15;
+            this.dcTotalProfessors.HeaderFontSize = 9F;
+            this.dcTotalProfessors.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
+            this.dcTotalProfessors.HeaderText = "TOTAL PROFESSORS";
+            this.dcTotalProfessors.IconBackColor = System.Drawing.Color.Goldenrod;
+            this.dcTotalProfessors.IconCircleSize = 50;
+            this.dcTotalProfessors.IconImage = ((System.Drawing.Image)(resources.GetObject("dcTotalProfessors.IconImage")));
+            this.dcTotalProfessors.Location = new System.Drawing.Point(567, 54);
+            this.dcTotalProfessors.Name = "dcTotalProfessors";
+            this.dcTotalProfessors.PanelBackColor = System.Drawing.Color.White;
+            this.dcTotalProfessors.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.dcTotalProfessors.ShadowDepth = 15;
+            this.dcTotalProfessors.ShadowPadding = 10;
+            this.dcTotalProfessors.ShowShadow = true;
+            this.dcTotalProfessors.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
+            this.dcTotalProfessors.SideBarWidth = 5;
+            this.dcTotalProfessors.Size = new System.Drawing.Size(225, 105);
+            this.dcTotalProfessors.TabIndex = 9;
+            this.dcTotalProfessors.ValueFontSize = 24F;
+            this.dcTotalProfessors.ValueForeColor = System.Drawing.Color.Black;
+            this.dcTotalProfessors.ValueText = "0";
+            this.dcTotalProfessors.Paint += new System.Windows.Forms.PaintEventHandler(this.dcTotalProfessors_Paint);
+            // 
+            // dcTotalSubjects
+            // 
+            this.dcTotalSubjects.BackColor = System.Drawing.Color.Transparent;
+            this.dcTotalSubjects.BorderRadius = 15;
+            this.dcTotalSubjects.HeaderFontSize = 9F;
+            this.dcTotalSubjects.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
+            this.dcTotalSubjects.HeaderText = "TOTAL SUBJECTS";
+            this.dcTotalSubjects.IconBackColor = System.Drawing.Color.Goldenrod;
+            this.dcTotalSubjects.IconCircleSize = 50;
+            this.dcTotalSubjects.IconImage = ((System.Drawing.Image)(resources.GetObject("dcTotalSubjects.IconImage")));
+            this.dcTotalSubjects.Location = new System.Drawing.Point(297, 54);
+            this.dcTotalSubjects.Name = "dcTotalSubjects";
+            this.dcTotalSubjects.PanelBackColor = System.Drawing.Color.White;
+            this.dcTotalSubjects.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.dcTotalSubjects.ShadowDepth = 15;
+            this.dcTotalSubjects.ShadowPadding = 10;
+            this.dcTotalSubjects.ShowShadow = true;
+            this.dcTotalSubjects.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
+            this.dcTotalSubjects.SideBarWidth = 5;
+            this.dcTotalSubjects.Size = new System.Drawing.Size(225, 105);
+            this.dcTotalSubjects.TabIndex = 9;
+            this.dcTotalSubjects.ValueFontSize = 24F;
+            this.dcTotalSubjects.ValueForeColor = System.Drawing.Color.Black;
+            this.dcTotalSubjects.ValueText = "0";
+            this.dcTotalSubjects.Paint += new System.Windows.Forms.PaintEventHandler(this.dcTotalSubjects_Paint);
+            // 
             // headerPanelCard4
             // 
             this.headerPanelCard4.BackColor = System.Drawing.Color.Transparent;
             this.headerPanelCard4.BorderColor = System.Drawing.Color.Gray;
             this.headerPanelCard4.BorderRadius = 20;
-            this.headerPanelCard4.BorderThickness = 1;
+            this.headerPanelCard4.BorderThickness = 0;
             this.headerPanelCard4.ContentBackColor = System.Drawing.Color.White;
             this.headerPanelCard4.Controls.Add(this.lblStorageUsageDetails);
             this.headerPanelCard4.Controls.Add(this.cpDriveUsage);
+            this.headerPanelCard4.EnableHoverEffect = false;
             this.headerPanelCard4.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
             this.headerPanelCard4.HeaderFontSize = 13F;
             this.headerPanelCard4.HeaderForeColor = System.Drawing.Color.Maroon;
@@ -90,9 +224,14 @@
             this.headerPanelCard4.HeaderLabel = "Local Storage Used ";
             this.headerPanelCard4.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard4.IconHeader")));
             this.headerPanelCard4.IconSize = 25;
-            this.headerPanelCard4.Location = new System.Drawing.Point(717, 255);
+            this.headerPanelCard4.Location = new System.Drawing.Point(717, 245);
             this.headerPanelCard4.Name = "headerPanelCard4";
-            this.headerPanelCard4.Size = new System.Drawing.Size(391, 234);
+            this.headerPanelCard4.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.headerPanelCard4.ShadowDepth = 4;
+            this.headerPanelCard4.ShadowPadding = 5;
+            this.headerPanelCard4.ShowHeaderDivider = false;
+            this.headerPanelCard4.ShowShadow = true;
+            this.headerPanelCard4.Size = new System.Drawing.Size(399, 255);
             this.headerPanelCard4.TabIndex = 10;
             // 
             // lblStorageUsageDetails
@@ -110,7 +249,7 @@
             // cpDriveUsage
             // 
             this.cpDriveUsage.BackColor = System.Drawing.Color.Transparent;
-            this.cpDriveUsage.BarWidth = 30;
+            this.cpDriveUsage.BarWidth = 20;
             this.cpDriveUsage.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.cpDriveUsage.FontSize = 10;
             this.cpDriveUsage.GradientEnd = System.Drawing.Color.Maroon;
@@ -131,10 +270,11 @@
             // 
             this.headerPanelCard3.BackColor = System.Drawing.Color.Transparent;
             this.headerPanelCard3.BorderColor = System.Drawing.Color.Gray;
-            this.headerPanelCard3.BorderRadius = 20;
-            this.headerPanelCard3.BorderThickness = 1;
+            this.headerPanelCard3.BorderRadius = 0;
+            this.headerPanelCard3.BorderThickness = 0;
             this.headerPanelCard3.ContentBackColor = System.Drawing.Color.White;
             this.headerPanelCard3.Controls.Add(this.dgvRecentUploads);
+            this.headerPanelCard3.EnableHoverEffect = false;
             this.headerPanelCard3.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
             this.headerPanelCard3.HeaderFontSize = 13F;
             this.headerPanelCard3.HeaderForeColor = System.Drawing.Color.Maroon;
@@ -142,9 +282,14 @@
             this.headerPanelCard3.HeaderLabel = "Recent Uploads";
             this.headerPanelCard3.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard3.IconHeader")));
             this.headerPanelCard3.IconSize = 25;
-            this.headerPanelCard3.Location = new System.Drawing.Point(12, 255);
+            this.headerPanelCard3.Location = new System.Drawing.Point(2, 245);
             this.headerPanelCard3.Name = "headerPanelCard3";
-            this.headerPanelCard3.Size = new System.Drawing.Size(697, 234);
+            this.headerPanelCard3.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.headerPanelCard3.ShadowDepth = 4;
+            this.headerPanelCard3.ShadowPadding = 5;
+            this.headerPanelCard3.ShowHeaderDivider = false;
+            this.headerPanelCard3.ShowShadow = true;
+            this.headerPanelCard3.Size = new System.Drawing.Size(717, 255);
             this.headerPanelCard3.TabIndex = 11;
             // 
             // dgvRecentUploads
@@ -193,10 +338,11 @@
             // 
             this.headerPanelCard2.BackColor = System.Drawing.Color.Transparent;
             this.headerPanelCard2.BorderColor = System.Drawing.Color.Gray;
-            this.headerPanelCard2.BorderRadius = 20;
-            this.headerPanelCard2.BorderThickness = 1;
+            this.headerPanelCard2.BorderRadius = 10;
+            this.headerPanelCard2.BorderThickness = 0;
             this.headerPanelCard2.ContentBackColor = System.Drawing.Color.White;
             this.headerPanelCard2.Controls.Add(this.dgvRecentActivityLog);
+            this.headerPanelCard2.EnableHoverEffect = false;
             this.headerPanelCard2.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
             this.headerPanelCard2.HeaderFontSize = 13F;
             this.headerPanelCard2.HeaderForeColor = System.Drawing.Color.Maroon;
@@ -204,9 +350,14 @@
             this.headerPanelCard2.HeaderLabel = "Recent Activity Log";
             this.headerPanelCard2.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard2.IconHeader")));
             this.headerPanelCard2.IconSize = 25;
-            this.headerPanelCard2.Location = new System.Drawing.Point(12, 503);
+            this.headerPanelCard2.Location = new System.Drawing.Point(2, 506);
             this.headerPanelCard2.Name = "headerPanelCard2";
-            this.headerPanelCard2.Size = new System.Drawing.Size(697, 234);
+            this.headerPanelCard2.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.headerPanelCard2.ShadowDepth = 4;
+            this.headerPanelCard2.ShadowPadding = 5;
+            this.headerPanelCard2.ShowHeaderDivider = false;
+            this.headerPanelCard2.ShowShadow = true;
+            this.headerPanelCard2.Size = new System.Drawing.Size(717, 255);
             this.headerPanelCard2.TabIndex = 9;
             // 
             // dgvRecentActivityLog
@@ -250,12 +401,13 @@
             this.headerPanelCard1.BackColor = System.Drawing.Color.Transparent;
             this.headerPanelCard1.BorderColor = System.Drawing.Color.Gray;
             this.headerPanelCard1.BorderRadius = 20;
-            this.headerPanelCard1.BorderThickness = 1;
+            this.headerPanelCard1.BorderThickness = 0;
             this.headerPanelCard1.ContentBackColor = System.Drawing.Color.White;
             this.headerPanelCard1.Controls.Add(this.pnlBySubject);
             this.headerPanelCard1.Controls.Add(this.pnlByProgram);
             this.headerPanelCard1.Controls.Add(this.pnlByYear_Sem);
             this.headerPanelCard1.Controls.Add(this.pnlByProfessor);
+            this.headerPanelCard1.EnableHoverEffect = false;
             this.headerPanelCard1.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
             this.headerPanelCard1.HeaderFontSize = 13F;
             this.headerPanelCard1.HeaderForeColor = System.Drawing.Color.Maroon;
@@ -263,9 +415,14 @@
             this.headerPanelCard1.HeaderLabel = "Record Distribution";
             this.headerPanelCard1.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard1.IconHeader")));
             this.headerPanelCard1.IconSize = 25;
-            this.headerPanelCard1.Location = new System.Drawing.Point(717, 503);
+            this.headerPanelCard1.Location = new System.Drawing.Point(717, 506);
             this.headerPanelCard1.Name = "headerPanelCard1";
-            this.headerPanelCard1.Size = new System.Drawing.Size(389, 234);
+            this.headerPanelCard1.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.headerPanelCard1.ShadowDepth = 4;
+            this.headerPanelCard1.ShadowPadding = 5;
+            this.headerPanelCard1.ShowHeaderDivider = false;
+            this.headerPanelCard1.ShowShadow = true;
+            this.headerPanelCard1.Size = new System.Drawing.Size(399, 255);
             this.headerPanelCard1.TabIndex = 9;
             // 
             // pnlBySubject
@@ -281,14 +438,14 @@
             this.pnlBySubject.HoverCardBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
             this.pnlBySubject.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlBySubject.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.pnlBySubject.Location = new System.Drawing.Point(207, 129);
+            this.pnlBySubject.Location = new System.Drawing.Point(205, 154);
             this.pnlBySubject.Name = "pnlBySubject";
             this.pnlBySubject.NormalCardBorderColor = System.Drawing.Color.LightGray;
             this.pnlBySubject.ShadowBlur = 15;
             this.pnlBySubject.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlBySubject.ShadowEnabled = true;
             this.pnlBySubject.ShadowOffset = 5;
-            this.pnlBySubject.Size = new System.Drawing.Size(156, 75);
+            this.pnlBySubject.Size = new System.Drawing.Size(166, 82);
             this.pnlBySubject.TabIndex = 11;
             this.pnlBySubject.Click += new System.EventHandler(this.pnlBySubject_Click);
             this.pnlBySubject.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlBySubject_Paint);
@@ -306,14 +463,14 @@
             this.pnlByProgram.HoverCardBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
             this.pnlByProgram.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlByProgram.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.pnlByProgram.Location = new System.Drawing.Point(25, 48);
+            this.pnlByProgram.Location = new System.Drawing.Point(21, 59);
             this.pnlByProgram.Name = "pnlByProgram";
             this.pnlByProgram.NormalCardBorderColor = System.Drawing.Color.LightGray;
             this.pnlByProgram.ShadowBlur = 15;
             this.pnlByProgram.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlByProgram.ShadowEnabled = true;
             this.pnlByProgram.ShadowOffset = 5;
-            this.pnlByProgram.Size = new System.Drawing.Size(156, 75);
+            this.pnlByProgram.Size = new System.Drawing.Size(166, 82);
             this.pnlByProgram.TabIndex = 10;
             this.pnlByProgram.Click += new System.EventHandler(this.pnlByProgram_Click);
             // 
@@ -330,14 +487,14 @@
             this.pnlByYear_Sem.HoverCardBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
             this.pnlByYear_Sem.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlByYear_Sem.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.pnlByYear_Sem.Location = new System.Drawing.Point(25, 129);
+            this.pnlByYear_Sem.Location = new System.Drawing.Point(21, 154);
             this.pnlByYear_Sem.Name = "pnlByYear_Sem";
             this.pnlByYear_Sem.NormalCardBorderColor = System.Drawing.Color.LightGray;
             this.pnlByYear_Sem.ShadowBlur = 15;
             this.pnlByYear_Sem.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlByYear_Sem.ShadowEnabled = true;
             this.pnlByYear_Sem.ShadowOffset = 5;
-            this.pnlByYear_Sem.Size = new System.Drawing.Size(156, 75);
+            this.pnlByYear_Sem.Size = new System.Drawing.Size(166, 82);
             this.pnlByYear_Sem.TabIndex = 11;
             this.pnlByYear_Sem.Click += new System.EventHandler(this.pnlByYear_Sem_Click);
             // 
@@ -354,14 +511,14 @@
             this.pnlByProfessor.HoverCardBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
             this.pnlByProfessor.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlByProfessor.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.pnlByProfessor.Location = new System.Drawing.Point(207, 48);
+            this.pnlByProfessor.Location = new System.Drawing.Point(205, 59);
             this.pnlByProfessor.Name = "pnlByProfessor";
             this.pnlByProfessor.NormalCardBorderColor = System.Drawing.Color.LightGray;
             this.pnlByProfessor.ShadowBlur = 15;
             this.pnlByProfessor.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlByProfessor.ShadowEnabled = true;
             this.pnlByProfessor.ShadowOffset = 5;
-            this.pnlByProfessor.Size = new System.Drawing.Size(156, 75);
+            this.pnlByProfessor.Size = new System.Drawing.Size(166, 82);
             this.pnlByProfessor.TabIndex = 11;
             this.pnlByProfessor.Click += new System.EventHandler(this.pnlByProfessor_Click);
             // 
@@ -408,119 +565,12 @@
             this.label10.Text = "Record Management Admin";
             this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
-            // headerPanelCard5
-            // 
-            this.headerPanelCard5.BackColor = System.Drawing.Color.Transparent;
-            this.headerPanelCard5.BorderColor = System.Drawing.Color.Gray;
-            this.headerPanelCard5.BorderRadius = 20;
-            this.headerPanelCard5.BorderThickness = 1;
-            this.headerPanelCard5.ContentBackColor = System.Drawing.Color.WhiteSmoke;
-            this.headerPanelCard5.Controls.Add(this.dashboardCard4);
-            this.headerPanelCard5.Controls.Add(this.dashboardCard1);
-            this.headerPanelCard5.Controls.Add(this.dashboardCard3);
-            this.headerPanelCard5.Controls.Add(this.dashboardCard2);
-            this.headerPanelCard5.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
-            this.headerPanelCard5.HeaderFontSize = 15F;
-            this.headerPanelCard5.HeaderForeColor = System.Drawing.Color.Maroon;
-            this.headerPanelCard5.HeaderHeight = 40;
-            this.headerPanelCard5.HeaderLabel = "System Dashboard";
-            this.headerPanelCard5.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard5.IconHeader")));
-            this.headerPanelCard5.IconSize = 30;
-            this.headerPanelCard5.Location = new System.Drawing.Point(12, 83);
-            this.headerPanelCard5.Name = "headerPanelCard5";
-            this.headerPanelCard5.Size = new System.Drawing.Size(1096, 157);
-            this.headerPanelCard5.TabIndex = 12;
-            // 
-            // dashboardCard4
-            // 
-            this.dashboardCard4.BackColor = System.Drawing.Color.Transparent;
-            this.dashboardCard4.BorderRadius = 15;
-            this.dashboardCard4.HeaderFontSize = 9F;
-            this.dashboardCard4.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
-            this.dashboardCard4.HeaderText = "RECENTLY UPLOADED";
-            this.dashboardCard4.IconBackColor = System.Drawing.Color.Goldenrod;
-            this.dashboardCard4.IconCircleSize = 50;
-            this.dashboardCard4.IconImage = ((System.Drawing.Image)(resources.GetObject("dashboardCard4.IconImage")));
-            this.dashboardCard4.Location = new System.Drawing.Point(843, 49);
-            this.dashboardCard4.Name = "dashboardCard4";
-            this.dashboardCard4.PanelBackColor = System.Drawing.Color.White;
-            this.dashboardCard4.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
-            this.dashboardCard4.SideBarWidth = 5;
-            this.dashboardCard4.Size = new System.Drawing.Size(225, 91);
-            this.dashboardCard4.TabIndex = 9;
-            this.dashboardCard4.ValueFontSize = 24F;
-            this.dashboardCard4.ValueForeColor = System.Drawing.Color.Black;
-            this.dashboardCard4.ValueText = "0";
-            // 
-            // dashboardCard1
-            // 
-            this.dashboardCard1.BackColor = System.Drawing.Color.Transparent;
-            this.dashboardCard1.BorderRadius = 15;
-            this.dashboardCard1.HeaderFontSize = 9F;
-            this.dashboardCard1.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
-            this.dashboardCard1.HeaderText = "TOTAL GRADE SHEETS";
-            this.dashboardCard1.IconBackColor = System.Drawing.Color.Goldenrod;
-            this.dashboardCard1.IconCircleSize = 50;
-            this.dashboardCard1.IconImage = ((System.Drawing.Image)(resources.GetObject("dashboardCard1.IconImage")));
-            this.dashboardCard1.Location = new System.Drawing.Point(29, 49);
-            this.dashboardCard1.Name = "dashboardCard1";
-            this.dashboardCard1.PanelBackColor = System.Drawing.Color.White;
-            this.dashboardCard1.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
-            this.dashboardCard1.SideBarWidth = 5;
-            this.dashboardCard1.Size = new System.Drawing.Size(225, 91);
-            this.dashboardCard1.TabIndex = 8;
-            this.dashboardCard1.ValueFontSize = 24F;
-            this.dashboardCard1.ValueForeColor = System.Drawing.Color.Black;
-            this.dashboardCard1.ValueText = "0";
-            // 
-            // dashboardCard3
-            // 
-            this.dashboardCard3.BackColor = System.Drawing.Color.Transparent;
-            this.dashboardCard3.BorderRadius = 15;
-            this.dashboardCard3.HeaderFontSize = 9F;
-            this.dashboardCard3.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
-            this.dashboardCard3.HeaderText = "TOTAL PROFESSORS";
-            this.dashboardCard3.IconBackColor = System.Drawing.Color.Goldenrod;
-            this.dashboardCard3.IconCircleSize = 50;
-            this.dashboardCard3.IconImage = ((System.Drawing.Image)(resources.GetObject("dashboardCard3.IconImage")));
-            this.dashboardCard3.Location = new System.Drawing.Point(562, 49);
-            this.dashboardCard3.Name = "dashboardCard3";
-            this.dashboardCard3.PanelBackColor = System.Drawing.Color.White;
-            this.dashboardCard3.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
-            this.dashboardCard3.SideBarWidth = 5;
-            this.dashboardCard3.Size = new System.Drawing.Size(239, 91);
-            this.dashboardCard3.TabIndex = 9;
-            this.dashboardCard3.ValueFontSize = 24F;
-            this.dashboardCard3.ValueForeColor = System.Drawing.Color.Black;
-            this.dashboardCard3.ValueText = "0";
-            // 
-            // dashboardCard2
-            // 
-            this.dashboardCard2.BackColor = System.Drawing.Color.Transparent;
-            this.dashboardCard2.BorderRadius = 15;
-            this.dashboardCard2.HeaderFontSize = 9F;
-            this.dashboardCard2.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
-            this.dashboardCard2.HeaderText = "TOTAL SUBJECTS";
-            this.dashboardCard2.IconBackColor = System.Drawing.Color.Goldenrod;
-            this.dashboardCard2.IconCircleSize = 50;
-            this.dashboardCard2.IconImage = ((System.Drawing.Image)(resources.GetObject("dashboardCard2.IconImage")));
-            this.dashboardCard2.Location = new System.Drawing.Point(295, 49);
-            this.dashboardCard2.Name = "dashboardCard2";
-            this.dashboardCard2.PanelBackColor = System.Drawing.Color.White;
-            this.dashboardCard2.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
-            this.dashboardCard2.SideBarWidth = 5;
-            this.dashboardCard2.Size = new System.Drawing.Size(225, 91);
-            this.dashboardCard2.TabIndex = 9;
-            this.dashboardCard2.ValueFontSize = 24F;
-            this.dashboardCard2.ValueForeColor = System.Drawing.Color.Black;
-            this.dashboardCard2.ValueText = "0";
-            // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1120, 749);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(237)))), ((int)(((byte)(233)))));
+            this.ClientSize = new System.Drawing.Size(1120, 768);
             this.Controls.Add(this.headerPanelCard5);
             this.Controls.Add(this.headerPanelCard4);
             this.Controls.Add(this.headerPanelCard3);
@@ -531,6 +581,7 @@
             this.Name = "frmDashboard";
             this.Text = "frmDashboard";
             this.Load += new System.EventHandler(this.frmDashboard_Load_1);
+            this.headerPanelCard5.ResumeLayout(false);
             this.headerPanelCard4.ResumeLayout(false);
             this.headerPanelCard4.PerformLayout();
             this.headerPanelCard3.ResumeLayout(false);
@@ -540,7 +591,6 @@
             this.headerPanelCard1.ResumeLayout(false);
             this.roundedPanel3.ResumeLayout(false);
             this.roundedPanel3.PerformLayout();
-            this.headerPanelCard5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -572,9 +622,9 @@
         private CustomControls.HeaderPanelCard headerPanelCard3;
         private CustomControls.HeaderPanelCard headerPanelCard4;
         private CustomControls.HeaderPanelCard headerPanelCard5;
-        private CustomControls.DashboardCard dashboardCard4;
-        private CustomControls.DashboardCard dashboardCard1;
-        private CustomControls.DashboardCard dashboardCard3;
-        private CustomControls.DashboardCard dashboardCard2;
+        private CustomControls.DashboardCard dcRecentlyUploaded;
+        private CustomControls.DashboardCard dcTotalGradesheets;
+        private CustomControls.DashboardCard dcTotalProfessors;
+        private CustomControls.DashboardCard dcTotalSubjects;
     }
 }
