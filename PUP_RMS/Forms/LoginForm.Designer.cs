@@ -240,6 +240,7 @@
             this.roundedPanel3.Controls.Add(this.pictureBoxShow);
             this.roundedPanel3.Controls.Add(this.pictureBox1);
             this.roundedPanel3.Controls.Add(this.textBox4);
+            this.roundedPanel3.HoverBackColor = System.Drawing.Color.Gainsboro;
             this.roundedPanel3.HoverBorderColor = System.Drawing.Color.Maroon;
             this.roundedPanel3.Location = new System.Drawing.Point(76, 376);
             this.roundedPanel3.Name = "roundedPanel3";
@@ -250,6 +251,7 @@
             this.roundedPanel3.ShadowOffset = 5;
             this.roundedPanel3.Size = new System.Drawing.Size(333, 54);
             this.roundedPanel3.TabIndex = 32;
+            this.roundedPanel3.Click += new System.EventHandler(this.roundedPanel3_Click);
             // 
             // pictureBoxHide
             // 
@@ -291,10 +293,9 @@
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox4.Location = new System.Drawing.Point(42, 15);
-            this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
             this.textBox4.PasswordChar = '●';
-            this.textBox4.Size = new System.Drawing.Size(249, 20);
+            this.textBox4.Size = new System.Drawing.Size(249, 19);
             this.textBox4.TabIndex = 1;
             this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged_1);
             this.textBox4.Enter += new System.EventHandler(this.textBox4_Enter);
@@ -307,6 +308,7 @@
             this.roundedPanel2.BorderSize = 2;
             this.roundedPanel2.Controls.Add(this.textBox3);
             this.roundedPanel2.Controls.Add(this.pictureBox2);
+            this.roundedPanel2.HoverBackColor = System.Drawing.Color.Gainsboro;
             this.roundedPanel2.HoverBorderColor = System.Drawing.Color.Maroon;
             this.roundedPanel2.Location = new System.Drawing.Point(76, 279);
             this.roundedPanel2.Name = "roundedPanel2";
@@ -317,6 +319,7 @@
             this.roundedPanel2.ShadowOffset = 5;
             this.roundedPanel2.Size = new System.Drawing.Size(333, 54);
             this.roundedPanel2.TabIndex = 31;
+            this.roundedPanel2.Click += new System.EventHandler(this.roundedPanel2_Click);
             // 
             // textBox3
             // 

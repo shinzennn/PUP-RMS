@@ -18,10 +18,15 @@ namespace PUP_RMS
         [Category("Appearance")]
         public int BorderSize { get; set; } = 2;
 
-        // NEW: HOVER BORDER COLOR
+        // HOVER BORDER COLOR (Property still exists for configuration/derived classes)
         [Category("Appearance")]
         public Color HoverBorderColor { get; set; } = Color.Maroon;
 
+        // HOVER BACKGROUND COLOR (Property still exists for configuration/derived classes)
+        [Category("Appearance")]
+        public Color HoverBackColor { get; set; } = Color.FromArgb(242, 242, 242);
+
+        // This boolean is now the *only* way to trigger hover appearance from outside
         private bool isHoverBorder = false;
 
         // Shadow Properties
@@ -40,10 +45,15 @@ namespace PUP_RMS
         public RoundedPanel()
         {
             this.DoubleBuffered = true;
-            this.BackColor = Color.White;
+            this.BackColor = Color.White; // Default background color
+
+            // No longer need to set Selectable if mouse events are removed.
+            // But keeping it doesn't hurt.
+            // this.SetStyle(ControlStyles.Selectable, true);
+            // this.UpdateStyles();
         }
 
-        // 🔥 CALL THIS FROM LoginForm TO SET BORDER HOVER
+        // 🔥 CALL THIS FROM LoginForm TO SET BORDER HOVER (and now also background hover)
         public void SetBorderHover(bool state)
         {
             isHoverBorder = state;
@@ -62,13 +72,15 @@ namespace PUP_RMS
             if (ShadowEnabled)
                 DrawShadow(e.Graphics, rect);
 
-            // FILL BACKGROUND
-            using (SolidBrush brush = new SolidBrush(this.BackColor))
+            // FILL BACKGROUND - Use HoverBackColor ONLY if isHoverBorder is true, otherwise use default BackColor
+            Color currentBackColor = isHoverBorder ? HoverBackColor : this.BackColor;
+            using (SolidBrush brush = new SolidBrush(currentBackColor))
                 e.Graphics.FillPath(brush, path);
 
             // DRAW BORDER
             if (BorderSize > 0)
             {
+                // Use HoverBorderColor ONLY if isHoverBorder is true, otherwise use BorderColor
                 Color drawColor = isHoverBorder ? HoverBorderColor : BorderColor;
 
                 using (Pen pen = new Pen(drawColor, BorderSize))
@@ -113,6 +125,7 @@ namespace PUP_RMS
                 g.DrawImage(shadowBmp, ShadowOffset - ShadowBlur, ShadowOffset - ShadowBlur);
             }
         }
+
+ 
     }
 }
-

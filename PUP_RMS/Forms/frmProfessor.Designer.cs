@@ -1,6 +1,6 @@
 ﻿namespace PUP_RMS.Forms
 {
-    partial class frmPrint
+    partial class frmProfessor
     {
         /// <summary>
         /// Required designer variable.
@@ -37,22 +37,21 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(63, 326);
+            this.label1.Location = new System.Drawing.Point(475, 332);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(974, 37);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Di ko alam kung bakit nilagyan ni bong ng print menu whahaha";
+            this.label1.Size = new System.Drawing.Size(251, 37);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Professor Page";
             // 
-            // frmPrint
+            // frmProfessor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1166, 700);
+            this.ClientSize = new System.Drawing.Size(1120, 749);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmPrint";
-            this.Text = "frmPrint";
+            this.Name = "frmProfessor";
+            this.Text = "frmProfessor";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -4,198 +4,203 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace PUP_RMS
+namespace PUP_RMS.CustomControls
 {
+    [ToolboxItem(true)]
+    [Description("A rounded dashboard card with a floating bottom shadow. All shadow properties are now editable.")]
     public class DashboardCard : Panel
     {
-        // --- APPEARANCE ---
-        [Category("Appearance")]
-        public int BorderRadius { get; set; } = 20;
+        #region Private Fields
+        private int _borderRadius = 15;
+        private Color _panelBackColor = Color.White;
 
-        [Category("Appearance")]
-        public Color PanelColor { get; set; } = Color.White;
+        private string _headerText = "TOTAL GRADE SHEETS";
+        private Color _headerForeColor = Color.FromArgb(100, 116, 139);
+        private float _headerFontSize = 9f;
 
-        [Category("Appearance")]
-        public Color BorderColor { get; set; } = Color.Transparent;
+        private string _valueText = "0";
+        private Color _valueForeColor = Color.Black;
+        private float _valueFontSize = 24f;
 
-        [Category("Appearance")]
-        public int BorderSize { get; set; } = 0;
+        private Image _iconImage = null;
+        private Color _iconBackColor = Color.FromArgb(253, 247, 228);
+        private int _iconCircleSize = 50;
 
-        // --- SHADOW ---
-        [Category("Shadow")]
-        public bool ShadowEnabled { get; set; } = true;
+        private Color _sideBarColor = Color.FromArgb(212, 175, 55);
+        private int _sideBarWidth = 5;
 
-        [Category("Shadow")]
-        public Color ShadowColor { get; set; } = Color.FromArgb(50, 200, 200, 200);
+        // Shadow Fields
+        private bool _showShadow = true;
+        private int _shadowDepth = 5;
+        private int _shadowPadding = 10;
+        private Color _shadowColor = Color.FromArgb(40, 0, 0, 0);
+        #endregion
 
-        [Category("Shadow")]
-        public int ShadowShift { get; set; } = 5;
+        #region Public Properties
 
-        [Category("Shadow")]
-        public int ShadowDepth { get; set; } = 10;
+        // --- NEW SHADOW PROPERTIES FOR PROPERTY WINDOW ---
+        [Category("PUP_RMS Shadow"), Browsable(true), Description("Enable or disable the bottom shadow.")]
+        public bool ShowShadow { get => _showShadow; set { _showShadow = value; Invalidate(); } }
 
-        // --- DASHBOARD SHAPES & ICON ---
+        [Category("PUP_RMS Shadow"), Browsable(true), Description("How far the shadow extends downwards.")]
+        public int ShadowDepth { get => _shadowDepth; set { _shadowDepth = value; Invalidate(); } }
 
-        private bool _isDashboardCard = true;
-        [Category("Dashboard Card")]
-        [Description("Enables the Circle, Icon, and Footer background shapes.")]
-        public bool IsDashboardCard
-        {
-            get { return _isDashboardCard; }
-            set { _isDashboardCard = value; Invalidate(); }
-        }
+        [Category("PUP_RMS Shadow"), Browsable(true), Description("Spacing around the card to prevent the shadow from being clipped.")]
+        public int ShadowPadding { get => _shadowPadding; set { _shadowPadding = value; Invalidate(); } }
 
-        [Category("Dashboard Card")]
-        public Color DashboardAccentColor { get; set; } = Color.Maroon;
+        [Category("PUP_RMS Shadow"), Browsable(true), Description("The color and transparency of the shadow.")]
+        public Color ShadowColor { get => _shadowColor; set { _shadowColor = value; Invalidate(); } }
 
-        // --- NEW: ICON PROPERTIES ---
+        // --- EXISTING PROPERTIES ---
+        [Category("PUP_RMS Appearance")]
+        public int BorderRadius { get => _borderRadius; set { _borderRadius = value; Invalidate(); } }
 
-        private Image _cardIcon;
-        [Category("Dashboard Card")]
-        [Description("The icon to display inside the colored circle.")]
-        public Image CardIcon
-        {
-            get { return _cardIcon; }
-            set { _cardIcon = value; Invalidate(); }
-        }
+        [Category("PUP_RMS Appearance")]
+        public Color PanelBackColor { get => _panelBackColor; set { _panelBackColor = value; Invalidate(); } }
 
-        private int _iconSize = 24;
-        [Category("Dashboard Card")]
-        [Description("The size of the icon inside the circle.")]
-        public int IconSize
-        {
-            get { return _iconSize; }
-            set { _iconSize = value; Invalidate(); }
-        }
+        [Category("PUP_RMS Header")]
+        public string HeaderText { get => _headerText; set { _headerText = value; Invalidate(); } }
 
-        // You can change X/Y in properties to move the background circle
-        private Point _circlePosition = new Point(20, 20);
-        [Category("Dashboard Card")]
-        public Point CirclePosition
-        {
-            get { return _circlePosition; }
-            set { _circlePosition = value; Invalidate(); }
-        }
+        [Category("PUP_RMS Header")]
+        public Color HeaderForeColor { get => _headerForeColor; set { _headerForeColor = value; Invalidate(); } }
+
+        [Category("PUP_RMS Header")]
+        public float HeaderFontSize { get => _headerFontSize; set { _headerFontSize = value; Invalidate(); } }
+
+        [Category("PUP_RMS Value")]
+        public string ValueText { get => _valueText; set { _valueText = value; Invalidate(); } }
+
+        [Category("PUP_RMS Value")]
+        public Color ValueForeColor { get => _valueForeColor; set { _valueForeColor = value; Invalidate(); } }
+
+        [Category("PUP_RMS Value")]
+        public float ValueFontSize { get => _valueFontSize; set { _valueFontSize = value; Invalidate(); } }
+
+        [Category("PUP_RMS Icon")]
+        public Image IconImage { get => _iconImage; set { _iconImage = value; Invalidate(); } }
+
+        [Category("PUP_RMS Icon")]
+        public Color IconBackColor { get => _iconBackColor; set { _iconBackColor = value; Invalidate(); } }
+
+        [Category("PUP_RMS Icon")]
+        public int IconCircleSize { get => _iconCircleSize; set { _iconCircleSize = value; Invalidate(); } }
+
+        [Category("PUP_RMS Side Bar")]
+        public Color SideBarColor { get => _sideBarColor; set { _sideBarColor = value; Invalidate(); } }
+
+        [Category("PUP_RMS Side Bar")]
+        public int SideBarWidth { get => _sideBarWidth; set { _sideBarWidth = value; Invalidate(); } }
+        #endregion
 
         public DashboardCard()
         {
             this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.ResizeRedraw, true);
-            this.SetStyle(ControlStyles.UserPaint, true);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.Size = new Size(250, 100);
             this.BackColor = Color.Transparent;
-            this.Size = new Size(220, 100);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-            int margin = ShadowEnabled ? (ShadowDepth + ShadowShift) : 0;
+            // Define the main card rectangle (Leaving space for shadow padding)
+            // We use '5' as a small offset so the shadow isn't cut off on the top/left either
+            Rectangle rect = new Rectangle(5, 2, Width - 11, Height - _shadowPadding - 2);
+            float radius = Math.Max(1, _borderRadius);
 
-            // Define the area of the actual card
-            Rectangle rectCard = new Rectangle(
-                margin / 2,
-                margin / 2,
-                this.Width - margin - 1,
-                this.Height - margin - 1
-            );
-
-            // 1. Draw Shadow
-            if (ShadowEnabled && ShadowDepth > 0)
+            // 1. Draw Directional Bottom Shadow
+            if (_showShadow)
             {
-                for (int i = 0; i < ShadowDepth; i++)
+                for (int i = 1; i <= _shadowDepth; i++)
                 {
-                    using (GraphicsPath shadowPath = GetRoundedPath(
-                        new Rectangle(
-                            rectCard.X + (i / 3) - (ShadowShift / 2),
-                            rectCard.Y + (i / 3) + (ShadowShift / 2),
-                            rectCard.Width + i,
-                            rectCard.Height + i
-                        ), BorderRadius))
+                    // Shift shadow downwards by 'i' pixels
+                    Rectangle shadowRect = new Rectangle(rect.X, rect.Y + i, rect.Width, rect.Height);
+                    using (GraphicsPath shadowPath = GetRoundedRectanglePath(shadowRect, radius))
                     {
-                        int alpha = 20 - (i * 20 / ShadowDepth);
-                        if (alpha < 0) alpha = 0;
-                        using (SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(alpha, ShadowColor)))
+                        int alpha = Math.Max(0, _shadowColor.A / (i + 1));
+                        using (SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(alpha, _shadowColor)))
                         {
-                            e.Graphics.FillPath(shadowBrush, shadowPath);
+                            g.FillPath(shadowBrush, shadowPath);
                         }
                     }
                 }
             }
 
-            // 2. Draw Card Body
-            using (GraphicsPath path = GetRoundedPath(rectCard, BorderRadius))
+            // 2. Draw Main Background
+            using (GraphicsPath path = GetRoundedRectanglePath(rect, radius))
             {
-                // A. White Background
-                using (SolidBrush brush = new SolidBrush(PanelColor))
+                using (SolidBrush bgBrush = new SolidBrush(_panelBackColor))
                 {
-                    e.Graphics.FillPath(brush, path);
+                    g.FillPath(bgBrush, path);
                 }
 
-                // B. Draw Dashboard Shapes (Circle + Footer + Icon)
-                if (IsDashboardCard)
+                // 3. Draw Side Bar (Clipped to left)
+                g.SetClip(path);
+                Rectangle sideBarRect = new Rectangle(rect.X, rect.Y, _sideBarWidth, rect.Height);
+                using (SolidBrush sideBrush = new SolidBrush(_sideBarColor))
                 {
-                    e.Graphics.SetClip(path); // Ensure shapes stay inside rounded corners
-
-                    // Draw Footer Strip
-                    int footerHeight = 15;
-                    Rectangle footerRect = new Rectangle(rectCard.X, rectCard.Bottom - footerHeight, rectCard.Width, footerHeight);
-                    using (SolidBrush accentBrush = new SolidBrush(DashboardAccentColor))
-                    {
-                        e.Graphics.FillRectangle(accentBrush, footerRect);
-                    }
-
-                    // Draw Circle
-                    int circleSize = 50;
-                    // Position is relative to the card rectangle + your custom X/Y
-                    int circleX = rectCard.X + _circlePosition.X;
-                    int circleY = rectCard.Y + _circlePosition.Y;
-
-                    using (SolidBrush accentBrush = new SolidBrush(DashboardAccentColor))
-                    {
-                        e.Graphics.FillEllipse(accentBrush, circleX, circleY, circleSize, circleSize);
-                    }
-
-                    // --- DRAW ICON (Added Here) ---
-                    if (CardIcon != null)
-                    {
-                        // Calculate center of circle to center the icon
-                        int iconX = circleX + (circleSize - _iconSize) / 2;
-                        int iconY = circleY + (circleSize - _iconSize) / 2;
-
-                        e.Graphics.DrawImage(CardIcon, new Rectangle(iconX, iconY, _iconSize, _iconSize));
-                    }
-
-                    e.Graphics.ResetClip();
+                    g.FillRectangle(sideBrush, sideBarRect);
                 }
+                g.ResetClip();
+            }
 
-                // C. Draw Border
-                if (BorderSize > 0)
-                {
-                    using (Pen pen = new Pen(BorderColor, BorderSize))
-                    {
-                        pen.Alignment = PenAlignment.Inset;
-                        e.Graphics.DrawPath(pen, path);
-                    }
-                }
+            // 4. Draw Icon Circle Container (Coordinates preserved from your layout)
+            int circleX = rect.Right - _iconCircleSize - 15;
+            int circleY = rect.Y + (rect.Height - _iconCircleSize) / 2;
+            Rectangle circleRect = new Rectangle(circleX, circleY, _iconCircleSize, _iconCircleSize);
+
+            using (SolidBrush circleBrush = new SolidBrush(_iconBackColor))
+            {
+                g.FillEllipse(circleBrush, circleRect);
+            }
+
+            // 5. Draw Icon Image
+            if (_iconImage != null)
+            {
+                int imgSize = (int)(_iconCircleSize * 0.55);
+                int imgX = circleX + (_iconCircleSize - imgSize) / 2;
+                int imgY = circleY + (_iconCircleSize - imgSize) / 2;
+                g.DrawImage(_iconImage, imgX, imgY, imgSize, imgSize);
+            }
+
+            // 6. Draw Text
+            int textLeftPadding = rect.X + _sideBarWidth + 15;
+
+            // Header
+            using (Font hFont = new Font("Segoe UI Semibold", _headerFontSize))
+            using (SolidBrush hBrush = new SolidBrush(_headerForeColor))
+            {
+                g.DrawString(_headerText, hFont, hBrush, textLeftPadding, rect.Y + 18);
+            }
+
+            // Value
+            using (Font vFont = new Font("Segoe UI", _valueFontSize, FontStyle.Bold))
+            using (SolidBrush vBrush = new SolidBrush(_valueForeColor))
+            {
+                g.DrawString(_valueText, vFont, vBrush, textLeftPadding - 2, rect.Y + 38);
             }
         }
 
-        private GraphicsPath GetRoundedPath(Rectangle rect, int radius)
+        private GraphicsPath GetRoundedRectanglePath(Rectangle rect, float radius)
         {
             GraphicsPath path = new GraphicsPath();
-            float d = radius * 2.0F;
-            path.StartFigure();
-            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
-            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
-            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
-            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
+            float diameter = radius * 2;
+            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
+            path.AddArc(rect.Right - diameter, rect.Y, diameter, diameter, 270, 90);
+            path.AddArc(rect.Right - diameter, rect.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - diameter, diameter, diameter, 90, 90);
             path.CloseFigure();
             return path;
+        }
+
+        protected override void OnResize(EventArgs eventargs)
+        {
+            base.OnResize(eventargs);
+            this.Invalidate();
         }
     }
 }

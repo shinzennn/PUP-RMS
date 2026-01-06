@@ -2,48 +2,119 @@
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using PUP_RMS.Core; // For the Database helper class
-using PUP_RMS.Forms; // For LoginForm and CustomMsgBox
+using PUP_RMS.Core;
+using PUP_RMS.Forms;
 
 namespace PUP_RMS.Forms
 {
     public partial class RegisterForm : Form
     {
+        // Timer for Fade-In
+        private Timer tmrFadeIn;
+
         public RegisterForm()
         {
+            // 1. START INVISIBLE
+            this.Opacity = 0;
+
+            // 2. BUFFERING
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+            this.UpdateStyles();
+
             InitializeComponent();
+            ApplyDoubleBufferingRecursively(this.Controls);
+            InitializeFadeTimer();
+        }
+
+        private void InitializeFadeTimer()
+        {
+            tmrFadeIn = new Timer();
+            tmrFadeIn.Interval = 10;
+            tmrFadeIn.Tick += TmrFadeIn_Tick;
+        }
+
+        private void TmrFadeIn_Tick(object sender, EventArgs e)
+        {
+            if (this.Opacity < 1.0)
+            {
+                this.Opacity += 0.05;
+            }
+            else
+            {
+                tmrFadeIn.Stop();
+            }
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.Style |= 0x02000000;
+                return cp;
+            }
+        }
+
+        private void ApplyDoubleBufferingRecursively(Control.ControlCollection controls)
+        {
+            foreach (Control c in controls)
+            {
+                SetDoubleBuffered(c);
+                if (c.HasChildren) ApplyDoubleBufferingRecursively(c.Controls);
+            }
+        }
+
+        public static void SetDoubleBuffered(System.Windows.Forms.Control c)
+        {
+            if (System.Windows.Forms.SystemInformation.TerminalServerSession) return;
+            System.Reflection.PropertyInfo aProp = typeof(System.Windows.Forms.Control).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (aProp != null) aProp.SetValue(c, true, null);
         }
 
         // ======================================================
-        // SECTION 1: FORM LOAD AND SETUP
+        // FORM LOAD
         // ======================================================
         private void RegisterForm_Load(object sender, EventArgs e)
         {
-            // Set up initial password mask (This hides the password)
+            this.SuspendLayout();
+
             textBoxPassword.UseSystemPasswordChar = true;
             textBoxConfirmPassword.UseSystemPasswordChar = true;
 
-            // Initialize the visibility of the show/hide icons
             pictureBoxShowPassword.Visible = true;
             pictureBoxHidePassword.Visible = false;
             pictureBoxShowConfirmPass.Visible = true;
             pictureBoxHideConfirmPass.Visible = false;
 
-            // Apply focus/click handling across the form
+            // --- IMPORTANT: CONNECT THE EVENTS HERE ---
+            // 1. Username Events
+            textBoxUsername.Enter += textBoxUsername_Enter;
+            textBoxUsername.Leave += textBoxUsername_Leave;
+
+            // 2. Password Events
+            textBoxPassword.Enter += textBoxPassword_Enter;
+            textBoxPassword.Leave += textBoxPassword_Leave;
+
+            // 3. Confirm Password Events
+            textBoxConfirmPassword.Enter += textBoxConfirmPassword_Enter;
+            textBoxConfirmPassword.Leave += textBoxConfirmPassword_Leave;
+
             AttachClickEvent(this);
             this.MouseDown += Background_Click;
+
+            this.ResumeLayout(true);
+
+            // START FADE IN AFTER LOADING IS DONE
+            tmrFadeIn.Start();
         }
 
-        // ======================================================
-        // SECTION 2: REGISTRATION LOGIC
-        // ======================================================
         private void roundedButtonSignUp_Click(object sender, EventArgs e)
         {
             string username = textBoxUsername.Text.Trim();
             string password = textBoxPassword.Text.Trim();
             string confirmPassword = textBoxConfirmPassword.Text.Trim();
 
-            // 1. Input Validation
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
             {
                 new CustomMsgBox("⚠ All fields are required.").ShowDialog(this);
@@ -58,7 +129,6 @@ namespace PUP_RMS.Forms
                 return;
             }
 
-            // 2. Check for Duplicate Username
             string checkUserQuery = $"SELECT COUNT(*) FROM Admin WHERE Username = '{username}'";
             DataTable dt = DbControl.GetData(checkUserQuery);
 
@@ -68,15 +138,12 @@ namespace PUP_RMS.Forms
                 return;
             }
 
-            // 3. Database Insert
             string insertQuery = $"INSERT INTO Admin (Username, Password) VALUES ('{username}', '{password}')";
             bool success = DbControl.SetData(insertQuery);
 
             if (success)
             {
                 new CustomMsgBox("Registration Successful! You can now log in.").ShowDialog(this);
-
-                // 4. Navigation to Login Form
                 LoginForm loginForm = new LoginForm();
                 loginForm.Show();
                 this.Close();
@@ -87,144 +154,159 @@ namespace PUP_RMS.Forms
             }
         }
 
-
-        // ======================================================
-        // SECTION 3: NAVIGATION (BACK TO LOGIN)
-        // ======================================================
-
         private void linkLabelSignUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LoginForm loginForm = new LoginForm();
-            loginForm.Show();
+            loginForm.Show(); // Triggers Fade-in of Login Form
             this.Close();
         }
 
-        // ======================================================
-        // SECTION 4: SHOW / HIDE PASSWORD (Password Field)
-        // Handlers must match the exact PictureBox names.
-        // ======================================================
+        // --- Visual Helpers ---
         private void pictureBoxHidePassword_Click(object sender, EventArgs e)
         {
-            textBoxPassword.UseSystemPasswordChar = true; // Hides
+            textBoxPassword.UseSystemPasswordChar = true;
             pictureBoxShowPassword.Visible = true;
             pictureBoxHidePassword.Visible = false;
         }
 
         private void pictureBoxShowPassword_Click(object sender, EventArgs e)
         {
-            textBoxPassword.UseSystemPasswordChar = false; // Shows
+            textBoxPassword.UseSystemPasswordChar = false;
             pictureBoxShowPassword.Visible = false;
             pictureBoxHidePassword.Visible = true;
         }
 
-        // ======================================================
-        // SECTION 5: SHOW / HIDE PASSWORD (Confirm Password Field)
-        // Handlers must match the exact PictureBox names.
-        // ======================================================
         private void pictureBoxHideConfirmPass_Click(object sender, EventArgs e)
         {
-            textBoxConfirmPassword.UseSystemPasswordChar = true; // Hides
+            textBoxConfirmPassword.UseSystemPasswordChar = true;
             pictureBoxShowConfirmPass.Visible = true;
             pictureBoxHideConfirmPass.Visible = false;
         }
 
         private void pictureBoxShowConfirmPass_Click(object sender, EventArgs e)
         {
-            textBoxConfirmPassword.UseSystemPasswordChar = false; // Shows
+            textBoxConfirmPassword.UseSystemPasswordChar = false;
             pictureBoxShowConfirmPass.Visible = false;
             pictureBoxHideConfirmPass.Visible = true;
         }
 
-
-        // ======================================================
-        // SECTION 6: TEXTBOX FOCUS AND BORDER STYLING
-        // ======================================================
         private void ResetBorders()
         {
-            // Reset all input panel borders to default
-            roundedPanelUser.SetBorderHover(false);
-            roundedPanelPass.SetBorderHover(false);
-            roundedPanelConfirmPass.SetBorderHover(false);
+            // Reset ALL borders to normal
+            if (roundedPanelUser != null) roundedPanelUser.SetBorderHover(false);
+            if (roundedPanelPass != null) roundedPanelPass.SetBorderHover(false);
+            if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(false);
         }
 
+        // ======================================================
+        // FOCUS EVENTS - BORDER COLOR CHANGE LOGIC
+        // ======================================================
+
+        // --- USERNAME ---
         private void textBoxUsername_Enter(object sender, EventArgs e)
         {
             ResetBorders();
-            roundedPanelUser.SetBorderHover(true);
-        }
-        // Added click event for the Username Icon to mimic your LoginForm logic
-        private void pictureBoxUsername_Click(object sender, EventArgs e)
-        {
-            textBoxUsername.Focus();
+            if (roundedPanelUser != null) roundedPanelUser.SetBorderHover(true); // Turn Maroon ON
         }
 
+        private void textBoxUsername_Leave(object sender, EventArgs e)
+        {
+            if (roundedPanelUser != null) roundedPanelUser.SetBorderHover(false); // Turn Maroon OFF
+        }
+
+        // --- PASSWORD ---
         private void textBoxPassword_Enter(object sender, EventArgs e)
         {
             ResetBorders();
-            roundedPanelPass.SetBorderHover(true);
-        }
-        // Added click event for the Password Icon to mimic your LoginForm logic
-        private void pictureBoxPassword_Click(object sender, EventArgs e)
-        {
-            textBoxPassword.Focus();
+            if (roundedPanelPass != null) roundedPanelPass.SetBorderHover(true); // Turn Maroon ON
         }
 
+        private void textBoxPassword_Leave(object sender, EventArgs e)
+        {
+            if (roundedPanelPass != null) roundedPanelPass.SetBorderHover(false); // Turn Maroon OFF
+        }
+
+        // --- CONFIRM PASSWORD ---
         private void textBoxConfirmPassword_Enter(object sender, EventArgs e)
         {
             ResetBorders();
-            roundedPanelConfirmPass.SetBorderHover(true);
+            if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(true); // Turn Maroon ON
         }
-        // Added click event for the Confirm Password Icon
-        private void pictureBoxConfirmPassword_Click(object sender, EventArgs e)
+
+        private void textBoxConfirmPassword_Leave(object sender, EventArgs e)
         {
-            textBoxConfirmPassword.Focus();
+            if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(false); // Turn Maroon OFF
         }
 
+        private void pictureBoxUsername_Click(object sender, EventArgs e) { textBoxUsername.Focus(); }
+        private void pictureBoxPassword_Click(object sender, EventArgs e) { textBoxPassword.Focus(); }
+        private void pictureBoxConfirmPassword_Click(object sender, EventArgs e) { textBoxConfirmPassword.Focus(); }
 
-        // ======================================================
-        // SECTION 7: OUTSIDE CLICK REMOVE FOCUS
-        // ======================================================
         private void AttachClickEvent(Control parent)
         {
             foreach (Control c in parent.Controls)
             {
                 c.MouseDown += Background_Click;
-
-                if (c.HasChildren)
-                    AttachClickEvent(c);
+                if (c.HasChildren) AttachClickEvent(c);
             }
         }
 
         private void Background_Click(object sender, MouseEventArgs e)
         {
-            // Ignore if the sender is an interactive control that needs its click
-            if (sender is Button || sender is CheckBox || sender is LinkLabel || sender is TextBox || sender is PictureBox)
-            {
-                return;
-            }
+            if (sender is Button || sender is CheckBox || sender is LinkLabel || sender is TextBox || sender is PictureBox) return;
+            if (sender is Panel pnl) { foreach (Control child in pnl.Controls) if (child.Focused) return; }
 
-            // If the sender is a panel, check its children before resetting focus
-            if (sender is Panel pnl)
-            {
-                foreach (Control child in pnl.Controls)
-                {
-                    if (child.Focused) return;
-                }
-            }
-
+            // If background clicked, remove focus and reset borders
             ResetBorders();
             this.ActiveControl = null;
         }
 
-        // ======================================================
-        // SECTION 8: IGNORE / UNUSED EVENTS (Placeholders)
-        // ======================================================
+        // Placeholders
         private void label7_Click(object sender, EventArgs e) { }
         private void textBoxUsername_TextChanged(object sender, EventArgs e) { }
         private void textBoxPassword_TextChanged(object sender, EventArgs e) { }
         private void textBoxConfirmPassword_TextChanged(object sender, EventArgs e) { }
+        private void roundedPanelUser_Paint(object sender, PaintEventArgs e) { }
+        private void roundedPanelPass_Paint(object sender, PaintEventArgs e) { }
+        private void roundedPanelConfirmPass_Paint(object sender, PaintEventArgs e) { }
 
-        // REMOVED: private void pictureBoxHidePassword(object sender, EventArgs e) { }
-        // This was a duplicate definition and has been removed.
+
+        private void lblUsername_Click(object sender, EventArgs e){textBoxUsername.Focus(); }
+
+        private void pictureBoxUsername_Click_1(object sender, EventArgs e){textBoxUsername.Focus(); }
+
+        private void lblPassword_Click(object sender, EventArgs e)
+        {
+            textBoxPassword.Focus();
+        }
+        private void pictureBoxPassword_Click_1(object sender, EventArgs e)
+        {
+            textBoxPassword.Focus();
+        }
+
+        private void lblConfirmPassword_Click(object sender, EventArgs e)
+        {
+            textBoxConfirmPassword.Focus();
+        }
+
+        private void pictureBoxConfirmPassword_Click_1(object sender, EventArgs e)
+        {
+            textBoxConfirmPassword.Focus();
+        }
+
+        private void roundedPanelUser_Click(object sender, EventArgs e)
+        {
+            textBoxUsername.Focus();
+        }
+
+        private void roundedPanelPass_Click(object sender, EventArgs e)
+        {
+            textBoxPassword.Focus();
+        }
+
+        private void roundedPanelConfirmPass_Click(object sender, EventArgs e)
+        {
+            textBoxConfirmPassword.Focus();
+        }
     }
 }
