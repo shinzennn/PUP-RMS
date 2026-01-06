@@ -35,6 +35,7 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.dgvCourse = new System.Windows.Forms.DataGridView();
             this.btnSearch = new PUP_RMS.RoundedButton();
+            this.btnCreate = new PUP_RMS.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourse)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,11 +118,32 @@
             this.btnSearch.TextColor = System.Drawing.Color.White;
             this.btnSearch.UseVisualStyleBackColor = false;
             // 
+            // btnCreate
+            // 
+            this.btnCreate.BackColor = System.Drawing.Color.Maroon;
+            this.btnCreate.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCreate.BorderRadius = 20;
+            this.btnCreate.BorderSize = 0;
+            this.btnCreate.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnCreate.FlatAppearance.BorderSize = 0;
+            this.btnCreate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCreate.ForeColor = System.Drawing.Color.White;
+            this.btnCreate.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnCreate.Location = new System.Drawing.Point(915, 25);
+            this.btnCreate.Name = "btnCreate";
+            this.btnCreate.Size = new System.Drawing.Size(150, 40);
+            this.btnCreate.TabIndex = 3;
+            this.btnCreate.Text = "Create Course";
+            this.btnCreate.TextColor = System.Drawing.Color.White;
+            this.btnCreate.UseVisualStyleBackColor = false;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
+            // 
             // frmCourse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 749);
+            this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.dgvCourse);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
@@ -142,5 +164,6 @@
         private System.Windows.Forms.TextBox txtSearch;
         private RoundedButton btnSearch;
         private System.Windows.Forms.DataGridView dgvCourse;
+        private RoundedButton btnCreate;
     }
 }

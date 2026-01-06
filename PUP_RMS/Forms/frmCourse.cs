@@ -47,5 +47,13 @@ namespace PUP_RMS.Forms
                 dgvCourse.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
             }
         }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            using (Forms.frmNewCourse newCourseForm = new Forms.frmNewCourse())
+            {
+                newCourseForm.ShowDialog();
+            }
+        }
     }
 }
