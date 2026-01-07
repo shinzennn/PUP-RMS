@@ -36,10 +36,9 @@
             this.roundedPanelConfirmPass = new PUP_RMS.RoundedPanel();
             this.pictureBoxHideConfirmPass = new System.Windows.Forms.PictureBox();
             this.pictureBoxShowConfirmPass = new System.Windows.Forms.PictureBox();
-            this.pictureBoxConfirmPassword = new System.Windows.Forms.PictureBox();
             this.textBoxConfirmPassword = new System.Windows.Forms.TextBox();
+            this.pictureBoxConfirmPassword = new System.Windows.Forms.PictureBox();
             this.linkLabelSignUp = new System.Windows.Forms.LinkLabel();
-            this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.roundedButtonSignup = new PUP_RMS.RoundedButton();
             this.label6 = new System.Windows.Forms.Label();
@@ -47,9 +46,9 @@
             this.lblUsername = new System.Windows.Forms.Label();
             this.roundedPanelPass = new PUP_RMS.RoundedPanel();
             this.pictureBoxHidePassword = new System.Windows.Forms.PictureBox();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.pictureBoxShowPassword = new System.Windows.Forms.PictureBox();
             this.pictureBoxPassword = new System.Windows.Forms.PictureBox();
-            this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.roundedPanelUser = new PUP_RMS.RoundedPanel();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.pictureBoxUsername = new System.Windows.Forms.PictureBox();
@@ -78,7 +77,6 @@
             this.roundedShadowPanelSignUp.Controls.Add(this.lblConfirmPassword);
             this.roundedShadowPanelSignUp.Controls.Add(this.roundedPanelConfirmPass);
             this.roundedShadowPanelSignUp.Controls.Add(this.linkLabelSignUp);
-            this.roundedShadowPanelSignUp.Controls.Add(this.label8);
             this.roundedShadowPanelSignUp.Controls.Add(this.label7);
             this.roundedShadowPanelSignUp.Controls.Add(this.roundedButtonSignup);
             this.roundedShadowPanelSignUp.Controls.Add(this.label6);
@@ -86,7 +84,7 @@
             this.roundedShadowPanelSignUp.Controls.Add(this.lblUsername);
             this.roundedShadowPanelSignUp.Controls.Add(this.roundedPanelPass);
             this.roundedShadowPanelSignUp.Controls.Add(this.roundedPanelUser);
-            this.roundedShadowPanelSignUp.Location = new System.Drawing.Point(809, 78);
+            this.roundedShadowPanelSignUp.Location = new System.Drawing.Point(531, 40);
             this.roundedShadowPanelSignUp.Name = "roundedShadowPanelSignUp";
             this.roundedShadowPanelSignUp.Padding = new System.Windows.Forms.Padding(20);
             this.roundedShadowPanelSignUp.PanelColor = System.Drawing.Color.Maroon;
@@ -95,15 +93,16 @@
             this.roundedShadowPanelSignUp.ShadowDepth = 20;
             this.roundedShadowPanelSignUp.ShadowEnabled = true;
             this.roundedShadowPanelSignUp.ShadowShift = 12;
-            this.roundedShadowPanelSignUp.Size = new System.Drawing.Size(474, 611);
+            this.roundedShadowPanelSignUp.Size = new System.Drawing.Size(420, 530);
             this.roundedShadowPanelSignUp.TabIndex = 6;
+            this.roundedShadowPanelSignUp.Paint += new System.Windows.Forms.PaintEventHandler(this.roundedShadowPanelSignUp_Paint);
             // 
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(173, 32);
+            this.pictureBox3.Location = new System.Drawing.Point(152, 33);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(142, 123);
+            this.pictureBox3.Size = new System.Drawing.Size(120, 110);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 48;
             this.pictureBox3.TabStop = false;
@@ -113,18 +112,18 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(180, 158);
+            this.label2.Location = new System.Drawing.Point(134, 146);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 20);
+            this.label2.Size = new System.Drawing.Size(169, 20);
             this.label2.TabIndex = 47;
-            this.label2.Text = "Create Account";
+            this.label2.Text = "CREATE ACCOUNT";
             // 
             // lblConfirmPassword
             // 
             this.lblConfirmPassword.AutoSize = true;
             this.lblConfirmPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblConfirmPassword.ForeColor = System.Drawing.Color.White;
-            this.lblConfirmPassword.Location = new System.Drawing.Point(76, 398);
+            this.lblConfirmPassword.Location = new System.Drawing.Point(49, 344);
             this.lblConfirmPassword.Name = "lblConfirmPassword";
             this.lblConfirmPassword.Size = new System.Drawing.Size(158, 20);
             this.lblConfirmPassword.TabIndex = 46;
@@ -140,18 +139,18 @@
             this.roundedPanelConfirmPass.BorderSize = 2;
             this.roundedPanelConfirmPass.Controls.Add(this.pictureBoxHideConfirmPass);
             this.roundedPanelConfirmPass.Controls.Add(this.pictureBoxShowConfirmPass);
-            this.roundedPanelConfirmPass.Controls.Add(this.pictureBoxConfirmPassword);
             this.roundedPanelConfirmPass.Controls.Add(this.textBoxConfirmPassword);
+            this.roundedPanelConfirmPass.Controls.Add(this.pictureBoxConfirmPassword);
             this.roundedPanelConfirmPass.HoverBackColor = System.Drawing.Color.Gainsboro;
             this.roundedPanelConfirmPass.HoverBorderColor = System.Drawing.Color.Goldenrod;
-            this.roundedPanelConfirmPass.Location = new System.Drawing.Point(76, 421);
+            this.roundedPanelConfirmPass.Location = new System.Drawing.Point(53, 367);
             this.roundedPanelConfirmPass.Name = "roundedPanelConfirmPass";
             this.roundedPanelConfirmPass.Padding = new System.Windows.Forms.Padding(5);
             this.roundedPanelConfirmPass.ShadowBlur = 15;
             this.roundedPanelConfirmPass.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.roundedPanelConfirmPass.ShadowEnabled = true;
             this.roundedPanelConfirmPass.ShadowOffset = 5;
-            this.roundedPanelConfirmPass.Size = new System.Drawing.Size(333, 54);
+            this.roundedPanelConfirmPass.Size = new System.Drawing.Size(317, 49);
             this.roundedPanelConfirmPass.TabIndex = 45;
             this.roundedPanelConfirmPass.Click += new System.EventHandler(this.roundedPanelConfirmPass_Click);
             this.roundedPanelConfirmPass.Paint += new System.Windows.Forms.PaintEventHandler(this.roundedPanelConfirmPass_Paint);
@@ -159,9 +158,9 @@
             // pictureBoxHideConfirmPass
             // 
             this.pictureBoxHideConfirmPass.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxHideConfirmPass.Image")));
-            this.pictureBoxHideConfirmPass.Location = new System.Drawing.Point(297, 10);
+            this.pictureBoxHideConfirmPass.Location = new System.Drawing.Point(281, 11);
             this.pictureBoxHideConfirmPass.Name = "pictureBoxHideConfirmPass";
-            this.pictureBoxHideConfirmPass.Size = new System.Drawing.Size(28, 36);
+            this.pictureBoxHideConfirmPass.Size = new System.Drawing.Size(26, 25);
             this.pictureBoxHideConfirmPass.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxHideConfirmPass.TabIndex = 3;
             this.pictureBoxHideConfirmPass.TabStop = false;
@@ -169,24 +168,12 @@
             // pictureBoxShowConfirmPass
             // 
             this.pictureBoxShowConfirmPass.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxShowConfirmPass.Image")));
-            this.pictureBoxShowConfirmPass.Location = new System.Drawing.Point(297, 10);
+            this.pictureBoxShowConfirmPass.Location = new System.Drawing.Point(281, 11);
             this.pictureBoxShowConfirmPass.Name = "pictureBoxShowConfirmPass";
-            this.pictureBoxShowConfirmPass.Size = new System.Drawing.Size(28, 36);
+            this.pictureBoxShowConfirmPass.Size = new System.Drawing.Size(26, 25);
             this.pictureBoxShowConfirmPass.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxShowConfirmPass.TabIndex = 2;
             this.pictureBoxShowConfirmPass.TabStop = false;
-            // 
-            // pictureBoxConfirmPassword
-            // 
-            this.pictureBoxConfirmPassword.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxConfirmPassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxConfirmPassword.Image")));
-            this.pictureBoxConfirmPassword.Location = new System.Drawing.Point(8, 8);
-            this.pictureBoxConfirmPassword.Name = "pictureBoxConfirmPassword";
-            this.pictureBoxConfirmPassword.Size = new System.Drawing.Size(28, 36);
-            this.pictureBoxConfirmPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxConfirmPassword.TabIndex = 1;
-            this.pictureBoxConfirmPassword.TabStop = false;
-            this.pictureBoxConfirmPassword.Click += new System.EventHandler(this.pictureBoxConfirmPassword_Click_1);
             // 
             // textBoxConfirmPassword
             // 
@@ -196,8 +183,20 @@
             this.textBoxConfirmPassword.Location = new System.Drawing.Point(42, 15);
             this.textBoxConfirmPassword.Multiline = true;
             this.textBoxConfirmPassword.Name = "textBoxConfirmPassword";
-            this.textBoxConfirmPassword.Size = new System.Drawing.Size(249, 20);
+            this.textBoxConfirmPassword.Size = new System.Drawing.Size(232, 20);
             this.textBoxConfirmPassword.TabIndex = 1;
+            // 
+            // pictureBoxConfirmPassword
+            // 
+            this.pictureBoxConfirmPassword.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxConfirmPassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxConfirmPassword.Image")));
+            this.pictureBoxConfirmPassword.Location = new System.Drawing.Point(8, 11);
+            this.pictureBoxConfirmPassword.Name = "pictureBoxConfirmPassword";
+            this.pictureBoxConfirmPassword.Size = new System.Drawing.Size(28, 26);
+            this.pictureBoxConfirmPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxConfirmPassword.TabIndex = 1;
+            this.pictureBoxConfirmPassword.TabStop = false;
+            this.pictureBoxConfirmPassword.Click += new System.EventHandler(this.pictureBoxConfirmPassword_Click_1);
             // 
             // linkLabelSignUp
             // 
@@ -206,7 +205,7 @@
             this.linkLabelSignUp.ForeColor = System.Drawing.Color.Blue;
             this.linkLabelSignUp.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.linkLabelSignUp.LinkColor = System.Drawing.Color.Goldenrod;
-            this.linkLabelSignUp.Location = new System.Drawing.Point(296, 564);
+            this.linkLabelSignUp.Location = new System.Drawing.Point(280, 483);
             this.linkLabelSignUp.Name = "linkLabelSignUp";
             this.linkLabelSignUp.Size = new System.Drawing.Size(47, 16);
             this.linkLabelSignUp.TabIndex = 44;
@@ -214,23 +213,12 @@
             this.linkLabelSignUp.Text = "Sign In";
             this.linkLabelSignUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSignUp_LinkClicked);
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.Maroon;
-            this.label8.Location = new System.Drawing.Point(167, 226);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(159, 18);
-            this.label8.TabIndex = 41;
-            this.label8.Text = "Sign in to your account";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(133, 187);
+            this.label7.Location = new System.Drawing.Point(105, 166);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(216, 16);
             this.label7.TabIndex = 40;
@@ -249,9 +237,9 @@
             this.roundedButtonSignup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.roundedButtonSignup.ForeColor = System.Drawing.Color.Black;
             this.roundedButtonSignup.HoverColor = System.Drawing.Color.Khaki;
-            this.roundedButtonSignup.Location = new System.Drawing.Point(76, 497);
+            this.roundedButtonSignup.Location = new System.Drawing.Point(53, 432);
             this.roundedButtonSignup.Name = "roundedButtonSignup";
-            this.roundedButtonSignup.Size = new System.Drawing.Size(333, 53);
+            this.roundedButtonSignup.Size = new System.Drawing.Size(317, 42);
             this.roundedButtonSignup.TabIndex = 30;
             this.roundedButtonSignup.Text = "CREATE ACCOUNT";
             this.roundedButtonSignup.TextColor = System.Drawing.Color.White;
@@ -262,7 +250,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(123, 562);
+            this.label6.Location = new System.Drawing.Point(110, 481);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(176, 18);
             this.label6.TabIndex = 38;
@@ -273,7 +261,7 @@
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPassword.ForeColor = System.Drawing.Color.White;
-            this.lblPassword.Location = new System.Drawing.Point(76, 308);
+            this.lblPassword.Location = new System.Drawing.Point(49, 269);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(91, 20);
             this.lblPassword.TabIndex = 34;
@@ -285,7 +273,7 @@
             this.lblUsername.AutoSize = true;
             this.lblUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsername.ForeColor = System.Drawing.Color.White;
-            this.lblUsername.Location = new System.Drawing.Point(76, 224);
+            this.lblUsername.Location = new System.Drawing.Point(49, 194);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(96, 20);
             this.lblUsername.TabIndex = 33;
@@ -300,19 +288,19 @@
             this.roundedPanelPass.BorderRadius = 20;
             this.roundedPanelPass.BorderSize = 2;
             this.roundedPanelPass.Controls.Add(this.pictureBoxHidePassword);
+            this.roundedPanelPass.Controls.Add(this.textBoxPassword);
             this.roundedPanelPass.Controls.Add(this.pictureBoxShowPassword);
             this.roundedPanelPass.Controls.Add(this.pictureBoxPassword);
-            this.roundedPanelPass.Controls.Add(this.textBoxPassword);
             this.roundedPanelPass.HoverBackColor = System.Drawing.Color.Gainsboro;
             this.roundedPanelPass.HoverBorderColor = System.Drawing.Color.Goldenrod;
-            this.roundedPanelPass.Location = new System.Drawing.Point(76, 331);
+            this.roundedPanelPass.Location = new System.Drawing.Point(53, 292);
             this.roundedPanelPass.Name = "roundedPanelPass";
             this.roundedPanelPass.Padding = new System.Windows.Forms.Padding(5);
             this.roundedPanelPass.ShadowBlur = 15;
             this.roundedPanelPass.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.roundedPanelPass.ShadowEnabled = true;
             this.roundedPanelPass.ShadowOffset = 5;
-            this.roundedPanelPass.Size = new System.Drawing.Size(333, 59);
+            this.roundedPanelPass.Size = new System.Drawing.Size(317, 49);
             this.roundedPanelPass.TabIndex = 32;
             this.roundedPanelPass.Click += new System.EventHandler(this.roundedPanelPass_Click);
             this.roundedPanelPass.Paint += new System.Windows.Forms.PaintEventHandler(this.roundedPanelPass_Paint);
@@ -320,34 +308,12 @@
             // pictureBoxHidePassword
             // 
             this.pictureBoxHidePassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxHidePassword.Image")));
-            this.pictureBoxHidePassword.Location = new System.Drawing.Point(297, 10);
+            this.pictureBoxHidePassword.Location = new System.Drawing.Point(280, 11);
             this.pictureBoxHidePassword.Name = "pictureBoxHidePassword";
-            this.pictureBoxHidePassword.Size = new System.Drawing.Size(28, 36);
+            this.pictureBoxHidePassword.Size = new System.Drawing.Size(26, 25);
             this.pictureBoxHidePassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxHidePassword.TabIndex = 3;
             this.pictureBoxHidePassword.TabStop = false;
-            // 
-            // pictureBoxShowPassword
-            // 
-            this.pictureBoxShowPassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxShowPassword.Image")));
-            this.pictureBoxShowPassword.Location = new System.Drawing.Point(297, 10);
-            this.pictureBoxShowPassword.Name = "pictureBoxShowPassword";
-            this.pictureBoxShowPassword.Size = new System.Drawing.Size(28, 36);
-            this.pictureBoxShowPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxShowPassword.TabIndex = 2;
-            this.pictureBoxShowPassword.TabStop = false;
-            // 
-            // pictureBoxPassword
-            // 
-            this.pictureBoxPassword.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxPassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxPassword.Image")));
-            this.pictureBoxPassword.Location = new System.Drawing.Point(8, 8);
-            this.pictureBoxPassword.Name = "pictureBoxPassword";
-            this.pictureBoxPassword.Size = new System.Drawing.Size(28, 36);
-            this.pictureBoxPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxPassword.TabIndex = 1;
-            this.pictureBoxPassword.TabStop = false;
-            this.pictureBoxPassword.Click += new System.EventHandler(this.pictureBoxPassword_Click_1);
             // 
             // textBoxPassword
             // 
@@ -357,8 +323,30 @@
             this.textBoxPassword.Location = new System.Drawing.Point(42, 15);
             this.textBoxPassword.Multiline = true;
             this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(249, 20);
+            this.textBoxPassword.Size = new System.Drawing.Size(232, 20);
             this.textBoxPassword.TabIndex = 1;
+            // 
+            // pictureBoxShowPassword
+            // 
+            this.pictureBoxShowPassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxShowPassword.Image")));
+            this.pictureBoxShowPassword.Location = new System.Drawing.Point(281, 11);
+            this.pictureBoxShowPassword.Name = "pictureBoxShowPassword";
+            this.pictureBoxShowPassword.Size = new System.Drawing.Size(26, 25);
+            this.pictureBoxShowPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxShowPassword.TabIndex = 2;
+            this.pictureBoxShowPassword.TabStop = false;
+            // 
+            // pictureBoxPassword
+            // 
+            this.pictureBoxPassword.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxPassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxPassword.Image")));
+            this.pictureBoxPassword.Location = new System.Drawing.Point(8, 11);
+            this.pictureBoxPassword.Name = "pictureBoxPassword";
+            this.pictureBoxPassword.Size = new System.Drawing.Size(28, 26);
+            this.pictureBoxPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxPassword.TabIndex = 1;
+            this.pictureBoxPassword.TabStop = false;
+            this.pictureBoxPassword.Click += new System.EventHandler(this.pictureBoxPassword_Click_1);
             // 
             // roundedPanelUser
             // 
@@ -370,14 +358,14 @@
             this.roundedPanelUser.Controls.Add(this.pictureBoxUsername);
             this.roundedPanelUser.HoverBackColor = System.Drawing.Color.Gainsboro;
             this.roundedPanelUser.HoverBorderColor = System.Drawing.Color.Goldenrod;
-            this.roundedPanelUser.Location = new System.Drawing.Point(76, 247);
+            this.roundedPanelUser.Location = new System.Drawing.Point(53, 217);
             this.roundedPanelUser.Name = "roundedPanelUser";
             this.roundedPanelUser.Padding = new System.Windows.Forms.Padding(5);
             this.roundedPanelUser.ShadowBlur = 15;
             this.roundedPanelUser.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.roundedPanelUser.ShadowEnabled = true;
             this.roundedPanelUser.ShadowOffset = 5;
-            this.roundedPanelUser.Size = new System.Drawing.Size(333, 54);
+            this.roundedPanelUser.Size = new System.Drawing.Size(317, 49);
             this.roundedPanelUser.TabIndex = 31;
             this.roundedPanelUser.Click += new System.EventHandler(this.roundedPanelUser_Click);
             this.roundedPanelUser.Paint += new System.Windows.Forms.PaintEventHandler(this.roundedPanelUser_Paint);
@@ -411,13 +399,13 @@
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.ClientSize = new System.Drawing.Size(1000, 600);
             this.Controls.Add(this.roundedShadowPanelSignUp);
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "RegisterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.RegisterForm_Load);
             this.roundedShadowPanelSignUp.ResumeLayout(false);
             this.roundedShadowPanelSignUp.PerformLayout();
@@ -443,7 +431,6 @@
 
         private RoundedShadowPanel roundedShadowPanelSignUp;
         private System.Windows.Forms.LinkLabel linkLabelSignUp;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private RoundedButton roundedButtonSignup;
         private System.Windows.Forms.Label label6;

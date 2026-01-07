@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDashboard));
             this.timerStorageUpdate = new System.Windows.Forms.Timer(this.components);
+            this.recentActivityLog1 = new RecordsManagementSystem.Controls.RecentActivityLog();
             this.headerPanelCard5 = new PUP_RMS.CustomControls.HeaderPanelCard();
             this.dcRecentlyUploaded = new PUP_RMS.CustomControls.DashboardCard();
             this.dcTotalGradesheets = new PUP_RMS.CustomControls.DashboardCard();
@@ -46,12 +47,6 @@
             this.colSubject = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUploadedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAction = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.headerPanelCard2 = new PUP_RMS.CustomControls.HeaderPanelCard();
-            this.dgvRecentActivityLog = new System.Windows.Forms.DataGridView();
-            this.colActivityDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colActivityUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colActivityAction = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colActivityDetails = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.headerPanelCard1 = new PUP_RMS.CustomControls.HeaderPanelCard();
             this.pnlBySubject = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProgram = new PUP_RMS.RecordDistributionPanelCard();
@@ -64,8 +59,6 @@
             this.headerPanelCard4.SuspendLayout();
             this.headerPanelCard3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentUploads)).BeginInit();
-            this.headerPanelCard2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRecentActivityLog)).BeginInit();
             this.headerPanelCard1.SuspendLayout();
             this.roundedPanel3.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +66,34 @@
             // timerStorageUpdate
             // 
             this.timerStorageUpdate.Tick += new System.EventHandler(this.timerStorageUpdate_Tick_1);
+            // 
+            // recentActivityLog1
+            // 
+            this.recentActivityLog1.BackColor = System.Drawing.Color.Transparent;
+            this.recentActivityLog1.BorderColor = System.Drawing.Color.Gray;
+            this.recentActivityLog1.BorderRadius = 10;
+            this.recentActivityLog1.BorderThickness = 0;
+            this.recentActivityLog1.ContentBackColor = System.Drawing.Color.White;
+            this.recentActivityLog1.EnableHoverEffect = false;
+            this.recentActivityLog1.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
+            this.recentActivityLog1.HeaderFontSize = 13F;
+            this.recentActivityLog1.HeaderForeColor = System.Drawing.Color.Maroon;
+            this.recentActivityLog1.HeaderHeight = 40;
+            this.recentActivityLog1.HeaderLabel = "Recent Activity Log";
+            this.recentActivityLog1.IconHeader = ((System.Drawing.Image)(resources.GetObject("recentActivityLog1.IconHeader")));
+            this.recentActivityLog1.IconSize = 25;
+            this.recentActivityLog1.Location = new System.Drawing.Point(2, 506);
+            this.recentActivityLog1.Name = "recentActivityLog1";
+            this.recentActivityLog1.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.recentActivityLog1.ShadowDepth = 4;
+            this.recentActivityLog1.ShadowPadding = 5;
+            this.recentActivityLog1.ShowHeaderDivider = false;
+            this.recentActivityLog1.ShowShadow = true;
+            this.recentActivityLog1.Size = new System.Drawing.Size(717, 255);
+            this.recentActivityLog1.TabIndex = 10;
+            this.recentActivityLog1.Text = "recentActivityLog1";
+            this.recentActivityLog1.Click += new System.EventHandler(this.recentActivityLog1_Click);
+            this.recentActivityLog1.Paint += new System.Windows.Forms.PaintEventHandler(this.recentActivityLog1_Paint);
             // 
             // headerPanelCard5
             // 
@@ -139,7 +160,7 @@
             this.dcTotalGradesheets.IconBackColor = System.Drawing.Color.Goldenrod;
             this.dcTotalGradesheets.IconCircleSize = 50;
             this.dcTotalGradesheets.IconImage = ((System.Drawing.Image)(resources.GetObject("dcTotalGradesheets.IconImage")));
-            this.dcTotalGradesheets.Location = new System.Drawing.Point(29, 54);
+            this.dcTotalGradesheets.Location = new System.Drawing.Point(39, 54);
             this.dcTotalGradesheets.Name = "dcTotalGradesheets";
             this.dcTotalGradesheets.PanelBackColor = System.Drawing.Color.White;
             this.dcTotalGradesheets.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -165,7 +186,7 @@
             this.dcTotalProfessors.IconBackColor = System.Drawing.Color.Goldenrod;
             this.dcTotalProfessors.IconCircleSize = 50;
             this.dcTotalProfessors.IconImage = ((System.Drawing.Image)(resources.GetObject("dcTotalProfessors.IconImage")));
-            this.dcTotalProfessors.Location = new System.Drawing.Point(567, 54);
+            this.dcTotalProfessors.Location = new System.Drawing.Point(571, 54);
             this.dcTotalProfessors.Name = "dcTotalProfessors";
             this.dcTotalProfessors.PanelBackColor = System.Drawing.Color.White;
             this.dcTotalProfessors.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -191,7 +212,7 @@
             this.dcTotalSubjects.IconBackColor = System.Drawing.Color.Goldenrod;
             this.dcTotalSubjects.IconCircleSize = 50;
             this.dcTotalSubjects.IconImage = ((System.Drawing.Image)(resources.GetObject("dcTotalSubjects.IconImage")));
-            this.dcTotalSubjects.Location = new System.Drawing.Point(297, 54);
+            this.dcTotalSubjects.Location = new System.Drawing.Point(303, 54);
             this.dcTotalSubjects.Name = "dcTotalSubjects";
             this.dcTotalSubjects.PanelBackColor = System.Drawing.Color.White;
             this.dcTotalSubjects.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -224,7 +245,7 @@
             this.headerPanelCard4.HeaderLabel = "Local Storage Used ";
             this.headerPanelCard4.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard4.IconHeader")));
             this.headerPanelCard4.IconSize = 25;
-            this.headerPanelCard4.Location = new System.Drawing.Point(717, 245);
+            this.headerPanelCard4.Location = new System.Drawing.Point(717, 247);
             this.headerPanelCard4.Name = "headerPanelCard4";
             this.headerPanelCard4.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.headerPanelCard4.ShadowDepth = 4;
@@ -238,7 +259,7 @@
             // 
             this.lblStorageUsageDetails.AutoSize = true;
             this.lblStorageUsageDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.lblStorageUsageDetails.Location = new System.Drawing.Point(85, 172);
+            this.lblStorageUsageDetails.Location = new System.Drawing.Point(145, 181);
             this.lblStorageUsageDetails.Name = "lblStorageUsageDetails";
             this.lblStorageUsageDetails.Size = new System.Drawing.Size(42, 13);
             this.lblStorageUsageDetails.TabIndex = 11;
@@ -254,7 +275,7 @@
             this.cpDriveUsage.FontSize = 10;
             this.cpDriveUsage.GradientEnd = System.Drawing.Color.Maroon;
             this.cpDriveUsage.GradientStart = System.Drawing.Color.Maroon;
-            this.cpDriveUsage.Location = new System.Drawing.Point(123, 49);
+            this.cpDriveUsage.Location = new System.Drawing.Point(140, 53);
             this.cpDriveUsage.Maximum = 100;
             this.cpDriveUsage.Minimum = 0;
             this.cpDriveUsage.Name = "cpDriveUsage";
@@ -270,7 +291,7 @@
             // 
             this.headerPanelCard3.BackColor = System.Drawing.Color.Transparent;
             this.headerPanelCard3.BorderColor = System.Drawing.Color.Gray;
-            this.headerPanelCard3.BorderRadius = 0;
+            this.headerPanelCard3.BorderRadius = 10;
             this.headerPanelCard3.BorderThickness = 0;
             this.headerPanelCard3.ContentBackColor = System.Drawing.Color.White;
             this.headerPanelCard3.Controls.Add(this.dgvRecentUploads);
@@ -282,7 +303,7 @@
             this.headerPanelCard3.HeaderLabel = "Recent Uploads";
             this.headerPanelCard3.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard3.IconHeader")));
             this.headerPanelCard3.IconSize = 25;
-            this.headerPanelCard3.Location = new System.Drawing.Point(2, 245);
+            this.headerPanelCard3.Location = new System.Drawing.Point(2, 247);
             this.headerPanelCard3.Name = "headerPanelCard3";
             this.headerPanelCard3.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.headerPanelCard3.ShadowDepth = 4;
@@ -333,68 +354,6 @@
             // 
             this.colAction.HeaderText = "Action";
             this.colAction.Name = "colAction";
-            // 
-            // headerPanelCard2
-            // 
-            this.headerPanelCard2.BackColor = System.Drawing.Color.Transparent;
-            this.headerPanelCard2.BorderColor = System.Drawing.Color.Gray;
-            this.headerPanelCard2.BorderRadius = 10;
-            this.headerPanelCard2.BorderThickness = 0;
-            this.headerPanelCard2.ContentBackColor = System.Drawing.Color.White;
-            this.headerPanelCard2.Controls.Add(this.dgvRecentActivityLog);
-            this.headerPanelCard2.EnableHoverEffect = false;
-            this.headerPanelCard2.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
-            this.headerPanelCard2.HeaderFontSize = 13F;
-            this.headerPanelCard2.HeaderForeColor = System.Drawing.Color.Maroon;
-            this.headerPanelCard2.HeaderHeight = 40;
-            this.headerPanelCard2.HeaderLabel = "Recent Activity Log";
-            this.headerPanelCard2.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard2.IconHeader")));
-            this.headerPanelCard2.IconSize = 25;
-            this.headerPanelCard2.Location = new System.Drawing.Point(2, 506);
-            this.headerPanelCard2.Name = "headerPanelCard2";
-            this.headerPanelCard2.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.headerPanelCard2.ShadowDepth = 4;
-            this.headerPanelCard2.ShadowPadding = 5;
-            this.headerPanelCard2.ShowHeaderDivider = false;
-            this.headerPanelCard2.ShowShadow = true;
-            this.headerPanelCard2.Size = new System.Drawing.Size(717, 255);
-            this.headerPanelCard2.TabIndex = 9;
-            // 
-            // dgvRecentActivityLog
-            // 
-            this.dgvRecentActivityLog.BackgroundColor = System.Drawing.Color.White;
-            this.dgvRecentActivityLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvRecentActivityLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRecentActivityLog.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colActivityDate,
-            this.colActivityUser,
-            this.colActivityAction,
-            this.colActivityDetails});
-            this.dgvRecentActivityLog.Location = new System.Drawing.Point(14, 48);
-            this.dgvRecentActivityLog.Name = "dgvRecentActivityLog";
-            this.dgvRecentActivityLog.Size = new System.Drawing.Size(657, 86);
-            this.dgvRecentActivityLog.TabIndex = 8;
-            this.dgvRecentActivityLog.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRecentActivityLog_CellContentClick);
-            // 
-            // colActivityDate
-            // 
-            this.colActivityDate.HeaderText = "Date ";
-            this.colActivityDate.Name = "colActivityDate";
-            // 
-            // colActivityUser
-            // 
-            this.colActivityUser.HeaderText = "User";
-            this.colActivityUser.Name = "colActivityUser";
-            // 
-            // colActivityAction
-            // 
-            this.colActivityAction.HeaderText = "Action";
-            this.colActivityAction.Name = "colActivityAction";
-            // 
-            // colActivityDetails
-            // 
-            this.colActivityDetails.HeaderText = "Details";
-            this.colActivityDetails.Name = "colActivityDetails";
             // 
             // headerPanelCard1
             // 
@@ -532,13 +491,13 @@
             this.roundedPanel3.Controls.Add(this.label10);
             this.roundedPanel3.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.roundedPanel3.HoverBorderColor = System.Drawing.Color.Maroon;
-            this.roundedPanel3.Location = new System.Drawing.Point(12, 4);
+            this.roundedPanel3.Location = new System.Drawing.Point(5, 4);
             this.roundedPanel3.Name = "roundedPanel3";
             this.roundedPanel3.ShadowBlur = 15;
             this.roundedPanel3.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.roundedPanel3.ShadowEnabled = true;
             this.roundedPanel3.ShadowOffset = 5;
-            this.roundedPanel3.Size = new System.Drawing.Size(1096, 73);
+            this.roundedPanel3.Size = new System.Drawing.Size(1107, 73);
             this.roundedPanel3.TabIndex = 5;
             // 
             // gradientLabel1
@@ -571,10 +530,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(237)))), ((int)(((byte)(233)))));
             this.ClientSize = new System.Drawing.Size(1120, 768);
+            this.Controls.Add(this.recentActivityLog1);
             this.Controls.Add(this.headerPanelCard5);
             this.Controls.Add(this.headerPanelCard4);
             this.Controls.Add(this.headerPanelCard3);
-            this.Controls.Add(this.headerPanelCard2);
             this.Controls.Add(this.headerPanelCard1);
             this.Controls.Add(this.roundedPanel3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -586,8 +545,6 @@
             this.headerPanelCard4.PerformLayout();
             this.headerPanelCard3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentUploads)).EndInit();
-            this.headerPanelCard2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRecentActivityLog)).EndInit();
             this.headerPanelCard1.ResumeLayout(false);
             this.roundedPanel3.ResumeLayout(false);
             this.roundedPanel3.PerformLayout();
@@ -613,12 +570,6 @@
         private RecordDistributionPanelCard pnlByYear_Sem;
         private RecordDistributionPanelCard pnlByProfessor;
         private CustomControls.HeaderPanelCard headerPanelCard1;
-        private CustomControls.HeaderPanelCard headerPanelCard2;
-        private System.Windows.Forms.DataGridView dgvRecentActivityLog;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colActivityDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colActivityUser;
-        private System.Windows.Forms.DataGridViewButtonColumn colActivityAction;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colActivityDetails;
         private CustomControls.HeaderPanelCard headerPanelCard3;
         private CustomControls.HeaderPanelCard headerPanelCard4;
         private CustomControls.HeaderPanelCard headerPanelCard5;
@@ -626,5 +577,6 @@
         private CustomControls.DashboardCard dcTotalGradesheets;
         private CustomControls.DashboardCard dcTotalProfessors;
         private CustomControls.DashboardCard dcTotalSubjects;
+        private RecordsManagementSystem.Controls.RecentActivityLog recentActivityLog1;
     }
 }

@@ -177,7 +177,6 @@ namespace PUP_RMS.Forms
         {
             // --- GRID VIEW SETUP ---
             if (this.dgvRecentUploads != null) SetupDataGridView(this.dgvRecentUploads, "Uploads");
-            if (this.dgvRecentActivityLog != null) SetupDataGridView(this.dgvRecentActivityLog, "ActivityLog");
 
             // --- CIRCULAR BAR SETUP (RESPECTS DESIGNER PROPERTIES) ---
             // We only enforce MIN/MAX here. Colors are left to the Designer properties.
@@ -518,6 +517,16 @@ namespace PUP_RMS.Forms
         }
 
         private void dcRecentlyUploaded_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void recentActivityLog1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void recentActivityLog1_Paint(object sender, PaintEventArgs e)
         {
 
         }

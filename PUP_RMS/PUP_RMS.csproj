@@ -95,6 +95,9 @@
     <Compile Include="CustomControls\iconButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CustomControls\RecentActivityLog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CustomControls\RecordDistributionPanelCard.cs">
       <SubType>Component</SubType>
     </Compile>
