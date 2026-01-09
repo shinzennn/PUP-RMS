@@ -96,6 +96,7 @@
             this.dgvCourse.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCourse.Size = new System.Drawing.Size(945, 508);
             this.dgvCourse.TabIndex = 2;
+            this.dgvCourse.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourse_CellDoubleClick);
             this.dgvCourse.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourse_CellMouseEnter);
             this.dgvCourse.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourse_CellMouseLeave);
             // 
@@ -152,7 +153,6 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.Text = "frmCourse";
             this.Load += new System.EventHandler(this.frmCourse_Load);
-            this.Shown += new System.EventHandler(this.frmCourse_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourse)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

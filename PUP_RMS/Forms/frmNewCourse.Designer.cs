@@ -35,16 +35,17 @@
             this.txtCourseDesc = new System.Windows.Forms.TextBox();
             this.btnCreate = new PUP_RMS.RoundedButton();
             this.btnCancel = new PUP_RMS.RoundedButton();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(50, 65);
+            this.label1.Location = new System.Drawing.Point(52, 111);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(308, 37);
+            this.label1.Size = new System.Drawing.Size(211, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "Course Information";
             // 
@@ -52,7 +53,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(54, 135);
+            this.label2.Location = new System.Drawing.Point(54, 153);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 16);
             this.label2.TabIndex = 1;
@@ -62,7 +63,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(54, 207);
+            this.label3.Location = new System.Drawing.Point(54, 225);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(121, 16);
             this.label3.TabIndex = 2;
@@ -71,7 +72,7 @@
             // txtCourseCode
             // 
             this.txtCourseCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCourseCode.Location = new System.Drawing.Point(57, 154);
+            this.txtCourseCode.Location = new System.Drawing.Point(57, 172);
             this.txtCourseCode.Name = "txtCourseCode";
             this.txtCourseCode.Size = new System.Drawing.Size(375, 22);
             this.txtCourseCode.TabIndex = 3;
@@ -79,7 +80,7 @@
             // txtCourseDesc
             // 
             this.txtCourseDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCourseDesc.Location = new System.Drawing.Point(57, 226);
+            this.txtCourseDesc.Location = new System.Drawing.Point(57, 244);
             this.txtCourseDesc.Name = "txtCourseDesc";
             this.txtCourseDesc.Size = new System.Drawing.Size(375, 22);
             this.txtCourseDesc.TabIndex = 4;
@@ -126,11 +127,24 @@
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Maroon;
+            this.label4.Location = new System.Drawing.Point(143, 44);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(203, 37);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "New Course";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
             // frmNewCourse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 450);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.txtCourseDesc);
@@ -157,5 +171,6 @@
         private System.Windows.Forms.TextBox txtCourseDesc;
         private RoundedButton btnCreate;
         private RoundedButton btnCancel;
+        private System.Windows.Forms.Label label4;
     }
 }

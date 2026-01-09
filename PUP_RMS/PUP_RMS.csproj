@@ -137,6 +137,12 @@
     <Compile Include="Forms\frmDistributionYear_Sem.Designer.cs">
       <DependentUpon>frmDistributionYear_Sem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmEditCourse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmEditCourse.Designer.cs">
+      <DependentUpon>frmEditCourse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmIndividualUpload.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDistributionYear_Sem.resx">
       <DependentUpon>frmDistributionYear_Sem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmEditCourse.resx">
+      <DependentUpon>frmEditCourse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmIndividualUpload.resx">
       <DependentUpon>frmIndividualUpload.cs</DependentUpon>

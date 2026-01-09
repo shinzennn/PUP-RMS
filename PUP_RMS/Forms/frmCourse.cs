@@ -19,17 +19,11 @@ namespace PUP_RMS.Forms
 
         private void frmCourse_Load(object sender, EventArgs e)
         {
-            dgvCourse.DataSource = Core.DbControl.GetData("SELECT * FROM Course");
+            RefreshGrid();
 
             dgvCourse.Columns["CourseID"].Width = 50;
             dgvCourse.Columns["CourseCode"].Width = 100;
             
-        }
-
-        private void frmCourse_Shown(object sender, EventArgs e)
-        {
-            dgvCourse.ClearSelection();
-            dgvCourse.CurrentCell = null;
         }
 
         // DATA GRID VIEW ROW HOVER COLOR CHANGE
@@ -48,12 +42,39 @@ namespace PUP_RMS.Forms
             }
         }
 
+        // CONTROL METHODS
+        private void RefreshGrid()
+        {
+            dgvCourse.DataSource = Core.DbControl.GetData("SELECT * FROM Course");
+            dgvCourse.ClearSelection();
+            dgvCourse.CurrentCell = null;
+        }
+
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            using (Forms.frmNewCourse newCourseForm = new Forms.frmNewCourse())
-            {
-                newCourseForm.ShowDialog();
+            Forms.frmNewCourse newCourseForm = new Forms.frmNewCourse();
+
+            if (newCourseForm.ShowDialog() == DialogResult.OK) 
+            { 
+                RefreshGrid();
             }
+        }
+
+        private void dgvCourse_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow selectedRow = dgvCourse.Rows[e.RowIndex];
+            frmEditCourse editCourseForm = new frmEditCourse();
+
+            if(selectedRow != null) 
+            {
+                editCourseForm.courseID = Convert.ToInt32(selectedRow.Cells["CourseID"].Value);
+            }
+
+            if (editCourseForm.ShowDialog() == DialogResult.OK) 
+            {
+                RefreshGrid();
+            }
+            
         }
     }
 }
