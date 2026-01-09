@@ -58,3 +58,4 @@ INSERT INTO Course(CourseCode, CourseDecription) VALUES('INTE 301', 'Systems Int
 SELECT * FROM Admin;
 SELECT * FROM Course;
 SELECT * FROM Professor;
+SELECT * FROM GradeSheet;
