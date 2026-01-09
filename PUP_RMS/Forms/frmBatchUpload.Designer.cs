@@ -39,8 +39,12 @@
             this.uploadBtn = new System.Windows.Forms.Button();
             this.currentImage = new System.Windows.Forms.PictureBox();
             this.saveBtn = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.undoBtn = new System.Windows.Forms.Button();
+            this.uploadedImgs = new System.Windows.Forms.ListView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -173,7 +177,7 @@
             // toUpload
             // 
             this.toUpload.HideSelection = false;
-            this.toUpload.Location = new System.Drawing.Point(45, 23);
+            this.toUpload.Location = new System.Drawing.Point(37, 23);
             this.toUpload.Name = "toUpload";
             this.toUpload.Size = new System.Drawing.Size(314, 310);
             this.toUpload.TabIndex = 6;
@@ -184,16 +188,16 @@
             this.panel1.BackColor = System.Drawing.Color.RosyBrown;
             this.panel1.Controls.Add(this.uploadBtn);
             this.panel1.Controls.Add(this.toUpload);
-            this.panel1.Location = new System.Drawing.Point(741, 223);
+            this.panel1.Location = new System.Drawing.Point(24, 274);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(396, 403);
+            this.panel1.Size = new System.Drawing.Size(396, 416);
             this.panel1.TabIndex = 7;
             // 
             // uploadBtn
             // 
             this.uploadBtn.BackColor = System.Drawing.Color.Maroon;
             this.uploadBtn.Font = new System.Drawing.Font("Sans Serif Collection", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uploadBtn.Location = new System.Drawing.Point(142, 339);
+            this.uploadBtn.Location = new System.Drawing.Point(148, 349);
             this.uploadBtn.Name = "uploadBtn";
             this.uploadBtn.Size = new System.Drawing.Size(103, 51);
             this.uploadBtn.TabIndex = 7;
@@ -203,7 +207,7 @@
             // currentImage
             // 
             this.currentImage.BackColor = System.Drawing.Color.MistyRose;
-            this.currentImage.Location = new System.Drawing.Point(177, 223);
+            this.currentImage.Location = new System.Drawing.Point(460, 274);
             this.currentImage.Name = "currentImage";
             this.currentImage.Size = new System.Drawing.Size(497, 416);
             this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -214,19 +218,50 @@
             // 
             this.saveBtn.BackColor = System.Drawing.Color.Maroon;
             this.saveBtn.Font = new System.Drawing.Font("Sans Serif Collection", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveBtn.Location = new System.Drawing.Point(360, 645);
+            this.saveBtn.Location = new System.Drawing.Point(650, 710);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(103, 51);
             this.saveBtn.TabIndex = 8;
             this.saveBtn.Text = "Save";
             this.saveBtn.UseVisualStyleBackColor = false;
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.RosyBrown;
+            this.panel2.Controls.Add(this.undoBtn);
+            this.panel2.Controls.Add(this.uploadedImgs);
+            this.panel2.Location = new System.Drawing.Point(976, 274);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(396, 416);
+            this.panel2.TabIndex = 9;
+            // 
+            // undoBtn
+            // 
+            this.undoBtn.BackColor = System.Drawing.Color.Maroon;
+            this.undoBtn.Font = new System.Drawing.Font("Sans Serif Collection", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.undoBtn.Location = new System.Drawing.Point(145, 349);
+            this.undoBtn.Name = "undoBtn";
+            this.undoBtn.Size = new System.Drawing.Size(103, 51);
+            this.undoBtn.TabIndex = 7;
+            this.undoBtn.Text = "Undo";
+            this.undoBtn.UseVisualStyleBackColor = false;
+            // 
+            // uploadedImgs
+            // 
+            this.uploadedImgs.HideSelection = false;
+            this.uploadedImgs.Location = new System.Drawing.Point(41, 23);
+            this.uploadedImgs.Name = "uploadedImgs";
+            this.uploadedImgs.Size = new System.Drawing.Size(314, 310);
+            this.uploadedImgs.TabIndex = 6;
+            this.uploadedImgs.UseCompatibleStateImageBehavior = false;
+            // 
             // frmBatchUpload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1166, 700);
+            this.ClientSize = new System.Drawing.Size(1429, 823);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.currentImage);
             this.Controls.Add(this.filenameTxtbox);
@@ -243,6 +278,7 @@
             this.Load += new System.EventHandler(this.frmBatchUpload_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).EndInit();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -261,6 +297,8 @@
         private System.Windows.Forms.Button uploadBtn;
         private System.Windows.Forms.PictureBox currentImage;
         private System.Windows.Forms.Button saveBtn;
-
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button undoBtn;
+        private System.Windows.Forms.ListView uploadedImgs;
     }
 }

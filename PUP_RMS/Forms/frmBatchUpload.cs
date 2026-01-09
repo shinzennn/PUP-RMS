@@ -14,16 +14,19 @@ using PUP_RMS.Model;
 
 namespace PUP_RMS.Forms
 {
-
-
-
     public partial class frmBatchUpload : Form
     {
-        // TEMP: replace with real logged-in admin ID
         private int loggedInAdminId = 1;
-        //FOR image path
-        private readonly string baseImagePath = Path.Combine(Application.StartupPath, "GradeSheets");
 
+        private readonly string baseImagePath =
+            Path.Combine(Application.StartupPath, "GradeSheets");
+
+        // Undo stack
+        private Stack<UndoItem> undoHistory = new Stack<UndoItem>();
+
+        // ImageLists for thumbnails
+        private ImageList uploadImageList;
+        private ImageList uploadedImageList;
 
         public frmBatchUpload()
         {
@@ -38,8 +41,7 @@ namespace PUP_RMS.Forms
 
             uploadBtn.Click += uploadBtn_Click;
             saveBtn.Click += saveBtn_Click;
-
-
+            undoBtn.Click += undoBtn_Click;
         }
 
         // =========================
@@ -50,9 +52,32 @@ namespace PUP_RMS.Forms
             LoadCourses();
             LoadProfessors();
             LoadSemester();
+            InitializeImageLists();
         }
 
+        // =========================
+        // IMAGE LIST INITIALIZATION
+        // =========================
+        private void InitializeImageLists()
+        {
+            uploadImageList = new ImageList
+            {
+                ImageSize = new Size(96, 96),
+                ColorDepth = ColorDepth.Depth32Bit
+            };
 
+            uploadedImageList = new ImageList
+            {
+                ImageSize = new Size(96, 96),
+                ColorDepth = ColorDepth.Depth32Bit
+            };
+
+            toUpload.View = View.LargeIcon;
+            uploadedImgs.View = View.LargeIcon;
+
+            toUpload.LargeImageList = uploadImageList;
+            uploadedImgs.LargeImageList = uploadedImageList;
+        }
 
         // =========================
         // LOAD COMBOBOX DATA
@@ -86,6 +111,7 @@ namespace PUP_RMS.Forms
             semesterCmbox.ValueMember = "Value";
             semesterCmbox.SelectedIndex = -1;
         }
+
         // =========================
         // AUTO FILENAME
         // =========================
@@ -98,10 +124,18 @@ namespace PUP_RMS.Forms
                 return;
 
             filenameTxtbox.Text =
-                $"{yearCmbox.Text}_" +
-                $"{semesterCmbox.Text}_" +
-                $"{courseCmbox.Text}_" +
-                $"{professorCmbox.Text}";
+                $"{yearCmbox.Text}_{semesterCmbox.Text}_{courseCmbox.Text}_{professorCmbox.Text}";
+        }
+
+        // =========================
+        // CREATE THUMBNAIL
+        // =========================
+        private Image CreateThumbnail(string path)
+        {
+            using (Image img = Image.FromFile(path))
+            {
+                return img.GetThumbnailImage(96, 96, () => false, IntPtr.Zero);
+            }
         }
 
         // =========================
@@ -119,11 +153,22 @@ namespace PUP_RMS.Forms
                 return;
 
             toUpload.Items.Clear();
+            uploadedImgs.Items.Clear();
+            uploadImageList.Images.Clear();
+            uploadedImageList.Images.Clear();
+            undoHistory.Clear();
 
             foreach (string file in ofd.FileNames)
             {
-                ListViewItem item = new ListViewItem(Path.GetFileName(file));
-                item.Tag = file; // full path
+                Image thumb = CreateThumbnail(file);
+                uploadImageList.Images.Add(file, thumb);
+
+                ListViewItem item = new ListViewItem(Path.GetFileName(file))
+                {
+                    Tag = file,
+                    ImageKey = file
+                };
+
                 toUpload.Items.Add(item);
             }
 
@@ -145,7 +190,6 @@ namespace PUP_RMS.Forms
             string path = toUpload.Items[0].Tag.ToString();
 
             currentImage.Image?.Dispose();
-
             using (Bitmap bmp = new Bitmap(path))
             {
                 currentImage.Image = new Bitmap(bmp);
@@ -153,53 +197,26 @@ namespace PUP_RMS.Forms
         }
 
         // =========================
-        // SAVE CURRENT IMAGE DATA
+        // SAVE IMAGE
         // =========================
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            // Queue check
             if (toUpload.Items.Count == 0)
             {
-                MessageBox.Show("No images left in the queue.");
+                MessageBox.Show("No images left.");
                 return;
             }
 
-            // Year check
-            if (string.IsNullOrWhiteSpace(yearCmbox.Text))
+            if (semesterCmbox.SelectedValue == null ||
+                courseCmbox.SelectedValue == null ||
+                professorCmbox.SelectedValue == null ||
+                string.IsNullOrWhiteSpace(yearCmbox.Text) ||
+                string.IsNullOrWhiteSpace(filenameTxtbox.Text))
             {
-                MessageBox.Show("Please select a School Year.");
+                MessageBox.Show("Complete all required fields.");
                 return;
             }
 
-            // Semester check
-            if (semesterCmbox.SelectedValue == null)
-            {
-                MessageBox.Show("Please select a Semester.");
-                return;
-            }
-
-            // Course check
-            if (courseCmbox.SelectedValue == null)
-            {
-                MessageBox.Show("Please select a Course.");
-                return;
-            }
-
-            // Professor check
-            if (professorCmbox.SelectedValue == null)
-            {
-                MessageBox.Show("Please select a Professor.");
-                return;
-            }
-
-            // Filename check
-            if (string.IsNullOrWhiteSpace(filenameTxtbox.Text))
-            {
-                MessageBox.Show("Filename is empty.");
-                return;
-            }
-
-            // SAFE to use values now
             bool success = DbControl.InsertGradeSheet(
                 filenameTxtbox.Text,
                 yearCmbox.Text,
@@ -215,69 +232,105 @@ namespace PUP_RMS.Forms
                 return;
             }
 
-            // =========================
-            // SAVE IMAGE TO FOLDER
-            // =========================
-
-            // Get current image full path
             string sourcePath = toUpload.Items[0].Tag.ToString();
+            string folder = BuildImageFolderPath();
+            Directory.CreateDirectory(folder);
 
-            // Build destination folder
-            string destinationFolder = BuildImageFolderPath();
+            string ext = Path.GetExtension(sourcePath);
+            string savedPath = Path.Combine(folder, filenameTxtbox.Text + ext);
 
-            // Create folder hierarchy if not exists
-            Directory.CreateDirectory(destinationFolder);
+            File.Copy(sourcePath, savedPath, true);
 
-            // Preserve original extension
-            string extension = Path.GetExtension(sourcePath);
+            undoHistory.Push(new UndoItem
+            {
+                FileName = filenameTxtbox.Text,
+                SourceFilePath = sourcePath,
+                SavedFilePath = savedPath
+            });
 
-            // Final destination file
-            string destinationFile = Path.Combine(
-                destinationFolder,
-                filenameTxtbox.Text + extension
-            );
+            Image thumb = CreateThumbnail(savedPath);
+            uploadedImageList.Images.Add(savedPath, thumb);
 
-            // Copy image to destination
-            File.Copy(sourcePath, destinationFile, true);
+            uploadedImgs.Items.Add(new ListViewItem(Path.GetFileName(savedPath))
+            {
+                ImageKey = savedPath
+            });
 
-            filenameTxtbox.Clear();
-
-
-            // Remove current image
             toUpload.Items.RemoveAt(0);
-
-            // Show next image
+            filenameTxtbox.Clear();
             DisplayCurrentImage();
 
-            MessageBox.Show("Saved successfully. Moving to next image.");
+            MessageBox.Show("Saved successfully.");
         }
 
+        // =========================
+        // FOR UNDOING LAST UPLOAD
+        // =========================
+        private void undoBtn_Click(object sender, EventArgs e)
+        {
+            if (undoHistory.Count == 0)
+            {
+                MessageBox.Show("Nothing to undo.");
+                return;
+            }
+
+            UndoItem undo = undoHistory.Pop();
+
+            DbControl.DeleteGradeSheetByFilename(undo.FileName);
+
+            if (File.Exists(undo.SavedFilePath))
+                File.Delete(undo.SavedFilePath);
+
+            Image thumb = CreateThumbnail(undo.SourceFilePath);
+            uploadImageList.Images.Add(undo.SourceFilePath, thumb);
+
+            ListViewItem restored = new ListViewItem(
+                Path.GetFileName(undo.SourceFilePath))
+            {
+                Tag = undo.SourceFilePath,
+                ImageKey = undo.SourceFilePath
+            };
+
+            toUpload.Items.Insert(0, restored);
+
+            if (uploadedImgs.Items.Count > 0)
+                uploadedImgs.Items.RemoveAt(uploadedImgs.Items.Count - 1);
+
+            DisplayCurrentImage();
+
+            MessageBox.Show("Undo completed.");
+        }
+
+        // =========================
+        // PATH HELPERS
+        // =========================
         private string BuildImageFolderPath()
         {
-            string year = SanitizePath(yearCmbox.Text);
-            string semester = SanitizePath(semesterCmbox.Text);
-            string course = SanitizePath(courseCmbox.Text);
-            string professor = SanitizePath(professorCmbox.Text);
-
             return Path.Combine(
                 baseImagePath,
-                year,
-                semester,
-                course,
-                professor
+                SanitizePath(yearCmbox.Text),
+                SanitizePath(semesterCmbox.Text),
+                SanitizePath(courseCmbox.Text),
+                SanitizePath(professorCmbox.Text)
             );
         }
 
         private string SanitizePath(string input)
         {
             foreach (char c in Path.GetInvalidFileNameChars())
-            {
                 input = input.Replace(c.ToString(), "");
-            }
             return input.Trim();
         }
+    }
 
-
+    // =========================
+    // SUPPORT MODELS
+    // =========================
+    public class UndoItem
+    {
+        public string FileName { get; set; }
+        public string SourceFilePath { get; set; }
+        public string SavedFilePath { get; set; }
     }
 
     public class ComboItem
