@@ -1,6 +1,6 @@
 ﻿namespace PUP_RMS.Forms
 {
-    partial class frmEditCourse
+    partial class frmEditProfessor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,27 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.txtLastName = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnCancel = new PUP_RMS.RoundedButton();
             this.btnSave = new PUP_RMS.RoundedButton();
-            this.txtCourseDesc = new System.Windows.Forms.TextBox();
-            this.txtCourseCode = new System.Windows.Forms.TextBox();
+            this.txtMiddleInitial = new System.Windows.Forms.TextBox();
+            this.txtFirstName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // txtLastName
+            // 
+            this.txtLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLastName.Location = new System.Drawing.Point(65, 301);
+            this.txtLastName.Name = "txtLastName";
+            this.txtLastName.Size = new System.Drawing.Size(375, 22);
+            this.txtLastName.TabIndex = 27;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(62, 282);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(75, 16);
+            this.label5.TabIndex = 26;
+            this.label5.Text = "Last Name:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Maroon;
-            this.label4.Location = new System.Drawing.Point(143, 44);
+            this.label4.Location = new System.Drawing.Point(134, 55);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(195, 37);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Edit Course";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.label4.Size = new System.Drawing.Size(232, 37);
+            this.label4.TabIndex = 25;
+            this.label4.Text = "Edit Professor";
             // 
             // btnCancel
             // 
@@ -62,10 +81,10 @@
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCancel.Location = new System.Drawing.Point(57, 321);
+            this.btnCancel.Location = new System.Drawing.Point(65, 359);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(162, 37);
-            this.btnCancel.TabIndex = 14;
+            this.btnCancel.TabIndex = 24;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.TextColor = System.Drawing.Color.White;
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -83,80 +102,82 @@
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSave.Location = new System.Drawing.Point(270, 321);
+            this.btnSave.Location = new System.Drawing.Point(278, 359);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(162, 37);
-            this.btnSave.TabIndex = 13;
+            this.btnSave.TabIndex = 23;
             this.btnSave.Text = "Save";
             this.btnSave.TextColor = System.Drawing.Color.White;
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // txtCourseDesc
+            // txtMiddleInitial
             // 
-            this.txtCourseDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCourseDesc.Location = new System.Drawing.Point(57, 244);
-            this.txtCourseDesc.Name = "txtCourseDesc";
-            this.txtCourseDesc.Size = new System.Drawing.Size(375, 22);
-            this.txtCourseDesc.TabIndex = 12;
+            this.txtMiddleInitial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMiddleInitial.Location = new System.Drawing.Point(65, 242);
+            this.txtMiddleInitial.Name = "txtMiddleInitial";
+            this.txtMiddleInitial.Size = new System.Drawing.Size(375, 22);
+            this.txtMiddleInitial.TabIndex = 22;
             // 
-            // txtCourseCode
+            // txtFirstName
             // 
-            this.txtCourseCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCourseCode.Location = new System.Drawing.Point(57, 172);
-            this.txtCourseCode.Name = "txtCourseCode";
-            this.txtCourseCode.Size = new System.Drawing.Size(375, 22);
-            this.txtCourseCode.TabIndex = 11;
+            this.txtFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFirstName.Location = new System.Drawing.Point(65, 183);
+            this.txtFirstName.Name = "txtFirstName";
+            this.txtFirstName.Size = new System.Drawing.Size(375, 22);
+            this.txtFirstName.TabIndex = 21;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(54, 225);
+            this.label3.Location = new System.Drawing.Point(62, 223);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(121, 16);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Course Description";
+            this.label3.Size = new System.Drawing.Size(84, 16);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "Middle Initial:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(54, 153);
+            this.label2.Location = new System.Drawing.Point(62, 164);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 16);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Course Code:";
+            this.label2.Size = new System.Drawing.Size(75, 16);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "First Name:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(52, 111);
+            this.label1.Location = new System.Drawing.Point(60, 122);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(211, 25);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Course Information";
+            this.label1.Size = new System.Drawing.Size(237, 25);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Professor Information";
             // 
-            // frmEditCourse
+            // frmEditProfessor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 450);
+            this.Controls.Add(this.txtLastName);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.txtCourseDesc);
-            this.Controls.Add(this.txtCourseCode);
+            this.Controls.Add(this.txtMiddleInitial);
+            this.Controls.Add(this.txtFirstName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmEditCourse";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmEditCourse";
-            this.Load += new System.EventHandler(this.frmEditCourse_Load);
+            this.Name = "frmEditProfessor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "frmEditProfessor";
+            this.Load += new System.EventHandler(this.frmEditProfessor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,11 +185,13 @@
 
         #endregion
 
+        private System.Windows.Forms.TextBox txtLastName;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private RoundedButton btnCancel;
         private RoundedButton btnSave;
-        private System.Windows.Forms.TextBox txtCourseDesc;
-        private System.Windows.Forms.TextBox txtCourseCode;
+        private System.Windows.Forms.TextBox txtMiddleInitial;
+        private System.Windows.Forms.TextBox txtFirstName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

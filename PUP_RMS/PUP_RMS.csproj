@@ -143,6 +143,12 @@
     <Compile Include="Forms\frmEditCourse.Designer.cs">
       <DependentUpon>frmEditCourse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmEditProfessor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmEditProfessor.Designer.cs">
+      <DependentUpon>frmEditProfessor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmIndividualUpload.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,12 @@
     </Compile>
     <Compile Include="Forms\frmNewCourse.Designer.cs">
       <DependentUpon>frmNewCourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmNewProfessor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmNewProfessor.Designer.cs">
+      <DependentUpon>frmNewProfessor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmProfessor.cs">
       <SubType>Form</SubType>
@@ -241,11 +253,17 @@
     <EmbeddedResource Include="Forms\frmEditCourse.resx">
       <DependentUpon>frmEditCourse.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmEditProfessor.resx">
+      <DependentUpon>frmEditProfessor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmIndividualUpload.resx">
       <DependentUpon>frmIndividualUpload.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmNewCourse.resx">
       <DependentUpon>frmNewCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmNewProfessor.resx">
+      <DependentUpon>frmNewProfessor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmProfessor.resx">
       <DependentUpon>frmProfessor.cs</DependentUpon>

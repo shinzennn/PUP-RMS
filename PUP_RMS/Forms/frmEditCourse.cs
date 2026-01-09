@@ -27,11 +27,10 @@ namespace PUP_RMS.Forms
 
         private void frmEditCourse_Load(object sender, EventArgs e)
         {
-            lblID.Text = courseID.ToString();
 
             if (courseID > 0)
             {
-                SearchCourse();
+                LoadCourse();
             }
         }
 
@@ -45,7 +44,7 @@ namespace PUP_RMS.Forms
             UpdateCourse();
         }
 
-        private void SearchCourse()
+        private void LoadCourse()
         {
             DataTable dt = Core.DbControl.GetData($"SELECT * FROM Course WHERE CourseID = {courseID}");
             if (dt.Rows.Count > 0)
