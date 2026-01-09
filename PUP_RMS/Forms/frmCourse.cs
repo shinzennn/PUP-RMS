@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUP_RMS.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Shapes;
 
 namespace PUP_RMS.Forms
 {
@@ -50,6 +52,17 @@ namespace PUP_RMS.Forms
             dgvCourse.CurrentCell = null;
         }
 
+        private void SearchCourse() 
+        {
+            if(txtSearch.Text != null) 
+            {
+                dgvCourse.DataSource = Core.DbControl.GetData($"SELECT * FROM Course WHERE CourseCode LIKE '%{txtSearch.Text}%' OR CourseDecription LIKE '%{txtSearch.Text}%';");
+                dgvCourse.ClearSelection();
+                dgvCourse.CurrentCell = null;
+            }
+            
+        }
+
         private void btnCreate_Click(object sender, EventArgs e)
         {
             Forms.frmNewCourse newCourseForm = new Forms.frmNewCourse();
@@ -58,6 +71,16 @@ namespace PUP_RMS.Forms
             { 
                 RefreshGrid();
             }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            SearchCourse();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshGrid();
         }
 
         private void dgvCourse_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -76,5 +99,7 @@ namespace PUP_RMS.Forms
             }
             
         }
+
+        
     }
 }
