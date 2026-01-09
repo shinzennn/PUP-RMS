@@ -73,6 +73,24 @@ namespace PUP_RMS.Core
             }
         }
 
+
+        public static bool DeleteGradeSheetByFilename(string filename)
+        {
+            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                string sql = @"DELETE FROM GradeSheet
+                       WHERE Filename = @Filename";
+
+                int rows = conn.Execute(sql, new
+                {
+                    Filename = filename
+                });
+
+                return rows > 0;
+            }
+        }
+
+
         // THIS IS DAPPER METHOD
         public static Admin GetAdmin(string username, string password)
         {
