@@ -475,30 +475,31 @@ namespace PUP_RMS.Forms
 
         }
 
-        private void pnlBySubject_Click(object sender, EventArgs e)
-        {
+     
 
-
-            frmDistributionSubject frm = new frmDistributionSubject();
-            frmDistributionSubject.ShowWithDimmer(this, frm);
-        }
-
-        private void pnlByProgram_Click(object sender, EventArgs e)
+        private void pnlByProgram_Click_1(object sender, EventArgs e)
         {
             frmDistributionProgram frm = new frmDistributionProgram();
             frmDistributionProgram.ShowWithDimmer(this, frm);
         }
 
-        private void pnlByProfessor_Click(object sender, EventArgs e)
+        private void pnlByProfessor_Click_1(object sender, EventArgs e)
         {
             frmDistributionProfessor frm = new frmDistributionProfessor();
             frmDistributionProfessor.ShowWithDimmer(this, frm);
         }
 
-        private void pnlByYear_Sem_Click(object sender, EventArgs e)
+
+        private void pnlByYear_Sem_Click_1(object sender, EventArgs e)
         {
             frmDistributionYear_Sem frm = new frmDistributionYear_Sem();
             frmDistributionYear_Sem.ShowWithDimmer(this, frm);
+        }
+        private void pnlBySubject_Click_1(object sender, EventArgs e)
+        {
+
+            frmDistributionSubject frm = new frmDistributionSubject();
+            frmDistributionSubject.ShowWithDimmer(this, frm);
         }
 
         private void dcTotalGradesheets_Paint(object sender, PaintEventArgs e)
@@ -530,5 +531,33 @@ namespace PUP_RMS.Forms
         {
 
         }
+
+        private void roundedPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void headerPanelCard5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pnlByProgram_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+   
+        private void pnlBySubject_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pnlByYear_Sem_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+
     }
 }
