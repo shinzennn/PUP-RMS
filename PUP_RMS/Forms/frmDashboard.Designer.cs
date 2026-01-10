@@ -295,6 +295,7 @@
             this.headerPanelCard5.BorderThickness = 1;
             this.headerPanelCard5.ContentBackColor = System.Drawing.Color.WhiteSmoke;
             this.headerPanelCard5.Controls.Add(this.tableLayoutPanel2);
+            this.headerPanelCard5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.headerPanelCard5.EnableHoverEffect = false;
             this.headerPanelCard5.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
             this.headerPanelCard5.HeaderFontSize = 15F;
@@ -450,6 +451,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel4.Controls.Add(this.recentActivityLog1, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.headerPanelCard1, 1, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 527);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;

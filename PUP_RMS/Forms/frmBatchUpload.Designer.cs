@@ -199,7 +199,7 @@
             this.uploadBtn.Font = new System.Drawing.Font("Sans Serif Collection", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uploadBtn.Location = new System.Drawing.Point(148, 349);
             this.uploadBtn.Name = "uploadBtn";
-            this.uploadBtn.Size = new System.Drawing.Size(103, 51);
+            this.uploadBtn.Size = new System.Drawing.Size(134, 51);
             this.uploadBtn.TabIndex = 7;
             this.uploadBtn.Text = "Upload";
             this.uploadBtn.UseVisualStyleBackColor = false;
@@ -260,7 +260,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1429, 823);
+            this.ClientSize = new System.Drawing.Size(1386, 788);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.currentImage);
