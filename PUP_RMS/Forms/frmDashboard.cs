@@ -47,6 +47,17 @@ namespace PUP_RMS.Forms
 
             InitializeComponent();
 
+            if(this.cpDriveUsage != null) this.cpDriveUsage.Anchor = AnchorStyles.None;
+
+            // Run the math every time the Dashboard resizes
+            this.Resize += (s, e) => ResizeChart();
+
+            // Also run it when the specific panel holding the chart resizes
+            if (this.cpDriveUsage != null && this.cpDriveUsage.Parent != null)
+            {
+                this.cpDriveUsage.Parent.Resize += (s, e) => ResizeChart();
+            }
+
             //// 3. TARGETED BUFFERING (Top Cards)
             //ForceDoubleBuffer(pnlTotalGradesSheets);
             //ForceDoubleBuffer(pnlTotalSubjects);
@@ -459,6 +470,32 @@ namespace PUP_RMS.Forms
                 }
             }
         }
+
+        private void ResizeChart()
+        {
+            // Safety Check: Make sure the chart exists
+            if (this.cpDriveUsage == null || this.cpDriveUsage.Parent == null) return;
+
+            // 1. Get the container (The TableLayoutPanel cell holding the chart)
+            Control container = this.cpDriveUsage.Parent;
+
+            // 2. Calculate the biggest square that fits (Width vs Height)
+            // We subtract 20 to give it a little breathing room (padding)
+            int size = Math.Min(container.Width, container.Height) - 60;
+
+            // 3. Apply the new size (Only if it's a reasonable size)
+            if (size > 50)
+            {
+                this.cpDriveUsage.Size = new Size(size, size);
+
+                // 4. Force Center (Manually calculate middle position)
+                this.cpDriveUsage.Left = (container.Width - this.cpDriveUsage.Width) / 2;
+                // If you are in a TableLayout, Top centering happens automatically if Anchor is None, 
+                // but this line ensures it works even in a normal Panel:
+                this.cpDriveUsage.Top = (container.Height - this.cpDriveUsage.Height) / 2;
+            }
+        }
+
         private void dgvRecentActivityLog_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void cpStorageCapacity_Click(object sender, EventArgs e) { }
         private void lblStorageUsageDetails_Click(object sender, EventArgs e) { }
@@ -558,6 +595,9 @@ namespace PUP_RMS.Forms
 
         }
 
+        private void cpDriveUsage_Click_1(object sender, EventArgs e)
+        {
 
+        }
     }
 }

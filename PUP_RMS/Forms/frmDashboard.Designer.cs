@@ -60,6 +60,7 @@
             this.pnlByYear_Sem = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProfessor = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProgram = new PUP_RMS.RecordDistributionPanelCard();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.roundedPanel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -71,6 +72,7 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.headerPanelCard1.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // timerStorageUpdate
@@ -163,8 +165,7 @@
             this.headerPanelCard4.BorderRadius = 20;
             this.headerPanelCard4.BorderThickness = 0;
             this.headerPanelCard4.ContentBackColor = System.Drawing.Color.White;
-            this.headerPanelCard4.Controls.Add(this.lblStorageUsageDetails);
-            this.headerPanelCard4.Controls.Add(this.cpDriveUsage);
+            this.headerPanelCard4.Controls.Add(this.tableLayoutPanel6);
             this.headerPanelCard4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.headerPanelCard4.EnableHoverEffect = false;
             this.headerPanelCard4.HeaderBackColor = System.Drawing.SystemColors.ControlLight;
@@ -187,23 +188,25 @@
             // lblStorageUsageDetails
             // 
             this.lblStorageUsageDetails.AutoSize = true;
+            this.lblStorageUsageDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblStorageUsageDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.lblStorageUsageDetails.Location = new System.Drawing.Point(145, 181);
+            this.lblStorageUsageDetails.Location = new System.Drawing.Point(3, 157);
             this.lblStorageUsageDetails.Name = "lblStorageUsageDetails";
-            this.lblStorageUsageDetails.Size = new System.Drawing.Size(42, 13);
+            this.lblStorageUsageDetails.Size = new System.Drawing.Size(348, 30);
             this.lblStorageUsageDetails.TabIndex = 11;
             this.lblStorageUsageDetails.Text = "storage";
             this.lblStorageUsageDetails.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // cpDriveUsage
             // 
+            this.cpDriveUsage.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cpDriveUsage.BackColor = System.Drawing.Color.Transparent;
             this.cpDriveUsage.BarWidth = 20;
             this.cpDriveUsage.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.cpDriveUsage.FontSize = 10;
             this.cpDriveUsage.GradientEnd = System.Drawing.Color.Maroon;
             this.cpDriveUsage.GradientStart = System.Drawing.Color.Maroon;
-            this.cpDriveUsage.Location = new System.Drawing.Point(140, 53);
+            this.cpDriveUsage.Location = new System.Drawing.Point(122, 24);
             this.cpDriveUsage.Maximum = 100;
             this.cpDriveUsage.Minimum = 0;
             this.cpDriveUsage.Name = "cpDriveUsage";
@@ -213,6 +216,7 @@
             this.cpDriveUsage.Text = "circularProgressBar1";
             this.cpDriveUsage.TrackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.cpDriveUsage.Value = 0;
+            this.cpDriveUsage.Click += new System.EventHandler(this.cpDriveUsage_Click_1);
             // 
             // headerPanelCard3
             // 
@@ -300,13 +304,14 @@
             this.headerPanelCard5.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard5.IconHeader")));
             this.headerPanelCard5.IconSize = 30;
             this.headerPanelCard5.Location = new System.Drawing.Point(3, 83);
+            this.headerPanelCard5.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.headerPanelCard5.Name = "headerPanelCard5";
             this.headerPanelCard5.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.headerPanelCard5.ShadowDepth = 4;
             this.headerPanelCard5.ShadowPadding = 5;
             this.headerPanelCard5.ShowHeaderDivider = false;
             this.headerPanelCard5.ShowShadow = true;
-            this.headerPanelCard5.Size = new System.Drawing.Size(1114, 174);
+            this.headerPanelCard5.Size = new System.Drawing.Size(1114, 177);
             this.headerPanelCard5.TabIndex = 16;
             this.headerPanelCard5.Paint += new System.Windows.Forms.PaintEventHandler(this.headerPanelCard5_Paint);
             // 
@@ -327,7 +332,7 @@
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 107F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1082, 107);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1082, 110);
             this.tableLayoutPanel2.TabIndex = 10;
             // 
             // dcRecentlyUploaded
@@ -351,7 +356,7 @@
             this.dcRecentlyUploaded.ShowShadow = true;
             this.dcRecentlyUploaded.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
             this.dcRecentlyUploaded.SideBarWidth = 5;
-            this.dcRecentlyUploaded.Size = new System.Drawing.Size(262, 107);
+            this.dcRecentlyUploaded.Size = new System.Drawing.Size(262, 110);
             this.dcRecentlyUploaded.TabIndex = 12;
             this.dcRecentlyUploaded.ValueFontSize = 24F;
             this.dcRecentlyUploaded.ValueForeColor = System.Drawing.Color.Black;
@@ -378,7 +383,7 @@
             this.dcTotalProfessors.ShowShadow = true;
             this.dcTotalProfessors.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
             this.dcTotalProfessors.SideBarWidth = 5;
-            this.dcTotalProfessors.Size = new System.Drawing.Size(260, 107);
+            this.dcTotalProfessors.Size = new System.Drawing.Size(260, 110);
             this.dcTotalProfessors.TabIndex = 11;
             this.dcTotalProfessors.ValueFontSize = 24F;
             this.dcTotalProfessors.ValueForeColor = System.Drawing.Color.Black;
@@ -405,7 +410,7 @@
             this.dcTotalSubjects.ShowShadow = true;
             this.dcTotalSubjects.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
             this.dcTotalSubjects.SideBarWidth = 5;
-            this.dcTotalSubjects.Size = new System.Drawing.Size(260, 107);
+            this.dcTotalSubjects.Size = new System.Drawing.Size(260, 110);
             this.dcTotalSubjects.TabIndex = 10;
             this.dcTotalSubjects.ValueFontSize = 24F;
             this.dcTotalSubjects.ValueForeColor = System.Drawing.Color.Black;
@@ -432,7 +437,7 @@
             this.dcTotalGradesheets.ShowShadow = true;
             this.dcTotalGradesheets.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
             this.dcTotalGradesheets.SideBarWidth = 5;
-            this.dcTotalGradesheets.Size = new System.Drawing.Size(260, 107);
+            this.dcTotalGradesheets.Size = new System.Drawing.Size(260, 110);
             this.dcTotalGradesheets.TabIndex = 9;
             this.dcTotalGradesheets.ValueFontSize = 24F;
             this.dcTotalGradesheets.ValueForeColor = System.Drawing.Color.Black;
@@ -630,6 +635,22 @@
             this.pnlByProgram.Click += new System.EventHandler(this.pnlByProgram_Click_1);
             this.pnlByProgram.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlByProgram_Paint);
             // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 1;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.Controls.Add(this.lblStorageUsageDetails, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.cpDriveUsage, 0, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(15, 50);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 2;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(354, 187);
+            this.tableLayoutPanel6.TabIndex = 9;
+            // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -646,7 +667,6 @@
             this.roundedPanel3.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.headerPanelCard4.ResumeLayout(false);
-            this.headerPanelCard4.PerformLayout();
             this.headerPanelCard3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentUploads)).EndInit();
             this.headerPanelCard5.ResumeLayout(false);
@@ -654,6 +674,8 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.headerPanelCard1.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -689,5 +711,6 @@
         private RecordDistributionPanelCard pnlByProgram;
         private System.Windows.Forms.Label lblStorageUsageDetails;
         private CircularProgressBar cpDriveUsage;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
     }
 }
