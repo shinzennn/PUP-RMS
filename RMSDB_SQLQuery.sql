@@ -8,7 +8,7 @@ CREATE TABLE Account(
 	Password VARCHAR(50) UNIQUE NOT NULL,
 	FirstName VARCHAR(50) NOT NULL,
 	LastName VARCHAR(50) NOT NULL,
-	UserType VARCHAR(20) NOT NULL
+	AccountType VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE Curriculum(
@@ -77,7 +77,7 @@ CREATE TABLE ActivityLog(
 -- SAMPLE DATA
 
 -- ACCOUNT
-INSERT INTO Account(Username, Password) VALUES('admin', '12345678', 'Bong', 'Montante', 'Admin');
+INSERT INTO Account(Username, Password, FirstName, LastName, AccountType) VALUES('admin', '12345678', 'Bong', 'Montante', 'Admin');
 
 -- CURRICULUM
 INSERT INTO Curriculum(CurriculumYear) VALUES('2021-2025');
@@ -106,7 +106,7 @@ INSERT INTO ProfessorProgram(ProfessorID, ProgramID) VALUES(3, 1);
 INSERT INTO ProfessorProgram(ProfessorID, ProgramID) VALUES(4, 1);
 INSERT INTO ProfessorProgram(ProfessorID, ProgramID) VALUES(5, 1);
 
-SELECT * FROM Admin;
+SELECT * FROM Account;
 SELECT * FROM Curriculum;
 SELECT * FROM Program;
 SELECT * FROM Course;

@@ -22,11 +22,11 @@ namespace PUP_RMS.Core
         // DITO NIYO LAGAY LAHAT NG QUERIES NYO PARA ICALL NA LANG SA IBANG PARTS NG PROGRAM
 
         // THIS IS DAPPER METHOD
-        public static Admin GetAdmin(string username, string password)
+        public static Account GetAdmin(string username, string password)
         {
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
-                var result = conn.QueryFirstOrDefault<Admin>("SELECT * FROM Admin WHERE Username = @Username AND Password = @Password", new { Username = username, Password = password });
+                var result = conn.QueryFirstOrDefault<Account>("SELECT * FROM Account WHERE Username = @Username AND Password = @Password", new { Username = username, Password = password });
                 return result;
             }
         }
