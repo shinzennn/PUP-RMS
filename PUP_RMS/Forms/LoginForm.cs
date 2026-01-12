@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using PUP_RMS.Core;
 using PUP_RMS.Forms;
+using PUP_RMS.Helper;
+using PUP_RMS.Model;
 
 namespace PUP_RMS
 {
@@ -142,6 +144,9 @@ namespace PUP_RMS
 
             if (DbControl.GetAdmin(user, pass) != null)
             {
+                // SETS THE CURRENT ACCOUNT INSTANCE FROM THE DASHBOARD
+                MainDashboard.CurrentAccount = DbControl.GetAdmin(user, pass);
+
                 Properties.Settings.Default.SavedUsername = checkBoxRememberMe.Checked ? user : "";
                 Properties.Settings.Default.SavedPassword = checkBoxRememberMe.Checked ? pass : "";
                 Properties.Settings.Default.RememberMe = checkBoxRememberMe.Checked;
@@ -150,6 +155,8 @@ namespace PUP_RMS
                 MainDashboard dash = new MainDashboard();
                 dash.Show();
                 this.Hide();
+
+                ActivityLogger.LogUserLogin();
             }
             else
             {

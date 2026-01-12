@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PUP_RMS.Helper;
 
 namespace PUP_RMS.Forms
 {
@@ -34,11 +35,12 @@ namespace PUP_RMS.Forms
 
         private void CreateCourse()
         {
-            bool success = Core.DbControl.SetData($"INSERT INTO Course (CourseCode, CourseDecription) VALUES ('{txtCourseCode.Text}', '{txtCourseDesc.Text}')");
+            bool success = Core.DbControl.SetData($"INSERT INTO Course (CourseCode, CourseDescription) VALUES ('{txtCourseCode.Text}', '{txtCourseDesc.Text}')");
 
             if (success)
             {
                 MessageBox.Show("New course has been created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ActivityLogger.LogCourseAddition(txtCourseCode.Text, txtCourseDesc.Text);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

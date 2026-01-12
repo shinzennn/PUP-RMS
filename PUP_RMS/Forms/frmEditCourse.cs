@@ -57,7 +57,7 @@ namespace PUP_RMS.Forms
 
         private void UpdateCourse()
         {
-            bool success = DbControl.SetData($"UPDATE Course SET CourseCode = '{txtCourseCode.Text}', CourseDecription = '{txtCourseDesc.Text}' WHERE CourseID = {courseID}");
+            bool success = DbControl.SetData($"UPDATE Course SET CourseCode = '{txtCourseCode.Text}', CourseDescription = '{txtCourseDesc.Text}' WHERE CourseID = {courseID}");
             if (success)
             {
                 MessageBox.Show("Course has been updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
