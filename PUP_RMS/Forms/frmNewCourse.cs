@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PUP_RMS.Helper;
 
 namespace PUP_RMS.Forms
 {
@@ -39,6 +40,7 @@ namespace PUP_RMS.Forms
             if (success)
             {
                 MessageBox.Show("New course has been created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ActivityLogger.LogCourseAddition(txtCourseCode.Text, txtCourseDesc.Text);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

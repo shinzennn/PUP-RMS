@@ -224,7 +224,9 @@
     <Compile Include="Forms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ActivityLogger.cs" />
     <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\ActivityLog.cs" />
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\GradeSheet.cs" />
     <Compile Include="Model\Professor.cs" />

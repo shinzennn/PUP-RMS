@@ -8,7 +8,13 @@ namespace PUP_RMS.Forms
 {
     public partial class MainDashboard : Form
     {
-        // --- CONSTANTS ---
+        // CURRENT ACCOUNT LOGGED IN
+        public static Model.Account CurrentAccount;
+
+        // --- VARIABLES ---
+        bool uploadExpand = false;
+        private const int UPLOAD_MIN_HEIGHT = 60;
+        private const int UPLOAD_MAX_HEIGHT = 190;
         private const int BUTTON_GAP = 5;
 
         // --- CACHING LOGIC VARIABLES ---
