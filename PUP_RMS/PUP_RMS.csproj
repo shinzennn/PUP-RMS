@@ -74,6 +74,9 @@
     <Compile Include="CustomControls\CircularProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CustomControls\CreateUserButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CustomControls\CustomMsgBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +106,12 @@
     </Compile>
     <Compile Include="CustomControls\SubjectTile.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAccounts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAccounts.Designer.cs">
+      <DependentUpon>frmAccounts.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmDistributionProfessor.cs">
       <SubType>Form</SubType>
@@ -210,6 +219,9 @@
     <Compile Include="StorageMonitor.cs" />
     <EmbeddedResource Include="CustomControls\CustomMsgBox.resx">
       <DependentUpon>CustomMsgBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAccounts.resx">
+      <DependentUpon>frmAccounts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDistributionProfessor.resx">
       <DependentUpon>frmDistributionProfessor.cs</DependentUpon>

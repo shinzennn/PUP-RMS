@@ -37,6 +37,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.headerPanelCard4 = new PUP_RMS.CustomControls.HeaderPanelCard();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.lblStorageUsageDetails = new System.Windows.Forms.Label();
             this.cpDriveUsage = new CircularProgressBar();
             this.headerPanelCard3 = new PUP_RMS.CustomControls.HeaderPanelCard();
@@ -60,11 +61,11 @@
             this.pnlByYear_Sem = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProfessor = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProgram = new PUP_RMS.RecordDistributionPanelCard();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.roundedPanel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.headerPanelCard4.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.headerPanelCard3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentUploads)).BeginInit();
             this.headerPanelCard5.SuspendLayout();
@@ -72,7 +73,6 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.headerPanelCard1.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // timerStorageUpdate
@@ -184,6 +184,22 @@
             this.headerPanelCard4.ShowShadow = true;
             this.headerPanelCard4.Size = new System.Drawing.Size(384, 252);
             this.headerPanelCard4.TabIndex = 13;
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 1;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.Controls.Add(this.lblStorageUsageDetails, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.cpDriveUsage, 0, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(15, 50);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 2;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(354, 187);
+            this.tableLayoutPanel6.TabIndex = 9;
             // 
             // lblStorageUsageDetails
             // 
@@ -332,7 +348,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 107F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1082, 110);
             this.tableLayoutPanel2.TabIndex = 10;
             // 
@@ -637,22 +653,6 @@
             this.pnlByProgram.Click += new System.EventHandler(this.pnlByProgram_Click_1);
             this.pnlByProgram.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlByProgram_Paint);
             // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.ColumnCount = 1;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.Controls.Add(this.lblStorageUsageDetails, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.cpDriveUsage, 0, 0);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(15, 50);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 2;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(354, 187);
-            this.tableLayoutPanel6.TabIndex = 9;
-            // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -669,6 +669,8 @@
             this.roundedPanel3.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.headerPanelCard4.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             this.headerPanelCard3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentUploads)).EndInit();
             this.headerPanelCard5.ResumeLayout(false);
@@ -676,8 +678,6 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.headerPanelCard1.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel6.PerformLayout();
             this.ResumeLayout(false);
 
         }
