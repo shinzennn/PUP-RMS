@@ -9,8 +9,8 @@ namespace PUP_RMS.Model
     public class Professor
     {
         public int ProfessorID { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
+
+        // MUST match the SQL alias
+        public string FullName { get; set; }
     }
 }

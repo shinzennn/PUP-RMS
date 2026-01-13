@@ -21,6 +21,76 @@ namespace PUP_RMS.Core
 
         // DITO NIYO LAGAY LAHAT NG QUERIES NYO PARA ICALL NA LANG SA IBANG PARTS NG PROGRAM
 
+        public static List<Course> GetCourses()
+        {
+            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                return conn.Query<Course>(
+                    "SELECT CourseID, CourseCode, CourseDescription FROM Course"
+                ).ToList();
+            }
+        }
+
+        public static List<Professor> GetProfessors()
+        {
+            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                return conn.Query<Professor>(
+                    @"SELECT ProfessorID,
+              FirstName + ' ' + ISNULL(MiddleName + ' ', '') + LastName AS FullName
+              FROM Professor"
+                ).ToList();
+            }
+        }
+
+        public static bool InsertGradeSheet(
+                    string filename,
+                    string schoolYear,
+                    int semester,
+                    int courseId,
+                    int professorId,
+                    int accountId
+                )
+        {
+            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                string sql = @"INSERT INTO GradeSheet
+                       (Filename, SchoolYear, Semester, CourseID, ProfessorID, AccountID)
+                       VALUES
+                       (@Filename, @SchoolYear, @Semester, @CourseID, @ProfessorID, @AccountID)";
+
+                int rows = conn.Execute(sql, new
+                {
+                    Filename = filename,
+                    SchoolYear = schoolYear,
+                    Semester = semester,
+                    CourseID = courseId,
+                    ProfessorID = professorId,
+                    AccountID = accountId
+                });
+
+                return rows > 0;
+            }
+        }
+
+
+        public static bool DeleteGradeSheetByFilename(string filename)
+        {
+            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                string sql = @"DELETE FROM GradeSheet
+                       WHERE Filename = @Filename";
+
+                int rows = conn.Execute(sql, new
+                {
+                    Filename = filename
+                });
+
+                return rows > 0;
+            }
+        }
+
+
         // THIS IS DAPPER METHOD
         public static Account GetAdmin(string username, string password)
         {
