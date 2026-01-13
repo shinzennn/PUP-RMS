@@ -79,6 +79,15 @@ namespace PUP_RMS.Forms
         {
             this.SuspendLayout();
 
+            this.WindowState = FormWindowState.Normal;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
+            this.MaximizeBox = false;
+            this.MinimizeBox = true;
+            this.ControlBox = true;
+
             textBoxPassword.UseSystemPasswordChar = true;
             textBoxConfirmPassword.UseSystemPasswordChar = true;
 
@@ -307,6 +316,11 @@ namespace PUP_RMS.Forms
         private void roundedPanelConfirmPass_Click(object sender, EventArgs e)
         {
             textBoxConfirmPassword.Focus();
+        }
+
+        private void roundedShadowPanelSignUp_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

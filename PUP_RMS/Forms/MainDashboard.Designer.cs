@@ -40,11 +40,10 @@
             this.btnDashboard = new PUP_RMS.Controls.iconButton();
             this.btnSearch = new PUP_RMS.Controls.iconButton();
             this.flowLayoutPanelUpload = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnUpload = new PUP_RMS.Controls.iconButton();
             this.btnBatchUpload = new PUP_RMS.Controls.iconButton();
-            this.btnIndividUpload = new PUP_RMS.Controls.iconButton();
             this.btnCourse = new PUP_RMS.Controls.iconButton();
             this.btnProfessor = new PUP_RMS.Controls.iconButton();
+            this.btnAccounts = new PUP_RMS.Controls.iconButton();
             this.btnLogout = new PUP_RMS.Controls.iconButton();
             this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
             this.pnlContent.SuspendLayout();
@@ -76,6 +75,7 @@
             this.flowLayoutPanelMain.Controls.Add(this.flowLayoutPanelUpload);
             this.flowLayoutPanelMain.Controls.Add(this.btnCourse);
             this.flowLayoutPanelMain.Controls.Add(this.btnProfessor);
+            this.flowLayoutPanelMain.Controls.Add(this.btnAccounts);
             this.flowLayoutPanelMain.Controls.Add(this.btnLogout);
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
@@ -187,41 +187,11 @@
             // flowLayoutPanelUpload
             // 
             this.flowLayoutPanelUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.flowLayoutPanelUpload.Controls.Add(this.btnUpload);
             this.flowLayoutPanelUpload.Controls.Add(this.btnBatchUpload);
-            this.flowLayoutPanelUpload.Controls.Add(this.btnIndividUpload);
             this.flowLayoutPanelUpload.Location = new System.Drawing.Point(3, 353);
             this.flowLayoutPanelUpload.Name = "flowLayoutPanelUpload";
             this.flowLayoutPanelUpload.Size = new System.Drawing.Size(244, 60);
             this.flowLayoutPanelUpload.TabIndex = 0;
-            // 
-            // btnUpload
-            // 
-            this.btnUpload.ActiveColor = System.Drawing.Color.Goldenrod;
-            this.btnUpload.BackColor = System.Drawing.Color.Maroon;
-            this.btnUpload.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnUpload.BorderRadius = 10;
-            this.btnUpload.BorderSize = 0;
-            this.btnUpload.FlatAppearance.BorderSize = 0;
-            this.btnUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpload.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnUpload.ForeColor = System.Drawing.Color.White;
-            this.btnUpload.HoverColor = System.Drawing.Color.Goldenrod;
-            this.btnUpload.IconSize = 30;
-            this.btnUpload.Image = ((System.Drawing.Image)(resources.GetObject("btnUpload.Image")));
-            this.btnUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpload.IndentLevel = 0;
-            this.btnUpload.IsActive = false;
-            this.btnUpload.Location = new System.Drawing.Point(0, 0);
-            this.btnUpload.Margin = new System.Windows.Forms.Padding(0);
-            this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(244, 60);
-            this.btnUpload.TabIndex = 7;
-            this.btnUpload.Text = "Upload";
-            this.btnUpload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnUpload.UseVisualStyleBackColor = false;
-            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
             // 
             // btnBatchUpload
             // 
@@ -232,52 +202,24 @@
             this.btnBatchUpload.BorderSize = 0;
             this.btnBatchUpload.FlatAppearance.BorderSize = 0;
             this.btnBatchUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBatchUpload.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBatchUpload.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnBatchUpload.ForeColor = System.Drawing.Color.White;
             this.btnBatchUpload.HoverColor = System.Drawing.Color.Goldenrod;
             this.btnBatchUpload.IconSize = 30;
             this.btnBatchUpload.Image = ((System.Drawing.Image)(resources.GetObject("btnBatchUpload.Image")));
             this.btnBatchUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBatchUpload.IndentLevel = 1;
+            this.btnBatchUpload.IndentLevel = 0;
             this.btnBatchUpload.IsActive = false;
-            this.btnBatchUpload.Location = new System.Drawing.Point(0, 60);
+            this.btnBatchUpload.Location = new System.Drawing.Point(0, 0);
             this.btnBatchUpload.Margin = new System.Windows.Forms.Padding(0);
             this.btnBatchUpload.Name = "btnBatchUpload";
             this.btnBatchUpload.Size = new System.Drawing.Size(244, 60);
-            this.btnBatchUpload.TabIndex = 8;
+            this.btnBatchUpload.TabIndex = 7;
             this.btnBatchUpload.Text = "Batch Upload";
             this.btnBatchUpload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnBatchUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnBatchUpload.UseVisualStyleBackColor = false;
-            this.btnBatchUpload.Click += new System.EventHandler(this.btnBatchUpload_Click);
-            // 
-            // btnIndividUpload
-            // 
-            this.btnIndividUpload.ActiveColor = System.Drawing.Color.Goldenrod;
-            this.btnIndividUpload.BackColor = System.Drawing.Color.Maroon;
-            this.btnIndividUpload.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnIndividUpload.BorderRadius = 10;
-            this.btnIndividUpload.BorderSize = 0;
-            this.btnIndividUpload.FlatAppearance.BorderSize = 0;
-            this.btnIndividUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnIndividUpload.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIndividUpload.ForeColor = System.Drawing.Color.White;
-            this.btnIndividUpload.HoverColor = System.Drawing.Color.Goldenrod;
-            this.btnIndividUpload.IconSize = 30;
-            this.btnIndividUpload.Image = ((System.Drawing.Image)(resources.GetObject("btnIndividUpload.Image")));
-            this.btnIndividUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnIndividUpload.IndentLevel = 1;
-            this.btnIndividUpload.IsActive = false;
-            this.btnIndividUpload.Location = new System.Drawing.Point(0, 120);
-            this.btnIndividUpload.Margin = new System.Windows.Forms.Padding(0);
-            this.btnIndividUpload.Name = "btnIndividUpload";
-            this.btnIndividUpload.Size = new System.Drawing.Size(244, 60);
-            this.btnIndividUpload.TabIndex = 9;
-            this.btnIndividUpload.Text = "Individual Upload";
-            this.btnIndividUpload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnIndividUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnIndividUpload.UseVisualStyleBackColor = false;
-            this.btnIndividUpload.Click += new System.EventHandler(this.btnIndividUpload_Click);
+            this.btnBatchUpload.Click += new System.EventHandler(this.btnUpload_Click);
             // 
             // btnCourse
             // 
@@ -333,6 +275,33 @@
             this.btnProfessor.UseVisualStyleBackColor = false;
             this.btnProfessor.Click += new System.EventHandler(this.btnProfessor_Click);
             // 
+            // btnAccounts
+            // 
+            this.btnAccounts.ActiveColor = System.Drawing.Color.Goldenrod;
+            this.btnAccounts.BackColor = System.Drawing.Color.Maroon;
+            this.btnAccounts.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnAccounts.BorderRadius = 10;
+            this.btnAccounts.BorderSize = 0;
+            this.btnAccounts.FlatAppearance.BorderSize = 0;
+            this.btnAccounts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAccounts.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnAccounts.ForeColor = System.Drawing.Color.White;
+            this.btnAccounts.HoverColor = System.Drawing.Color.Goldenrod;
+            this.btnAccounts.IconSize = 30;
+            this.btnAccounts.Image = ((System.Drawing.Image)(resources.GetObject("btnAccounts.Image")));
+            this.btnAccounts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAccounts.IndentLevel = 0;
+            this.btnAccounts.IsActive = false;
+            this.btnAccounts.Location = new System.Drawing.Point(3, 551);
+            this.btnAccounts.Name = "btnAccounts";
+            this.btnAccounts.Size = new System.Drawing.Size(244, 60);
+            this.btnAccounts.TabIndex = 14;
+            this.btnAccounts.Text = "Accounts";
+            this.btnAccounts.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAccounts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAccounts.UseVisualStyleBackColor = false;
+            this.btnAccounts.Click += new System.EventHandler(this.btnAccounts_Click);
+            // 
             // btnLogout
             // 
             this.btnLogout.ActiveColor = System.Drawing.Color.Goldenrod;
@@ -350,7 +319,7 @@
             this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogout.IndentLevel = 0;
             this.btnLogout.IsActive = false;
-            this.btnLogout.Location = new System.Drawing.Point(3, 551);
+            this.btnLogout.Location = new System.Drawing.Point(3, 617);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(244, 60);
             this.btnLogout.TabIndex = 8;
@@ -359,11 +328,6 @@
             this.btnLogout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLogout.UseVisualStyleBackColor = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
-            // 
-            // tmrUploadTransition
-            // 
-            this.tmrUploadTransition.Interval = 10;
-            this.tmrUploadTransition.Tick += new System.EventHandler(this.tmrUploadTransition_Tick);
             // 
             // MainDashboard
             // 
@@ -394,9 +358,7 @@
         private Controls.iconButton btnSearch;
         private Controls.iconButton btnDashboard;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelUpload;
-        private Controls.iconButton btnUpload;
         private Controls.iconButton btnBatchUpload;
-        private Controls.iconButton btnIndividUpload;
         private Controls.iconButton btnLogout;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
@@ -405,5 +367,6 @@
         private System.Windows.Forms.Label label1;
         private Controls.iconButton btnCourse;
         private Controls.iconButton btnProfessor;
+        private Controls.iconButton btnAccounts;
     }
 }

@@ -51,13 +51,13 @@ namespace PUP_RMS.Forms
             {
                 DataRow row = dt.Rows[0];
                 txtCourseCode.Text = row["CourseCode"].ToString();
-                txtCourseDesc.Text = row["CourseDecription"].ToString();
+                txtCourseDesc.Text = row["CourseDescription"].ToString();
             }
         }
 
         private void UpdateCourse()
         {
-            bool success = DbControl.SetData($"UPDATE Course SET CourseCode = '{txtCourseCode.Text}', CourseDecription = '{txtCourseDesc.Text}' WHERE CourseID = {courseID}");
+            bool success = DbControl.SetData($"UPDATE Course SET CourseCode = '{txtCourseCode.Text}', CourseDescription = '{txtCourseDesc.Text}' WHERE CourseID = {courseID}");
             if (success)
             {
                 MessageBox.Show("Course has been updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

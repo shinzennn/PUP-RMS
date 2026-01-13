@@ -34,7 +34,7 @@ namespace PUP_RMS.Forms
 
         private void CreateCourse()
         {
-            bool success = Core.DbControl.SetData($"INSERT INTO Course (CourseCode, CourseDecription) VALUES ('{txtCourseCode.Text}', '{txtCourseDesc.Text}')");
+            bool success = Core.DbControl.SetData($"INSERT INTO Course (CourseCode, CourseDescription) VALUES ('{txtCourseCode.Text}', '{txtCourseDesc.Text}')");
 
             if (success)
             {

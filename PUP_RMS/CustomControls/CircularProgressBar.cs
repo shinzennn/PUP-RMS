@@ -68,7 +68,6 @@ public class CircularProgressBar : Control
         }
     }
 
-    // --- COMPATIBILITY FIX ---
     [Category("Appearance")]
     public Color ProgressColor
     {
@@ -132,7 +131,6 @@ public class CircularProgressBar : Control
     // ==========================================================
     public CircularProgressBar()
     {
-        // Enable Transparent Background Support
         SetStyle(ControlStyles.SupportsTransparentBackColor, true);
         SetStyle(ControlStyles.UserPaint, true);
         SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -150,15 +148,12 @@ public class CircularProgressBar : Control
     // ==========================================================
     protected override void OnPaint(PaintEventArgs e)
     {
-        // Safety Check
         if (this.Width <= 0 || this.Height <= 0) return;
 
-        // Graphics Settings
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
         e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
         e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-        // 1. Setup Areas
         Rectangle rect = this.ClientRectangle;
         Rectangle arcRect = new Rectangle(
             rect.X + _barWidth / 2,
@@ -168,7 +163,7 @@ public class CircularProgressBar : Control
 
         if (arcRect.Width <= 0 || arcRect.Height <= 0) return;
 
-        // 2. Draw Track (Subtle Gray)
+        // 2. Draw Track
         using (Pen trackPen = new Pen(_trackColor, _barWidth))
         {
             e.Graphics.DrawEllipse(trackPen, arcRect);
@@ -179,7 +174,6 @@ public class CircularProgressBar : Control
         {
             float sweepAngle = (_maximum > 0) ? 360f * _value / _maximum : 0;
 
-            // Use the Full Rectangle for the Brush to ensure the gradient stretches nicely
             using (LinearGradientBrush brush = new LinearGradientBrush(
                 rect, _gradientStart, _gradientEnd, 45f))
             {
@@ -192,7 +186,7 @@ public class CircularProgressBar : Control
             }
         }
 
-        // 4. Draw Center Circle (The Hole)
+        // 4. Draw Center Circle
         int innerOffset = _barWidth;
         Rectangle innerRect = new Rectangle(
             rect.X + innerOffset,
@@ -203,9 +197,7 @@ public class CircularProgressBar : Control
 
         if (innerRect.Width > 0)
         {
-            // A. Draw Soft Shadow (Makes it float)
             int shadowShift = 4;
-            // Very transparent black (Alpha = 15) for a subtle, clean shadow
             using (SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(15, 0, 0, 0)))
             {
                 e.Graphics.FillEllipse(shadowBrush,
@@ -215,7 +207,6 @@ public class CircularProgressBar : Control
                     innerRect.Height);
             }
 
-            // B. Draw Inner Circle (With very subtle gradient)
             using (LinearGradientBrush centerBrush = new LinearGradientBrush(
                 innerRect, _centerColorStart, _centerColorEnd, 65f))
             {
@@ -223,24 +214,38 @@ public class CircularProgressBar : Control
             }
         }
 
-        // 5. Draw Text (Gray Color for professional look)
+        // 5. Draw Text (Percentage and "Used" Label)
         int percent = (_maximum > 0) ? (int)((float)_value / _maximum * 100) : 0;
-        string text = $"{percent}%";
+        string mainText = $"{percent}%";
+        string subText = "Used";
 
-        SizeF textSize = e.Graphics.MeasureString(text, this.Font);
-        PointF textPoint = new PointF(
-            (this.Width - textSize.Width) / 2,
-            (this.Height - textSize.Height) / 2);
+        // Draw Main Percentage Text
+        SizeF mainTextSize = e.Graphics.MeasureString(mainText, this.Font);
+        PointF mainTextPoint = new PointF(
+            (this.Width - mainTextSize.Width) / 2,
+            (this.Height - mainTextSize.Height) / 2 - (mainTextSize.Height / 4)); // Shift up slightly
 
-        using (SolidBrush textBrush = new SolidBrush(Color.DimGray))
+        using (SolidBrush textBrush = new SolidBrush(Color.FromArgb(44, 54, 79))) // Dark slate for percentage
         {
-            e.Graphics.DrawString(text, this.Font, textBrush, textPoint);
+            e.Graphics.DrawString(mainText, this.Font, textBrush, mainTextPoint);
+        }
+
+        // Draw "Used" Subtext
+        using (Font subFont = new Font("Segoe UI", _fontSize * 0.7f, FontStyle.Regular))
+        using (SolidBrush subBrush = new SolidBrush(Color.Gray))
+        {
+            SizeF subTextSize = e.Graphics.MeasureString(subText, subFont);
+            PointF subTextPoint = new PointF(
+                (this.Width - subTextSize.Width) / 2,
+                mainTextPoint.Y + mainTextSize.Height - 5); // Positioned directly under main text
+
+            e.Graphics.DrawString(subText, subFont, subBrush, subTextPoint);
         }
     }
 
     protected override void OnResize(EventArgs e)
     {
-        this.Height = this.Width; // Keep Square
+        this.Height = this.Width;
         base.OnResize(e);
     }
 }
