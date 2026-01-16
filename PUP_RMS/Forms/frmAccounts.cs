@@ -35,5 +35,7 @@ namespace PUP_RMS.Forms
         {
 
         }
+
+        private void headerPanelCard1_Paint(object sender, PaintEventArgs e){}
     }
 }
