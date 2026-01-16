@@ -2,11 +2,14 @@
 using PUP_RMS.Forms;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Dapper;
 
 namespace PUP_RMS.Helper
 {
@@ -15,12 +18,21 @@ namespace PUP_RMS.Helper
         public static void LogActivity(int account_id, string activityDescription)
         {
             DateTime date = DateTime.Now;
-            string query = $"INSERT INTO ActivityLog (AccountID, ActivityDescription, ActivityDate) " +
-                           $"VALUES ({account_id}, '{activityDescription}', '{date}')";
-            bool success = DbControl.SetData(query);
-            if (!success)
+            using (IDbConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
             {
-                MessageBox.Show("Failed to log activity.");
+                string query = $"INSERT INTO ActivityLog (AccountID, ActivityDescription, ActivityDate) " +
+                               $"VALUES (@account_id, '@activity_desc', @activity_date)";
+                int rowsAffected = conn.Execute(query, new
+                {
+                    account_id = account_id,
+                    activity_desc = activityDescription,
+                    activity_date = date
+                });
+
+                if (rowsAffected == 0)
+                { 
+                    MessageBox.Show("Failed to log activity.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
         

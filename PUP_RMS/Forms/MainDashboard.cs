@@ -214,6 +214,13 @@ namespace PUP_RMS.Forms
             // Directly show the Batch Upload Form
             ShowForm(new frmBatchUpload());
         }
+        private void btnProgram_Click(object sender, EventArgs e)
+        {
+            if (currentActiveButton == sender) return;
+            ActivateButton(sender);
+
+            ShowForm(new frmProgram());
+        }
 
         private void btnCourse_Click(object sender, EventArgs e)
         {
@@ -229,15 +236,12 @@ namespace PUP_RMS.Forms
             ShowForm(new frmProfessor());
         }
 
-        // If you created the new Settings/Accounts button:
-        /*
         private void btnAccounts_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
             ActivateButton(sender);
-            ShowForm(new frmAccounts()); // Or whatever your form is named
+            ShowForm(new frmAccounts());
         }
-        */
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
@@ -253,12 +257,7 @@ namespace PUP_RMS.Forms
 
         private void label1_Click(object sender, EventArgs e) { }
 
-        private void btnAccounts_Click(object sender, EventArgs e)
-        {
-            if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(new frmAccounts());
-        }
+
 
         private void iconButton1_Click(object sender, EventArgs e)
         {

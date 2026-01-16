@@ -5,62 +5,50 @@ USE RMSDB;
 CREATE TABLE Account(
 	AccountID INT IDENTITY(1,1) PRIMARY KEY,
 	Username VARCHAR(50) UNIQUE NOT NULL,
-	Password VARCHAR(50) UNIQUE NOT NULL,
+	Password VARCHAR(50) NOT NULL,
 	FirstName VARCHAR(50) NOT NULL,
 	LastName VARCHAR(50) NOT NULL,
 	AccountType VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE Curriculum(
-	CurriculumID INT IDENTITY(1,1) PRIMARY KEY,
-	CurriculumYear VARCHAR(20) NOT NULL,
-);
-
 CREATE TABLE Program(
 	ProgramID INT IDENTITY(1,1) PRIMARY KEY,
 	ProgramCode VARCHAR(20) NOT NULL,
-	ProgramDescription VARCHAR(50) NOT NULL,
-	CurriculumID INT
-	
-	CONSTRAINT FK_Curriculum_Program FOREIGN KEY (CurriculumID) REFERENCES Curriculum(CurriculumID)
+	ProgramDescription VARCHAR(100) NOT NULL,
 );
 
 CREATE TABLE Course(
 	CourseID INT IDENTITY(1,1) PRIMARY KEY,
 	CourseCode VARCHAR(20) NOT NULL,
-	CourseDescription VARCHAR(50) NOT NULL,
-	ProgramID INT,
-
-	CONSTRAINT FK_Program_Course FOREIGN KEY (ProgramID) REFERENCES Program(ProgramID)
+	CourseDescription VARCHAR(100) NOT NULL,
+    CurriculumYear VARCHAR(10)
 );
 
-CREATE TABLE Professor(
-	ProfessorID INT IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE Faculty(
+	FacultyID INT IDENTITY(1,1) PRIMARY KEY,
 	FirstName VARCHAR(50) NOT NULL,
 	MiddleName VARCHAR(20),
 	LastName VARCHAR(50) NOT NULL,
-	Suffix VARCHAR(10)
-);
-
-CREATE TABLE ProfessorProgram(
-	ProfessorID INT,
-	ProgramID INT,
-
-	CONSTRAINT FK_ProfessorID_ProfessorProgram FOREIGN KEY (ProfessorID) REFERENCES Professor(ProfessorID),
-	CONSTRAINT FK_ProgramID_ProfessorProgram FOREIGN KEY (ProgramID) REFERENCES Program(ProgramID)
+	Suffix VARCHAR(10),
+	Initials VARCHAR(20)
 );
 
 CREATE TABLE GradeSheet(
 	GradeSheetID INT IDENTITY(1,1) PRIMARY KEY,
 	Filename VARCHAR(100) UNIQUE NOT NULL,
+    Filepath VARCHAR(200) NOT NULL,
 	SchoolYear VARCHAR(20) NOT NULL,
 	Semester INT,
+    ProgramID INT,
+    YearLevel INT,
 	CourseID INT,
-	ProfessorID INT,
+	FacultyID INT,
+    PageNumber INT,
 	AccountID INT,
 
+    CONSTRAINT FK_ProgramID_GradeSheet FOREIGN KEY (ProgramID) REFERENCES Program(ProgramID),
 	CONSTRAINT FK_CourseID_GradeSheet FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
-	CONSTRAINT FK_ProfessorID_GradeSheet FOREIGN KEY (ProfessorID) REFERENCES Professor(ProfessorID),
+	CONSTRAINT FK_FacultyID_GradeSheet FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID),
 	CONSTRAINT FK_AccountID_GradeSheet FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
 );
 
@@ -79,89 +67,703 @@ CREATE TABLE ActivityLog(
 -- ACCOUNT
 INSERT INTO Account(Username, Password, FirstName, LastName, AccountType) VALUES('admin', '12345678', 'Bong', 'Montante', 'Admin');
 
--- CURRICULUM
-INSERT INTO Curriculum(CurriculumYear) VALUES('2021-2025');
-
 -- PROGRAM
-INSERT INTO Program(ProgramCode, ProgramDescription, CurriculumID) VALUES('BSIT-LQ', 'Bachelor of Science in Information Technology', 1);
+INSERT INTO Program(ProgramCode, ProgramDescription) VALUES('BSIT-LQ', 'Bachelor of Science in Information Technology');
+INSERT INTO Program(ProgramCode, ProgramDescription) VALUES('DIT-LQ', 'Diploma in Information Technology');
+INSERT INTO Program(ProgramCode, ProgramDescription) VALUES('DICT-LQ', 'Diploma in Information Communication Technology');
 
 -- COURSE
-INSERT INTO Course(CourseCode, CourseDescription, ProgramID) VALUES('COMP 015', 'Fundamentals of Research', 1);
-INSERT INTO Course(CourseCode, CourseDescription, ProgramID) VALUES('COMP 016', 'Web Development', 1);
-INSERT INTO Course(CourseCode, CourseDescription, ProgramID) VALUES('COMP 017', 'Multimedia', 1);
-INSERT INTO Course(CourseCode, CourseDescription, ProgramID) VALUES('COMP 018', 'Database Administration', 1);
-INSERT INTO Course(CourseCode, CourseDescription, ProgramID) VALUES('INTE 301', 'Systems Integration and Architecture 1', 1);
+INSERT INTO Course(CourseCode, CourseDescription, CurriculumYear) VALUES('ACCO 014', 'Principles of Accounting', '22-23');
+INSERT INTO Course(CourseCode, CourseDescription, CurriculumYear) VALUES('COMP 001', 'Introduction to Computing', '22-23');
+INSERT INTO Course(CourseCode, CourseDescription, CurriculumYear) VALUES('COMP 002', 'Computer Programming 1', '22-23');
+INSERT INTO Course(CourseCode, CourseDescription, CurriculumYear) VALUES('ACCO 20213', 'Principles of Accounting', '18-19');
+INSERT INTO Course(CourseCode, CourseDescription, CurriculumYear) VALUES('COMP 20013', 'Introduction to Computing', '18-19');
+INSERT INTO Course(CourseCode, CourseDescription, CurriculumYear) VALUES('COMP 20023', 'Computer Programming 1', '18-19');
 
--- PROFESSOR
-INSERT INTO Professor(FirstName, MiddleName, LastName) VALUES('Mark Vence', 'V' , 'Dungca');
-INSERT INTO Professor(FirstName, MiddleName, LastName) VALUES('Mario', 'S' , 'Enteria');
-INSERT INTO Professor(FirstName, MiddleName, LastName) VALUES('Icon', 'C' , 'Obmerga');
-INSERT INTO Professor(FirstName, MiddleName, LastName) VALUES('Marie Andrea', 'E' , 'Zurbano');
-INSERT INTO Professor(FirstName, MiddleName, LastName) VALUES('Tito Ernesto', 'Z' , 'Loreto');
+-- FACULTY
+INSERT INTO Faculty(FirstName, MiddleName, LastName, Initials) VALUES('Mark Vence', 'V' , 'Dungca', 'DUNGCAMVV');
+INSERT INTO Faculty(FirstName, MiddleName, LastName, Initials) VALUES('Mario', 'S' , 'Enteria', 'ENTERIAMS');
+INSERT INTO Faculty(FirstName, MiddleName, LastName, Initials) VALUES('Icon', 'C' , 'Obmerga', 'OBMERGAIC');
+INSERT INTO Faculty(FirstName, MiddleName, LastName, Initials) VALUES('Marie Andrea', 'E' , 'Zurbano', 'ZURBANOMAE');
+INSERT INTO Faculty(FirstName, MiddleName, LastName, Initials) VALUES('Tito Ernesto', 'Z' , 'Loreto', 'LORETOTEZ');
 
--- PROFESSOR-PROGRAM
-INSERT INTO ProfessorProgram(ProfessorID, ProgramID) VALUES(1, 1);
-INSERT INTO ProfessorProgram(ProfessorID, ProgramID) VALUES(2, 1);
-INSERT INTO ProfessorProgram(ProfessorID, ProgramID) VALUES(3, 1);
-INSERT INTO ProfessorProgram(ProfessorID, ProgramID) VALUES(4, 1);
-INSERT INTO ProfessorProgram(ProfessorID, ProgramID) VALUES(5, 1);
+-- GRADESHEET
+INSERT INTO GradeSheet (Filename, Filepath, SchoolYear, Semester, ProgramID, YearLevel, CourseID, FacultyID, PageNumber, AccountID)
+VALUES ('BSIT_IT101_S1_Y1.pdf', 'C:/Uploads/2025/', '2025-2026', 1, 1, 1, 1, 1, 1, 1);
+
+-- Example 2: Second page of the same report
+INSERT INTO GradeSheet (Filename, Filepath, SchoolYear, Semester, ProgramID, YearLevel, CourseID, FacultyID, PageNumber, AccountID)
+VALUES ('BSIT_IT101_S1_Y1_P2.pdf', 'C:/Uploads/2025/', '2025-2026', 1, 1, 1, 1, 1, 2, 1);
 
 SELECT * FROM Account;
-SELECT * FROM Curriculum;
 SELECT * FROM Program;
 SELECT * FROM Course;
-SELECT * FROM Professor;
-SELECT * FROM ProfessorProgram;
+SELECT * FROM Faculty;
+SELECT * FROM GradeSheet;
+SELECT * FROM ActivityLog;
 
--- GAWA NI RENZ
--- STORED PROCEDURE TO SEARCH COURSES BASED ON FILTERS
-CREATE PROCEDURE sp_SearchCourses
-    @ProgramID INT = NULL,
-    @SchoolYear VARCHAR(20) = NULL,
-    @CurriculumYear VARCHAR(20) = NULL,
-    @Semester INT = NULL
+
+-- STORED PROCEDURES --
+
+-- 1. COURSE STORED PROCEDURES ///
+-- 1.1. CREATE COURSE //
+CREATE PROCEDURE sp_CreateCourse
+    @CourseCode VARCHAR(20),
+    @CourseDescription VARCHAR(50),
+    @CurriculumYear VARCHAR(10)
 AS
 BEGIN
-    SELECT DISTINCT
-        c.CourseID,
-        c.CourseCode,
-        c.CourseDescription,
-        p.ProgramCode,
-        p.ProgramDescription,
-        cur.CurriculumYear
-    FROM Course c
-    INNER JOIN Program p 
-        ON c.ProgramID = p.ProgramID
-    INNER JOIN Curriculum cur 
-        ON p.CurriculumID = cur.CurriculumID
-    LEFT JOIN GradeSheet gs 
-        ON c.CourseID = gs.CourseID
-    WHERE
-        (@ProgramID IS NULL OR p.ProgramID = @ProgramID)
-        AND (@CurriculumYear IS NULL OR cur.CurriculumYear = @CurriculumYear)
-        AND (@SchoolYear IS NULL OR gs.SchoolYear = @SchoolYear)
-        AND (@Semester IS NULL OR gs.Semester = @Semester)
-    ORDER BY
-        c.CourseCode;
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        INSERT INTO Course (CourseCode, CourseDescription, CurriculumYear)
+        VALUES (@CourseCode, @CourseDescription, @CurriculumYear);
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- UNDO IF ANYTHING GOES WRONG
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        -- RAISE THE ERROR TO C#
+        THROW;
+    END CATCH
 END
-GO
 
--- show all courses
-EXEC sp_SearchCourses;
+-- 1.2. GET ALL COURSE DESCRIPTION //
+CREATE PROCEDURE sp_GetAllCourseDescription
+AS
+BEGIN
+    SET NOCOUNT ON;
 
--- show courses by program
-EXEC sp_SearchCourses @ProgramID = 1;
+    WITH TrackedCourses AS (
+        SELECT 
+            CourseID, 
+            CourseCode, 
+            CourseDescription, 
+            CurriculumYear,
+            -- Partition by the duplicate column, order by ID to get the first occurrence
+            ROW_NUMBER() OVER (
+                PARTITION BY CourseDescription 
+                ORDER BY CourseID ASC
+            ) AS RowNum
+        FROM Course
+    )
+    SELECT 
+        CourseID, 
+        CourseDescription
+    FROM TrackedCourses
+    WHERE RowNum = 1; -- Only take the first instance of each description
+END
 
--- show courses school year & semester
-EXEC sp_SearchCourses 
-    @SchoolYear = '2024-2025',
-    @Semester = 1;
+-- 1.3. GET ALL COURSE CODE PER COURSE DESCRIPTION //
+CREATE PROCEDURE sp_GetAllCourseCodePerDescription
+    @CourseDescription VARCHAR(100)
+AS
+BEGIN
+    SELECT
+        CourseID,
+        CourseCode,
+        CurriculumYear
+    FROM
+        Course
+    WHERE
+        CourseDescription = @CourseDescription;
+END
 
--- show base on all filter
-EXEC sp_SearchCourses 
-    @ProgramID = 1,
-    @CurriculumYear = '2021-2025',
-    @SchoolYear = '2024-2025',
-    @Semester = 2;
+-- 1.4. SEARCH COURSE //
+CREATE PROCEDURE sp_SearchCourse
+    @CurriculumYear VARCHAR(10) = NULL,
+    @SearchTerm VARCHAR(100) = NULL,
+    @ProgramID INT = NULL -- New Parameter
+AS
+BEGIN
+    -- Prepare the search filter
+    DECLARE @Filter VARCHAR(102) = '%' + ISNULL(@SearchTerm, '') + '%';
 
--- END-GAWA NI RENZ
+    SET NOCOUNT ON;
+
+    WITH FilteredAndTracked AS (
+        SELECT 
+            CourseID, 
+            CourseCode, 
+            CourseDescription, 
+            CurriculumYear,
+            ROW_NUMBER() OVER (
+                PARTITION BY CourseDescription 
+                ORDER BY CourseID ASC
+            ) AS RowNum
+        FROM Course c
+        WHERE 
+            (@CurriculumYear IS NULL OR c.CurriculumYear = @CurriculumYear)
+            AND (@SearchTerm IS NULL 
+                 OR c.CourseCode LIKE @Filter 
+                 OR c.CourseDescription LIKE @Filter)
+            -- Filter by ProgramID via the GradeSheet table
+            AND (@ProgramID IS NULL OR EXISTS (
+                SELECT 1 
+                FROM GradeSheet gs 
+                WHERE gs.CourseID = c.CourseID 
+                AND gs.ProgramID = @ProgramID
+            ))
+    )
+    SELECT 
+        CourseID, 
+        CourseDescription
+    FROM 
+        FilteredAndTracked
+    WHERE 
+        RowNum = 1;
+END
+
+-- 1.5. UPDATE COURSE //
+CREATE PROCEDURE sp_UpdateCourse
+    @CourseID INT,
+    @CourseCode VARCHAR(20),
+    @CourseDescription VARCHAR(100),
+    @CurriculumYear VARCHAR(10)
+AS
+BEGIN
+    UPDATE 
+        Course
+    SET 
+        CourseCode = @CourseCode,
+        CourseDescription = @CourseDescription,
+        CurriculumYear = @CurriculumYear
+    WHERE 
+        CourseID = @CourseID;
+END
+
+-- 1.6. DELETE COURSE //
+CREATE PROCEDURE sp_DeleteCourse
+    @CourseID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- CANCEL DELETE IF COURSE IS LINKED TO GRADESHEET
+    IF EXISTS (SELECT 1 FROM GradeSheet WHERE CourseID = @CourseID)
+    BEGIN
+        RAISERROR('Cannot delete: This course is linked to existing Grade Sheets.', 16, 1);
+        RETURN;
+    END
+
+    -- PERFORM DELETE IT NOT LINKED
+    DELETE FROM Course WHERE CourseID = @CourseID;
+END
+
+
+-- 2. PROGRAM STORED PROCEDURE ///
+-- 2.1. CREATE PROGRAM //
+CREATE PROCEDURE sp_CreateProgram
+	@ProgramCode VARCHAR(20),
+	@ProgramDescription VARCHAR(100)
+AS
+BEGIN
+	INSERT INTO Program (ProgramCode, ProgramDescription)
+	VALUES (@ProgramCode, @ProgramDescription);
+END
+
+-- 2.2. GET ALL PROGRAM //
+CREATE PROCEDURE sp_GetAllProgram
+AS
+BEGIN
+	SELECT
+		ProgramCode,
+		ProgramDescription
+	FROM
+		Program
+END
+
+-- 2.3. SEARCH PROGRAM //
+CREATE PROCEDURE sp_SearchProgram
+    @SearchTerm VARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @Filter VARCHAR(52) = '%' + @SearchTerm + '%';
+
+    SELECT 
+        ProgramID,
+        ProgramCode,
+        ProgramDescription
+    FROM 
+        Program
+    WHERE 
+        ProgramCode LIKE @Filter 
+        OR ProgramDescription LIKE @Filter;
+END
+
+-- 2.4. UPDATE PROGRAM //
+CREATE PROCEDURE sp_UpdateProgram
+	@ProgramID INT,
+	@ProgramCode VARCHAR(20),
+	@ProgramDescription VARCHAR(100)
+AS
+BEGIN
+	UPDATE 
+		Program
+	SET
+		ProgramCode = @ProgramCode,
+		ProgramDescription = @ProgramDescription
+	WHERE
+		ProgramID = @ProgramID;
+END
+
+-- 2.5. DELETE PROGRAM //
+CREATE PROCEDURE sp_DeleteProgram
+    @ProgramID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        DELETE FROM Program WHERE ProgramID = @ProgramID;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+
+
+-- 3. FACULTY STORED PROCEDURE ///
+-- 3.1. CREATE FACULTY //
+CREATE PROCEDURE sp_CreateFaculty
+    @FirstName   VARCHAR(50),
+    @MiddleName  VARCHAR(20) = NULL,
+    @LastName    VARCHAR(50),
+    @Suffix      VARCHAR(10) = NULL,
+    @Initials    VARCHAR(20) = NULL
+AS
+BEGIN
+    INSERT INTO Faculty (FirstName, MiddleName, LastName, Suffix, Initials)
+    VALUES (@FirstName, @MiddleName, @LastName, @Suffix, @Initials);
+END;
+
+-- 3.2. GET ALL FACULTY //
+CREATE PROCEDURE sp_GetAllFaculty
+AS
+BEGIN
+    SELECT 
+        FacultyID,
+        FirstName,
+        MiddleName,
+        LastName,
+        LastName + ', ' + FirstName + ' ' + ISNULL(SUBSTRING(MiddleName, 1, 1) + '.', '') AS FullName,
+        Initials
+    FROM Faculty
+    ORDER BY LastName, FirstName ASC;
+END;
+
+-- 3.3. SEARCH FACULTY 
+CREATE PROCEDURE sp_SearchFaculty
+    @SearchTerm VARCHAR(50) = NULL,
+    @ProgramID INT = NULL -- New Parameter
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Prepare the search filter to handle NULLs and prevent repetitive string building
+    DECLARE @Filter VARCHAR(52) = '%' + ISNULL(@SearchTerm, '') + '%';
+
+    SELECT 
+        FacultyID,
+        FirstName,
+        MiddleName,
+        LastName,
+        -- Combined Full Name for display in UI ComboBoxes/Lists
+        LastName + ', ' + FirstName + 
+            ISNULL(' ' + SUBSTRING(MiddleName, 1, 1) + '.', '') AS FullName,
+        Initials
+    FROM Faculty f
+    WHERE 
+        -- Name Search Logic
+        (@SearchTerm IS NULL OR (
+            FirstName  LIKE @Filter
+            OR MiddleName LIKE @Filter
+            OR LastName   LIKE @Filter
+        ))
+        -- Program Filter Logic
+        AND (@ProgramID IS NULL OR EXISTS (
+            SELECT 1 
+            FROM GradeSheet gs 
+            WHERE gs.FacultyID = f.FacultyID 
+            AND gs.ProgramID = @ProgramID
+        ))
+    ORDER BY LastName, FirstName ASC;
+END;
+
+-- 3.4. UPDATE FACULTY //
+CREATE PROCEDURE sp_UpdateFaculty
+    @FacultyID INT,
+    @FirstName   VARCHAR(50),
+    @MiddleName  VARCHAR(20) = NULL,
+    @LastName    VARCHAR(50),
+    @Suffix      VARCHAR(10) = NULL,
+    @Initials    VARCHAR(20) = NULL
+AS
+BEGIN
+    UPDATE Faculty
+    SET
+        FirstName  = @FirstName,
+        MiddleName = @MiddleName,
+        LastName   = @LastName,
+        Suffix     = @Suffix,
+        Initials   = @Initials
+    WHERE FacultyID = @FacultyID;
+END;
+
+-- 3.5. DELETE FACULTY //
+CREATE PROCEDURE sp_DeleteFaculty
+    @FacultyID INT
+AS
+BEGIN
+    -- para di agad madelete pag connected sa iabng table alsin nalang if di needed
+    IF EXISTS (SELECT 1 FROM GradeSheet WHERE FacultyID = @FacultyID)
+
+    BEGIN
+        RAISERROR('Cannot delete Faculty. Faculty is currently in use.', 16, 1);
+        RETURN;
+    END
+
+    DELETE FROM Faculty
+    WHERE FacultyID = @FacultyID;
+END;
+
+
+-- 4. GRADESHEET STORED PROCEDURE ///
+-- 4.1. CREATE GRADESHEET //
+CREATE PROCEDURE sp_InsertGradeSheet
+    @Filename     VARCHAR(100),
+    @Filepath     VARCHAR(200),
+    @SchoolYear   VARCHAR(20),
+    @Semester     INT,
+    @ProgramID    INT,
+    @YearLevel    INT,
+    @CourseID     INT,
+    @FacultyID    INT,
+    @PageNumber   INT,
+    @AccountID    INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Basic validation
+    IF @Filename IS NULL OR @Filename = ''
+    BEGIN
+    RAISERROR('Filename is required.', 16, 1);
+    RETURN;
+    END
+
+    IF @Filepath IS NULL OR @Filepath = ''
+    BEGIN
+    RAISERROR('Filepath is required.', 16, 1);
+    RETURN;
+    END
+
+    -- Insert record
+    INSERT INTO GradeSheet
+    (
+        Filename,
+        Filepath,
+        SchoolYear,
+        Semester,
+        ProgramID,
+        YearLevel,
+        CourseID,
+        FacultyID,
+        PageNumber,
+        AccountID               
+    )
+    VALUES
+    (
+        @Filename,
+        @Filepath,
+        @SchoolYear,
+        @Semester,
+        @ProgramID,
+        @YearLevel,
+        @CourseID,
+        @FacultyID,
+        @PageNumber,
+        @AccountID
+    
+    )
+END
+
+-- 4.2. GET ALL GRADESHEET //
+CREATE PROCEDURE sp_GetAllGradeSheets
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        gs.GradeSheetID,
+        gs.Filename,
+        gs.Filepath,
+        gs.SchoolYear,
+        gs.Semester,
+        p.ProgramCode,
+        gs.YearLevel,
+        c.CourseCode,
+        f.LastName + ', ' + f.FirstName + ISNULL(' ' + LEFT(f.MiddleName, 1) + '.', '') AS Faculty,
+        a.LastName + ', ' + a.FirstName AS UploadedBy,
+        gs.PageNumber
+    FROM GradeSheet gs
+    INNER JOIN Course c ON gs.CourseID = c.CourseID
+    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
+    INNER JOIN Account a ON gs.AccountID = a.AccountID
+    INNER JOIN Program p ON gs.ProgramID = p.ProgramID
+    ORDER BY gs.SchoolYear DESC, gs.Semester DESC, gs.PageNumber ASC;
+END
+
+-- 4.3. SEARCH GRADESHEET //
+CREATE PROCEDURE sp_SearchGradeSheet
+    @SchoolYear   VARCHAR(20) = NULL,
+    @Semester     INT = NULL,
+    @ProgramID    INT = NULL,
+    @YearLevel    INT = NULL,
+    @CourseID     INT = NULL,
+    @FacultyID    INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        gs.GradeSheetID,
+        gs.Filename,
+        gs.Filepath,
+        gs.SchoolYear,
+        gs.Semester,
+        p.ProgramCode,
+        gs.YearLevel,
+        c.CourseCode,
+        f.LastName + ', ' + f.FirstName + ISNULL(' ' + LEFT(f.MiddleName, 1) + '.', '') AS Faculty,
+        gs.PageNumber,
+        a.LastName + ', ' + a.FirstName AS UploadedBy
+
+    FROM GradeSheet gs
+    INNER JOIN Course c ON gs.CourseID = c.CourseID
+    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
+    INNER JOIN Account a ON gs.AccountID = a.AccountID
+    INNER JOIN Program p ON gs.ProgramID = p.ProgramID
+
+    WHERE
+        (@SchoolYear IS NULL OR gs.SchoolYear = @SchoolYear)
+        AND (@Semester IS NULL OR gs.Semester = @Semester)
+        AND (@ProgramID IS NULL OR gs.ProgramID = @ProgramID)
+        AND (@YearLevel IS NULL OR gs.YearLevel = @YearLevel)
+        AND (@CourseID IS NULL OR gs.CourseID = @CourseID)
+        AND (@FacultyID IS NULL OR gs.FacultyID = @FacultyID)
+
+    ORDER BY gs.SchoolYear DESC, gs.Semester DESC, gs.PageNumber ASC;
+END
+
+-- 4.4. UPDATE GRADESHEET //
+CREATE PROCEDURE sp_UpdateGradeSheet
+    @GradeSheetID INT,
+    @Filename     VARCHAR(100),
+    @Filepath     VARCHAR(200),
+    @SchoolYear   VARCHAR(20),
+    @Semester     INT,
+    @ProgramID    INT,
+    @YearLevel    INT,
+    @CourseID     INT,
+    @FacultyID    INT,
+    @PageNumber   INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Validate ID
+    IF NOT EXISTS (SELECT 1 FROM GradeSheet WHERE GradeSheetID = @GradeSheetID)
+    BEGIN
+        RAISERROR('Gradesheet record not found.', 16, 1);
+        RETURN;
+    END
+
+    -- Update record
+    UPDATE 
+        GradeSheet
+    SET
+        Filename   = @Filename,
+        Filepath   = @Filepath,
+        SchoolYear = @SchoolYear,
+        Semester   = @Semester,
+        ProgramID  = @ProgramID,
+        YearLevel  = @YearLevel,
+        CourseID   = @CourseID,
+        FacultyID  = @FacultyID,
+        PageNumber = @PageNumber
+    WHERE 
+        GradeSheetID = @GradeSheetID;
+END
+
+-- 4.5. DELETE GRADESHEET //
+CREATE  PROCEDURE sp_DeleteGradeSheet
+    @GradeSheetID INT
+AS
+BEGIN
+    SET NOCOUNT ON
+               
+    IF NOT EXISTS (SELECT 1 FROM GradeSheet WHERE GradeSheetID = @GradeSheetID)
+    BEGIN
+        RAISERROR('Gradesheet record not found.', 16, 1);
+        RETURN;
+    END           
+    DELETE FROM GradeSheet
+    WHERE GradeSheetID = @GradeSheetID;
+END
+
+
+-- 5. ACCOUNT STORED PROCEDURE ///
+-- 5.1. CREATE ACCOUNT //
+CREATE PROCEDURE sp_CreateAccount
+    @Username     VARCHAR(50),
+    @Password     VARCHAR(50),
+    @FirstName    VARCHAR(50),
+    @LastName     VARCHAR(50),
+    @AccountType  VARCHAR(20)
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM Account WHERE Username = @Username)
+    BEGIN
+        RAISERROR('Username already exists.', 16, 1);
+        RETURN;
+    END
+
+    INSERT INTO Account (Username, Password, FirstName, LastName, AccountType)
+    VALUES (@Username, @Password, @FirstName, @LastName, @AccountType);
+END;
+
+-- 5.2. GET ALL ACCOUNT //
+CREATE PROCEDURE sp_GetAllAccount
+AS
+BEGIN
+    SELECT
+        AccountID,
+        Username,
+        FirstName,
+        LastName,
+        LastName + ', ' + FirstName AS FullName,
+        AccountType
+    FROM 
+        Account
+    ORDER BY 
+        LastName, FirstName ASC;
+END;
+
+-- 5.3. SEARCH ACCOUNT //
+CREATE PROCEDURE sp_SearchAccount
+    @SearchTerm VARCHAR(50)
+AS
+BEGIN
+    SELECT
+        AccountID,
+        Username,
+        FirstName,
+        LastName,
+        AccountType
+    FROM Account
+    WHERE Username  LIKE '%' + @SearchTerm + '%'
+       OR FirstName LIKE '%' + @SearchTerm + '%'
+       OR LastName  LIKE '%' + @SearchTerm + '%'
+    ORDER BY LastName, FirstName;
+END;
+
+-- 5.4. UPDATE ACCOUNT //
+CREATE PROCEDURE sp_UpdateAccount
+    @AccountID    INT,
+    @Username     VARCHAR(50),
+    @Password     VARCHAR(50),
+    @FirstName    VARCHAR(50),
+    @LastName     VARCHAR(50),
+    @AccountType  VARCHAR(20)
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM Account 
+        WHERE Username = @Username 
+        AND AccountID <> @AccountID
+    )
+    BEGIN
+        RAISERROR('Username already exists.', 16, 1);
+        RETURN;
+    END
+
+    UPDATE 
+        Account
+    SET
+        Username    = @Username,
+        Password    = @Password,
+        FirstName   = @FirstName,
+        LastName    = @LastName,
+        AccountType = @AccountType
+    WHERE 
+        AccountID = @AccountID;
+END;
+
+-- 5.5. DELETE ACCOUNT //
+CREATE PROCEDURE sp_DeleteAccount
+    @AccountID INT
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM GradeSheet WHERE AccountID = @AccountID)
+       OR EXISTS (SELECT 1 FROM ActivityLog WHERE AccountID = @AccountID)
+    BEGIN
+        RAISERROR('Cannot delete account. Account is currently in use.', 16, 1);
+        RETURN;
+    END
+
+    DELETE FROM Account
+    WHERE AccountID = @AccountID;
+END;
+
+-- 5.6. Login Account //
+CREATE PROCEDURE sp_LoginAccount
+    @Username VARCHAR(50),
+    @Password VARCHAR(50)
+AS
+BEGIN
+    SELECT *
+    FROM Account
+    WHERE Username = @Username
+      AND Password = @Password;
+END;
+
+
+-- 6. ACTIVITY LOG STORED PROCEDURE ///
+-- 6.1. CREATE ACTIVITY //
+CREATE PROCEDURE sp_CreateActivityLog
+    @AccountID INT,
+    @ActivityDescription VARCHAR(255),
+    @ActivityDate DATETIME
+AS
+BEGIN
+    INSERT INTO ActivityLog(AccountID, ActivityDescription, ActivityDate)
+    VALUES (@AccountID, @ActivityDescription, @ActivityDate);
+END
+
+-- 6.2. GET ALL ACTIVITY //
+CREATE PROCEDURE sp_GetAllActivityLog
+AS
+BEGIN
+    SELECT
+        CONCAT_WS(' ', ActivityDescription, ActivityDate) AS Log
+    FROM 
+        ActivityLog;
+END
+
+
+
+

@@ -37,21 +37,21 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.flowLayoutPanelUpload = new System.Windows.Forms.FlowLayoutPanel();
+            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
             this.btnDashboard = new PUP_RMS.Controls.iconButton();
             this.btnSearch = new PUP_RMS.Controls.iconButton();
-            this.flowLayoutPanelUpload = new System.Windows.Forms.FlowLayoutPanel();
             this.btnBatchUpload = new PUP_RMS.Controls.iconButton();
+            this.btnProgram = new PUP_RMS.Controls.iconButton();
             this.btnCourse = new PUP_RMS.Controls.iconButton();
             this.btnProfessor = new PUP_RMS.Controls.iconButton();
             this.btnAccounts = new PUP_RMS.Controls.iconButton();
             this.btnLogout = new PUP_RMS.Controls.iconButton();
-            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
             this.pnlContent.SuspendLayout();
             this.flowLayoutPanelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
-            this.flowLayoutPanelUpload.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlContent
@@ -72,11 +72,13 @@
             this.flowLayoutPanelMain.Controls.Add(this.panel1);
             this.flowLayoutPanelMain.Controls.Add(this.btnDashboard);
             this.flowLayoutPanelMain.Controls.Add(this.btnSearch);
-            this.flowLayoutPanelMain.Controls.Add(this.flowLayoutPanelUpload);
+            this.flowLayoutPanelMain.Controls.Add(this.btnBatchUpload);
+            this.flowLayoutPanelMain.Controls.Add(this.btnProgram);
             this.flowLayoutPanelMain.Controls.Add(this.btnCourse);
             this.flowLayoutPanelMain.Controls.Add(this.btnProfessor);
             this.flowLayoutPanelMain.Controls.Add(this.btnAccounts);
             this.flowLayoutPanelMain.Controls.Add(this.btnLogout);
+            this.flowLayoutPanelMain.Controls.Add(this.flowLayoutPanelUpload);
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
@@ -129,6 +131,14 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(247, 29);
             this.panel2.TabIndex = 12;
+            // 
+            // flowLayoutPanelUpload
+            // 
+            this.flowLayoutPanelUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
+            this.flowLayoutPanelUpload.Location = new System.Drawing.Point(3, 743);
+            this.flowLayoutPanelUpload.Name = "flowLayoutPanelUpload";
+            this.flowLayoutPanelUpload.Size = new System.Drawing.Size(244, 60);
+            this.flowLayoutPanelUpload.TabIndex = 0;
             // 
             // btnDashboard
             // 
@@ -184,15 +194,6 @@
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // flowLayoutPanelUpload
-            // 
-            this.flowLayoutPanelUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.flowLayoutPanelUpload.Controls.Add(this.btnBatchUpload);
-            this.flowLayoutPanelUpload.Location = new System.Drawing.Point(3, 353);
-            this.flowLayoutPanelUpload.Name = "flowLayoutPanelUpload";
-            this.flowLayoutPanelUpload.Size = new System.Drawing.Size(244, 60);
-            this.flowLayoutPanelUpload.TabIndex = 0;
-            // 
             // btnBatchUpload
             // 
             this.btnBatchUpload.ActiveColor = System.Drawing.Color.Goldenrod;
@@ -210,7 +211,7 @@
             this.btnBatchUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnBatchUpload.IndentLevel = 0;
             this.btnBatchUpload.IsActive = false;
-            this.btnBatchUpload.Location = new System.Drawing.Point(0, 0);
+            this.btnBatchUpload.Location = new System.Drawing.Point(0, 350);
             this.btnBatchUpload.Margin = new System.Windows.Forms.Padding(0);
             this.btnBatchUpload.Name = "btnBatchUpload";
             this.btnBatchUpload.Size = new System.Drawing.Size(244, 60);
@@ -220,6 +221,33 @@
             this.btnBatchUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnBatchUpload.UseVisualStyleBackColor = false;
             this.btnBatchUpload.Click += new System.EventHandler(this.btnUpload_Click);
+            // 
+            // btnProgram
+            // 
+            this.btnProgram.ActiveColor = System.Drawing.Color.Goldenrod;
+            this.btnProgram.BackColor = System.Drawing.Color.Maroon;
+            this.btnProgram.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnProgram.BorderRadius = 10;
+            this.btnProgram.BorderSize = 0;
+            this.btnProgram.FlatAppearance.BorderSize = 0;
+            this.btnProgram.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProgram.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnProgram.ForeColor = System.Drawing.Color.White;
+            this.btnProgram.HoverColor = System.Drawing.Color.Goldenrod;
+            this.btnProgram.IconSize = 30;
+            this.btnProgram.Image = ((System.Drawing.Image)(resources.GetObject("btnProgram.Image")));
+            this.btnProgram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProgram.IndentLevel = 0;
+            this.btnProgram.IsActive = false;
+            this.btnProgram.Location = new System.Drawing.Point(3, 413);
+            this.btnProgram.Name = "btnProgram";
+            this.btnProgram.Size = new System.Drawing.Size(244, 60);
+            this.btnProgram.TabIndex = 15;
+            this.btnProgram.Text = "Program";
+            this.btnProgram.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProgram.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnProgram.UseVisualStyleBackColor = false;
+            this.btnProgram.Click += new System.EventHandler(this.btnProgram_Click);
             // 
             // btnCourse
             // 
@@ -238,7 +266,7 @@
             this.btnCourse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCourse.IndentLevel = 0;
             this.btnCourse.IsActive = false;
-            this.btnCourse.Location = new System.Drawing.Point(3, 419);
+            this.btnCourse.Location = new System.Drawing.Point(3, 479);
             this.btnCourse.Name = "btnCourse";
             this.btnCourse.Size = new System.Drawing.Size(244, 60);
             this.btnCourse.TabIndex = 12;
@@ -265,11 +293,11 @@
             this.btnProfessor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnProfessor.IndentLevel = 0;
             this.btnProfessor.IsActive = false;
-            this.btnProfessor.Location = new System.Drawing.Point(3, 485);
+            this.btnProfessor.Location = new System.Drawing.Point(3, 545);
             this.btnProfessor.Name = "btnProfessor";
             this.btnProfessor.Size = new System.Drawing.Size(244, 60);
             this.btnProfessor.TabIndex = 13;
-            this.btnProfessor.Text = "Professor";
+            this.btnProfessor.Text = "Faculty";
             this.btnProfessor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnProfessor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnProfessor.UseVisualStyleBackColor = false;
@@ -292,7 +320,7 @@
             this.btnAccounts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAccounts.IndentLevel = 0;
             this.btnAccounts.IsActive = false;
-            this.btnAccounts.Location = new System.Drawing.Point(3, 551);
+            this.btnAccounts.Location = new System.Drawing.Point(3, 611);
             this.btnAccounts.Name = "btnAccounts";
             this.btnAccounts.Size = new System.Drawing.Size(244, 60);
             this.btnAccounts.TabIndex = 14;
@@ -319,7 +347,7 @@
             this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogout.IndentLevel = 0;
             this.btnLogout.IsActive = false;
-            this.btnLogout.Location = new System.Drawing.Point(3, 617);
+            this.btnLogout.Location = new System.Drawing.Point(3, 677);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(244, 60);
             this.btnLogout.TabIndex = 8;
@@ -346,7 +374,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.flowLayoutPanelUpload.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -368,5 +395,6 @@
         private Controls.iconButton btnCourse;
         private Controls.iconButton btnProfessor;
         private Controls.iconButton btnAccounts;
+        private Controls.iconButton btnProgram;
     }
 }
