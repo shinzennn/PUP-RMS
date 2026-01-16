@@ -36,9 +36,9 @@ namespace PUP_RMS.Core
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
                 return conn.Query<Professor>(
-                    @"SELECT ProfessorID,
+                    @"SELECT FacultyID,
               FirstName + ' ' + ISNULL(MiddleName + ' ', '') + LastName AS FullName
-              FROM Professor"
+              FROM Faculty"
                 ).ToList();
             }
         }
@@ -55,9 +55,9 @@ namespace PUP_RMS.Core
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
                 string sql = @"INSERT INTO GradeSheet
-                       (Filename, SchoolYear, Semester, CourseID, ProfessorID, AccountID)
+                       (Filename, SchoolYear, Semester, CourseID, FacultyID, AccountID)
                        VALUES
-                       (@Filename, @SchoolYear, @Semester, @CourseID, @ProfessorID, @AccountID)";
+                       (@Filename, @SchoolYear, @Semester, @CourseID, FacultyID, @AccountID)";
 
                 int rows = conn.Execute(sql, new
                 {
