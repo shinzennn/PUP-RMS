@@ -101,8 +101,8 @@ namespace PUP_RMS.Helper
             LogActivity(account_id, description);
         }
 
-        // PROFESSOR ACTIVITY LOGGING
-        public static void LogProfessorAddition(string professorName)
+        // FACULTY ACTIVITY LOGGING
+        public static void LogFacultyAddition(string professorName)
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;
@@ -110,7 +110,7 @@ namespace PUP_RMS.Helper
             
             LogActivity(account_id, description);
         }
-        public static void LogProfessorModification(string professorID, string professorName)
+        public static void LogFacultyModification(string professorID, string professorName)
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;
@@ -118,7 +118,7 @@ namespace PUP_RMS.Helper
             
             LogActivity(account_id, description);
         }
-        public static void LogProfessorDeletion(string professorName)
+        public static void LogFacultyDeletion(string professorName)
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;

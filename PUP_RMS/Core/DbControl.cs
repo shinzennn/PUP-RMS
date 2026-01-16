@@ -1,13 +1,14 @@
 ﻿using Dapper;
+using PUP_RMS.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
-using System.Data.SqlClient;
-using PUP_RMS.Model;
+using System.Windows.Forms;
 
 namespace PUP_RMS.Core
 {
@@ -31,11 +32,11 @@ namespace PUP_RMS.Core
             }
         }
 
-        public static List<Professor> GetProfessors()
+        public static List<Faculty> GetProfessors()
         {
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
-                return conn.Query<Professor>(
+                return conn.Query<Faculty>(
                     @"SELECT FacultyID,
               FirstName + ' ' + ISNULL(MiddleName + ' ', '') + LastName AS FullName
               FROM Faculty"
@@ -149,6 +150,100 @@ namespace PUP_RMS.Core
                     }
                 }
             }
+        }
+
+
+
+        // ANOTHER METHOD
+        private static List<SqlParameter> sqlParameters = new List<SqlParameter>();
+
+        // USED THIS TO ADD PARAMETERS TO THE LIST
+        public static void AddParameter(string name, object value, SqlDbType dbType)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                ParameterName = name,
+                SqlDbType = dbType,
+                Value = value ?? DBNull.Value
+            };
+            sqlParameters.Add(param);
+        }
+
+        // Used for INSERT, UPDATE, DELETE
+        public static int ExecuteNonQuery(string procedureName)
+        {
+            int rowsAffected = 0;
+            using (SqlConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                using (SqlCommand cmd = new SqlCommand(procedureName, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    if (sqlParameters != null)
+                    {
+                        cmd.Parameters.AddRange(sqlParameters.ToArray());
+                    }
+
+                    try
+                    {
+                        conn.Open();
+                        rowsAffected = cmd.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        // Catch SQL specific errors (like RAISERROR or Constraint violations)
+                        MessageBox.Show("Database Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Catch general C# errors
+                        MessageBox.Show("General Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        if (conn.State == ConnectionState.Open)
+                        {
+                            sqlParameters.Clear();
+                            conn.Close();
+                        }
+                    }
+                }
+            return rowsAffected;
+            }
+        }
+
+        // Used for SELECT (Get All, Search)
+        public static DataTable ExecuteQuery(string procedureName)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                using (SqlCommand cmd = new SqlCommand(procedureName, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    if (sqlParameters != null)
+                    {
+                        cmd.Parameters.AddRange(sqlParameters.ToArray());
+                    }
+
+                    try
+                    {
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show("Query Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            sqlParameters.Clear();
+            return dt;
         }
 
     }

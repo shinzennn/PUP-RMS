@@ -94,7 +94,7 @@ namespace PUP_RMS.Forms
         {
             professorCmbox.DataSource = DbControl.GetProfessors();
             professorCmbox.DisplayMember = "FullName";
-            professorCmbox.ValueMember = "ProfessorID";
+            professorCmbox.ValueMember = "FacultyID";
             professorCmbox.SelectedIndex = -1;
         }
 

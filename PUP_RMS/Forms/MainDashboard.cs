@@ -233,7 +233,7 @@ namespace PUP_RMS.Forms
         {
             if (currentActiveButton == sender) return;
             ActivateButton(sender);
-            ShowForm(new frmProfessor());
+            ShowForm(new frmFaculty());
         }
 
         private void btnAccounts_Click(object sender, EventArgs e)

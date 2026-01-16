@@ -37,8 +37,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.flowLayoutPanelUpload = new System.Windows.Forms.FlowLayoutPanel();
-            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
             this.btnDashboard = new PUP_RMS.Controls.iconButton();
             this.btnSearch = new PUP_RMS.Controls.iconButton();
             this.btnBatchUpload = new PUP_RMS.Controls.iconButton();
@@ -47,6 +45,8 @@
             this.btnProfessor = new PUP_RMS.Controls.iconButton();
             this.btnAccounts = new PUP_RMS.Controls.iconButton();
             this.btnLogout = new PUP_RMS.Controls.iconButton();
+            this.flowLayoutPanelUpload = new System.Windows.Forms.FlowLayoutPanel();
+            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
             this.pnlContent.SuspendLayout();
             this.flowLayoutPanelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -131,14 +131,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(247, 29);
             this.panel2.TabIndex = 12;
-            // 
-            // flowLayoutPanelUpload
-            // 
-            this.flowLayoutPanelUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.flowLayoutPanelUpload.Location = new System.Drawing.Point(3, 743);
-            this.flowLayoutPanelUpload.Name = "flowLayoutPanelUpload";
-            this.flowLayoutPanelUpload.Size = new System.Drawing.Size(244, 60);
-            this.flowLayoutPanelUpload.TabIndex = 0;
             // 
             // btnDashboard
             // 
@@ -356,6 +348,14 @@
             this.btnLogout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLogout.UseVisualStyleBackColor = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // flowLayoutPanelUpload
+            // 
+            this.flowLayoutPanelUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
+            this.flowLayoutPanelUpload.Location = new System.Drawing.Point(3, 743);
+            this.flowLayoutPanelUpload.Name = "flowLayoutPanelUpload";
+            this.flowLayoutPanelUpload.Size = new System.Drawing.Size(244, 60);
+            this.flowLayoutPanelUpload.TabIndex = 0;
             // 
             // MainDashboard
             // 
