@@ -19,7 +19,7 @@ namespace PUP_RMS.Forms
 
         private void RefreshGrid()
         {
-            dgvProfessor.DataSource = Core.DbControl.GetData("SELECT * FROM Professor");
+            dgvProfessor.DataSource = Core.DbControl.GetData("SELECT * FROM Faculty");
             dgvProfessor.ClearSelection();
             dgvProfessor.CurrentCell = null;
         }
@@ -28,7 +28,7 @@ namespace PUP_RMS.Forms
         {
             if (txtSearch.Text != null)
             {
-                dgvProfessor.DataSource = Core.DbControl.GetData($"SELECT * FROM Professor WHERE FirstName LIKE '%{txtSearch.Text}%' OR LastName LIKE '%{txtSearch.Text}%';");
+                dgvProfessor.DataSource = Core.DbControl.GetData($"SELECT * FROM Faculty WHERE FirstName LIKE '%{txtSearch.Text}%' OR LastName LIKE '%{txtSearch.Text}%';");
                 dgvProfessor.ClearSelection();
                 dgvProfessor.CurrentCell = null;
             }
@@ -79,7 +79,7 @@ namespace PUP_RMS.Forms
 
             if(selectedRow != null)
             {
-                editProfessorForm.professorID = Convert.ToInt32(selectedRow.Cells["ProfessorID"].Value);
+                editProfessorForm.professorID = Convert.ToInt32(selectedRow.Cells["FacultyID"].Value);
             }
             
             if(editProfessorForm.ShowDialog() == DialogResult.OK) 

@@ -22,7 +22,7 @@ namespace PUP_RMS.Forms
 
         private void LoadProfessor()
         {
-            DataTable dt = Core.DbControl.GetData($"SELECT * FROM Professor WHERE ProfessorID = {professorID}");
+            DataTable dt = Core.DbControl.GetData($"SELECT * FROM Faculty WHERE FacultyID = {professorID}");
             if(dt.Rows.Count > 0)
             {
                 DataRow row = dt.Rows[0];
@@ -34,16 +34,16 @@ namespace PUP_RMS.Forms
 
         private void UpdateProfessor() 
         { 
-            bool success = Core.DbControl.SetData($"UPDATE Professor SET FirstName = '{txtFirstName.Text}', MiddleName = '{txtMiddleInitial.Text}', LastName = '{txtLastName.Text}' WHERE ProfessorID = {professorID}");
+            bool success = Core.DbControl.SetData($"UPDATE Faculty SET FirstName = '{txtFirstName.Text}', MiddleName = '{txtMiddleInitial.Text}', LastName = '{txtLastName.Text}' WHERE FacultyID = {professorID}");
             if(success)
             {
-                MessageBox.Show("Professor has been updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Faculty has been updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Failed to update professor. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed to update Faculty. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

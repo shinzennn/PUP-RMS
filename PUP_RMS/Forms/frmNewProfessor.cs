@@ -19,16 +19,16 @@ namespace PUP_RMS.Forms
 
         private void CreateProfessor() 
         { 
-            bool success = Core.DbControl.SetData($"INSERT INTO Professor (FirstName, MiddleName, LastName) VALUES ('{txtFirstName.Text}', '{txtMiddleInitial.Text}', '{txtLastName.Text}')");
+            bool success = Core.DbControl.SetData($"INSERT INTO Faculty (FirstName, MiddleName, LastName) VALUES ('{txtFirstName.Text}', '{txtMiddleInitial.Text}', '{txtLastName.Text}')");
             if (success)
             {
-                MessageBox.Show("New professor has been created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("New Faculty has been created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Failed to create new professor. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed to create new Faculty. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
