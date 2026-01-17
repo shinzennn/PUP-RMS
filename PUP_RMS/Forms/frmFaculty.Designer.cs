@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmFaculty));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnEdit = new PUP_RMS.RoundedButton();
@@ -42,8 +42,6 @@
             this.btnCancel = new PUP_RMS.RoundedButton();
             this.btnSave = new PUP_RMS.RoundedButton();
             this.txtLastName = new System.Windows.Forms.TextBox();
-            this.txtMiddleName = new System.Windows.Forms.TextBox();
-            this.txtFirstName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -59,6 +57,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
+            this.roundedShadowPanel2 = new PUP_RMS.RoundedShadowPanel();
+            this.txtMiddleName = new System.Windows.Forms.TextBox();
+            this.roundedShadowPanel3 = new PUP_RMS.RoundedShadowPanel();
+            this.txtFirstName = new System.Windows.Forms.TextBox();
+            this.roundedShadowPanel4 = new PUP_RMS.RoundedShadowPanel();
+            this.label6 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFacultyList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFaculty)).BeginInit();
@@ -67,6 +71,9 @@
             this.roundedShadowPanel1.SuspendLayout();
             this.panelSearch.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.roundedShadowPanel2.SuspendLayout();
+            this.roundedShadowPanel3.SuspendLayout();
+            this.roundedShadowPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -155,8 +162,8 @@
             // 
             this.dgvFaculty.AllowUserToAddRows = false;
             this.dgvFaculty.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            this.dgvFaculty.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvFaculty.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle29;
             this.dgvFaculty.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -164,15 +171,15 @@
             this.dgvFaculty.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvFaculty.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvFaculty.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFaculty.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle30.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle30.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFaculty.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle30;
             this.dgvFaculty.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFaculty.GridColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvFaculty.Location = new System.Drawing.Point(40, 67);
@@ -180,25 +187,25 @@
             this.dgvFaculty.Name = "dgvFaculty";
             this.dgvFaculty.ReadOnly = true;
             this.dgvFaculty.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFaculty.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle31.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle31.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFaculty.RowHeadersDefaultCellStyle = dataGridViewCellStyle31;
             this.dgvFaculty.RowHeadersVisible = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Goldenrod;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFaculty.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle32.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle32.ForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle32.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
+            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.Goldenrod;
+            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFaculty.RowsDefaultCellStyle = dataGridViewCellStyle32;
             this.dgvFaculty.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvFaculty.Size = new System.Drawing.Size(392, 387);
             this.dgvFaculty.TabIndex = 12;
@@ -215,11 +222,11 @@
             this.panelFacultyForm.BorderColor = System.Drawing.Color.Transparent;
             this.panelFacultyForm.BorderRadius = 20;
             this.panelFacultyForm.BorderSize = 0;
+            this.panelFacultyForm.Controls.Add(this.roundedShadowPanel4);
+            this.panelFacultyForm.Controls.Add(this.roundedShadowPanel3);
+            this.panelFacultyForm.Controls.Add(this.roundedShadowPanel2);
             this.panelFacultyForm.Controls.Add(this.btnCancel);
             this.panelFacultyForm.Controls.Add(this.btnSave);
-            this.panelFacultyForm.Controls.Add(this.txtLastName);
-            this.panelFacultyForm.Controls.Add(this.txtMiddleName);
-            this.panelFacultyForm.Controls.Add(this.txtFirstName);
             this.panelFacultyForm.Controls.Add(this.label5);
             this.panelFacultyForm.Controls.Add(this.label4);
             this.panelFacultyForm.Controls.Add(this.label3);
@@ -287,43 +294,15 @@
             // 
             this.txtLastName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLastName.BackColor = System.Drawing.Color.Gainsboro;
-            this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLastName.BackColor = System.Drawing.Color.LightGray;
+            this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLastName.Location = new System.Drawing.Point(50, 307);
+            this.txtLastName.Location = new System.Drawing.Point(24, 21);
             this.txtLastName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtLastName.Size = new System.Drawing.Size(372, 26);
+            this.txtLastName.Size = new System.Drawing.Size(326, 19);
             this.txtLastName.TabIndex = 20;
-            // 
-            // txtMiddleName
-            // 
-            this.txtMiddleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMiddleName.BackColor = System.Drawing.Color.Gainsboro;
-            this.txtMiddleName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMiddleName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMiddleName.Location = new System.Drawing.Point(50, 221);
-            this.txtMiddleName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
-            this.txtMiddleName.Name = "txtMiddleName";
-            this.txtMiddleName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtMiddleName.Size = new System.Drawing.Size(372, 26);
-            this.txtMiddleName.TabIndex = 19;
-            // 
-            // txtFirstName
-            // 
-            this.txtFirstName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFirstName.BackColor = System.Drawing.Color.Gainsboro;
-            this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFirstName.Location = new System.Drawing.Point(50, 135);
-            this.txtFirstName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
-            this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtFirstName.Size = new System.Drawing.Size(372, 26);
-            this.txtFirstName.TabIndex = 18;
             // 
             // label5
             // 
@@ -331,7 +310,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(46, 277);
+            this.label5.Location = new System.Drawing.Point(70, 286);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(90, 20);
             this.label5.TabIndex = 17;
@@ -343,7 +322,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(46, 191);
+            this.label4.Location = new System.Drawing.Point(70, 196);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(105, 20);
             this.label4.TabIndex = 16;
@@ -355,7 +334,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(46, 106);
+            this.label3.Location = new System.Drawing.Point(70, 106);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(90, 20);
             this.label3.TabIndex = 15;
@@ -427,6 +406,7 @@
             this.roundedShadowPanel1.BorderColor = System.Drawing.Color.Transparent;
             this.roundedShadowPanel1.BorderRadius = 20;
             this.roundedShadowPanel1.BorderSize = 0;
+            this.roundedShadowPanel1.Controls.Add(this.label6);
             this.roundedShadowPanel1.Controls.Add(this.cbxProgram);
             this.roundedShadowPanel1.Location = new System.Drawing.Point(10, 0);
             this.roundedShadowPanel1.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
@@ -442,15 +422,18 @@
             // 
             // cbxProgram
             // 
-            this.cbxProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxProgram.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxProgram.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbxProgram.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbxProgram.BackColor = System.Drawing.Color.LightGray;
             this.cbxProgram.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbxProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxProgram.FormattingEnabled = true;
-            this.cbxProgram.Location = new System.Drawing.Point(19, 17);
+            this.cbxProgram.Location = new System.Drawing.Point(99, 17);
             this.cbxProgram.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.cbxProgram.Name = "cbxProgram";
-            this.cbxProgram.Size = new System.Drawing.Size(185, 28);
+            this.cbxProgram.Size = new System.Drawing.Size(105, 28);
             this.cbxProgram.TabIndex = 16;
             this.cbxProgram.Text = "Program";
             // 
@@ -575,6 +558,107 @@
             this.label10.TabIndex = 8;
             this.label10.Text = "Create and manage faculty records";
             // 
+            // roundedShadowPanel2
+            // 
+            this.roundedShadowPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.roundedShadowPanel2.BackColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel2.BorderColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel2.BorderRadius = 20;
+            this.roundedShadowPanel2.BorderSize = 0;
+            this.roundedShadowPanel2.Controls.Add(this.txtLastName);
+            this.roundedShadowPanel2.Location = new System.Drawing.Point(50, 306);
+            this.roundedShadowPanel2.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.roundedShadowPanel2.Name = "roundedShadowPanel2";
+            this.roundedShadowPanel2.PanelColor = System.Drawing.Color.LightGray;
+            this.roundedShadowPanel2.PanelImage = null;
+            this.roundedShadowPanel2.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.roundedShadowPanel2.ShadowDepth = 10;
+            this.roundedShadowPanel2.ShadowEnabled = true;
+            this.roundedShadowPanel2.ShadowShift = 5;
+            this.roundedShadowPanel2.Size = new System.Drawing.Size(372, 64);
+            this.roundedShadowPanel2.TabIndex = 18;
+            // 
+            // txtMiddleName
+            // 
+            this.txtMiddleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMiddleName.BackColor = System.Drawing.Color.LightGray;
+            this.txtMiddleName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtMiddleName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMiddleName.Location = new System.Drawing.Point(24, 21);
+            this.txtMiddleName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
+            this.txtMiddleName.Name = "txtMiddleName";
+            this.txtMiddleName.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtMiddleName.Size = new System.Drawing.Size(326, 19);
+            this.txtMiddleName.TabIndex = 20;
+            // 
+            // roundedShadowPanel3
+            // 
+            this.roundedShadowPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.roundedShadowPanel3.BackColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel3.BorderColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel3.BorderRadius = 20;
+            this.roundedShadowPanel3.BorderSize = 0;
+            this.roundedShadowPanel3.Controls.Add(this.txtMiddleName);
+            this.roundedShadowPanel3.Location = new System.Drawing.Point(50, 216);
+            this.roundedShadowPanel3.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.roundedShadowPanel3.Name = "roundedShadowPanel3";
+            this.roundedShadowPanel3.PanelColor = System.Drawing.Color.LightGray;
+            this.roundedShadowPanel3.PanelImage = null;
+            this.roundedShadowPanel3.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.roundedShadowPanel3.ShadowDepth = 10;
+            this.roundedShadowPanel3.ShadowEnabled = true;
+            this.roundedShadowPanel3.ShadowShift = 5;
+            this.roundedShadowPanel3.Size = new System.Drawing.Size(372, 64);
+            this.roundedShadowPanel3.TabIndex = 21;
+            // 
+            // txtFirstName
+            // 
+            this.txtFirstName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFirstName.BackColor = System.Drawing.Color.LightGray;
+            this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFirstName.Location = new System.Drawing.Point(24, 21);
+            this.txtFirstName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
+            this.txtFirstName.Name = "txtFirstName";
+            this.txtFirstName.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtFirstName.Size = new System.Drawing.Size(326, 19);
+            this.txtFirstName.TabIndex = 20;
+            // 
+            // roundedShadowPanel4
+            // 
+            this.roundedShadowPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.roundedShadowPanel4.BackColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel4.BorderColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel4.BorderRadius = 20;
+            this.roundedShadowPanel4.BorderSize = 0;
+            this.roundedShadowPanel4.Controls.Add(this.txtFirstName);
+            this.roundedShadowPanel4.Location = new System.Drawing.Point(50, 126);
+            this.roundedShadowPanel4.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.roundedShadowPanel4.Name = "roundedShadowPanel4";
+            this.roundedShadowPanel4.PanelColor = System.Drawing.Color.LightGray;
+            this.roundedShadowPanel4.PanelImage = null;
+            this.roundedShadowPanel4.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.roundedShadowPanel4.ShadowDepth = 10;
+            this.roundedShadowPanel4.ShadowEnabled = true;
+            this.roundedShadowPanel4.ShadowShift = 5;
+            this.roundedShadowPanel4.Size = new System.Drawing.Size(372, 64);
+            this.roundedShadowPanel4.TabIndex = 21;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(20, 20);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(73, 20);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Program:";
+            // 
             // frmFaculty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -595,10 +679,17 @@
             this.panelFacultyForm.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.roundedShadowPanel1.ResumeLayout(false);
+            this.roundedShadowPanel1.PerformLayout();
             this.panelSearch.ResumeLayout(false);
             this.panelSearch.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.roundedShadowPanel2.ResumeLayout(false);
+            this.roundedShadowPanel2.PerformLayout();
+            this.roundedShadowPanel3.ResumeLayout(false);
+            this.roundedShadowPanel3.PerformLayout();
+            this.roundedShadowPanel4.ResumeLayout(false);
+            this.roundedShadowPanel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -623,8 +714,6 @@
         private System.Windows.Forms.TextBox txtSearch;
         private RoundedButton btnSave;
         private System.Windows.Forms.TextBox txtLastName;
-        private System.Windows.Forms.TextBox txtMiddleName;
-        private System.Windows.Forms.TextBox txtFirstName;
         private RoundedButton btnEdit;
         private System.Windows.Forms.Panel panel1;
         private GradientLabel gradientLabel1;
@@ -632,5 +721,11 @@
         private RoundedButton btnCancel;
         private RoundedShadowPanel panelSearch;
         private RoundedShadowPanel roundedShadowPanel1;
+        private RoundedShadowPanel roundedShadowPanel3;
+        private System.Windows.Forms.TextBox txtMiddleName;
+        private RoundedShadowPanel roundedShadowPanel2;
+        private RoundedShadowPanel roundedShadowPanel4;
+        private System.Windows.Forms.TextBox txtFirstName;
+        private System.Windows.Forms.Label label6;
     }
 }
