@@ -263,5 +263,10 @@ namespace PUP_RMS.Forms
         {
 
         }
+
+        private void flowLayoutPanelMain_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

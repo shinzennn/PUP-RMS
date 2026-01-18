@@ -459,6 +459,7 @@
             this.dcTotalGradesheets.ValueFontSize = 24F;
             this.dcTotalGradesheets.ValueForeColor = System.Drawing.Color.Black;
             this.dcTotalGradesheets.ValueText = "0";
+            this.dcTotalGradesheets.Paint += new System.Windows.Forms.PaintEventHandler(this.dcTotalGradesheets_Paint_1);
             // 
             // tableLayoutPanel4
             // 

@@ -84,6 +84,7 @@
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
             this.flowLayoutPanelMain.Size = new System.Drawing.Size(250, 749);
             this.flowLayoutPanelMain.TabIndex = 10;
+            this.flowLayoutPanelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanelMain_Paint);
             // 
             // pictureBox1
             // 
@@ -206,7 +207,7 @@
             this.btnBatchUpload.Location = new System.Drawing.Point(0, 350);
             this.btnBatchUpload.Margin = new System.Windows.Forms.Padding(0);
             this.btnBatchUpload.Name = "btnBatchUpload";
-            this.btnBatchUpload.Size = new System.Drawing.Size(244, 60);
+            this.btnBatchUpload.Size = new System.Drawing.Size(250, 60);
             this.btnBatchUpload.TabIndex = 7;
             this.btnBatchUpload.Text = "Batch Upload";
             this.btnBatchUpload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

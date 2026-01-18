@@ -225,6 +225,7 @@
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\ActivityLogger.cs" />
+    <Compile Include="Helper\DashboardHelper.cs" />
     <Compile Include="Helper\FacultyHelper.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ActivityLog.cs" />

@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
+using PUP_RMS.Core;
+using PUP_RMS.Helper; 
 
 namespace PUP_RMS.Forms
 {
@@ -57,12 +59,6 @@ namespace PUP_RMS.Forms
             {
                 this.cpDriveUsage.Parent.Resize += (s, e) => ResizeChart();
             }
-
-            //// 3. TARGETED BUFFERING (Top Cards)
-            //ForceDoubleBuffer(pnlTotalGradesSheets);
-            //ForceDoubleBuffer(pnlTotalSubjects);
-            //ForceDoubleBuffer(pnlTotalProfessors);
-            //ForceDoubleBuffer(pnlTotalRecentlyUploads);
 
             // 4. GLOBAL RECURSIVE BUFFERING
             ApplyDoubleBufferingRecursively(this.Controls);
@@ -171,6 +167,8 @@ namespace PUP_RMS.Forms
             // Run storage check immediately
             UpdateDriveStatus();
             if (timerStorageUpdate != null) timerStorageUpdate.Start();
+
+            LoadDashboardCounts();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -442,6 +440,28 @@ namespace PUP_RMS.Forms
                 this.lblStorageUsageDetails.Text = "Storage Error";
             }
         }
+        private void LoadDashboardCounts()
+        {
+            // Now the Form doesn't know about SQL. It just asks the Helper.
+
+            // 1. Grade Sheets
+            if (dcTotalGradesheets != null)
+            {
+                dcTotalGradesheets.ValueText = DashboardHelper.GetGradeSheetCount();
+            }
+
+            // 2. Subjects
+            if (dcTotalSubjects != null)
+            {
+                dcTotalSubjects.ValueText = DashboardHelper.GetSubjectCount();
+            }
+
+            // 3. Professors
+            if (dcTotalProfessors != null)
+            {
+                dcTotalProfessors.ValueText = DashboardHelper.GetProfessorCount();
+            }
+        }
 
         // Helper for formatting
         private string FormatBytes(long bytes)
@@ -596,6 +616,11 @@ namespace PUP_RMS.Forms
         }
 
         private void cpDriveUsage_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dcTotalGradesheets_Paint_1(object sender, PaintEventArgs e)
         {
 
         }

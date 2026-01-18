@@ -155,7 +155,7 @@ namespace PUP_RMS.Core
 
 
         // ANOTHER METHOD
-        private static List<SqlParameter> sqlParameters = new List<SqlParameter>();
+        public static List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
         // USED THIS TO ADD PARAMETERS TO THE LIST
         public static void AddParameter(string name, object value, SqlDbType dbType)
@@ -244,6 +244,45 @@ namespace PUP_RMS.Core
             }
             sqlParameters.Clear();
             return dt;
+        }
+
+        // Method to get a single value (Count, ID, Name, etc.)
+        // ADD THIS TO DbControl.cs
+        public static int ExecuteScalar(string procedureName)
+        {
+            int result = 0;
+            using (SqlConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                using (SqlCommand cmd = new SqlCommand(procedureName, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // This allows us to reuse your existing parameter logic
+                    if (sqlParameters != null)
+                    {
+                        cmd.Parameters.AddRange(sqlParameters.ToArray());
+                    }
+
+                    try
+                    {
+                        conn.Open();
+                        // ExecuteScalar grabs the top-left value (the count) from the result
+                        object returnVal = cmd.ExecuteScalar();
+
+                        if (returnVal != null)
+                        {
+                            result = Convert.ToInt32(returnVal);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                }
+            }
+            // Always clear parameters after use
+            sqlParameters.Clear();
+            return result;
         }
 
     }

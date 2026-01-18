@@ -1,11 +1,13 @@
-﻿using System;
+﻿using PUP_RMS.CustomControls;
+using PUP_RMS.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
-using PUP_RMS.CustomControls;
 
 namespace PUP_RMS.Forms
 {
@@ -116,35 +118,59 @@ namespace PUP_RMS.Forms
         }
         private void LoadMainData()
         {
-            // 20+ Sample Programs
-            _mainSegments = new List<ChartSegment>
+            _mainSegments = new List<ChartSegment>();
+
+            // 1. GET REAL DATA
+            DataTable dt = DashboardHelper.GetProgramDistribution();
+
+            // 2. DEFINE COLORS (To cycle through, since DB doesn't have colors)
+            Color[] colors = {
+        ClrMaroon, ClrGold, Color.FromArgb(180, 130, 40), Color.CadetBlue,
+        Color.SteelBlue, Color.DarkSlateBlue, Color.MediumPurple, Color.IndianRed,
+        Color.SeaGreen, Color.Teal, Color.DimGray, Color.Sienna
+    };
+
+            int limit = 10; // Show Top 10 only
+            int othersCount = 0;
+
+            // 3. LOOP THROUGH DATA
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                new ChartSegment { Label = "BSIT", Value = 4500, Color = ClrMaroon },
-                new ChartSegment { Label = "BSA", Value = 2500, Color = Color.FromArgb(180, 130, 40) },
-                new ChartSegment { Label = "BSED", Value = 2000, Color = ClrGold },
-                new ChartSegment { Label = "BSHM", Value = 1500, Color = Color.FromArgb(240, 190, 80) },
-                new ChartSegment { Label = "BSBA", Value = 1200, Color = Color.FromArgb(210, 160, 50) },
-                new ChartSegment { Label = "BSCE", Value = 900, Color = Color.CadetBlue },
-                new ChartSegment { Label = "BSEE", Value = 850, Color = Color.SteelBlue },
-                new ChartSegment { Label = "BSME", Value = 800, Color = Color.DarkSlateBlue },
-                new ChartSegment { Label = "BSCpE", Value = 750, Color = Color.MediumPurple },
-                new ChartSegment { Label = "BSIE", Value = 700, Color = Color.FromArgb(102,51,153) },
-                new ChartSegment { Label = "AB English", Value = 600, Color = Color.IndianRed },
-                new ChartSegment { Label = "AB PolSci", Value = 550, Color = Color.Firebrick },
-                new ChartSegment { Label = "BS Psych", Value = 500, Color = Color.DarkSalmon },
-                new ChartSegment { Label = "BS Bio", Value = 450, Color = Color.SeaGreen },
-                new ChartSegment { Label = "BS Math", Value = 400, Color = Color.MediumSeaGreen },
-                new ChartSegment { Label = "BS Stat", Value = 350, Color = Color.Teal },
-                new ChartSegment { Label = "BS Arch", Value = 300, Color = Color.DimGray },
-                new ChartSegment { Label = "BPE", Value = 250, Color = Color.SlateGray },
-                new ChartSegment { Label = "BTLEd", Value = 200, Color = Color.DarkOliveGreen },
-                new ChartSegment { Label = "DOMT", Value = 150, Color = Color.Sienna },
-                // Extra items to test crowding
-                new ChartSegment { Label = "BS Entrep", Value = 140, Color = Color.OrangeRed },
-                new ChartSegment { Label = "BS OAd", Value = 130, Color = Color.PaleVioletRed },
-                new ChartSegment { Label = "BS Nutri", Value = 120, Color = Color.LimeGreen },
-                new ChartSegment { Label = "BS Chem", Value = 110, Color = Color.CornflowerBlue }
-            };
+                DataRow row = dt.Rows[i];
+                string label = row["Label"].ToString();
+                int val = Convert.ToInt32(row["Value"]);
+
+                if (i < limit)
+                {
+                    _mainSegments.Add(new ChartSegment
+                    {
+                        Label = label,
+                        Value = val,
+                        Color = colors[i % colors.Length]
+                    });
+                }
+                else
+                {
+                    othersCount += val;
+                }
+            }
+
+            // 4. ADD "OTHERS" SLICE
+            if (othersCount > 0)
+            {
+                _mainSegments.Add(new ChartSegment
+                {
+                    Label = "Others",
+                    Value = othersCount,
+                    Color = Color.Gray
+                });
+            }
+
+            // 5. HANDLE EMPTY DB
+            if (_mainSegments.Count == 0)
+            {
+                _mainSegments.Add(new ChartSegment { Label = "No Data", Value = 1, Color = Color.LightGray });
+            }
 
             _currentSegments = new List<ChartSegment>(_mainSegments);
             _isDrilledDown = false;

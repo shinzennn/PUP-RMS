@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PUP_RMS.Helper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -118,15 +120,30 @@ namespace PUP_RMS.Forms
 
         private void LoadFacultyData()
         {
-            var facultyList = new List<(string Name, int Progress, int Records)> {
-                ("Prof. Maria Santos", 85, 550),
-                ("Prof. John Cruz", 70, 320),
-                ("Prof. David Lee", 45, 180),
-                ("Prof. Anna Belen", 30, 70)
-            };
+            // 1. CLEAR DUMMY DATA
+            listContainer.Controls.Clear();
 
-            foreach (var faculty in facultyList)
-                listContainer.Controls.Add(CreateFacultyRow(faculty.Name, faculty.Progress, faculty.Records));
+            // 2. GET REAL DATA
+            DataTable dt = DashboardHelper.GetFacultyDistribution();
+
+            if (dt.Rows.Count == 0) return;
+
+            // 3. FIND MAX VALUE (To make the progress bar relative to the highest)
+            // The query orders by count desc, so the first row is the max.
+            int maxRecords = Convert.ToInt32(dt.Rows[0]["RecordCount"]);
+            if (maxRecords == 0) maxRecords = 1;
+
+            // 4. LOOP AND CREATE ROWS
+            foreach (DataRow row in dt.Rows)
+            {
+                string name = row["Name"].ToString();
+                int records = Convert.ToInt32(row["RecordCount"]);
+
+                // Calculate percentage (0 to 100) based on the top performer
+                int progress = (int)((double)records / maxRecords * 100);
+
+                listContainer.Controls.Add(CreateFacultyRow(name, progress, records));
+            }
         }
 
         private Panel CreateFacultyRow(string name, int progress, int records)

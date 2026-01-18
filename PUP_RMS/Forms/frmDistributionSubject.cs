@@ -1,9 +1,12 @@
-﻿using System;
+﻿using PUP_RMS.Helper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
+
 
 namespace PUP_RMS.Forms
 {
@@ -39,14 +42,37 @@ namespace PUP_RMS.Forms
                      ControlStyles.DoubleBuffer |
                      ControlStyles.ResizeRedraw, true);
 
-            subjectData = new List<(string Name, int Count)>
+            subjectData = new List<(string Name, int Count)>();
+
+            DataTable dt = DashboardHelper.GetSubjectDistribution();
+
+            int limit = 18; // Show top 18 subjects to fit the grid
+            int othersCount = 0;
+
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                ("Programming 1", 550), ("History", 680), ("Physics", 520),
-                ("Web Dev", 410), ("Accounting", 320), ("Calculus", 250),
-                ("Pathfit", 200), ("Physics 1", 180), ("Ethics", 70), ("Rizal", 40),
-                ("Webdev", 200), ("Physics 2", 180), ("UTS", 70), ("Bonifacio", 40),
-                ("OS", 250), ("MMW", 130), ("DSA", 210), ("DSA", 130), 
-            };
+                DataRow row = dt.Rows[i];
+                string name = row["SubjectName"].ToString();
+                int count = Convert.ToInt32(row["Count"]);
+
+                if (i < limit)
+                {
+                    subjectData.Add((name, count));
+                }
+                else
+                {
+                    othersCount += count;
+                }
+            }
+
+            if (othersCount > 0)
+            {
+                subjectData.Add(("Others", othersCount));
+            }
+
+            if (subjectData.Count == 0)
+                subjectData.Add(("No Data Uploaded", 1));
+            // ============================================
 
             SetupFormDesign();
         }
