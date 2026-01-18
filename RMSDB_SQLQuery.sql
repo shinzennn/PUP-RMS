@@ -1,6 +1,8 @@
 CREATE DATABASE RMSDB;
+GO
 
 USE RMSDB;
+GO
 
 CREATE TABLE Account(
 	AccountID INT IDENTITY(1,1) PRIMARY KEY,
@@ -10,12 +12,14 @@ CREATE TABLE Account(
 	LastName VARCHAR(50) NOT NULL,
 	AccountType VARCHAR(20) NOT NULL
 );
+GO
 
 CREATE TABLE Program(
 	ProgramID INT IDENTITY(1,1) PRIMARY KEY,
 	ProgramCode VARCHAR(20) NOT NULL,
 	ProgramDescription VARCHAR(100) NOT NULL,
 );
+GO
 
 CREATE TABLE Course(
 	CourseID INT IDENTITY(1,1) PRIMARY KEY,
@@ -23,6 +27,7 @@ CREATE TABLE Course(
 	CourseDescription VARCHAR(100) NOT NULL,
     CurriculumYear VARCHAR(10)
 );
+GO
 
 CREATE TABLE Faculty(
 	FacultyID INT IDENTITY(1,1) PRIMARY KEY,
@@ -32,6 +37,7 @@ CREATE TABLE Faculty(
 	Suffix VARCHAR(10),
 	Initials VARCHAR(20)
 );
+GO
 
 CREATE TABLE GradeSheet(
 	GradeSheetID INT IDENTITY(1,1) PRIMARY KEY,
@@ -45,12 +51,14 @@ CREATE TABLE GradeSheet(
 	FacultyID INT,
     PageNumber INT,
 	AccountID INT,
+    DateUploaded DATETIME DEFAULT GETDATE()
 
     CONSTRAINT FK_ProgramID_GradeSheet FOREIGN KEY (ProgramID) REFERENCES Program(ProgramID),
 	CONSTRAINT FK_CourseID_GradeSheet FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
 	CONSTRAINT FK_FacultyID_GradeSheet FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID),
 	CONSTRAINT FK_AccountID_GradeSheet FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
 );
+GO
 
 CREATE TABLE ActivityLog(
 	LogID INT IDENTITY(1,1) PRIMARY KEY,
@@ -60,6 +68,7 @@ CREATE TABLE ActivityLog(
 
 	CONSTRAINT FK_AccountID_ActivityLog FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
 );
+GO
 
 
 -- SAMPLE DATA
@@ -105,6 +114,7 @@ SELECT * FROM ActivityLog;
 
 -- STORED PROCEDURES --
 
+GO
 -- 1. COURSE STORED PROCEDURES ///
 -- 1.1. CREATE COURSE //
 CREATE PROCEDURE sp_CreateCourse
@@ -115,23 +125,12 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    BEGIN TRY
-        BEGIN TRANSACTION;
+    INSERT INTO Course (CourseCode, CourseDescription, CurriculumYear)
+    VALUES (@CourseCode, @CourseDescription, @CurriculumYear);
 
-        INSERT INTO Course (CourseCode, CourseDescription, CurriculumYear)
-        VALUES (@CourseCode, @CourseDescription, @CurriculumYear);
-
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        -- UNDO IF ANYTHING GOES WRONG
-        IF @@TRANCOUNT > 0
-            ROLLBACK TRANSACTION;
-
-        -- RAISE THE ERROR TO C#
-        THROW;
-    END CATCH
 END
+
+GO
 
 -- 1.2. GET ALL COURSE DESCRIPTION //
 CREATE PROCEDURE sp_GetAllCourseDescription
@@ -159,6 +158,8 @@ BEGIN
     WHERE RowNum = 1; -- Only take the first instance of each description
 END
 
+GO
+
 -- 1.3. GET ALL COURSE CODE PER COURSE DESCRIPTION //
 CREATE PROCEDURE sp_GetAllCourseCodePerDescription
     @CourseDescription VARCHAR(100)
@@ -174,11 +175,13 @@ BEGIN
         CourseDescription = @CourseDescription;
 END
 
+GO
+
 -- 1.4. SEARCH COURSE //
 CREATE PROCEDURE sp_SearchCourse
     @CurriculumYear VARCHAR(10) = NULL,
     @SearchTerm VARCHAR(100) = NULL,
-    @ProgramID INT = NULL -- New Parameter
+    @ProgramID INT = NULL
 AS
 BEGIN
     -- Prepare the search filter
@@ -219,6 +222,8 @@ BEGIN
         RowNum = 1;
 END
 
+GO
+
 -- 1.5. UPDATE COURSE //
 CREATE PROCEDURE sp_UpdateCourse
     @CourseID INT,
@@ -236,6 +241,8 @@ BEGIN
     WHERE 
         CourseID = @CourseID;
 END
+
+GO
 
 -- 1.6. DELETE COURSE //
 CREATE PROCEDURE sp_DeleteCourse
@@ -255,6 +262,8 @@ BEGIN
     DELETE FROM Course WHERE CourseID = @CourseID;
 END
 
+GO
+
 
 -- 2. PROGRAM STORED PROCEDURE ///
 -- 2.1. CREATE PROGRAM //
@@ -267,6 +276,8 @@ BEGIN
 	VALUES (@ProgramCode, @ProgramDescription);
 END
 
+GO
+
 -- 2.2. GET ALL PROGRAM //
 CREATE PROCEDURE sp_GetAllProgram
 AS
@@ -278,6 +289,8 @@ BEGIN
 	FROM
 		Program
 END
+
+GO
 
 -- 2.3. SEARCH PROGRAM //
 CREATE PROCEDURE sp_SearchProgram
@@ -299,6 +312,8 @@ BEGIN
         OR ProgramDescription LIKE @Filter;
 END
 
+GO
+
 -- 2.4. UPDATE PROGRAM //
 CREATE PROCEDURE sp_UpdateProgram
 	@ProgramID INT,
@@ -315,6 +330,8 @@ BEGIN
 		ProgramID = @ProgramID;
 END
 
+GO
+
 -- 2.5. DELETE PROGRAM //
 CREATE PROCEDURE sp_DeleteProgram
     @ProgramID INT
@@ -322,19 +339,11 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    BEGIN TRY
-        BEGIN TRANSACTION;
+    DELETE FROM Program WHERE ProgramID = @ProgramID;
 
-        DELETE FROM Program WHERE ProgramID = @ProgramID;
-
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        IF @@TRANCOUNT > 0
-            ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH
 END
+
+GO
 
 
 -- 3. FACULTY STORED PROCEDURE ///
@@ -351,6 +360,8 @@ BEGIN
     VALUES (@FirstName, @MiddleName, @LastName, @Suffix, @Initials);
 END;
 
+GO
+
 -- 3.2. GET ALL FACULTY //
 CREATE PROCEDURE sp_GetAllFaculty
 AS
@@ -365,6 +376,8 @@ BEGIN
     FROM Faculty
     ORDER BY LastName, FirstName ASC;
 END;
+
+GO
 
 -- 3.3. SEARCH FACULTY 
 CREATE PROCEDURE sp_SearchFaculty
@@ -402,6 +415,8 @@ BEGIN
     ORDER BY LastName, FirstName ASC;
 END;
 
+GO
+
 -- 3.4. UPDATE FACULTY //
 CREATE PROCEDURE sp_UpdateFaculty
     @FacultyID INT,
@@ -422,6 +437,8 @@ BEGIN
     WHERE FacultyID = @FacultyID;
 END;
 
+GO
+
 -- 3.5. DELETE FACULTY //
 CREATE PROCEDURE sp_DeleteFaculty
     @FacultyID INT
@@ -438,6 +455,8 @@ BEGIN
     DELETE FROM Faculty
     WHERE FacultyID = @FacultyID;
 END;
+
+GO
 
 
 -- 4. GRADESHEET STORED PROCEDURE ///
@@ -498,7 +517,9 @@ BEGIN
         @AccountID
     
     )
-END
+END;
+
+GO
 
 -- 4.2. GET ALL GRADESHEET //
 CREATE PROCEDURE sp_GetAllGradeSheets
@@ -515,7 +536,7 @@ BEGIN
         p.ProgramCode,
         gs.YearLevel,
         c.CourseCode,
-        f.LastName + ', ' + f.FirstName + ISNULL(' ' + LEFT(f.MiddleName, 1) + '.', '') AS Faculty,
+        f.LastName + ', ' + f.FirstName + ' ' + ISNULL(NULLIF(SUBSTRING(f.MiddleName, 1, 1), '') + '.', '') AS FullName,
         a.LastName + ', ' + a.FirstName AS UploadedBy,
         gs.PageNumber
     FROM GradeSheet gs
@@ -525,6 +546,8 @@ BEGIN
     INNER JOIN Program p ON gs.ProgramID = p.ProgramID
     ORDER BY gs.SchoolYear DESC, gs.Semester DESC, gs.PageNumber ASC;
 END
+
+GO
 
 -- 4.3. SEARCH GRADESHEET //
 CREATE PROCEDURE sp_SearchGradeSheet
@@ -547,7 +570,7 @@ BEGIN
         p.ProgramCode,
         gs.YearLevel,
         c.CourseCode,
-        f.LastName + ', ' + f.FirstName + ISNULL(' ' + LEFT(f.MiddleName, 1) + '.', '') AS Faculty,
+        f.LastName + ', ' + f.FirstName + ' ' + ISNULL(NULLIF(SUBSTRING(f.MiddleName, 1, 1), '') + '.', '') AS FullName,
         gs.PageNumber,
         a.LastName + ', ' + a.FirstName AS UploadedBy
 
@@ -567,6 +590,8 @@ BEGIN
 
     ORDER BY gs.SchoolYear DESC, gs.Semester DESC, gs.PageNumber ASC;
 END
+
+GO
 
 -- 4.4. UPDATE GRADESHEET //
 CREATE PROCEDURE sp_UpdateGradeSheet
@@ -608,6 +633,8 @@ BEGIN
         GradeSheetID = @GradeSheetID;
 END
 
+GO
+
 -- 4.5. DELETE GRADESHEET //
 CREATE  PROCEDURE sp_DeleteGradeSheet
     @GradeSheetID INT
@@ -623,6 +650,8 @@ BEGIN
     DELETE FROM GradeSheet
     WHERE GradeSheetID = @GradeSheetID;
 END
+
+GO
 
 
 -- 5. ACCOUNT STORED PROCEDURE ///
@@ -645,6 +674,8 @@ BEGIN
     VALUES (@Username, @Password, @FirstName, @LastName, @AccountType);
 END;
 
+GO
+
 -- 5.2. GET ALL ACCOUNT //
 CREATE PROCEDURE sp_GetAllAccount
 AS
@@ -661,6 +692,8 @@ BEGIN
     ORDER BY 
         LastName, FirstName ASC;
 END;
+
+GO
 
 -- 5.3. SEARCH ACCOUNT //
 CREATE PROCEDURE sp_SearchAccount
@@ -679,6 +712,8 @@ BEGIN
        OR LastName  LIKE '%' + @SearchTerm + '%'
     ORDER BY LastName, FirstName;
 END;
+
+GO
 
 -- 5.4. UPDATE ACCOUNT //
 CREATE PROCEDURE sp_UpdateAccount
@@ -712,6 +747,8 @@ BEGIN
         AccountID = @AccountID;
 END;
 
+GO
+
 -- 5.5. DELETE ACCOUNT //
 CREATE PROCEDURE sp_DeleteAccount
     @AccountID INT
@@ -728,6 +765,8 @@ BEGIN
     WHERE AccountID = @AccountID;
 END;
 
+GO
+
 -- 5.6. Login Account //
 CREATE PROCEDURE sp_LoginAccount
     @Username VARCHAR(50),
@@ -739,6 +778,8 @@ BEGIN
     WHERE Username = @Username
       AND Password = @Password;
 END;
+
+GO
 
 
 -- 6. ACTIVITY LOG STORED PROCEDURE ///
@@ -753,6 +794,8 @@ BEGIN
     VALUES (@AccountID, @ActivityDescription, @ActivityDate);
 END
 
+GO
+
 -- 6.2. GET ALL ACTIVITY //
 CREATE PROCEDURE sp_GetAllActivityLog
 AS
@@ -763,6 +806,128 @@ BEGIN
         ActivityLog;
 END
 
+GO
 
+-- 7. SYSTEM DASHBOARD 4 CARDS STORED PROCEDURE ///
+-- 7.1. Count for TOTAL GRADE SHEETS
+CREATE PROCEDURE sp_GetGradeSheetCount
+AS
+BEGIN
+    SELECT COUNT(*) FROM GradeSheet;
+END
+
+GO
+
+-- 7.2. Count for TOTAL SUBJECTS (Counts the Course table)
+CREATE PROCEDURE sp_GetSubjectCount
+AS
+BEGIN
+    SELECT COUNT(*) FROM Course;
+END
+
+GO
+
+-- 7.3. Count for TOTAL PROFESSORS (Counts the Faculty table)
+CREATE PROCEDURE sp_GetFacultyCount
+AS
+BEGIN
+    SELECT COUNT(*) FROM Faculty;
+END
+
+GO
+
+-- 7.4. Distribution by PROGRAM
+CREATE PROCEDURE sp_GetDistributionByProgram
+AS
+BEGIN
+    SELECT 
+        p.ProgramCode AS Label, 
+        COUNT(gs.GradeSheetID) AS Value
+    FROM GradeSheet gs
+    INNER JOIN Program p ON gs.ProgramID = p.ProgramID
+    GROUP BY p.ProgramCode
+    ORDER BY Value DESC;
+END
+
+GO
+
+-- 7.5. Distribution by PROFESSOR
+CREATE PROCEDURE sp_GetDistributionByFaculty
+AS
+BEGIN
+    SELECT 
+        f.LastName + ', ' + f.FirstName AS Name,
+        COUNT(gs.GradeSheetID) AS RecordCount
+    FROM GradeSheet gs
+    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
+    GROUP BY f.LastName, f.FirstName
+    ORDER BY RecordCount DESC;
+END
+
+GO
+
+-- 7.6. Distribution by SUBJECT
+CREATE PROCEDURE sp_GetDistributionBySubject
+AS
+BEGIN
+    SELECT 
+        c.CourseDescription AS SubjectName,
+        COUNT(gs.GradeSheetID) AS Count
+    FROM GradeSheet gs
+    INNER JOIN Course c ON gs.CourseID = c.CourseID
+    GROUP BY c.CourseDescription
+    ORDER BY Count DESC;
+END
+GO
+
+-- 7.7. Distribution by YEAR & SEMESTER 
+CREATE PROCEDURE sp_GetDistributionByYearSem
+    @Program     VARCHAR(50) = NULL,
+    @Faculty     VARCHAR(100) = NULL,
+    @Subject     VARCHAR(100) = NULL,
+    @SchoolYear  VARCHAR(20) = NULL
+AS
+BEGIN
+    SELECT 
+        gs.SchoolYear,
+        gs.Semester,
+        COUNT(gs.GradeSheetID) AS Total
+    FROM GradeSheet gs
+    INNER JOIN Program p ON gs.ProgramID = p.ProgramID
+    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
+    INNER JOIN Course c ON gs.CourseID = c.CourseID
+    WHERE 
+        (@Program IS NULL OR p.ProgramCode = @Program) 
+        AND (@Faculty IS NULL OR (f.LastName + ', ' + f.FirstName) = @Faculty)
+        AND (@Subject IS NULL OR c.CourseDescription = @Subject)
+        AND (@SchoolYear IS NULL OR gs.SchoolYear = @SchoolYear)
+    GROUP BY gs.SchoolYear, gs.Semester
+    ORDER BY gs.SchoolYear DESC, gs.Semester ASC;
+END
+
+--7.8 GetGradesheetsBySubject
+
+/*
+CREATE PROCEDURE sp_GetGradeSheetsBySubject
+    @SubjectName VARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        gs.Filename,
+        f.LastName + ', ' + f.FirstName AS UploadedBy,
+        -- If you added DateUploaded in previous steps, use it. 
+        -- If not, we use GETDATE() or SchoolYear as a placeholder.
+        ISNULL(gs.DateUploaded, GETDATE()) AS DateUploaded 
+    FROM GradeSheet gs
+    INNER JOIN Course c ON gs.CourseID = c.CourseID
+    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
+    WHERE c.CourseDescription = @SubjectName
+    ORDER BY gs.Filename ASC;
+END
+GO
+*/
+-- di pa to nagagwa wala pang dateupload
 
 

@@ -19,5 +19,6 @@ namespace PUP_RMS.Model
         public int FacultyID { get; set; }
         public int PageNumber { get; set; }
         public int AccountID { get; set; }
+        public DateTime DateUploaded { get; set; }
     }
 }
