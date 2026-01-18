@@ -331,6 +331,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -350,6 +351,10 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\AccountIcon.png" />
+    <None Include="Resources\Icons\account %281%29.png" />
+    <None Include="Resources\Icons\740b6f73-591a-445a-9bdd-ae960fb84374_removalai_preview%281%29.png" />
+    <None Include="Resources\Icons\Account_2.png" />
     <Content Include="Resources\Icons\batch upload.png" />
     <Content Include="Resources\Icons\browse.png" />
     <Content Include="Resources\Icons\dashboard.png" />

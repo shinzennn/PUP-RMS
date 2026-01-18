@@ -38,6 +38,7 @@ namespace PUP_RMS.Forms
             tblpnlAccount.ColumnCount = 1;
             tblpnlAccount.ColumnStyles.Clear();
             tblpnlAccount.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+            tblpnlAccount.BackColor = Color.Transparent;
 
             // DEFINE ROW HIEGHT
             int rowHeight = 110; // Adjust based on your design
@@ -66,7 +67,7 @@ namespace PUP_RMS.Forms
             {
                 Size = new Size(parentWidth, panelHeight),
                 Padding = new Padding(5),
-                BackColor = Color.WhiteSmoke
+                BackColor = Color.Transparent
             };
 
             // EXTRACT DATA FROM THE DataRow
@@ -76,7 +77,7 @@ namespace PUP_RMS.Forms
             string accountType = row["AccountType"].ToString();
 
             // DESIGN THE PICTURE BOX FOR ICON IMAGE
-            int iconSize = 50;
+            int iconSize = 48;
             int iconLeftMargin = 20;
 
 
@@ -84,7 +85,9 @@ namespace PUP_RMS.Forms
             {
                 Size = new Size(iconSize, iconSize),
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Location = new Point(iconLeftMargin, (rowPanel.Height - iconSize) / 2)
+                Location = new Point(iconLeftMargin, (rowPanel.Height - iconSize) / 2),
+                BackColor = Color.Transparent,
+                Image = Properties.Resources.Account_2
             };
 
             // DESIGN THE LABELS
@@ -96,6 +99,7 @@ namespace PUP_RMS.Forms
                 Text = fullName,
                 Font = new Font("Segoe UI", 14, FontStyle.Bold),
                 Location = new Point(labelLeftStart, 25),
+                BackColor = Color.Transparent,
                 AutoSize = true
             };
 
@@ -104,6 +108,7 @@ namespace PUP_RMS.Forms
                 Text = username,
                 Font = new Font("Segoe UI", 11, FontStyle.Regular),
                 Location = new Point(labelLeftStart, 50),
+                BackColor = Color.Transparent,
                 AutoSize = true
             };
 
@@ -111,9 +116,10 @@ namespace PUP_RMS.Forms
             {
                 Text = accountType,
                 Font = new Font("Segoe UI", 11, FontStyle.Regular),
+                BackColor = Color.Transparent,
                 AutoSize = true
             };
-            int xPos = rowPanel.Width - lblAccountType.Width - 15;
+            int xPos = rowPanel.Width - lblAccountType.Width - 10;
             lblAccountType.Location = new Point(xPos, 25);
 
             // ADD CONTROLS TO THE ROW PANEL

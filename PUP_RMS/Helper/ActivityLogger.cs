@@ -46,7 +46,7 @@ namespace PUP_RMS.Helper
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;
-            string description = $"User {username} - ID:{account_id} logged in.";
+            string description = $"Account {username} - ID:{account_id} logged in.";
             
             LogActivity(account_id, description);
         }
@@ -54,7 +54,7 @@ namespace PUP_RMS.Helper
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;
-            string description = $"Admin {username} - ID:{account_id} registered new account - {newUsername}.";
+            string description = $"Admin: {username} - ID:{account_id} registered new account - {newUsername}.";
 
             LogActivity(account_id, description);
         }
