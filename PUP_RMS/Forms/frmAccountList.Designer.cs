@@ -28,36 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvAccount = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAccount)).BeginInit();
+            this.tblpnlAccount = new System.Windows.Forms.TableLayoutPanel();
             this.SuspendLayout();
             // 
-            // dgvAccount
+            // tblpnlAccount
             // 
-            this.dgvAccount.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAccount.Location = new System.Drawing.Point(13, 13);
-            this.dgvAccount.Name = "dgvAccount";
-            this.dgvAccount.Size = new System.Drawing.Size(679, 416);
-            this.dgvAccount.TabIndex = 0;
+            this.tblpnlAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tblpnlAccount.ColumnCount = 1;
+            this.tblpnlAccount.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tblpnlAccount.Location = new System.Drawing.Point(12, 12);
+            this.tblpnlAccount.Name = "tblpnlAccount";
+            this.tblpnlAccount.RowCount = 1;
+            this.tblpnlAccount.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tblpnlAccount.Size = new System.Drawing.Size(680, 417);
+            this.tblpnlAccount.TabIndex = 0;
             // 
             // frmAccountList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(704, 441);
-            this.Controls.Add(this.dgvAccount);
+            this.Controls.Add(this.tblpnlAccount);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmAccountList";
             this.Text = "Account List";
             this.Load += new System.EventHandler(this.frmAccountList_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAccount)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgvAccount;
+        private System.Windows.Forms.TableLayoutPanel tblpnlAccount;
     }
 }

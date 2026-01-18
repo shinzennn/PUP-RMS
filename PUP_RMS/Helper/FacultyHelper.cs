@@ -22,6 +22,7 @@ namespace PUP_RMS.Helper
             return dt;
         }
 
+        // PRACTICE LANG TO WHAHAHAHA PERO DAPAT NASA PROGRAMHELPER TO
         public static DataTable GetAllProgram()
         {
             DataTable dt = new DataTable();
