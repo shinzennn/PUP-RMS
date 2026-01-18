@@ -113,11 +113,23 @@
     <Compile Include="Forms\frmAccount.Designer.cs">
       <DependentUpon>frmAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmAccountList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAccountList.Designer.cs">
+      <DependentUpon>frmAccountList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmAccounts.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmAccounts.Designer.cs">
       <DependentUpon>frmAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmActivityLogs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmActivityLogs.Designer.cs">
+      <DependentUpon>frmActivityLogs.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmDistributionProfessor.cs">
       <SubType>Form</SubType>
@@ -224,6 +236,7 @@
     <Compile Include="Forms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\AccountHelper.cs" />
     <Compile Include="Helper\ActivityLogger.cs" />
     <Compile Include="Helper\DashboardHelper.cs" />
     <Compile Include="Helper\FacultyHelper.cs" />
@@ -250,8 +263,14 @@
     <EmbeddedResource Include="Forms\frmAccount.resx">
       <DependentUpon>frmAccount.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAccountList.resx">
+      <DependentUpon>frmAccountList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmAccounts.resx">
       <DependentUpon>frmAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmActivityLogs.resx">
+      <DependentUpon>frmActivityLogs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDistributionProfessor.resx">
       <DependentUpon>frmDistributionProfessor.cs</DependentUpon>
@@ -313,6 +332,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -332,6 +352,10 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\AccountIcon.png" />
+    <None Include="Resources\Icons\account %281%29.png" />
+    <None Include="Resources\Icons\740b6f73-591a-445a-9bdd-ae960fb84374_removalai_preview%281%29.png" />
+    <None Include="Resources\Icons\Account_2.png" />
     <Content Include="Resources\Icons\batch upload.png" />
     <Content Include="Resources\Icons\browse.png" />
     <Content Include="Resources\Icons\dashboard.png" />

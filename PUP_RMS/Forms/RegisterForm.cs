@@ -153,8 +153,7 @@ namespace PUP_RMS.Forms
             if (success)
             {
                 new CustomMsgBox("Registration Successful! You can now log in.").ShowDialog(this);
-                LoginForm loginForm = new LoginForm();
-                loginForm.Show();
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else

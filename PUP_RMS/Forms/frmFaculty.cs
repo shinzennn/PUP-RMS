@@ -24,6 +24,7 @@ namespace PUP_RMS.Forms
 
         private void frmFaculty_Load(object sender, EventArgs e)
         {
+            txtSearch.Focus();
             RefreshGrid();
         }
 
@@ -41,6 +42,13 @@ namespace PUP_RMS.Forms
             dgvFaculty.ClearSelection();
             dgvFaculty.CurrentCell = null;
             dgvFacultyColumnDesign();
+
+     
+            cbxProgram.DisplayMember = "ProgramCode";
+            cbxProgram.ValueMember = "ProgramID";
+            cbxProgram.DataSource = FacultyHelper.GetAllProgram();
+            cbxProgram.SelectedIndex = -1;
+
         }
         private void btnRefresh_Click_1(object sender, EventArgs e)
         {
@@ -56,8 +64,11 @@ namespace PUP_RMS.Forms
                 return;
             }
 
+            int selectedID = Convert.ToInt32(cbxProgram.SelectedValue);
+            string searchTerm = txtSearch.Text.Trim();
+
             // EXECUTE QUERY
-            dgvFaculty.DataSource = FacultyHelper.SearchFaculty(txtSearch.Text);
+            dgvFaculty.DataSource = FacultyHelper.SearchFaculty(searchTerm, selectedID);
 
         }
         private void btnCreate_Click(object sender, EventArgs e)
@@ -100,12 +111,15 @@ namespace PUP_RMS.Forms
                 facultyID = Convert.ToInt32(selectedRow.Cells["FacultyID"].Value);
             }
 
+            string fullName = FacultyHelper.ConstructFullname(txtFirstName.Text.Trim(), txtMiddleName.Text.Trim(), txtLastName.Text.Trim());
+            string initials = FacultyHelper.ConstructInitials(fullName);
             // CREATE FACULTY OBJECT
             Faculty faculty = new Faculty
             {
-                FirstName = txtFirstName.Text,
-                MiddleName = txtMiddleName.Text,
-                LastName = txtLastName.Text
+                FirstName = txtFirstName.Text.Trim(),
+                MiddleName = txtMiddleName.Text.Trim(),
+                LastName = txtLastName.Text.Trim(),
+                Initials = initials
             };
 
             // CHECK BUTTON CLICK STATE

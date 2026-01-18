@@ -272,6 +272,7 @@ CREATE PROCEDURE sp_GetAllProgram
 AS
 BEGIN
 	SELECT
+        ProgramID,
 		ProgramCode,
 		ProgramDescription
 	FROM
@@ -359,7 +360,7 @@ BEGIN
         FirstName,
         MiddleName,
         LastName,
-        LastName + ', ' + FirstName + ' ' + ISNULL(SUBSTRING(MiddleName, 1, 1) + '.', '') AS FullName,
+        LastName + ', ' + FirstName + ' ' + ISNULL(NULLIF(SUBSTRING(MiddleName, 1, 1), '') + '.', '') AS FullName,
         Initials
     FROM Faculty
     ORDER BY LastName, FirstName ASC;
@@ -381,9 +382,7 @@ BEGIN
         FirstName,
         MiddleName,
         LastName,
-        -- Combined Full Name for display in UI ComboBoxes/Lists
-        LastName + ', ' + FirstName + 
-            ISNULL(' ' + SUBSTRING(MiddleName, 1, 1) + '.', '') AS FullName,
+        LastName + ', ' + FirstName + ' ' + ISNULL(NULLIF(SUBSTRING(MiddleName, 1, 1), '') + '.', '') AS FullName,
         Initials
     FROM Faculty f
     WHERE 
