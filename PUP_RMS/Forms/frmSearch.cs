@@ -14,9 +14,28 @@ namespace PUP_RMS.Forms
 
         private bool isLoading = false;
 
+        // Filter variables
+        private string selectedSchoolYear = null;
+        private int selectedSemester = 0;
+        private int selectedProgram = 0;
+        private int selectedYearLevel = 0;
+        private int selectedCourse = 0;
+        private int selectedProfessor = 0;
+
         public frmSearch()
         {
             InitializeComponent();
+
+            // Ensure event handlers are wired
+            this.btnSearch.Click += this.btnSearch_Click;
+            this.btnClear.Click += this.btnClear_Click;
+
+            this.cmbProgram.SelectedIndexChanged += this.cmbProgram_SelectedIndexChanged;
+            this.cmbCourse.SelectedIndexChanged += this.cmbCourse_SelectedIndexChanged;
+            this.cmbProfessor.SelectedIndexChanged += this.cmbProfessor_SelectedIndexChanged;
+            this.cmbSemester.SelectedIndexChanged += this.cmbSemester_SelectedIndexChanged;
+            this.cmbSchoolYear.SelectedIndexChanged += this.cmbSchoolYear_SelectedIndexChanged;
+            this.cmbYearLevel.SelectedIndexChanged += this.cmbYearLevel_SelectedIndexChanged;
         }
 
         private void frmSearch_Load(object sender, EventArgs e)
@@ -26,6 +45,9 @@ namespace PUP_RMS.Forms
             LoadPrograms();
             LoadCourses();
             LoadProfessors();
+            LoadSchoolYears();
+            LoadSemesters();
+            LoadYearLevels();
             LoadAllGradeSheets();
 
             isLoading = false;
@@ -44,7 +66,7 @@ namespace PUP_RMS.Forms
         }
 
         // =========================
-        // PROGRAM COMBOBOX
+        // LOAD COMBOBOXES
         // =========================
         private void LoadPrograms()
         {
@@ -56,6 +78,7 @@ namespace PUP_RMS.Forms
                 con.Open();
                 dt.Load(cmd.ExecuteReader());
 
+                // Placeholder row
                 DataRow placeholder = dt.NewRow();
                 placeholder["ProgramID"] = 0;
                 placeholder["ProgramCode"] = "Program";
@@ -68,9 +91,6 @@ namespace PUP_RMS.Forms
             }
         }
 
-        // =========================
-        // COURSE COMBOBOX
-        // =========================
         private void LoadCourses()
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -93,9 +113,6 @@ namespace PUP_RMS.Forms
             }
         }
 
-        // =========================
-        // PROFESSOR (FACULTY) COMBOBOX
-        // =========================
         private void LoadProfessors()
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -118,77 +135,117 @@ namespace PUP_RMS.Forms
             }
         }
 
-        string selectedSchoolYear = "";
-        int selectedSemester = 0;
-        int selectedProgram = 0;
-        int selectedYearLevel = 0;
-        int selectedCourse = 0;
-        int selectedProfessor = 0;
+        private void LoadSchoolYears()
+        {
+            // Example: populate with distinct years from database
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(
+                "SELECT DISTINCT SchoolYear FROM GradeSheet ORDER BY SchoolYear DESC", con))
+            {
+                DataTable dt = new DataTable();
+                con.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                DataRow placeholder = dt.NewRow();
+                placeholder["SchoolYear"] = "School Year";
+                dt.Rows.InsertAt(placeholder, 0);
+
+                cmbSchoolYear.DataSource = dt;
+                cmbSchoolYear.DisplayMember = "SchoolYear";
+                cmbSchoolYear.ValueMember = "SchoolYear";
+                cmbSchoolYear.SelectedIndex = 0;
+            }
+        }
+
+        private void LoadSemesters()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Name", typeof(string));
+
+            dt.Rows.Add(0, "Semester");   // placeholder
+            dt.Rows.Add(1, "1st Semester");
+            dt.Rows.Add(2, "2nd Semester");
+
+            cmbSemester.DataSource = dt;
+            cmbSemester.DisplayMember = "Name";
+            cmbSemester.ValueMember = "ID";
+            cmbSemester.SelectedIndex = 0;
+        }
+
+        private void LoadYearLevels()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Name", typeof(string));
+
+            dt.Rows.Add(0, "Year Level");   // placeholder
+            dt.Rows.Add(1, "1st Year");
+            dt.Rows.Add(2, "2nd Year");
+            dt.Rows.Add(3, "3rd Year");
+            dt.Rows.Add(4, "4th Year");
+
+            cmbYearLevel.DataSource = dt;
+            cmbYearLevel.DisplayMember = "Name";
+            cmbYearLevel.ValueMember = "ID";
+            cmbYearLevel.SelectedIndex = 0;
+        }
 
         // =========================
-        // OPTIONAL: SELECTION EVENTS
+        // COMBOBOX SELECTION EVENTS
         // =========================
-        // School Year: string
         private void cmbSchoolYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbSchoolYear.SelectedIndex > 0) // skip placeholder
-                selectedSchoolYear = cmbSchoolYear.SelectedItem.ToString();
-            else
-                selectedSchoolYear = null;
+            if (isLoading) return;
+
+            selectedSchoolYear = cmbSchoolYear.SelectedIndex > 0
+                ? cmbSchoolYear.SelectedValue.ToString()
+                : null;
         }
 
-        // Semester: int
         private void cmbSemester_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbSemester.SelectedIndex > 0) // skip placeholder
-            {
-                // If your ComboBox shows "1 - First Semester", take the first number
-                string semString = cmbSemester.SelectedItem.ToString();
-                if (int.TryParse(semString.Substring(0, 1), out int sem))
-                    selectedSemester = sem;
-                else
-                    selectedSemester = 0;
-            }
-            else
-                selectedSemester = 0;
+            if (isLoading) return;
+            selectedSemester = cmbSemester.SelectedValue != null
+                ? Convert.ToInt32(cmbSemester.SelectedValue)
+                : 0;
         }
 
-        // Program: int
-        private void cmbProgram_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbProgram.SelectedIndex > 0 && cmbProgram.SelectedValue != null)
-                selectedProgram = Convert.ToInt32(cmbProgram.SelectedValue);
-            else
-                selectedProgram = 0;
-        }
-
-        // Year Level: int
         private void cmbYearLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbYearLevel.SelectedIndex > 0)
-                selectedYearLevel = Convert.ToInt32(cmbYearLevel.SelectedItem);
-            else
-                selectedYearLevel = 0;
+            if (isLoading) return;
+            selectedYearLevel = cmbYearLevel.SelectedValue != null
+                ? Convert.ToInt32(cmbYearLevel.SelectedValue)
+                : 0;
         }
 
-        // Course: int
+        private void cmbProgram_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            selectedProgram = cmbProgram.SelectedValue != null
+                ? Convert.ToInt32(cmbProgram.SelectedValue)
+                : 0;
+        }
+
         private void cmbCourse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbCourse.SelectedIndex > 0 && cmbCourse.SelectedValue != null)
-                selectedCourse = Convert.ToInt32(cmbCourse.SelectedValue);
-            else
-                selectedCourse = 0;
+            if (isLoading) return;
+            selectedCourse = cmbCourse.SelectedValue != null
+                ? Convert.ToInt32(cmbCourse.SelectedValue)
+                : 0;
         }
 
-        // Faculty/Professor: int
         private void cmbProfessor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbProfessor.SelectedIndex > 0 && cmbProfessor.SelectedValue != null)
-                selectedProfessor = Convert.ToInt32(cmbProfessor.SelectedValue);
-            else
-                selectedProfessor = 0;
+            if (isLoading) return;
+            selectedProfessor = cmbProfessor.SelectedValue != null
+                ? Convert.ToInt32(cmbProfessor.SelectedValue)
+                : 0;
         }
 
+        // =========================
+        // SEARCH BUTTON
+        // =========================
         private void btnSearch_Click(object sender, EventArgs e)
         {
             try
@@ -198,23 +255,24 @@ namespace PUP_RMS.Forms
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    // Pass parameters, use DBNull.Value for unselected filters
-                    cmd.Parameters.AddWithValue("@SchoolYear", string.IsNullOrEmpty(selectedSchoolYear) ? (object)DBNull.Value : selectedSchoolYear);
-                    cmd.Parameters.AddWithValue("@Semester", selectedSemester == 0 ? (object)DBNull.Value : selectedSemester);
-                    cmd.Parameters.AddWithValue("@ProgramID", selectedProgram == 0 ? (object)DBNull.Value : selectedProgram);
-                    cmd.Parameters.AddWithValue("@YearLevel", selectedYearLevel == 0 ? (object)DBNull.Value : selectedYearLevel);
-                    cmd.Parameters.AddWithValue("@CourseID", selectedCourse == 0 ? (object)DBNull.Value : selectedCourse);
-                    cmd.Parameters.AddWithValue("@FacultyID", selectedProfessor == 0 ? (object)DBNull.Value : selectedProfessor);
+                    cmd.Parameters.Add("@SchoolYear", SqlDbType.VarChar, 20)
+                        .Value = string.IsNullOrEmpty(selectedSchoolYear) ? (object)DBNull.Value : selectedSchoolYear;
+                    cmd.Parameters.Add("@Semester", SqlDbType.Int)
+                        .Value = selectedSemester == 0 ? (object)DBNull.Value : selectedSemester;
+                    cmd.Parameters.Add("@ProgramID", SqlDbType.Int)
+                        .Value = selectedProgram == 0 ? (object)DBNull.Value : selectedProgram;
+                    cmd.Parameters.Add("@YearLevel", SqlDbType.Int)
+                        .Value = selectedYearLevel == 0 ? (object)DBNull.Value : selectedYearLevel;
+                    cmd.Parameters.Add("@CourseID", SqlDbType.Int)
+                        .Value = selectedCourse == 0 ? (object)DBNull.Value : selectedCourse;
+                    cmd.Parameters.Add("@FacultyID", SqlDbType.Int)
+                        .Value = selectedProfessor == 0 ? (object)DBNull.Value : selectedProfessor;
 
-                    // Execute and load results
                     DataTable dt = new DataTable();
                     con.Open();
                     dt.Load(cmd.ExecuteReader());
 
-                    // Bind results to the DataGridView
                     dgvGradeSheets.DataSource = dt;
-
-                    // Optional: clear selection
                     dgvGradeSheets.ClearSelection();
                     dgvGradeSheets.CurrentCell = null;
                 }
@@ -223,7 +281,70 @@ namespace PUP_RMS.Forms
             {
                 MessageBox.Show("Error performing search: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
+
+        // =========================
+        // CLEAR BUTTON
+        // =========================
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            isLoading = true;
+
+            // Reset all ComboBoxes to placeholder
+            cmbSchoolYear.SelectedIndex = 0;
+            cmbSemester.SelectedIndex = 0;
+            cmbYearLevel.SelectedIndex = 0;
+            cmbProgram.SelectedIndex = 0;
+            cmbCourse.SelectedIndex = 0;
+            cmbProfessor.SelectedIndex = 0;
+
+            // Reset filter variables
+            selectedSchoolYear = null;
+            selectedSemester = 0;
+            selectedYearLevel = 0;
+            selectedProgram = 0;
+            selectedCourse = 0;
+            selectedProfessor = 0;
+
+            LoadAllGradeSheets();
+            isLoading = false;
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            if (dgvGradeSheets.CurrentRow == null) return;
+            OpenGradeSheetDetailsFromGrid(dgvGradeSheets.CurrentRow.Index);
+        }
+
+        private void dgvGradeSheets_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            OpenGradeSheetDetailsFromGrid(e.RowIndex);
+        }
+
+        private void OpenGradeSheetDetailsFromGrid(int rowIndex)
+        {
+            try
+            {
+                int gradeSheetID = 0;
+                if (!int.TryParse(dgvGradeSheets.Rows[rowIndex].Cells["GradeSheetID"].Value.ToString(), out gradeSheetID))
+                {
+                    MessageBox.Show("Invalid GradeSheet selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                using (frmGradeSheetDetails frm = new frmGradeSheetDetails())
+                {
+                    frm.GradeSheetID = gradeSheetID;
+                    frm.ShowDialog(); // modal
+                    LoadAllGradeSheets(); // refresh grid after closing
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to open GradeSheet details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

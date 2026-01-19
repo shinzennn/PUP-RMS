@@ -44,6 +44,8 @@
             this.rMSDBDataSet1 = new PUP_RMS.RMSDBDataSet1();
             this.programBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.programTableAdapter1 = new PUP_RMS.RMSDBDataSet1TableAdapters.ProgramTableAdapter();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnView = new System.Windows.Forms.Button();
             this.tlpControls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGradeSheets)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rMSDBDataSet)).BeginInit();
@@ -216,10 +218,10 @@
             "2097-2098",
             "2098-2099",
             "2099-2100"});
-            this.cmbSchoolYear.Location = new System.Drawing.Point(3, 2);
-            this.cmbSchoolYear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbSchoolYear.Location = new System.Drawing.Point(2, 2);
+            this.cmbSchoolYear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbSchoolYear.Name = "cmbSchoolYear";
-            this.cmbSchoolYear.Size = new System.Drawing.Size(121, 24);
+            this.cmbSchoolYear.Size = new System.Drawing.Size(92, 21);
             this.cmbSchoolYear.TabIndex = 2;
             this.cmbSchoolYear.Text = "School Year";
             // 
@@ -229,20 +231,20 @@
             this.cmbSemester.Items.AddRange(new object[] {
             "1st",
             "2nd"});
-            this.cmbSemester.Location = new System.Drawing.Point(157, 2);
-            this.cmbSemester.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbSemester.Location = new System.Drawing.Point(117, 2);
+            this.cmbSemester.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbSemester.Name = "cmbSemester";
-            this.cmbSemester.Size = new System.Drawing.Size(121, 24);
+            this.cmbSemester.Size = new System.Drawing.Size(92, 21);
             this.cmbSemester.TabIndex = 3;
             this.cmbSemester.Text = "Semester";
             // 
             // cmbProgram
             // 
             this.cmbProgram.FormattingEnabled = true;
-            this.cmbProgram.Location = new System.Drawing.Point(311, 2);
-            this.cmbProgram.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbProgram.Location = new System.Drawing.Point(232, 2);
+            this.cmbProgram.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbProgram.Name = "cmbProgram";
-            this.cmbProgram.Size = new System.Drawing.Size(121, 24);
+            this.cmbProgram.Size = new System.Drawing.Size(92, 21);
             this.cmbProgram.TabIndex = 4;
             this.cmbProgram.Text = "Program";
             // 
@@ -255,30 +257,30 @@
             "3rd",
             "4th",
             "5th"});
-            this.cmbYearLevel.Location = new System.Drawing.Point(465, 2);
-            this.cmbYearLevel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbYearLevel.Location = new System.Drawing.Point(347, 2);
+            this.cmbYearLevel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbYearLevel.Name = "cmbYearLevel";
-            this.cmbYearLevel.Size = new System.Drawing.Size(121, 24);
+            this.cmbYearLevel.Size = new System.Drawing.Size(92, 21);
             this.cmbYearLevel.TabIndex = 5;
             this.cmbYearLevel.Text = "Year Level";
             // 
             // cmbCourse
             // 
             this.cmbCourse.FormattingEnabled = true;
-            this.cmbCourse.Location = new System.Drawing.Point(619, 2);
-            this.cmbCourse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbCourse.Location = new System.Drawing.Point(462, 2);
+            this.cmbCourse.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbCourse.Name = "cmbCourse";
-            this.cmbCourse.Size = new System.Drawing.Size(121, 24);
+            this.cmbCourse.Size = new System.Drawing.Size(92, 21);
             this.cmbCourse.TabIndex = 6;
             this.cmbCourse.Text = "Course";
             // 
             // btnSearch
             // 
             this.btnSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSearch.Location = new System.Drawing.Point(927, 2);
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSearch.Location = new System.Drawing.Point(692, 2);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(150, 72);
+            this.btnSearch.Size = new System.Drawing.Size(116, 58);
             this.btnSearch.TabIndex = 7;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -287,10 +289,10 @@
             // cmbProfessor
             // 
             this.cmbProfessor.FormattingEnabled = true;
-            this.cmbProfessor.Location = new System.Drawing.Point(773, 2);
-            this.cmbProfessor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbProfessor.Location = new System.Drawing.Point(577, 2);
+            this.cmbProfessor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbProfessor.Name = "cmbProfessor";
-            this.cmbProfessor.Size = new System.Drawing.Size(121, 24);
+            this.cmbProfessor.Size = new System.Drawing.Size(92, 21);
             this.cmbProfessor.TabIndex = 8;
             this.cmbProfessor.Text = "Professor";
             // 
@@ -311,12 +313,12 @@
             this.tlpControls.Controls.Add(this.cmbProgram, 2, 0);
             this.tlpControls.Controls.Add(this.cmbCourse, 4, 0);
             this.tlpControls.Controls.Add(this.cmbYearLevel, 3, 0);
-            this.tlpControls.Location = new System.Drawing.Point(235, 79);
-            this.tlpControls.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tlpControls.Location = new System.Drawing.Point(176, 64);
+            this.tlpControls.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tlpControls.Name = "tlpControls";
             this.tlpControls.RowCount = 1;
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpControls.Size = new System.Drawing.Size(1080, 76);
+            this.tlpControls.Size = new System.Drawing.Size(810, 62);
             this.tlpControls.TabIndex = 9;
             // 
             // dgvGradeSheets
@@ -325,14 +327,14 @@
             this.dgvGradeSheets.AllowUserToDeleteRows = false;
             this.dgvGradeSheets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGradeSheets.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
-            this.dgvGradeSheets.Location = new System.Drawing.Point(235, 204);
-            this.dgvGradeSheets.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvGradeSheets.Location = new System.Drawing.Point(176, 166);
             this.dgvGradeSheets.Name = "dgvGradeSheets";
             this.dgvGradeSheets.ReadOnly = true;
             this.dgvGradeSheets.RowHeadersVisible = false;
             this.dgvGradeSheets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvGradeSheets.Size = new System.Drawing.Size(1080, 537);
+            this.dgvGradeSheets.Size = new System.Drawing.Size(810, 436);
             this.dgvGradeSheets.TabIndex = 10;
+            this.dgvGradeSheets.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGradeSheets_CellDoubleClick);
             // 
             // rMSDBDataSet
             // 
@@ -362,16 +364,37 @@
             // 
             this.programTableAdapter1.ClearBeforeFill = true;
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(890, 131);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 11;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // btnView
+            // 
+            this.btnView.Location = new System.Drawing.Point(911, 622);
+            this.btnView.Name = "btnView";
+            this.btnView.Size = new System.Drawing.Size(75, 23);
+            this.btnView.TabIndex = 12;
+            this.btnView.Text = "View";
+            this.btnView.UseVisualStyleBackColor = true;
+            this.btnView.Click += new System.EventHandler(this.btnView_Click);
+            // 
             // frmSearch
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1493, 884);
+            this.ClientSize = new System.Drawing.Size(1120, 718);
+            this.Controls.Add(this.btnView);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.dgvGradeSheets);
             this.Controls.Add(this.tlpControls);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmSearch";
             this.Text = "frmSearch";
             this.Load += new System.EventHandler(this.frmSearch_Load);
@@ -401,5 +424,7 @@
         private RMSDBDataSet1 rMSDBDataSet1;
         private System.Windows.Forms.BindingSource programBindingSource1;
         private RMSDBDataSet1TableAdapters.ProgramTableAdapter programTableAdapter1;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnView;
     }
 }
