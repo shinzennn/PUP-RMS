@@ -58,5 +58,16 @@ namespace PUP_RMS.Properties {
                 this["RememberMe"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLEXPRESS;Initial Catalog=RMSDB;Integrated Security=True;TrustServ" +
+            "erCertificate=True")]
+        public string RMSDBConnectionString {
+            get {
+                return ((string)(this["RMSDBConnectionString"]));
+            }
+        }
     }
 }
