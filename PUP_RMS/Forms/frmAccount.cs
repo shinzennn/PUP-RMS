@@ -36,7 +36,8 @@ namespace PUP_RMS.Forms
 
         private void btnCreateAccount_Click(object sender, EventArgs e)
         {
-
+            RegisterForm registerForm = new RegisterForm();
+            registerForm.ShowDialog();
         }
 
         private void btnAccountList_Click(object sender, EventArgs e)

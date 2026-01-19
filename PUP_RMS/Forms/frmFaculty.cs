@@ -1,14 +1,7 @@
 ﻿using PUP_RMS.Helper;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using PUP_RMS.Model;
+using System;
+using System.Windows.Forms;
 
 namespace PUP_RMS.Forms
 {
@@ -43,7 +36,7 @@ namespace PUP_RMS.Forms
             dgvFaculty.CurrentCell = null;
             dgvFacultyColumnDesign();
 
-     
+
             cbxProgram.DisplayMember = "ProgramCode";
             cbxProgram.ValueMember = "ProgramID";
             cbxProgram.DataSource = FacultyHelper.GetAllProgram();
@@ -58,14 +51,15 @@ namespace PUP_RMS.Forms
         }
         private void btnSearch_Click_1(object sender, EventArgs e)
         {
-            // VALIDATION
-            if (string.IsNullOrEmpty(txtSearch.Text) && cbxProgram.SelectedIndex == -1)
-            {
-                return;
-            }
-
             int selectedID = Convert.ToInt32(cbxProgram.SelectedValue);
             string searchTerm = txtSearch.Text.Trim();
+
+            // VALIDATION
+            if (!string.IsNullOrEmpty(searchTerm) && cbxProgram.Text == "")
+            {
+                dgvFaculty.DataSource = FacultyHelper.SearchFaculty(searchTerm);
+                return;
+            }
 
             // EXECUTE QUERY
             dgvFaculty.DataSource = FacultyHelper.SearchFaculty(searchTerm, selectedID);
@@ -177,11 +171,11 @@ namespace PUP_RMS.Forms
         }
 
 
-        private void dgvFaculty_CellMouseEnter(object sender, DataGridViewCellEventArgs e){}
-        private void dgvFaculty_CellMouseLeave(object sender, DataGridViewCellEventArgs e){}
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e){}
+        private void dgvFaculty_CellMouseEnter(object sender, DataGridViewCellEventArgs e) { }
+        private void dgvFaculty_CellMouseLeave(object sender, DataGridViewCellEventArgs e) { }
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e) { }
 
-      
+
     }
 }
 

@@ -50,6 +50,22 @@ namespace PUP_RMS.Helper
 
             return dt;
         }
+        public static DataTable SearchFaculty(string searchTerm)
+        {
+            // CREATE DATATABLE TO HOLD RESULTS
+            DataTable dt = new DataTable();
+
+            //STORED PROCEDURE NAME
+            string procedureName = "sp_SearchFaculty";
+
+            // ADD PARAMETERS
+            DbControl.AddParameter("@SearchTerm", searchTerm, SqlDbType.VarChar);
+
+            // EXECUTE QUERY AND CLEAR PARAMETERS
+            dt = DbControl.ExecuteQuery(procedureName);
+
+            return dt;
+        }
 
         // CREATE FACULTY
         public static void CreateFaculty(Faculty faculty)

@@ -40,7 +40,7 @@ namespace PUP_RMS.Helper
                 MessageBox.Show("Account created successfully.", "Record Created Successfully.", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // LOG ACTIVITY
-                
+                ActivityLogger.LogAccountRegistration(account.Username);
             }
             else
             {
