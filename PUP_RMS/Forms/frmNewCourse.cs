@@ -21,6 +21,7 @@ namespace PUP_RMS.Forms
         private void btnCreate_Click(object sender, EventArgs e)
         {
             CreateCourse();
+            this.DialogResult = DialogResult.OK;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

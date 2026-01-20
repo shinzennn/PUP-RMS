@@ -286,7 +286,7 @@ namespace PUP_RMS.Forms
 
 
 
-            if (!cbxKeep.Checked)
+            if (!KeepCheckbox.Checked)
             {
                 yearCmbox.Text = "";
                 semesterCmbox.Text = "";
@@ -348,26 +348,59 @@ namespace PUP_RMS.Forms
 
         }
 
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
 
-        public class UndoItem
+        }
+
+        private void btnCourse_Click(object sender, EventArgs e)
+        {
+            frmNewCourse openCouse = new frmNewCourse();
+            openCouse.ShowDialog();
+
+            if (openCouse.DialogResult == DialogResult.OK)
+            {
+                LoadCourses();
+            }
+        }
+
+        private void btnProf_Click(object sender, EventArgs e)
+        {
+            newFaculty NewFaculty = new newFaculty();
+            NewFaculty.ShowDialog();
+
+            if(NewFaculty.DialogResult == DialogResult.OK)
+            {
+                LoadProfessors();
+            }
+        }
+
+        private void btnProgram_Click(object sender, EventArgs e)
+        {
+            
+        }
+    }
+
+
+    public class UndoItem
         {
             public int GradeSheetID { get; set; }
             public string SourceFilePath { get; set; }
             public string SavedFilePath { get; set; }
         }
 
-        public class ComboItem
-        {
-            public string Text { get; set; }
-            public int Value { get; set; }
-            public string Code { get; set; } // Used for A, B, C Semester codes
-        }
+    public class ComboItem
+    {
+        public string Text { get; set; }
+        public int Value { get; set; }
+        public string Code { get; set; } // Used for A, B, C Semester codes
+        
 
         private void btnOpenCouse_Click(object sender, EventArgs e)
         {
             frmNewCourse openCouse = new frmNewCourse();
             openCouse.ShowDialog();
-            
+
         }
 
         private void createNewFaculty_Click(object sender, EventArgs e)

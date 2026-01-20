@@ -47,7 +47,8 @@ namespace PUP_RMS.Forms
             txtFirstName.Text = "";
             txtMiddleName.Text = "";
             txtLastName.Text = "";
-    
+            
+            this.DialogResult = DialogResult.OK;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
