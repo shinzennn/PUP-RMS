@@ -50,6 +50,9 @@
             this.btnUpload = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnSaveGradeSheetDetails = new System.Windows.Forms.Button();
+            this.btnCancelEdit = new System.Windows.Forms.Button();
+            this.btnCancelImageChange = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,8 +77,10 @@
             // 
             this.txtPageNumber.Location = new System.Drawing.Point(426, 70);
             this.txtPageNumber.Name = "txtPageNumber";
+            this.txtPageNumber.ReadOnly = true;
             this.txtPageNumber.Size = new System.Drawing.Size(100, 20);
             this.txtPageNumber.TabIndex = 2;
+            this.txtPageNumber.TextChanged += new System.EventHandler(this.txtPageNumber_TextChanged);
             // 
             // lblPageNumber
             // 
@@ -97,6 +102,7 @@
             // 
             // cmbSchoolYear
             // 
+            this.cmbSchoolYear.Enabled = false;
             this.cmbSchoolYear.FormattingEnabled = true;
             this.cmbSchoolYear.Location = new System.Drawing.Point(111, 109);
             this.cmbSchoolYear.Name = "cmbSchoolYear";
@@ -105,6 +111,7 @@
             // 
             // cmbProgram
             // 
+            this.cmbProgram.Enabled = false;
             this.cmbProgram.FormattingEnabled = true;
             this.cmbProgram.Location = new System.Drawing.Point(238, 109);
             this.cmbProgram.Name = "cmbProgram";
@@ -122,6 +129,7 @@
             // 
             // cmbYearLevel
             // 
+            this.cmbYearLevel.Enabled = false;
             this.cmbYearLevel.FormattingEnabled = true;
             this.cmbYearLevel.Location = new System.Drawing.Point(333, 109);
             this.cmbYearLevel.Name = "cmbYearLevel";
@@ -130,6 +138,7 @@
             // 
             // cmbCourse
             // 
+            this.cmbCourse.Enabled = false;
             this.cmbCourse.FormattingEnabled = true;
             this.cmbCourse.Location = new System.Drawing.Point(426, 109);
             this.cmbCourse.Name = "cmbCourse";
@@ -147,6 +156,7 @@
             // 
             // cmbSemester
             // 
+            this.cmbSemester.Enabled = false;
             this.cmbSemester.FormattingEnabled = true;
             this.cmbSemester.Location = new System.Drawing.Point(111, 149);
             this.cmbSemester.Name = "cmbSemester";
@@ -155,6 +165,7 @@
             // 
             // cmbProfessor
             // 
+            this.cmbProfessor.Enabled = false;
             this.cmbProfessor.FormattingEnabled = true;
             this.cmbProfessor.Location = new System.Drawing.Point(238, 149);
             this.cmbProfessor.Name = "cmbProfessor";
@@ -190,6 +201,7 @@
             // 
             // cmbAccount
             // 
+            this.cmbAccount.Enabled = false;
             this.cmbAccount.FormattingEnabled = true;
             this.cmbAccount.Location = new System.Drawing.Point(184, 176);
             this.cmbAccount.Name = "cmbAccount";
@@ -208,7 +220,7 @@
             // 
             // pbPreview
             // 
-            this.pbPreview.Location = new System.Drawing.Point(111, 222);
+            this.pbPreview.Location = new System.Drawing.Point(111, 230);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(414, 373);
             this.pbPreview.TabIndex = 18;
@@ -216,7 +228,7 @@
             // 
             // btnUpload
             // 
-            this.btnUpload.Location = new System.Drawing.Point(111, 601);
+            this.btnUpload.Location = new System.Drawing.Point(111, 609);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(75, 23);
             this.btnUpload.TabIndex = 19;
@@ -226,12 +238,13 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(466, 646);
+            this.btnSave.Location = new System.Drawing.Point(370, 609);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 20;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Visible = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnClose
@@ -244,11 +257,47 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // btnSaveGradeSheetDetails
+            // 
+            this.btnSaveGradeSheetDetails.Location = new System.Drawing.Point(239, 203);
+            this.btnSaveGradeSheetDetails.Name = "btnSaveGradeSheetDetails";
+            this.btnSaveGradeSheetDetails.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveGradeSheetDetails.TabIndex = 22;
+            this.btnSaveGradeSheetDetails.Text = "Save";
+            this.btnSaveGradeSheetDetails.UseVisualStyleBackColor = true;
+            this.btnSaveGradeSheetDetails.Visible = false;
+            this.btnSaveGradeSheetDetails.Click += new System.EventHandler(this.btnSaveGradeSheetDetails_Click);
+            // 
+            // btnCancelEdit
+            // 
+            this.btnCancelEdit.Location = new System.Drawing.Point(320, 203);
+            this.btnCancelEdit.Name = "btnCancelEdit";
+            this.btnCancelEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelEdit.TabIndex = 23;
+            this.btnCancelEdit.Text = "Cancel";
+            this.btnCancelEdit.UseVisualStyleBackColor = true;
+            this.btnCancelEdit.Visible = false;
+            this.btnCancelEdit.Click += new System.EventHandler(this.btnCancelEdit_Click);
+            // 
+            // btnCancelImageChange
+            // 
+            this.btnCancelImageChange.Location = new System.Drawing.Point(451, 609);
+            this.btnCancelImageChange.Name = "btnCancelImageChange";
+            this.btnCancelImageChange.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelImageChange.TabIndex = 24;
+            this.btnCancelImageChange.Text = "Cancel";
+            this.btnCancelImageChange.UseVisualStyleBackColor = true;
+            this.btnCancelImageChange.Visible = false;
+            this.btnCancelImageChange.Click += new System.EventHandler(this.btnCancelImageChange_Click);
+            // 
             // frmGradeSheetDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(634, 681);
+            this.Controls.Add(this.btnCancelImageChange);
+            this.Controls.Add(this.btnCancelEdit);
+            this.Controls.Add(this.btnSaveGradeSheetDetails);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnUpload);
@@ -306,5 +355,8 @@
         private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnSaveGradeSheetDetails;
+        private System.Windows.Forms.Button btnCancelEdit;
+        private System.Windows.Forms.Button btnCancelImageChange;
     }
 }

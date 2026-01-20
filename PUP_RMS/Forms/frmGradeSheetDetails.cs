@@ -92,6 +92,9 @@ namespace PUP_RMS.Forms
                 txtFilename.Text = newFileName;
                 LoadThumbnail(currentFilePath);
             }
+
+            btnSave.Visible = true;
+            btnCancelImageChange.Visible = true;
         }
 
         private string GenerateFileName()
@@ -107,7 +110,21 @@ namespace PUP_RMS.Forms
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
+            enableEdit();
+            //txtFilename.ReadOnly = false;   
+            //txtPageNumber.ReadOnly = false;
+            //cmbSchoolYear.Enabled = true;
+            //cmbSemester.Enabled = true;
+            //cmbProgram.Enabled = true;
+            //cmbYearLevel.Enabled = true;
+            //cmbCourse.Enabled = true;
+            //cmbProfessor.Enabled = true;
+            //cmbAccount.Enabled = true;
 
+            //btnSaveGradeSheetDetails.Visible = true;
+            //btnCancelEdit.Visible = true;
+            //btnEdit.Enabled = false;
+            //btnEdit.Visible = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -134,6 +151,11 @@ namespace PUP_RMS.Forms
                 this.Close();
 
             }
+        }
+
+        private void btnCancelImageChange_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -180,6 +202,89 @@ namespace PUP_RMS.Forms
                 cmb.DisplayMember = display;
                 cmb.ValueMember = value;
             }
+        }
+
+        private void txtPageNumber_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSaveGradeSheetDetails_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("sp_UpdateGradeSheet", con))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
+                cmd.Parameters.AddWithValue("@Filename", txtFilename.Text);
+                cmd.Parameters.AddWithValue("@Filepath", "C:/Uploads/2025/");
+                cmd.Parameters.AddWithValue("@SchoolYear", cmbSchoolYear.SelectedValue.ToString());
+                cmd.Parameters.AddWithValue("@Semester", Convert.ToInt32(cmbSemester.SelectedValue));
+                cmd.Parameters.AddWithValue("@ProgramID", Convert.ToInt32(cmbProgram.SelectedValue));
+                cmd.Parameters.AddWithValue("@YearLevel", Convert.ToInt32(cmbYearLevel.SelectedValue));
+                cmd.Parameters.AddWithValue("@CourseID", Convert.ToInt32(cmbCourse.SelectedValue));
+                cmd.Parameters.AddWithValue("@FacultyID", Convert.ToInt32(cmbProfessor.SelectedValue));
+                cmd.Parameters.AddWithValue("@PageNumber", 1); // For simplicity
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("GradeSheet updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            disableEdit();
+        }
+
+        private void btnCancelEdit_Click(object sender, EventArgs e)
+        {
+            LoadGradeSheetData();
+            disableEdit();
+
+            //txtFilename.ReadOnly = true;
+            //txtPageNumber.ReadOnly = true;
+
+            //cmbSchoolYear.Enabled = false;
+            //cmbAccount.Enabled = false;
+            //cmbSemester.Enabled = false;
+            //cmbProgram.Enabled = false;
+            //cmbYearLevel.Enabled = false;
+            //cmbCourse.Enabled = false;
+            //cmbProfessor.Enabled = false;
+
+            //btnSaveGradeSheetDetails.Visible = false;
+            //btnCancelEdit.Visible = false;
+            //btnEdit.Enabled = true;
+            //btnEdit.Visible = true;
+        }
+
+        private void enableEdit()
+        {
+            txtPageNumber.ReadOnly = false;
+            cmbSchoolYear.Enabled = true;
+            cmbSemester.Enabled = true;
+            cmbProgram.Enabled = true;
+            cmbYearLevel.Enabled = true;
+            cmbCourse.Enabled = true;
+            cmbProfessor.Enabled = true;
+            btnSaveGradeSheetDetails.Visible = true;
+            btnCancelEdit.Visible = true;
+            btnEdit.Enabled = false;
+            btnEdit.Visible = false;
+        }
+
+        private void disableEdit()
+        {
+            txtPageNumber.ReadOnly = true;
+            cmbSchoolYear.Enabled = false;
+            cmbSemester.Enabled = false;
+            cmbProgram.Enabled = false;
+            cmbYearLevel.Enabled = false;
+            cmbCourse.Enabled = false;
+            cmbProfessor.Enabled = false;
+            btnSaveGradeSheetDetails.Visible = false;
+            btnCancelEdit.Visible = false;
+            btnEdit.Enabled = true;
+            btnEdit.Visible = true;
         }
 
 

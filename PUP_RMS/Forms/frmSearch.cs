@@ -322,6 +322,60 @@ namespace PUP_RMS.Forms
             OpenGradeSheetDetailsFromGrid(e.RowIndex);
         }
 
+        // New helper: refresh grid using currently selected filters (or load all if none)
+        private void RefreshGridUsingCurrentFilters()
+        {
+            try
+            {
+                // If no filters selected, show all
+                bool noFilters =
+                    string.IsNullOrEmpty(selectedSchoolYear) &&
+                    selectedSemester == 0 &&
+                    selectedProgram == 0 &&
+                    selectedYearLevel == 0 &&
+                    selectedCourse == 0 &&
+                    selectedProfessor == 0;
+
+                if (noFilters)
+                {
+                    LoadAllGradeSheets();
+                    return;
+                }
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("sp_SearchGradeSheet", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@SchoolYear", SqlDbType.VarChar, 20)
+                        .Value = string.IsNullOrEmpty(selectedSchoolYear) ? (object)DBNull.Value : selectedSchoolYear;
+                    cmd.Parameters.Add("@Semester", SqlDbType.Int)
+                        .Value = selectedSemester == 0 ? (object)DBNull.Value : selectedSemester;
+                    cmd.Parameters.Add("@ProgramID", SqlDbType.Int)
+                        .Value = selectedProgram == 0 ? (object)DBNull.Value : selectedProgram;
+                    cmd.Parameters.Add("@YearLevel", SqlDbType.Int)
+                        .Value = selectedYearLevel == 0 ? (object)DBNull.Value : selectedYearLevel;
+                    cmd.Parameters.Add("@CourseID", SqlDbType.Int)
+                        .Value = selectedCourse == 0 ? (object)DBNull.Value : selectedCourse;
+                    cmd.Parameters.Add("@FacultyID", SqlDbType.Int)
+                        .Value = selectedProfessor == 0 ? (object)DBNull.Value : selectedProfessor;
+
+                    DataTable dt = new DataTable();
+                    con.Open();
+                    dt.Load(cmd.ExecuteReader());
+
+                    dgvGradeSheets.DataSource = dt;
+                    dgvGradeSheets.ClearSelection();
+                    dgvGradeSheets.CurrentCell = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error refreshing grid: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Modified: open details and refresh using current filters (and try to re-select the same row)
         private void OpenGradeSheetDetailsFromGrid(int rowIndex)
         {
             try
@@ -337,7 +391,24 @@ namespace PUP_RMS.Forms
                 {
                     frm.GradeSheetID = gradeSheetID;
                     frm.ShowDialog(); // modal
-                    LoadAllGradeSheets(); // refresh grid after closing
+
+                    // Refresh grid according to current filters (don't always reset to "all")
+                    RefreshGridUsingCurrentFilters();
+
+                    // Try to find and re-select the same grade sheet row after refresh
+                    for (int i = 0; i < dgvGradeSheets.Rows.Count; i++)
+                    {
+                        object cellVal = dgvGradeSheets.Rows[i].Cells["GradeSheetID"].Value;
+                        if (cellVal != null && int.TryParse(cellVal.ToString(), out int id) && id == gradeSheetID)
+                        {
+                            dgvGradeSheets.ClearSelection();
+                            dgvGradeSheets.Rows[i].Selected = true;
+                            dgvGradeSheets.CurrentCell = dgvGradeSheets.Rows[i].Cells[0];
+                            // scroll into view
+                            dgvGradeSheets.FirstDisplayedScrollingRowIndex = Math.Max(0, i - 2);
+                            break;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
