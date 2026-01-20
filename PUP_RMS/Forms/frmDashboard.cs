@@ -296,31 +296,24 @@ namespace PUP_RMS.Forms
                 dgv.Columns.Add("colCourse", "Course");
                 dgv.Columns.Add("colUploadedBy", "Uploaded By");
 
-                dgv.Columns.Add(new DataGridViewButtonColumn
-                {
-                    Name = "colAction",
-                    HeaderText = "Action",
-                    Text = "View",
-                    UseColumnTextForButtonValue = true,
-                    FlatStyle = FlatStyle.Flat
-                });
+               
 
                 // Sizing
                 dgv.Columns["colFilename"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgv.Columns["colCourse"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgv.Columns["colUploadedBy"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dgv.Columns["colAction"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                
 
                 dgv.Columns["colFilename"].FillWeight = 45;
                 dgv.Columns["colUploadedBy"].FillWeight = 25;
                 dgv.Columns["colCourse"].FillWeight = 15;
-                dgv.Columns["colAction"].FillWeight = 15;
+                
 
                 // Alignment
                 dgv.Columns["colFilename"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
                 dgv.Columns["colCourse"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgv.Columns["colUploadedBy"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgv.Columns["colAction"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                
 
                 dgv.AlternatingRowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.NotSet;
 
