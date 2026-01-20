@@ -20,8 +20,7 @@ namespace PUP_RMS.Forms
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            CreateCourse();
-            this.DialogResult = DialogResult.OK;
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -36,6 +35,12 @@ namespace PUP_RMS.Forms
 
         private void CreateCourse()
         {
+            if(txtCourseCode.Text == "" || txtCourseDesc.Text == "")
+            {
+                MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             bool success = Core.DbControl.SetData($"INSERT INTO Course (CourseCode, CourseDescription) VALUES ('{txtCourseCode.Text}', '{txtCourseDesc.Text}')");
 
             if (success)
@@ -49,6 +54,27 @@ namespace PUP_RMS.Forms
             {
                 MessageBox.Show("Failed to create new course. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            CreateCourse();
+            this.DialogResult = DialogResult.OK;
+        }
+
+        private void frmNewCourse_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtCourseDesc_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void roundedButton1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -289,13 +289,14 @@ namespace PUP_RMS.Forms
             if (!KeepCheckbox.Checked)
             {
                 yearCmbox.Text = "";
-                semesterCmbox.Text = "";
+                semesterCmbox.SelectedIndex = -1;
                 courseCmbox.Text = "";
                 professorCmbox.Text = "";
-                yearLevelCmbox.Text = "";
+                yearLevelCmbox.SelectedIndex = -1;
                 programCmbox.Text = "";
                 pageCmbox.Text = "";
                 filenameTxtbox.Text = "";
+
             }
         }
 
@@ -377,7 +378,13 @@ namespace PUP_RMS.Forms
 
         private void btnProgram_Click(object sender, EventArgs e)
         {
-            
+            frmnewProgram newPrograms = new frmnewProgram();  
+            newPrograms.ShowDialog();
+            if (newPrograms.DialogResult == DialogResult.OK)
+            {
+                LoadPrograms();
+            }
+
         }
     }
 

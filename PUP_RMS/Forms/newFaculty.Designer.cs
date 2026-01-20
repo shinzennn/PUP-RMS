@@ -41,19 +41,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelFacultyForm.SuspendLayout();
             this.roundedShadowPanel4.SuspendLayout();
             this.roundedShadowPanel3.SuspendLayout();
             this.roundedShadowPanel2.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelFacultyForm
             // 
-            this.panelFacultyForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelFacultyForm.BackColor = System.Drawing.Color.Transparent;
             this.panelFacultyForm.BorderColor = System.Drawing.Color.Transparent;
             this.panelFacultyForm.BorderRadius = 20;
@@ -67,7 +62,8 @@
             this.panelFacultyForm.Controls.Add(this.label4);
             this.panelFacultyForm.Controls.Add(this.label3);
             this.panelFacultyForm.Controls.Add(this.label2);
-            this.panelFacultyForm.Location = new System.Drawing.Point(3, 3);
+            this.panelFacultyForm.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelFacultyForm.Location = new System.Drawing.Point(0, 0);
             this.panelFacultyForm.Margin = new System.Windows.Forms.Padding(3, 3, 25, 3);
             this.panelFacultyForm.Name = "panelFacultyForm";
             this.panelFacultyForm.PanelColor = System.Drawing.Color.White;
@@ -76,7 +72,7 @@
             this.panelFacultyForm.ShadowDepth = 10;
             this.panelFacultyForm.ShadowEnabled = true;
             this.panelFacultyForm.ShadowShift = 5;
-            this.panelFacultyForm.Size = new System.Drawing.Size(501, 475);
+            this.panelFacultyForm.Size = new System.Drawing.Size(480, 483);
             this.panelFacultyForm.TabIndex = 17;
             // 
             // roundedShadowPanel4
@@ -97,7 +93,7 @@
             this.roundedShadowPanel4.ShadowDepth = 10;
             this.roundedShadowPanel4.ShadowEnabled = true;
             this.roundedShadowPanel4.ShadowShift = 5;
-            this.roundedShadowPanel4.Size = new System.Drawing.Size(401, 64);
+            this.roundedShadowPanel4.Size = new System.Drawing.Size(380, 64);
             this.roundedShadowPanel4.TabIndex = 21;
             // 
             // txtFirstName
@@ -111,7 +107,7 @@
             this.txtFirstName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtFirstName.Size = new System.Drawing.Size(355, 19);
+            this.txtFirstName.Size = new System.Drawing.Size(334, 19);
             this.txtFirstName.TabIndex = 20;
             // 
             // roundedShadowPanel3
@@ -132,7 +128,7 @@
             this.roundedShadowPanel3.ShadowDepth = 10;
             this.roundedShadowPanel3.ShadowEnabled = true;
             this.roundedShadowPanel3.ShadowShift = 5;
-            this.roundedShadowPanel3.Size = new System.Drawing.Size(401, 64);
+            this.roundedShadowPanel3.Size = new System.Drawing.Size(380, 64);
             this.roundedShadowPanel3.TabIndex = 21;
             // 
             // txtMiddleName
@@ -146,7 +142,7 @@
             this.txtMiddleName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
             this.txtMiddleName.Name = "txtMiddleName";
             this.txtMiddleName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtMiddleName.Size = new System.Drawing.Size(355, 19);
+            this.txtMiddleName.Size = new System.Drawing.Size(334, 19);
             this.txtMiddleName.TabIndex = 20;
             // 
             // roundedShadowPanel2
@@ -167,7 +163,7 @@
             this.roundedShadowPanel2.ShadowDepth = 10;
             this.roundedShadowPanel2.ShadowEnabled = true;
             this.roundedShadowPanel2.ShadowShift = 5;
-            this.roundedShadowPanel2.Size = new System.Drawing.Size(401, 64);
+            this.roundedShadowPanel2.Size = new System.Drawing.Size(380, 64);
             this.roundedShadowPanel2.TabIndex = 18;
             // 
             // txtLastName
@@ -181,7 +177,7 @@
             this.txtLastName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtLastName.Size = new System.Drawing.Size(355, 19);
+            this.txtLastName.Size = new System.Drawing.Size(334, 19);
             this.txtLastName.TabIndex = 20;
             // 
             // btnCancel
@@ -197,7 +193,7 @@
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCancel.Location = new System.Drawing.Point(262, 404);
+            this.btnCancel.Location = new System.Drawing.Point(252, 412);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(152, 40);
             this.btnCancel.TabIndex = 22;
@@ -219,7 +215,7 @@
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSave.Location = new System.Drawing.Point(88, 404);
+            this.btnSave.Location = new System.Drawing.Point(78, 412);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 40);
             this.btnSave.TabIndex = 21;
@@ -277,32 +273,16 @@
             this.label2.TabIndex = 14;
             this.label2.Text = "Faculty Information";
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.panelFacultyForm, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(59, 83);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(50);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(529, 531);
-            this.tableLayoutPanel1.TabIndex = 18;
-            // 
             // newFaculty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(658, 689);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(480, 483);
+            this.Controls.Add(this.panelFacultyForm);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "newFaculty";
-            this.Text = "newFaculty";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Add Faculty";
             this.panelFacultyForm.ResumeLayout(false);
             this.panelFacultyForm.PerformLayout();
             this.roundedShadowPanel4.ResumeLayout(false);
@@ -311,9 +291,7 @@
             this.roundedShadowPanel3.PerformLayout();
             this.roundedShadowPanel2.ResumeLayout(false);
             this.roundedShadowPanel2.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -331,6 +309,5 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
