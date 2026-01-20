@@ -316,6 +316,11 @@ namespace PUP_RMS.Forms
             previewForm.Show();
 
         }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 
     public class UndoItem
