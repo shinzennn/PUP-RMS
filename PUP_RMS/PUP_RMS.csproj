@@ -131,6 +131,12 @@
     <Compile Include="Forms\frmActivityLogs.Designer.cs">
       <DependentUpon>frmActivityLogs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmCourseDescription.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmCourseDescription.Designer.cs">
+      <DependentUpon>frmCourseDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmDistributionProfessor.cs">
       <SubType>Form</SubType>
     </Compile>
