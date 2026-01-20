@@ -1,14 +1,15 @@
-﻿using Dapper;
-using PUP_RMS.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Dapper;
+using PUP_RMS.Model;
 
 namespace PUP_RMS.Core
 {
@@ -36,60 +37,81 @@ namespace PUP_RMS.Core
         {
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
-                return conn.Query<Faculty>(
-                    @"SELECT FacultyID,
-              FirstName + ' ' + ISNULL(MiddleName + ' ', '') + LastName AS FullName
-              FROM Faculty"
+                return conn.Query<Faculty>(@"
+            SELECT 
+                FacultyID, 
+                Initials, -- Add this here
+                UPPER(LastName) + ', ' + UPPER(FirstName) + ' ' + 
+                ISNULL(UPPER(MiddleName), '') AS DisplayName
+            FROM Faculty
+            ORDER BY LastName, FirstName"
                 ).ToList();
             }
         }
 
-        public static bool InsertGradeSheet(
-                    string filename,
-                    string schoolYear,
-                    int semester,
-                    int courseId,
-                    int professorId,
-                    int accountId
-                )
+
+        public static List<ProgramModel> GetPrograms()
         {
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
-                string sql = @"INSERT INTO GradeSheet
-                       (Filename, SchoolYear, Semester, CourseID, FacultyID, AccountID)
-                       VALUES
-                       (@Filename, @SchoolYear, @Semester, @CourseID, FacultyID, @AccountID)";
-
-                int rows = conn.Execute(sql, new
-                {
-                    Filename = filename,
-                    SchoolYear = schoolYear,
-                    Semester = semester,
-                    CourseID = courseId,
-                    ProfessorID = professorId,
-                    AccountID = accountId
-                });
-
-                return rows > 0;
+                return conn.Query<ProgramModel>(
+                    "SELECT ProgramID, ProgramCode FROM Program"
+                ).ToList();
             }
         }
 
 
-        public static bool DeleteGradeSheetByFilename(string filename)
+        public static int InsertGradeSheet(
+            string filename,
+            string filepath,
+            string schoolYear,
+            int semester,
+            int programId,
+            int yearLevel,
+            int courseId,
+            int facultyId,
+            int pageNumber,
+            int accountId
+)
         {
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
-                string sql = @"DELETE FROM GradeSheet
-                       WHERE Filename = @Filename";
+                var parameters = new DynamicParameters();
+                parameters.Add("@Filename", filename);
+                parameters.Add("@Filepath", filepath);
+                parameters.Add("@SchoolYear", schoolYear);
+                parameters.Add("@Semester", semester);
+                parameters.Add("@ProgramID", programId);
+                parameters.Add("@YearLevel", yearLevel);
+                parameters.Add("@CourseID", courseId);
+                parameters.Add("@FacultyID", facultyId);
+                parameters.Add("@PageNumber", pageNumber);
+                parameters.Add("@AccountID", accountId);
 
-                int rows = conn.Execute(sql, new
-                {
-                    Filename = filename
-                });
-
-                return rows > 0;
+                // QuerySingle<int> expects the stored procedure to return the ID
+                return conn.QuerySingle<int>(
+                    "sp_InsertGradeSheet",
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
             }
         }
+
+        public static bool DeleteGradeSheet(int gradeSheetId)
+        {
+            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                int rowsAffected = conn.Execute(
+                    "sp_DeleteGradeSheet",
+                    new { GradeSheetID = gradeSheetId },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return rowsAffected > 0;
+            }
+        }
+
+
 
 
         // THIS IS DAPPER METHOD

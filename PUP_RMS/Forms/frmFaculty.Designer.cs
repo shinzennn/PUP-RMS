@@ -88,7 +88,7 @@
             this.tableLayoutPanel1.Controls.Add(this.panelFacultyList, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelFacultyForm, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnCreate, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(59, 190);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(59, 191);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(50);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;

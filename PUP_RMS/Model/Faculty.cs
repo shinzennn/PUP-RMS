@@ -15,5 +15,7 @@ namespace PUP_RMS.Model
         public string Suffix { get; set; }
         public string Initials { get; set; }
 
+        public string FacultyCode { get; set; }
+        public string DisplayName { get; set; }
     }
 }
