@@ -44,6 +44,9 @@
             this.yearLevelCmbox = new System.Windows.Forms.ComboBox();
             this.programCmbox = new System.Windows.Forms.ComboBox();
             this.pageCmbox = new System.Windows.Forms.ComboBox();
+            this.btnOpenCouse = new System.Windows.Forms.Button();
+            this.createNewFaculty = new System.Windows.Forms.Button();
+            this.cbxKeep = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).BeginInit();
             this.SuspendLayout();
@@ -349,12 +352,46 @@
             this.pageCmbox.TabIndex = 12;
             this.pageCmbox.Text = "Page";
             // 
+            // btnOpenCouse
+            // 
+            this.btnOpenCouse.Location = new System.Drawing.Point(12, 12);
+            this.btnOpenCouse.Name = "btnOpenCouse";
+            this.btnOpenCouse.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenCouse.TabIndex = 13;
+            this.btnOpenCouse.Text = "Create Course";
+            this.btnOpenCouse.UseVisualStyleBackColor = true;
+            this.btnOpenCouse.Click += new System.EventHandler(this.btnOpenCouse_Click);
+            // 
+            // createNewFaculty
+            // 
+            this.createNewFaculty.Location = new System.Drawing.Point(12, 41);
+            this.createNewFaculty.Name = "createNewFaculty";
+            this.createNewFaculty.Size = new System.Drawing.Size(75, 23);
+            this.createNewFaculty.TabIndex = 14;
+            this.createNewFaculty.Text = "Create Faculty";
+            this.createNewFaculty.UseVisualStyleBackColor = true;
+            this.createNewFaculty.Click += new System.EventHandler(this.createNewFaculty_Click);
+            // 
+            // cbxKeep
+            // 
+            this.cbxKeep.AutoSize = true;
+            this.cbxKeep.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cbxKeep.Location = new System.Drawing.Point(562, 128);
+            this.cbxKeep.Name = "cbxKeep";
+            this.cbxKeep.Size = new System.Drawing.Size(51, 17);
+            this.cbxKeep.TabIndex = 15;
+            this.cbxKeep.Text = "Keep";
+            this.cbxKeep.UseVisualStyleBackColor = true;
+            // 
             // frmBatchUpload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Bisque;
             this.ClientSize = new System.Drawing.Size(867, 574);
+            this.Controls.Add(this.cbxKeep);
+            this.Controls.Add(this.createNewFaculty);
+            this.Controls.Add(this.btnOpenCouse);
             this.Controls.Add(this.pageCmbox);
             this.Controls.Add(this.programCmbox);
             this.Controls.Add(this.yearLevelCmbox);
@@ -399,5 +436,8 @@
         private System.Windows.Forms.ComboBox yearLevelCmbox;
         private System.Windows.Forms.ComboBox programCmbox;
         private System.Windows.Forms.ComboBox pageCmbox;
+        private System.Windows.Forms.Button btnOpenCouse;
+        private System.Windows.Forms.Button createNewFaculty;
+        private System.Windows.Forms.CheckBox cbxKeep;
     }
 }

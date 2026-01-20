@@ -22,6 +22,7 @@ namespace PUP_RMS.Forms
         public currentpicturePreview()
         {
             InitializeComponent();
+          
         }
 
         int picWidth = 0;
@@ -29,6 +30,7 @@ namespace PUP_RMS.Forms
 
         private void currentpicturePreview_Load(object sender, EventArgs e)
         {
+            this.AutoScroll = true;
             if (PassedImage != null) { 
                 pictureBox1.Image = PassedImage; 
             }
@@ -47,25 +49,18 @@ namespace PUP_RMS.Forms
             return bmp;
         }
 
-        private void currentpicturePreview_KeyPress(object sender, KeyPressEventArgs e)
+        private void currentpicturePreview_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (e.KeyChar == 'a')
+            if (e.KeyCode == Keys.Up)
             {
-                pictureBox1.Image = Zoom(pictureBox1.Image, new Size(pictureBox1.Width - 50, pictureBox1.Height - 50));
+                pictureBox1.Size = new Size(pictureBox1.Size.Width, pictureBox1.Height += 10);
+                this.AutoScrollMinSize = new Size(pictureBox1.Right, pictureBox1.Bottom);
+            }
+            if (e.KeyCode == Keys.Down)
+            {
+                pictureBox1.Size = new Size(pictureBox1.Size.Width, pictureBox1.Height -= 10);
+                this.AutoScrollMinSize = new Size(pictureBox1.Right, pictureBox1.Bottom);
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            int a = 0;
-            pictureBox1.Image = Zoom(pictureBox1.Image, new Size (a-=1, a -= 1));
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            int a = 0;
-            pictureBox1.Image = Zoom(pictureBox1.Image, new Size(a += 1, a += 1));
-        }
-
     }
 }
