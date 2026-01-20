@@ -65,6 +65,7 @@ namespace PUP_RMS.Forms
             dgvProgram.ClearSelection();
             dgvProgram.CurrentCell = null;
             dgvProgram.Columns["ProgramID"].Visible = false;
+            dgvProgram.Columns["ProgramCode"].Width = 180;
         }
 
         private void frmProgram_Load(object sender, EventArgs e)
@@ -167,6 +168,8 @@ namespace PUP_RMS.Forms
 
             // EXECUTE QUERY
             dgvProgram.DataSource = ProgramHelper.SearchProgram(searchTerm);
+
+            dgvProgram.Columns["ProgramCode"].Width = 180;
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
