@@ -37,7 +37,6 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "frmDistributionSubject";
             this.Text = "frmDistributionSubject";
-            this.Load += new System.EventHandler(this.frmDistributionSubject_Load_1);
             this.ResumeLayout(false);
 
         }

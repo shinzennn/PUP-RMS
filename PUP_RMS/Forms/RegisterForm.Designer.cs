@@ -139,7 +139,7 @@
             // 
             // comboBoxAccountType
             // 
-            this.comboBoxAccountType.BackColor = System.Drawing.Color.Gainsboro;
+            this.comboBoxAccountType.BackColor = System.Drawing.Color.White;
             this.comboBoxAccountType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAccountType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxAccountType.FormattingEnabled = true;
@@ -361,8 +361,8 @@
             this.roundedPanelPass.BorderColor = System.Drawing.Color.Black;
             this.roundedPanelPass.BorderRadius = 20;
             this.roundedPanelPass.BorderSize = 2;
-            this.roundedPanelPass.Controls.Add(this.pictureBoxHidePassword);
             this.roundedPanelPass.Controls.Add(this.textBoxPassword);
+            this.roundedPanelPass.Controls.Add(this.pictureBoxHidePassword);
             this.roundedPanelPass.Controls.Add(this.pictureBoxShowPassword);
             this.roundedPanelPass.Controls.Add(this.pictureBoxPassword);
             this.roundedPanelPass.HoverBackColor = System.Drawing.Color.Gainsboro;

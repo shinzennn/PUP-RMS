@@ -68,7 +68,7 @@ namespace PUP_RMS.Helper
                 MessageBox.Show("Account updated successfully.", "Record Updated Successfully.", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // LOG ACTIVITY
-
+                ActivityLogger.AccountModification(account.AccountID,account.FirstName +" "+ account.LastName);
             }
             else
             {
