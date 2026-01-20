@@ -90,10 +90,14 @@ namespace PUP_RMS.Forms
             this.MinimizeBox = true;
             this.ControlBox = true;
 
-            textBoxPassword.UseSystemPasswordChar = true;
 
-            pictureBoxShowPassword.Visible = true;
+            textBoxPassword.UseSystemPasswordChar = true;
             pictureBoxHidePassword.Visible = false;
+            pictureBoxShowPassword.Visible = true;
+            
+
+
+
 
             // --- IMPORTANT: CONNECT THE EVENTS HERE ---
             // 1. Username Events
@@ -154,17 +158,28 @@ namespace PUP_RMS.Forms
         // --- Visual Helpers ---
         private void pictureBoxHidePassword_Click(object sender, EventArgs e)
         {
-            textBoxPassword.UseSystemPasswordChar = true;
-            pictureBoxShowPassword.Visible = true;
+            textBoxPassword.PasswordChar = '●';
+           
+            
+
             pictureBoxHidePassword.Visible = false;
+            pictureBoxShowPassword.Visible = true;
+            textBoxPassword.UseSystemPasswordChar = true;
         }
+
 
         private void pictureBoxShowPassword_Click(object sender, EventArgs e)
         {
-            textBoxPassword.UseSystemPasswordChar = false;
+            
+            textBoxPassword.PasswordChar = '\0';
+
             pictureBoxShowPassword.Visible = false;
             pictureBoxHidePassword.Visible = true;
+            textBoxPassword.UseSystemPasswordChar = false;
+
+
         }
+
 
         private void ResetBorders()
         {

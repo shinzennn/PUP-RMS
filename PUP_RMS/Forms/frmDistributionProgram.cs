@@ -11,9 +11,6 @@ using System.Windows.Forms;
 
 namespace PUP_RMS.Forms
 {
-    // ==========================================
-    // MAIN FORM CLASS
-    // ==========================================
     public partial class frmDistributionProgram : Form
     {
         // ==============================
@@ -24,9 +21,6 @@ namespace PUP_RMS.Forms
         private Point dragFormPoint;
 
         private const int CS_DROPSHADOW = 0x00020000;
-        private const int WM_NCHITTEST = 0x84;
-        private const int HTCLIENT = 0x1;
-        private const int HTCAPTION = 0x2;
 
         // Colors
         private readonly Color ClrMaroon = Color.FromArgb(108, 42, 51);
@@ -55,9 +49,13 @@ namespace PUP_RMS.Forms
         private bool _isHoveringMax = false;
         private bool _isHoveringBack = false;
 
-        // SCALING: Increased Size for 30+ Items
+        // SCALING
         private const float BASE_WIDTH = 950f;
         private const float BASE_HEIGHT = 600f;
+
+        // Filter Controls
+        private Label lblFilter;
+        private ComboBox cmbSchoolYear;
 
         public frmDistributionProgram()
         {
@@ -69,6 +67,7 @@ namespace PUP_RMS.Forms
                      ControlStyles.ResizeRedraw, true);
 
             SetupForm();
+            SetupFilterControls();
             LoadMainData();
         }
 
@@ -77,7 +76,6 @@ namespace PUP_RMS.Forms
             FormBorderStyle = FormBorderStyle.None;
             StartPosition = FormStartPosition.CenterParent;
             BackColor = ClrStandoutBack;
-            // Larger Size
             MinimumSize = new Size(880, 540);
             Size = new Size(880, 540);
             Padding = new Padding(0);
@@ -87,93 +85,140 @@ namespace PUP_RMS.Forms
             this.MouseUp += Form_MouseUp;
         }
 
-        protected override CreateParams CreateParams
+        // =========================================================
+        // 1. SETUP FILTER CONTROLS
+        // =========================================================
+        private void SetupFilterControls()
         {
-            get
+            lblFilter = new Label();
+            lblFilter.Text = "Filter by School Year:";
+            lblFilter.ForeColor = ClrGold;
+            lblFilter.BackColor = ClrMaroon;
+            lblFilter.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            lblFilter.AutoSize = true;
+
+            cmbSchoolYear = new ComboBox();
+            cmbSchoolYear.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+            cmbSchoolYear.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSchoolYear.Width = 140;
+            cmbSchoolYear.BackColor = Color.White;
+            cmbSchoolYear.FlatStyle = FlatStyle.Flat;
+
+            cmbSchoolYear.Items.Add("All");
+            try
             {
-                CreateParams cp = base.CreateParams;
-                cp.ClassStyle |= CS_DROPSHADOW;
-                return cp;
+                DataTable dt = DashboardHelper.GetSchoolYears();
+                if (dt != null)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        cmbSchoolYear.Items.Add(row["SchoolYear"].ToString());
+                    }
+                }
             }
+            catch { }
+
+            if (cmbSchoolYear.Items.Count > 0) cmbSchoolYear.SelectedIndex = 0;
+
+            cmbSchoolYear.SelectedIndexChanged += (s, e) =>
+            {
+                LoadMainData();
+            };
+
+            this.Controls.Add(cmbSchoolYear);
+            this.Controls.Add(lblFilter);
+
+            RepositionFilterControls();
         }
 
-        public static void ShowWithDimmer(Form parent, frmDistributionProgram child)
+        protected override void OnResize(EventArgs e)
         {
-            using (Form dimmer = new Form())
-            {
-                dimmer.StartPosition = FormStartPosition.Manual;
-                dimmer.FormBorderStyle = FormBorderStyle.None;
-                dimmer.AllowTransparency = true;
-                dimmer.BackColor = Color.Black;
-                dimmer.Opacity = 0.5; 
-                dimmer.Size = parent.Size;
-                dimmer.Location = parent.Location;
-                dimmer.ShowInTaskbar = false;
-
-                dimmer.Show();
-                child.Owner = dimmer;
-                child.ShowDialog();
-                dimmer.Close();
-            }
+            base.OnResize(e);
+            RepositionFilterControls();
         }
+
+        private void RepositionFilterControls()
+        {
+            if (lblFilter == null || cmbSchoolYear == null) return;
+
+            float scale = GetScaleFactor();
+            int headerHeight = (int)(50 * scale);
+            if (headerHeight < 50) headerHeight = 50;
+
+            int comboX = this.Width - cmbSchoolYear.Width - (int)(80 * scale);
+            int comboY = (headerHeight - cmbSchoolYear.Height) / 2;
+
+            int labelX = comboX - lblFilter.Width - 10;
+            int labelY = (headerHeight - lblFilter.Height) / 2;
+
+            cmbSchoolYear.Location = new Point(comboX, comboY);
+            lblFilter.Location = new Point(labelX, labelY);
+
+            cmbSchoolYear.BringToFront();
+            lblFilter.BringToFront();
+        }
+
+        // =========================================================
+        // 2. DATA LOADING
+        // =========================================================
         private void LoadMainData()
         {
+            _isDrilledDown = false;
+
             _mainSegments = new List<ChartSegment>();
 
-            // 1. GET REAL DATA
-            DataTable dt = DashboardHelper.GetProgramDistribution();
+            string selectedYear = null;
+            if (cmbSchoolYear != null && cmbSchoolYear.SelectedItem != null)
+            {
+                selectedYear = cmbSchoolYear.SelectedItem.ToString();
+            }
 
-            // 2. DEFINE COLORS (To cycle through, since DB doesn't have colors)
+            DataTable dt = DashboardHelper.GetProgramDistribution(selectedYear);
+
             Color[] colors = {
-        ClrMaroon, ClrGold, Color.FromArgb(180, 130, 40), Color.CadetBlue,
-        Color.SteelBlue, Color.DarkSlateBlue, Color.MediumPurple, Color.IndianRed,
-        Color.SeaGreen, Color.Teal, Color.DimGray, Color.Sienna
-    };
+                ClrMaroon, ClrGold, Color.FromArgb(180, 130, 40), Color.CadetBlue,
+                Color.SteelBlue, Color.DarkSlateBlue, Color.MediumPurple, Color.IndianRed,
+                Color.SeaGreen, Color.Teal, Color.DimGray, Color.Sienna
+            };
 
-            int limit = 10; // Show Top 10 only
+            int limit = 10;
             int othersCount = 0;
 
-            // 3. LOOP THROUGH DATA
-            for (int i = 0; i < dt.Rows.Count; i++)
+            if (dt != null)
             {
-                DataRow row = dt.Rows[i];
-                string label = row["Label"].ToString();
-                int val = Convert.ToInt32(row["Value"]);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    DataRow row = dt.Rows[i];
+                    string label = row["Label"].ToString();
+                    int val = Convert.ToInt32(row["Value"]);
 
-                if (i < limit)
-                {
-                    _mainSegments.Add(new ChartSegment
+                    if (i < limit)
                     {
-                        Label = label,
-                        Value = val,
-                        Color = colors[i % colors.Length]
-                    });
-                }
-                else
-                {
-                    othersCount += val;
+                        _mainSegments.Add(new ChartSegment
+                        {
+                            Label = label,
+                            Value = val,
+                            Color = colors[i % colors.Length]
+                        });
+                    }
+                    else
+                    {
+                        othersCount += val;
+                    }
                 }
             }
 
-            // 4. ADD "OTHERS" SLICE
             if (othersCount > 0)
             {
-                _mainSegments.Add(new ChartSegment
-                {
-                    Label = "Others",
-                    Value = othersCount,
-                    Color = Color.Gray
-                });
+                _mainSegments.Add(new ChartSegment { Label = "Others", Value = othersCount, Color = Color.Gray });
             }
 
-            // 5. HANDLE EMPTY DB
             if (_mainSegments.Count == 0)
             {
                 _mainSegments.Add(new ChartSegment { Label = "No Data", Value = 1, Color = Color.LightGray });
             }
 
             _currentSegments = new List<ChartSegment>(_mainSegments);
-            _isDrilledDown = false;
             Invalidate();
         }
 
@@ -183,6 +228,8 @@ namespace PUP_RMS.Forms
             _drilledProgramName = parentProgram.Label;
 
             int total = parentProgram.Value;
+
+            // Simulating Year Level Distribution
             int y1 = (int)(total * 0.35);
             int y2 = (int)(total * 0.25);
             int y3 = (int)(total * 0.22);
@@ -201,19 +248,9 @@ namespace PUP_RMS.Forms
             Invalidate();
         }
 
-        // ==============================
-        // SCALING
-        // ==============================
-        private float GetScaleFactor()
-        {
-            float scaleX = this.Width / BASE_WIDTH;
-            float scaleY = this.Height / BASE_HEIGHT;
-            return Math.Min(scaleX, scaleY);
-        }
-
-        // ==============================
-        // PAINTING
-        // ==============================
+        // =========================================================
+        // 3. PAINTING & DRAWING
+        // =========================================================
         protected override void OnPaint(PaintEventArgs e)
         {
             _sliceZones.Clear();
@@ -225,7 +262,7 @@ namespace PUP_RMS.Forms
 
             float scale = GetScaleFactor();
 
-            // 1. HEADER
+            // Header
             int headerHeight = (int)(50 * scale);
             if (headerHeight < 50) headerHeight = 50;
             Rectangle headerRect = new Rectangle(0, 0, Width, headerHeight);
@@ -235,7 +272,12 @@ namespace PUP_RMS.Forms
                 g.FillRectangle(brush, headerRect);
             }
 
-            string title = _isDrilledDown ? $"Program > {_drilledProgramName}" : "Grade Sheets Distribution by Program";
+            // Title Logic
+            string title;
+            if (_isDrilledDown)
+                title = $"Program > {_drilledProgramName}";
+            else
+                title = "Grade Sheets Distribution by Program";
 
             using (Font titleFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
             using (Brush textBrush = new SolidBrush(ClrGold))
@@ -246,28 +288,26 @@ namespace PUP_RMS.Forms
 
             DrawWindowButtons(g, scale);
 
-            // 2. CHART LAYOUT
+            // Chart Bounds
             Rectangle contentRect = new Rectangle(0, headerHeight, Width, Height - headerHeight);
             if (contentRect.Width < 50 || contentRect.Height < 50) return;
 
             long total = _currentSegments.Sum(s => (long)s.Value);
             if (total == 0) return;
 
-            // Dimensions - Adjusted for staggering
             float chartSize = 380 * scale;
             float thickness = 70 * scale;
-
-            // Move Chart Left to allow space for staggered labels
             float chartX = 60 * scale;
             float chartY = headerHeight + (contentRect.Height - chartSize) / 2;
 
             _lastChartBounds = new RectangleF(chartX, chartY, chartSize, chartSize);
 
-            // 3. DRAW
+            // Draw Chart
             DrawShadow(g, _lastChartBounds, scale);
             DrawDoughnutWithSpokes(g, _lastChartBounds, total, thickness, scale);
 
-            float legendX = _lastChartBounds.Right + (80 * scale); // More space between chart and legend
+            // Draw Legend
+            float legendX = _lastChartBounds.Right + (80 * scale);
             float legendY = headerHeight + (30 * scale);
             DrawLegendColumns(g, legendX, legendY, total, scale);
 
@@ -275,6 +315,167 @@ namespace PUP_RMS.Forms
             {
                 g.DrawRectangle(borderPen, 0, 0, Width - 1, Height - 1);
             }
+        }
+
+        private void DrawDoughnutWithSpokes(Graphics g, RectangleF bounds, long total, float thickness, float scale)
+        {
+            float startAngle = -90;
+            RectangleF arcRect = bounds;
+            arcRect.Inflate(-thickness / 2f, -thickness / 2f);
+
+            for (int i = 0; i < _currentSegments.Count; i++)
+            {
+                ChartSegment seg = _currentSegments[i];
+                float sweepAngle = (float)((double)seg.Value / total * 360.0);
+
+                _sliceZones.Add(new SliceHitZone { StartAngle = startAngle, SweepAngle = sweepAngle, Segment = seg });
+
+                using (Pen p = new Pen(seg.Color, thickness))
+                {
+                    p.StartCap = LineCap.Flat;
+                    p.EndCap = LineCap.Flat;
+                    g.DrawArc(p, arcRect, startAngle, sweepAngle);
+                }
+
+                float endRad = (startAngle + sweepAngle) * (float)Math.PI / 180f;
+                float cx = bounds.X + bounds.Width / 2f;
+                float cy = bounds.Y + bounds.Height / 2f;
+                float rOut = bounds.Width / 2f;
+                float rIn = rOut - thickness;
+
+                using (Pen whitePen = new Pen(Color.White, 2f * scale))
+                {
+                    PointF p1 = new PointF(cx + rIn * (float)Math.Cos(endRad), cy + rIn * (float)Math.Sin(endRad));
+                    PointF p2 = new PointF(cx + rOut * (float)Math.Cos(endRad), cy + rOut * (float)Math.Sin(endRad));
+                    g.DrawLine(whitePen, p1, p2);
+                }
+
+                if (sweepAngle > 0)
+                    DrawSpokeLabel(g, bounds, startAngle, sweepAngle, seg, total, scale, i);
+
+                startAngle += sweepAngle;
+            }
+
+            DrawCenterText(g, bounds, total, scale);
+        }
+
+        private void DrawCenterText(Graphics g, RectangleF bounds, long total, float scale)
+        {
+            float cx = bounds.X + bounds.Width / 2f;
+            float cy = bounds.Y + bounds.Height / 2f;
+
+            string label = "";
+            string value = "";
+
+            if (_isDrilledDown)
+            {
+                // DRILL DOWN: Show Program Name + Total Count
+                label = _drilledProgramName;
+                value = total.ToString();
+            }
+            else
+            {
+                // MAIN: Show Largest Slice + Percentage
+                ChartSegment largest = _currentSegments.OrderByDescending(s => s.Value).FirstOrDefault();
+                if (largest != null)
+                {
+                    label = largest.Label;
+                    value = $"{(double)largest.Value / total * 100:0}%";
+                }
+            }
+
+            using (StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+            {
+                using (Font f = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+                    g.DrawString(label, f, Brushes.Black, cx, cy - (15 * scale), sf);
+
+                using (Font f = new Font("Segoe UI", 24 * scale, FontStyle.Bold))
+                    g.DrawString(value, f, new SolidBrush(Color.FromArgb(40, 40, 40)), cx, cy + (18 * scale), sf);
+            }
+        }
+
+        private void DrawSpokeLabel(Graphics g, RectangleF bounds, float startAngle, float sweepAngle, ChartSegment seg, long total, float scale, int index)
+        {
+            float midAngle = startAngle + sweepAngle / 2f;
+            float rad = midAngle * (float)Math.PI / 180f;
+            float cx = bounds.X + bounds.Width / 2f;
+            float cy = bounds.Y + bounds.Height / 2f;
+            float radius = bounds.Width / 2f;
+
+            float extension = (index % 2 == 0) ? 15 * scale : 45 * scale;
+
+            float x1 = cx + (radius - 5 * scale) * (float)Math.Cos(rad);
+            float y1 = cy + (radius - 5 * scale) * (float)Math.Sin(rad);
+            float x2 = cx + (radius + extension) * (float)Math.Cos(rad);
+            float y2 = cy + (radius + extension) * (float)Math.Sin(rad);
+
+            using (Pen p = new Pen(Color.Gray, 1 * scale)) g.DrawLine(p, x1, y1, x2, y2);
+
+            string pctText = $"{(double)seg.Value / total:P0}";
+
+            float tx = x2;
+            float ty = y2;
+            float textOffset = 2 * scale;
+
+            StringFormat sf = new StringFormat();
+
+            if (midAngle >= -90 && midAngle < 90)
+            {
+                sf.Alignment = StringAlignment.Near;
+                tx += textOffset;
+            }
+            else
+            {
+                sf.Alignment = StringAlignment.Far;
+                tx -= textOffset;
+            }
+            sf.LineAlignment = StringAlignment.Center;
+
+            using (Font f = new Font("Segoe UI", 7 * scale, FontStyle.Regular))
+                g.DrawString(pctText, f, Brushes.Black, tx, ty, sf);
+        }
+
+        private void DrawLegendColumns(Graphics g, float x, float y, long total, float scale)
+        {
+            float startY = y;
+            float vSpace = 28 * scale;
+            float colSpace = 160 * scale;
+            float boxSize = 10 * scale;
+            int itemsPerCol = 10;
+            int count = 0;
+
+            using (Font fontLabel = new Font("Segoe UI", 9 * scale, FontStyle.Regular))
+            using (Brush textBrush = new SolidBrush(ClrTextGray))
+            {
+                foreach (var seg in _currentSegments)
+                {
+                    if (count > 0 && count % itemsPerCol == 0)
+                    {
+                        x += colSpace;
+                        y = startY;
+                    }
+
+                    SizeF txtSize = g.MeasureString($"{seg.Label}: {seg.Value}", fontLabel);
+                    RectangleF hitRect = new RectangleF(x, y, boxSize + 20 + txtSize.Width, boxSize + 10);
+                    _legendZones.Add(new LegendHitZone { Bounds = hitRect, Segment = seg });
+
+                    using (SolidBrush b = new SolidBrush(seg.Color))
+                        g.FillEllipse(b, x, y + (2 * scale), boxSize, boxSize);
+
+                    g.DrawString($"{seg.Label}: {seg.Value}", fontLabel, textBrush, x + (18 * scale), y - (2 * scale));
+
+                    y += vSpace;
+                    count++;
+                }
+            }
+        }
+
+        private void DrawShadow(Graphics g, RectangleF bounds, float scale)
+        {
+            RectangleF s = bounds; s.Inflate(-10 * scale, -10 * scale); s.Offset(0, 10 * scale);
+            using (SolidBrush b = new SolidBrush(Color.FromArgb(20, 0, 0, 0))) g.FillEllipse(b, s);
+            RectangleF sc = s; sc.Inflate(-10 * scale, -10 * scale);
+            using (SolidBrush b = new SolidBrush(Color.FromArgb(15, 0, 0, 0))) g.FillEllipse(b, sc);
         }
 
         private void DrawWindowButtons(Graphics g, float scale)
@@ -327,184 +528,17 @@ namespace PUP_RMS.Forms
             }
         }
 
-        private void DrawShadow(Graphics g, RectangleF bounds, float scale)
-        {
-            RectangleF s = bounds; s.Inflate(-10 * scale, -10 * scale); s.Offset(0, 10 * scale);
-            using (SolidBrush b = new SolidBrush(Color.FromArgb(20, 0, 0, 0))) g.FillEllipse(b, s);
-            RectangleF sc = s; sc.Inflate(-10 * scale, -10 * scale);
-            using (SolidBrush b = new SolidBrush(Color.FromArgb(15, 0, 0, 0))) g.FillEllipse(b, sc);
-        }
-
-        private void DrawDoughnutWithSpokes(Graphics g, RectangleF bounds, long total, float thickness, float scale)
-        {
-            float startAngle = -90;
-            RectangleF arcRect = bounds;
-            arcRect.Inflate(-thickness / 2f, -thickness / 2f);
-
-            ChartSegment largest = _currentSegments.OrderByDescending(s => s.Value).First();
-
-            // Use FOR LOOP to access Index for Staggering
-            for (int i = 0; i < _currentSegments.Count; i++)
-            {
-                ChartSegment seg = _currentSegments[i];
-                float sweepAngle = (float)((double)seg.Value / total * 360.0);
-
-                // REGISTER HIT ZONE
-                _sliceZones.Add(new SliceHitZone { StartAngle = startAngle, SweepAngle = sweepAngle, Segment = seg });
-
-                using (Pen p = new Pen(seg.Color, thickness))
-                {
-                    p.StartCap = LineCap.Flat;
-                    p.EndCap = LineCap.Flat;
-                    g.DrawArc(p, arcRect, startAngle, sweepAngle);
-                }
-
-                // White separator
-                float endRad = (startAngle + sweepAngle) * (float)Math.PI / 180f;
-                float cx = bounds.X + bounds.Width / 2f;
-                float cy = bounds.Y + bounds.Height / 2f;
-                float rOut = bounds.Width / 2f;
-                float rIn = rOut - thickness;
-
-                using (Pen whitePen = new Pen(Color.White, 2f * scale))
-                {
-                    PointF p1 = new PointF(cx + rIn * (float)Math.Cos(endRad), cy + rIn * (float)Math.Sin(endRad));
-                    PointF p2 = new PointF(cx + rOut * (float)Math.Cos(endRad), cy + rOut * (float)Math.Sin(endRad));
-                    g.DrawLine(whitePen, p1, p2);
-                }
-
-                // DRAW SPOKE LABEL
-                if (sweepAngle > 0)
-                    DrawSpokeLabel(g, bounds, startAngle, sweepAngle, seg, total, scale, i);
-
-                startAngle += sweepAngle;
-            }
-
-            DrawCenterText(g, bounds, largest, total, scale);
-        }
-
-        private void DrawSpokeLabel(Graphics g, RectangleF bounds, float startAngle, float sweepAngle, ChartSegment seg, long total, float scale, int index)
-        {
-            float midAngle = startAngle + sweepAngle / 2f;
-            float rad = midAngle * (float)Math.PI / 180f;
-            float cx = bounds.X + bounds.Width / 2f;
-            float cy = bounds.Y + bounds.Height / 2f;
-            float radius = bounds.Width / 2f;
-
-            // ===== STAGGERING LOGIC =====
-            // If index is even, short line (15px). If odd, long line (45px).
-            // This prevents text labels from colliding when slices are small.
-            float extension = (index % 2 == 0) ? 15 * scale : 45 * scale;
-
-            float x1 = cx + (radius - 5 * scale) * (float)Math.Cos(rad);
-            float y1 = cy + (radius - 5 * scale) * (float)Math.Sin(rad);
-            float x2 = cx + (radius + extension) * (float)Math.Cos(rad);
-            float y2 = cy + (radius + extension) * (float)Math.Sin(rad);
-
-            using (Pen p = new Pen(Color.Gray, 1 * scale)) g.DrawLine(p, x1, y1, x2, y2);
-
-            string pctText = $"{(double)seg.Value / total:P0}";
-
-            float tx = x2;
-            float ty = y2;
-            float textOffset = 2 * scale;
-
-            StringFormat sf = new StringFormat();
-
-            // Adjust Alignment
-            if (midAngle >= -90 && midAngle < 90)
-            {
-                sf.Alignment = StringAlignment.Near;
-                tx += textOffset;
-            }
-            else
-            {
-                sf.Alignment = StringAlignment.Far;
-                tx -= textOffset;
-            }
-            sf.LineAlignment = StringAlignment.Center;
-
-            // Smaller font (7pt) to fit more
-            using (Font f = new Font("Segoe UI", 7 * scale, FontStyle.Regular))
-                g.DrawString(pctText, f, Brushes.Black, tx, ty, sf);
-        }
-
-        private void DrawCenterText(Graphics g, RectangleF bounds, ChartSegment largest, long total, float scale)
-        {
-            float cx = bounds.X + bounds.Width / 2f;
-            float cy = bounds.Y + bounds.Height / 2f;
-
-            string label, value;
-
-            if (_isDrilledDown)
-            {
-                label = _drilledProgramName;
-                value = total.ToString();
-            }
-            else
-            {
-                label = largest.Label;
-                value = $"{(double)largest.Value / total * 100:0}%";
-            }
-
-            using (StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
-            {
-                using (Font f = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
-                    g.DrawString(label, f, Brushes.Black, cx, cy - (15 * scale), sf);
-
-                using (Font f = new Font("Segoe UI", 24 * scale, FontStyle.Bold))
-                    g.DrawString(value, f, new SolidBrush(Color.FromArgb(40, 40, 40)), cx, cy + (18 * scale), sf);
-            }
-        }
-
-        private void DrawLegendColumns(Graphics g, float x, float y, long total, float scale)
-        {
-            float startY = y;
-            float vSpace = 28 * scale;
-            float colSpace = 160 * scale;
-            float boxSize = 10 * scale;
-            int itemsPerCol = 10;
-            int count = 0;
-
-            using (Font fontLabel = new Font("Segoe UI", 9 * scale, FontStyle.Regular))
-            using (Brush textBrush = new SolidBrush(ClrTextGray))
-            {
-                foreach (var seg in _currentSegments)
-                {
-                    if (count > 0 && count % itemsPerCol == 0)
-                    {
-                        x += colSpace;
-                        y = startY;
-                    }
-
-                    // REGISTER HIT ZONE
-                    SizeF txtSize = g.MeasureString($"{seg.Label}: {seg.Value}", fontLabel);
-                    RectangleF hitRect = new RectangleF(x, y, boxSize + 20 + txtSize.Width, boxSize + 10);
-                    _legendZones.Add(new LegendHitZone { Bounds = hitRect, Segment = seg });
-
-                    // Draw
-                    using (SolidBrush b = new SolidBrush(seg.Color))
-                        g.FillEllipse(b, x, y + (2 * scale), boxSize, boxSize);
-
-                    g.DrawString($"{seg.Label}: {seg.Value}", fontLabel, textBrush, x + (18 * scale), y - (2 * scale));
-
-                    y += vSpace;
-                    count++;
-                }
-            }
-        }
-
         // ==============================
         // MOUSE / INTERACTION
         // ==============================
         private void Form_MouseDown(object sender, MouseEventArgs e)
         {
             if (_closeBtnRect.Contains(e.Location)) { Close(); return; }
+
             if (_maxBtnRect.Contains(e.Location))
             {
                 if (this.WindowState == FormWindowState.Normal)
                 {
-                    // Use .Bounds to ignore the taskbar and go true full screen
                     this.MaximizedBounds = Screen.FromHandle(this.Handle).Bounds;
                     this.WindowState = FormWindowState.Maximized;
                 }
@@ -515,8 +549,11 @@ namespace PUP_RMS.Forms
                 this.Invalidate();
                 return;
             }
+
+            // Back Button Logic
             if (_backBtnRect.Contains(e.Location) && _isDrilledDown)
             {
+                _isDrilledDown = false;
                 LoadMainData();
                 return;
             }
@@ -562,7 +599,6 @@ namespace PUP_RMS.Forms
             double dist = Math.Sqrt(dx * dx + dy * dy);
             float radius = _lastChartBounds.Width / 2f;
 
-            // Adjust hit test for the new thickness (70)
             float holeRadius = radius - (70 * GetScaleFactor());
 
             if (dist > radius || dist < holeRadius) return;
@@ -641,9 +677,37 @@ namespace PUP_RMS.Forms
             dragging = false;
         }
 
+        private float GetScaleFactor()
+        {
+            float scaleX = this.Width / BASE_WIDTH;
+            float scaleY = this.Height / BASE_HEIGHT;
+            return Math.Min(scaleX, scaleY);
+        }
+
+        // ADDED TO FIX ERROR
         private void frmDistributionProgram_Load(object sender, EventArgs e)
         {
+        }
 
+        // ADDED TO FIX ERROR
+        public static void ShowWithDimmer(Form parent, frmDistributionProgram child)
+        {
+            using (Form dimmer = new Form())
+            {
+                dimmer.StartPosition = FormStartPosition.Manual;
+                dimmer.FormBorderStyle = FormBorderStyle.None;
+                dimmer.AllowTransparency = true;
+                dimmer.BackColor = Color.Black;
+                dimmer.Opacity = 0.5;
+                dimmer.Size = parent.Size;
+                dimmer.Location = parent.Location;
+                dimmer.ShowInTaskbar = false;
+
+                dimmer.Show();
+                child.Owner = dimmer;
+                child.ShowDialog();
+                dimmer.Close();
+            }
         }
     }
 

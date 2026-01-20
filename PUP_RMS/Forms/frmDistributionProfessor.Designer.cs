@@ -37,7 +37,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "frmDistributionProfessor";
             this.Text = "frmDistributionProfessor";
-            this.Load += new System.EventHandler(this.frmDistributionProfessor_Load_1);
+            this.Load += new System.EventHandler(this.frmDistributionProfessor_Load);
             this.ResumeLayout(false);
 
         }

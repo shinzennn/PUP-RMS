@@ -59,6 +59,15 @@ namespace PUP_RMS.Helper
             LogActivity(account_id, description);
         }
 
+        public static void AccountModification( int accountID, string fullname)
+        {
+            int account_id = MainDashboard.CurrentAccount.AccountID;
+            string username = MainDashboard.CurrentAccount.Username;
+            string description = $"Admin: {username} - ID:{account_id} modified account id: {accountID} to {fullname}.";
+
+            LogActivity(account_id, description);
+        }
+
         // GRADESHEET ACTIVITY LOGGING
         public static void LogGradesheetUpload(string schoolYear, string semester, string courseCode, string professor)
         {
@@ -96,7 +105,7 @@ namespace PUP_RMS.Helper
             
             LogActivity(account_id, description);
         }
-
+        
         public static void LogCourseModification(string courseID, string courseCode, string courseDescription)
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;

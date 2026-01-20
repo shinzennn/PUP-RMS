@@ -29,12 +29,9 @@
         private void InitializeComponent()
         {
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnCreateAccount = new PUP_RMS.RoundedButton();
-            this.btnAccountList = new PUP_RMS.RoundedButton();
-            this.btnActivityLog = new PUP_RMS.RoundedButton();
             this.panelAccountInfo = new PUP_RMS.RoundedShadowPanel();
             this.btnCancelAccount = new PUP_RMS.RoundedButton();
             this.btnSaveAccountInfo = new PUP_RMS.RoundedButton();
@@ -59,10 +56,12 @@
             this.roundedShadowPanel1 = new PUP_RMS.RoundedShadowPanel();
             this.btnEditProfileInfo = new PUP_RMS.RoundedButton();
             this.gradientLabel2 = new GradientLabel();
-            this.gradientLabel1 = new GradientLabel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnCreateAccount = new PUP_RMS.RoundedButton();
+            this.btnAccountList = new PUP_RMS.RoundedButton();
+            this.btnActivityLog = new PUP_RMS.RoundedButton();
             this.panelHeader.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.panelAccountInfo.SuspendLayout();
             this.roundedShadowPanel6.SuspendLayout();
             this.roundedShadowPanel5.SuspendLayout();
@@ -71,6 +70,7 @@
             this.roundedShadowPanel4.SuspendLayout();
             this.roundedShadowPanel3.SuspendLayout();
             this.roundedShadowPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelHeader
@@ -84,6 +84,17 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1120, 90);
             this.panelHeader.TabIndex = 20;
+            // 
+            // gradientLabel1
+            // 
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(307, 37);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "Account Management ";
             // 
             // label10
             // 
@@ -115,104 +126,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 776);
             this.tableLayoutPanel1.TabIndex = 21;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel2.Controls.Add(this.btnCreateAccount, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnAccountList, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnActivityLog, 2, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(59, 112);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(50);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1000, 50);
-            this.tableLayoutPanel2.TabIndex = 22;
-            // 
-            // btnCreateAccount
-            // 
-            this.btnCreateAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreateAccount.BackColor = System.Drawing.Color.Maroon;
-            this.btnCreateAccount.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCreateAccount.BorderRadius = 20;
-            this.btnCreateAccount.BorderSize = 0;
-            this.btnCreateAccount.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnCreateAccount.FlatAppearance.BorderSize = 0;
-            this.btnCreateAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCreateAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateAccount.ForeColor = System.Drawing.Color.White;
-            this.btnCreateAccount.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCreateAccount.Location = new System.Drawing.Point(7, 7);
-            this.btnCreateAccount.Margin = new System.Windows.Forms.Padding(7);
-            this.btnCreateAccount.Name = "btnCreateAccount";
-            this.btnCreateAccount.Size = new System.Drawing.Size(86, 36);
-            this.btnCreateAccount.TabIndex = 0;
-            this.btnCreateAccount.Text = "Create Account";
-            this.btnCreateAccount.TextColor = System.Drawing.Color.White;
-            this.btnCreateAccount.UseVisualStyleBackColor = false;
-            this.btnCreateAccount.Visible = false;
-            this.btnCreateAccount.Click += new System.EventHandler(this.btnCreateAccount_Click);
-            // 
-            // btnAccountList
-            // 
-            this.btnAccountList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAccountList.BackColor = System.Drawing.Color.Maroon;
-            this.btnAccountList.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnAccountList.BorderRadius = 20;
-            this.btnAccountList.BorderSize = 0;
-            this.btnAccountList.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnAccountList.FlatAppearance.BorderSize = 0;
-            this.btnAccountList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAccountList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAccountList.ForeColor = System.Drawing.Color.White;
-            this.btnAccountList.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnAccountList.Location = new System.Drawing.Point(107, 7);
-            this.btnAccountList.Margin = new System.Windows.Forms.Padding(7);
-            this.btnAccountList.Name = "btnAccountList";
-            this.btnAccountList.Size = new System.Drawing.Size(86, 36);
-            this.btnAccountList.TabIndex = 1;
-            this.btnAccountList.Text = "View Account List";
-            this.btnAccountList.TextColor = System.Drawing.Color.White;
-            this.btnAccountList.UseVisualStyleBackColor = false;
-            this.btnAccountList.Visible = false;
-            this.btnAccountList.Click += new System.EventHandler(this.btnAccountList_Click);
-            // 
-            // btnActivityLog
-            // 
-            this.btnActivityLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnActivityLog.BackColor = System.Drawing.Color.Maroon;
-            this.btnActivityLog.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnActivityLog.BorderRadius = 20;
-            this.btnActivityLog.BorderSize = 0;
-            this.btnActivityLog.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnActivityLog.FlatAppearance.BorderSize = 0;
-            this.btnActivityLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnActivityLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActivityLog.ForeColor = System.Drawing.Color.White;
-            this.btnActivityLog.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnActivityLog.Location = new System.Drawing.Point(207, 7);
-            this.btnActivityLog.Margin = new System.Windows.Forms.Padding(7);
-            this.btnActivityLog.Name = "btnActivityLog";
-            this.btnActivityLog.Size = new System.Drawing.Size(86, 36);
-            this.btnActivityLog.TabIndex = 2;
-            this.btnActivityLog.Text = "View Activity Logs";
-            this.btnActivityLog.TextColor = System.Drawing.Color.White;
-            this.btnActivityLog.UseVisualStyleBackColor = false;
-            this.btnActivityLog.Visible = false;
-            this.btnActivityLog.Click += new System.EventHandler(this.btnActivityLog_Click);
             // 
             // panelAccountInfo
             // 
@@ -396,7 +309,7 @@
             this.btnEditAccountInfo.BorderColor = System.Drawing.Color.PaleVioletRed;
             this.btnEditAccountInfo.BorderRadius = 20;
             this.btnEditAccountInfo.BorderSize = 0;
-            this.btnEditAccountInfo.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnEditAccountInfo.ButtonColor = System.Drawing.Color.Goldenrod;
             this.btnEditAccountInfo.FlatAppearance.BorderSize = 0;
             this.btnEditAccountInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditAccountInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -607,7 +520,7 @@
             this.btnEditProfileInfo.BorderColor = System.Drawing.Color.PaleVioletRed;
             this.btnEditProfileInfo.BorderRadius = 20;
             this.btnEditProfileInfo.BorderSize = 0;
-            this.btnEditProfileInfo.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnEditProfileInfo.ButtonColor = System.Drawing.Color.Goldenrod;
             this.btnEditProfileInfo.FlatAppearance.BorderSize = 0;
             this.btnEditProfileInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditProfileInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -633,16 +546,103 @@
             this.gradientLabel2.TabIndex = 10;
             this.gradientLabel2.Text = "Profile Information ";
             // 
-            // gradientLabel1
+            // tableLayoutPanel2
             // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(307, 37);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "Account Management ";
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel2.Controls.Add(this.btnCreateAccount, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnAccountList, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnActivityLog, 2, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(59, 112);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(50);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1000, 50);
+            this.tableLayoutPanel2.TabIndex = 22;
+            // 
+            // btnCreateAccount
+            // 
+            this.btnCreateAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCreateAccount.BackColor = System.Drawing.Color.Maroon;
+            this.btnCreateAccount.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCreateAccount.BorderRadius = 20;
+            this.btnCreateAccount.BorderSize = 0;
+            this.btnCreateAccount.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnCreateAccount.FlatAppearance.BorderSize = 0;
+            this.btnCreateAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCreateAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCreateAccount.ForeColor = System.Drawing.Color.White;
+            this.btnCreateAccount.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnCreateAccount.Location = new System.Drawing.Point(7, 7);
+            this.btnCreateAccount.Margin = new System.Windows.Forms.Padding(7);
+            this.btnCreateAccount.Name = "btnCreateAccount";
+            this.btnCreateAccount.Size = new System.Drawing.Size(86, 36);
+            this.btnCreateAccount.TabIndex = 0;
+            this.btnCreateAccount.Text = "Create Account";
+            this.btnCreateAccount.TextColor = System.Drawing.Color.White;
+            this.btnCreateAccount.UseVisualStyleBackColor = false;
+            this.btnCreateAccount.Visible = false;
+            this.btnCreateAccount.Click += new System.EventHandler(this.btnCreateAccount_Click);
+            // 
+            // btnAccountList
+            // 
+            this.btnAccountList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAccountList.BackColor = System.Drawing.Color.Maroon;
+            this.btnAccountList.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnAccountList.BorderRadius = 20;
+            this.btnAccountList.BorderSize = 0;
+            this.btnAccountList.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnAccountList.FlatAppearance.BorderSize = 0;
+            this.btnAccountList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAccountList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAccountList.ForeColor = System.Drawing.Color.White;
+            this.btnAccountList.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnAccountList.Location = new System.Drawing.Point(107, 7);
+            this.btnAccountList.Margin = new System.Windows.Forms.Padding(7);
+            this.btnAccountList.Name = "btnAccountList";
+            this.btnAccountList.Size = new System.Drawing.Size(86, 36);
+            this.btnAccountList.TabIndex = 1;
+            this.btnAccountList.Text = "View Account List";
+            this.btnAccountList.TextColor = System.Drawing.Color.White;
+            this.btnAccountList.UseVisualStyleBackColor = false;
+            this.btnAccountList.Visible = false;
+            this.btnAccountList.Click += new System.EventHandler(this.btnAccountList_Click);
+            // 
+            // btnActivityLog
+            // 
+            this.btnActivityLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActivityLog.BackColor = System.Drawing.Color.Maroon;
+            this.btnActivityLog.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnActivityLog.BorderRadius = 20;
+            this.btnActivityLog.BorderSize = 0;
+            this.btnActivityLog.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnActivityLog.FlatAppearance.BorderSize = 0;
+            this.btnActivityLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnActivityLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActivityLog.ForeColor = System.Drawing.Color.White;
+            this.btnActivityLog.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnActivityLog.Location = new System.Drawing.Point(207, 7);
+            this.btnActivityLog.Margin = new System.Windows.Forms.Padding(7);
+            this.btnActivityLog.Name = "btnActivityLog";
+            this.btnActivityLog.Size = new System.Drawing.Size(86, 36);
+            this.btnActivityLog.TabIndex = 2;
+            this.btnActivityLog.Text = "View Activity Logs";
+            this.btnActivityLog.TextColor = System.Drawing.Color.White;
+            this.btnActivityLog.UseVisualStyleBackColor = false;
+            this.btnActivityLog.Visible = false;
+            this.btnActivityLog.Click += new System.EventHandler(this.btnActivityLog_Click);
             // 
             // frmAccount
             // 
@@ -659,7 +659,6 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
             this.panelAccountInfo.ResumeLayout(false);
             this.panelAccountInfo.PerformLayout();
             this.roundedShadowPanel6.ResumeLayout(false);
@@ -676,6 +675,7 @@
             this.roundedShadowPanel3.PerformLayout();
             this.roundedShadowPanel1.ResumeLayout(false);
             this.roundedShadowPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

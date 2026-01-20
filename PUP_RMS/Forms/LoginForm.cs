@@ -58,9 +58,10 @@ namespace PUP_RMS
             this.MinimizeBox = true;
             this.ControlBox = true;
 
-            textBox4.UseSystemPasswordChar = true;
-            pictureBoxShow.Visible = true;
             pictureBoxHide.Visible = false;
+            pictureBoxShow.Visible = true;
+            textBox4.UseSystemPasswordChar = true;
+
 
             if (Properties.Settings.Default.RememberMe)
             {
@@ -109,8 +110,18 @@ namespace PUP_RMS
         }
 
         private void linkLabelSignUp(object sender, LinkLabelLinkClickedEventArgs e) { RegisterForm rf = new RegisterForm(); rf.Show(); this.Hide(); }
-        private void pictureBoxHide_Click_1(object sender, EventArgs e) { textBox4.UseSystemPasswordChar = true; pictureBoxShow.Visible = true; pictureBoxHide.Visible = false; }
-        private void pictureBoxShow_Click_1(object sender, EventArgs e) { textBox4.UseSystemPasswordChar = false; pictureBoxShow.Visible = false; pictureBoxHide.Visible = true; }
+        private void pictureBoxHide_Click_1(object sender, EventArgs e) { 
+            textBox4.PasswordChar = '●'; 
+            pictureBoxHide.Visible=false; 
+            pictureBoxShow.Visible = true;
+            textBox4.UseSystemPasswordChar = true;
+        }
+        private void pictureBoxShow_Click_1(object sender, EventArgs e) {
+            textBox4.PasswordChar = '\0';
+            pictureBoxShow.Visible = false; 
+            pictureBoxHide.Visible = true;
+            textBox4.UseSystemPasswordChar = false;
+        }
         private void AttachClickEvent(Control parent) { foreach (Control c in parent.Controls) { c.MouseDown += Background_Click; if (c.HasChildren) AttachClickEvent(c); } }
         private void Background_Click(object sender, MouseEventArgs e) { if (sender is Button || sender is CheckBox || sender is LinkLabel || sender is TextBox || sender is PictureBox) return; ResetBorders(); this.ActiveControl = null; }
         private void ResetBorders() { if (roundedPanel2 != null) roundedPanel2.SetBorderHover(false); if (roundedPanel3 != null) roundedPanel3.SetBorderHover(false); }
@@ -127,5 +138,10 @@ namespace PUP_RMS
         protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.Style |= 0x02000000; return cp; } }
         private void ApplyDoubleBufferingRecursively(Control.ControlCollection controls) { foreach (Control c in controls) { SetDoubleBuffered(c); if (c.HasChildren) ApplyDoubleBufferingRecursively(c.Controls); } }
         public static void SetDoubleBuffered(Control c) { if (SystemInformation.TerminalServerSession) return; System.Reflection.PropertyInfo aProp = typeof(Control).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance); if (aProp != null) aProp.SetValue(c, true, null); }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

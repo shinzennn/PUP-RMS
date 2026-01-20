@@ -175,7 +175,10 @@ namespace PUP_RMS.Forms
         private void dgvFaculty_CellMouseLeave(object sender, DataGridViewCellEventArgs e) { }
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e) { }
 
+        private void cbxProgram_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }
 

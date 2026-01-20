@@ -51,6 +51,19 @@ namespace PUP_RMS.Helper
                 return "0";
             }
         }
+        // 3. Get Program Count
+        public static string GetProgramCount()
+        {
+            try
+            {
+                int count = DbControl.ExecuteScalar("countTotalProgram");
+                return count.ToString();
+            }
+            catch
+            {
+                return "0";
+            }
+        }
 
 
         public static DataTable GetProgramDistribution()
@@ -58,14 +71,64 @@ namespace PUP_RMS.Helper
             return DbControl.ExecuteQuery("sp_GetDistributionByProgram");
         }
 
+        public static DataTable GetProgramDistribution(string schoolYear = null)
+        {
+            DbControl.sqlParameters.Clear();
+
+            // If a specific year is selected (not null, not empty, and not "All")
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
+            {
+                DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
+            }
+            else
+            {
+                // Pass NULL to get all records
+                DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
+            }
+
+            // Make sure you have created this Stored Procedure in SQL (sp_GetDistributionByProgram_Filtered)
+            return DbControl.ExecuteQuery("sp_GetDistributionByProgram_Filtered");
+        }
+
+
         public static DataTable GetFacultyDistribution()
         {
             return DbControl.ExecuteQuery("sp_GetDistributionByFaculty");
         }
 
+        //Filter grasheet per School Year in By Faculty
+        public static DataTable GetFacultyDistribution(string schoolYear = null)
+        {
+            DbControl.sqlParameters.Clear();
+
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
+            {
+                DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
+            }
+            else
+            {
+                DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
+            }
+
+            return DbControl.ExecuteQuery("sp_GetDistributionByFaculty_Filtered");
+        }
+
+
         public static DataTable GetSubjectDistribution()
         {
             return DbControl.ExecuteQuery("sp_GetDistributionBySubject");
+        }
+
+        public static DataTable GetSubjectDetails(string courseDescription)
+        {
+            // Clear any previous parameters to avoid conflicts
+            DbControl.sqlParameters.Clear();
+
+            // Add the parameter expected by the Stored Procedure
+            DbControl.AddParameter("@CourseDescription", courseDescription, SqlDbType.VarChar);
+
+            // Execute the stored procedure
+            return DbControl.ExecuteQuery("sp_GetSubjectDetailsByName");
         }
 
         public static DataTable GetYearSemDistribution(string prog = null, string prof = null, string subj = null, string year = null)
@@ -79,6 +142,7 @@ namespace PUP_RMS.Helper
             if (!string.IsNullOrEmpty(prof)) DbControl.AddParameter("@Faculty", prof, System.Data.SqlDbType.VarChar);
             else DbControl.AddParameter("@Faculty", DBNull.Value, System.Data.SqlDbType.VarChar);
 
+
             if (!string.IsNullOrEmpty(subj)) DbControl.AddParameter("@Subject", subj, System.Data.SqlDbType.VarChar);
             else DbControl.AddParameter("@Subject", DBNull.Value, System.Data.SqlDbType.VarChar);
 
@@ -88,6 +152,41 @@ namespace PUP_RMS.Helper
             return DbControl.ExecuteQuery("sp_GetDistributionByYearSem");
         }
 
+        //Filter grasheet per School Year in By program
+        public static DataTable GetSchoolYears()
+        {
+            return DbControl.ExecuteQuery("sp_GetAllSchoolYears");
+        }
+
+        public static DataTable GetRecentActivities()
+        {
+            return DbControl.ExecuteQuery("sp_GetActivityLogWithUserDesc");
+        }
+
+        public static DataTable recentlyUploads()
+        {
+            return DbControl.ExecuteQuery("RecentUploadedGradeSheets");
+        }
+
+        //filter by schoolyear in subject distribution 
+        public static DataTable GetSubjectDistribution(string schoolYear = null)
+        {
+            DbControl.sqlParameters.Clear();
+
+            // If a specific year is selected (not null, empty, or "All Years")
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All Years")
+            {
+                DbControl.AddParameter("@SchoolYear", schoolYear, System.Data.SqlDbType.VarChar);
+            }
+            else
+            {
+                // Pass NULL to get all records
+                DbControl.AddParameter("@SchoolYear", DBNull.Value, System.Data.SqlDbType.VarChar);
+            }
+
+            return DbControl.ExecuteQuery("sp_GetDistributionBySubject_FilteredSchoolYears");
+        }
 
     }
 }
+

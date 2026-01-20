@@ -1,9 +1,12 @@
-﻿using System;
+﻿using PUP_RMS.Core;
+using PUP_RMS.CustomControls;
+using PUP_RMS.Helper;
+using System;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using System.ComponentModel;
-using PUP_RMS.CustomControls; // Ensure this matches the namespace of your HeaderPanelCard
 
 namespace RecordsManagementSystem.Controls
 {
@@ -11,20 +14,14 @@ namespace RecordsManagementSystem.Controls
     [Description("A draggable activity log that inherits the PUP_RMS HeaderPanelCard styling.")]
     public class RecentActivityLog : HeaderPanelCard
     {
-        // ==========================================================
-        // FIELDS
-        // ==========================================================
         private Panel _itemContainer;
         private bool _isDragging = false;
         private Point _dragCursorPoint;
         private Point _dragFormPoint;
+        private int _latestLogID = -1;
 
-        // ==========================================================
-        // CONSTRUCTOR
-        // ==========================================================
         public RecentActivityLog()
         {
-            // Set default properties inherited from HeaderPanelCard
             this.HeaderLabel = "Recent Activity Log";
             this.HeaderHeight = 60;
             this.Size = new Size(400, 500);
@@ -32,8 +29,6 @@ namespace RecordsManagementSystem.Controls
             this.ShowShadow = true;
             this.EnableHoverEffect = true;
 
-            // Initialize the scrollable container
-            // It automatically sits inside the DisplayRectangle of the base card
             _itemContainer = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -44,19 +39,17 @@ namespace RecordsManagementSystem.Controls
 
             this.Controls.Add(_itemContainer);
 
-            // Load some default data for visibility
-            LoadDefaultActivities();
+            // FIX: Prevent Database connection during Visual Studio Design Time
+            if (!this.DesignMode && LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                LoadDefaultActivities();
+            }
         }
 
-        // ==========================================================
-        // DRAGGING LOGIC (Using inherited HeaderHeight)
-        // ==========================================================
+        #region Dragging Logic
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            // We use the 'pad' logic from the base class to detect the header click
             int pad = ShowShadow ? ShadowPadding : 0;
-
-            // If click is within the Header area
             if (e.Button == MouseButtons.Left && e.Y >= pad && e.Y <= pad + HeaderHeight)
             {
                 _isDragging = true;
@@ -83,63 +76,219 @@ namespace RecordsManagementSystem.Controls
             this.Cursor = Cursors.Default;
             base.OnMouseUp(e);
         }
+        #endregion
 
-        // ==========================================================
-        // ACTIVITY LOG METHODS
-        // ==========================================================
-        public void AddActivity(string title, string desc, string time, Color themeColor)
+        #region Activity Loading Logic
+
+        public void LoadDefaultActivities()
         {
-            ActivityItem row = new ActivityItem(title, desc, time, themeColor);
-            row.Width = _itemContainer.Width - 5; // Slight offset for scrollbar
+            try
+            {
+                // 1. Get Data from Helper
+                DataTable dt = DashboardHelper.GetRecentActivities();
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    int currentTopID = Convert.ToInt32(dt.Rows[0]["LogID"]);
+                    if (currentTopID == _latestLogID) return; // Stop if no new data
+
+                    _latestLogID = currentTopID;
+
+                    _itemContainer.SuspendLayout();
+                    _itemContainer.Controls.Clear();
+
+                    // UPDATED: Changed to 'for' loop to detect the first item (Index 0)
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        DataRow row = dt.Rows[i];
+
+                        string rawDesc = row["ActivityDescription"].ToString();
+                        string username = row["Username"].ToString();
+                        DateTime dbDate = Convert.ToDateTime(row["ActivityDate"]);
+
+                        string title = GetTitleFromDescription(rawDesc, username);
+                        string timeAgo = GetRelativeTime(dbDate);
+                        Color themeColor = GetColorByAction(rawDesc);
+
+                        // CHECK: If it is the first row (i == 0), it is the most recent
+                        bool isLatest = (i == 0);
+
+                        AddActivity(title, rawDesc, timeAgo, themeColor, isLatest);
+                    }
+                }
+                else
+                {
+                    _itemContainer.Controls.Clear();
+                    // Pass false for 'No Activity'
+                    AddActivity("No Activity", "The log is currently empty.", "", Color.LightGray, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                _itemContainer.ResumeLayout();
+            }
+        }
+
+        // UPDATED: Added bool 'isLatest' parameter
+        public void AddActivity(string title, string desc, string time, Color themeColor, bool isLatest)
+        {
+            Image icon = GetIconByAction(desc);
+
+            // Pass 'isLatest' to the Item Control
+            ActivityItem row = new ActivityItem(title, desc, time, themeColor, icon, isLatest);
+
+            row.Width = _itemContainer.Width - 20;
+            row.Dock = DockStyle.Top;
+
             _itemContainer.Controls.Add(row);
-            row.BringToFront(); // Newest at top
+            _itemContainer.Controls.SetChildIndex(row, 0);
         }
 
-        private void LoadDefaultActivities()
+        #endregion
+
+        #region Helpers & Resource Image Logic
+
+        private Image GetIconByAction(string description)
         {
-            AddActivity("System Login", "Admin J. Montante accessed the dashboard", "Just now", Color.FromArgb(232, 240, 254));
-            AddActivity("Batch Upload", "Successfully uploaded 15 Grade Sheets", "10m ago", Color.FromArgb(232, 245, 233));
-            AddActivity("Naming Conflict", "File 'Record_01.pdf' was renamed automatically", "1h ago", Color.FromArgb(255, 248, 225));
+            if (string.IsNullOrEmpty(description)) return null;
+
+            description = description.ToLower();
+
+            if (description.Contains("login") || description.Contains("logged in") || description.Contains("access"))
+                return PUP_RMS.Properties.Resources.login;
+
+            if (description.Contains("create") || description.Contains("upload") || description.Contains("add"))
+                return PUP_RMS.Properties.Resources.create;
+
+            if (description.Contains("update") || description.Contains("modified") || description.Contains("modify"))
+                return PUP_RMS.Properties.Resources.edit;
+
+            return null;
         }
+
+        private string GetRelativeTime(DateTime date)
+        {
+            TimeSpan ts = DateTime.Now - date;
+            if (ts.TotalMinutes < 1) return "Just now";
+            if (ts.TotalMinutes < 60) return $"{(int)ts.TotalMinutes}m ago";
+            if (ts.TotalHours < 24) return $"{(int)ts.TotalHours}h ago";
+            if (ts.TotalDays < 7) return $"{(int)ts.TotalDays}d ago";
+            return date.ToString("MMM dd");
+        }
+
+        private Color GetColorByAction(string description)
+        {
+            description = description.ToLower();
+            if (description.Contains("login") || description.Contains("access")) return Color.FromArgb(232, 240, 254);
+            if (description.Contains("upload") || description.Contains("create")) return Color.FromArgb(232, 245, 233);
+            if (description.Contains("update") || description.Contains("edit")) return Color.FromArgb(255, 248, 225);
+            if (description.Contains("delete") || description.Contains("error")) return Color.FromArgb(255, 235, 238);
+            return Color.WhiteSmoke;
+        }
+
+        private string GetTitleFromDescription(string desc, string username)
+        {
+            if (desc.ToLower().Contains("login")) return "System Login";
+            if (desc.ToLower().Contains("upload")) return "File Upload";
+            if (desc.ToLower().Contains("delete")) return "Data Removal";
+            if (desc.ToLower().Contains("update")) return "Record Update";
+            return username;
+        }
+
+        #endregion
     }
 
-    // ==========================================================
-    // THE ROW ITEM CONTROL
-    // ==========================================================
+    // ---------------------------------------------------------
+    // INTERNAL CONTROL: Activity Item Row
+    // ---------------------------------------------------------
     internal class ActivityItem : UserControl
     {
-        public ActivityItem(string title, string desc, string time, Color iconColor)
+        private readonly Image _icon;
+        private readonly string _title;
+        private readonly string _desc;
+        private readonly string _time;
+        private readonly Color _iconBackgroundColor;
+        private readonly bool _isLatest; // Field to store status
+
+        // UPDATED: Constructor accepts 'isLatest'
+        public ActivityItem(string title, string desc, string time, Color iconBgColor, Image icon, bool isLatest)
         {
+            _title = title;
+            _desc = desc;
+            _time = time;
+            _iconBackgroundColor = iconBgColor;
+            _icon = icon;
+            _isLatest = isLatest;
+
             this.Dock = DockStyle.Top;
             this.Height = 65;
             this.BackColor = Color.White;
             this.DoubleBuffered = true;
 
-            this.Paint += (s, e) =>
+            this.Paint += ActivityItem_Paint;
+        }
+
+        private void ActivityItem_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            // 1. Draw Icon Circle Background
+            using (SolidBrush b = new SolidBrush(_iconBackgroundColor))
             {
-                Graphics g = e.Graphics;
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                g.FillEllipse(b, 15, 12, 40, 40);
+            }
 
-                // Draw Icon Circle
-                using (SolidBrush b = new SolidBrush(iconColor))
-                    g.FillEllipse(b, 15, 12, 40, 40);
+            // 2. Draw the Image (PNG) inside the Circle
+            if (_icon != null)
+            {
+                int iconRenderSize = 40; // Kept at 40 per your previous request
 
-                // Text Rendering
-                using (Font fBold = new Font("Segoe UI Semibold", 9.5f))
-                using (Font fReg = new Font("Segoe UI", 8.5f))
+                int iconX = 12 + (40 - iconRenderSize) / 2;
+                int iconY = 12 + (40 - iconRenderSize) / 2;
+
+                g.DrawImage(_icon, new Rectangle(iconX, iconY, iconRenderSize, iconRenderSize));
+            }
+
+            // 3. Text Rendering
+            using (Font fBold = new Font("Segoe UI Black", 10f))
+            using (Font fReg = new Font("Segoe UI", 8.5f))
+            {
+                // COLOR LOGIC: 
+                // If _isLatest is true, use Green brush. Otherwise, use Black.
+                Brush mainTextBrush = _isLatest ? new SolidBrush(Color.Black) : Brushes.Black;
+                Brush timeTextBrush = _isLatest ? new SolidBrush(Color.Green) : Brushes.Black;
+
+                // Draw Title
+                g.DrawString(_title, fBold, mainTextBrush, 65, 14);
+
+                // Draw Description (Kept Black/Gray to maintain readability)
+                g.DrawString(_desc, fReg, Brushes.Black, 65, 32);
+
+                // Draw Time
+                SizeF tSize = g.MeasureString(_time, fReg);
+                g.DrawString(_time, fReg, timeTextBrush, Width - tSize.Width - 15, 24);
+
+                // Dispose of custom brushes if created
+                if (_isLatest)
                 {
-                    g.DrawString(title, fBold, Brushes.Black, 65, 14);
-                    g.DrawString(desc, fReg, Brushes.Gray, 65, 32);
-
-                    SizeF tSize = g.MeasureString(time, fReg);
-                    g.DrawString(time, fReg, Brushes.Silver, Width - tSize.Width - 15, 24);
+                    mainTextBrush.Dispose();
+                    timeTextBrush.Dispose();
                 }
+            }
 
-                // Thin divider line
-                using (Pen p = new Pen(Color.FromArgb(245, 245, 245)))
-                    g.DrawLine(p, 65, Height - 1, Width - 10, Height - 1);
-            };
+            // 4. Divider Line
+            using (Pen p = new Pen(Color.FromArgb(245, 245, 245)))
+            {
+                g.DrawLine(p, 65, Height - 1, Width - 10, Height - 1);
+            }
         }
     }
 }

@@ -111,7 +111,7 @@ namespace PUP_RMS.Helper
                 MessageBox.Show("Faculty updated successfully.", "Record Created Successfully.", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // LOG ACTIVITY
-                ActivityLogger.LogFacultyAddition(faculty.FirstName + " " + faculty.LastName);
+                ActivityLogger.LogFacultyModification(faculty.FacultyID.ToString(),faculty.FirstName + " " + faculty.LastName);
             }
             else
             {
@@ -178,6 +178,15 @@ namespace PUP_RMS.Helper
             // 4. Combine into: LAST, FIRST MIDDLE
             // We use Trim() at the end in case the middle name was empty
             return $"{formattedLast}, {formattedFirst} {formattedMiddle}".Trim();
+        }
+
+        public static DataTable GetAllActivityLog()
+        {
+            DataTable dt = new DataTable();
+
+            dt = DbControl.ExecuteQuery("sp_GetActivityLogWithUserDesc");
+
+            return dt;
         }
     }
 }

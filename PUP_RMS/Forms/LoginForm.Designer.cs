@@ -42,10 +42,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.roundedPanel3 = new PUP_RMS.RoundedPanel();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.pictureBoxHide = new System.Windows.Forms.PictureBox();
             this.pictureBoxShow = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.roundedPanel2 = new PUP_RMS.RoundedPanel();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -235,10 +235,10 @@
             this.roundedPanel3.BorderColor = System.Drawing.Color.Goldenrod;
             this.roundedPanel3.BorderRadius = 20;
             this.roundedPanel3.BorderSize = 2;
+            this.roundedPanel3.Controls.Add(this.textBox4);
             this.roundedPanel3.Controls.Add(this.pictureBoxHide);
             this.roundedPanel3.Controls.Add(this.pictureBoxShow);
             this.roundedPanel3.Controls.Add(this.pictureBox1);
-            this.roundedPanel3.Controls.Add(this.textBox4);
             this.roundedPanel3.HoverBackColor = System.Drawing.Color.Gainsboro;
             this.roundedPanel3.HoverBorderColor = System.Drawing.Color.Maroon;
             this.roundedPanel3.Location = new System.Drawing.Point(50, 330);
@@ -251,6 +251,19 @@
             this.roundedPanel3.Size = new System.Drawing.Size(317, 49);
             this.roundedPanel3.TabIndex = 32;
             this.roundedPanel3.Click += new System.EventHandler(this.roundedPanel3_Click);
+            // 
+            // textBox4
+            // 
+            this.textBox4.BackColor = System.Drawing.Color.Gainsboro;
+            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox4.Location = new System.Drawing.Point(40, 13);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.PasswordChar = '●';
+            this.textBox4.Size = new System.Drawing.Size(234, 19);
+            this.textBox4.TabIndex = 1;
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.textBox4.Enter += new System.EventHandler(this.textBox4_Enter);
             // 
             // pictureBoxHide
             // 
@@ -285,18 +298,6 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.passIcon_click);
-            // 
-            // textBox4
-            // 
-            this.textBox4.BackColor = System.Drawing.Color.Gainsboro;
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(40, 13);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.PasswordChar = '●';
-            this.textBox4.Size = new System.Drawing.Size(234, 19);
-            this.textBox4.TabIndex = 1;
-            this.textBox4.Enter += new System.EventHandler(this.textBox4_Enter);
             // 
             // roundedPanel2
             // 
