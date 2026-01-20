@@ -30,6 +30,10 @@ namespace PUP_RMS.Forms
         private readonly Color ButtonMaroon = Color.FromArgb(128, 0, 0);
         private readonly Color ChildFormBackgroundColor = Color.FromArgb(240, 240, 240);
 
+
+        bool allowSwitch = true;
+
+
         public MainDashboard()
         {
             this.Opacity = 0;
@@ -165,7 +169,12 @@ namespace PUP_RMS.Forms
             if (!pnlContent.Controls.Contains(childForm))
             {
                 PrepareChildForm(childForm);
+
+
             }
+
+            
+
 
             childForm.BringToFront();
             childForm.Show();
@@ -192,67 +201,83 @@ namespace PUP_RMS.Forms
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(_dashboardInstance);
+
+                if (currentActiveButton == sender) return;
+                ActivateButton(sender);
+                ShowForm(_dashboardInstance);
+
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(new frmSearch());
+
+                if (currentActiveButton == sender) return;
+                ActivateButton(sender);
+                ShowForm(new frmSearch());
+
         }
 
         // --- UPDATED UPLOAD BUTTON ---
         // Directly opens the Batch Upload form now
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            if (currentActiveButton == sender) return;
-            ActivateButton(sender);
 
-            // Directly show the Batch Upload Form
-            ShowForm(new frmBatchUpload());
+                if (currentActiveButton == sender) return;
+                ActivateButton(sender);
+
+                // Directly show the Batch Upload Form
+                ShowForm(new frmBatchUpload());
+
+
+
         }
         private void btnProgram_Click(object sender, EventArgs e)
         {
-            if (currentActiveButton == sender) return;
-            ActivateButton(sender);
 
-            ShowForm(new frmProgram());
+                if (currentActiveButton == sender) return;
+                ActivateButton(sender);
+
+                ShowForm(new frmProgram());
+
         }
 
         private void btnCourse_Click(object sender, EventArgs e)
         {
-            if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(new frmCourse());
+
+                if (currentActiveButton == sender) return;
+                ActivateButton(sender);
+                ShowForm(new frmCourse());
+
         }
 
         private void btnProfessor_Click(object sender, EventArgs e)
         {
-            if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(new frmFaculty());
+                if (currentActiveButton == sender) return;
+                ActivateButton(sender);
+                ShowForm(new frmFaculty());
+
         }
 
         private void btnAccounts_Click(object sender, EventArgs e)
         {
-            if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(new frmAccount());
+                if (currentActiveButton == sender) return;
+                ActivateButton(sender);
+                ShowForm(new frmAccount());
+ 
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if (result == DialogResult.Yes)
-            {
-                this.Hide();
-                LoginForm loginForm = new LoginForm();
-                loginForm.Show();
-            }
+                if (result == DialogResult.Yes)
+                {
+                    this.Hide();
+                    LoginForm loginForm = new LoginForm();
+                    loginForm.Show();
+                }
+                
+            
         }
 
         private void label1_Click(object sender, EventArgs e) { }
@@ -268,5 +293,7 @@ namespace PUP_RMS.Forms
         {
 
         }
+
+
     }
 }

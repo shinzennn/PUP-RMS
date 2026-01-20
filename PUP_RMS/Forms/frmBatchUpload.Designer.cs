@@ -39,12 +39,13 @@
             this.uploadBtn = new System.Windows.Forms.Button();
             this.currentImage = new System.Windows.Forms.PictureBox();
             this.saveBtn = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.undoBtn = new System.Windows.Forms.Button();
-            this.uploadedImgs = new System.Windows.Forms.ListView();
+            this.viewBtn = new System.Windows.Forms.Button();
+            this.yearLevelCmbox = new System.Windows.Forms.ComboBox();
+            this.programCmbox = new System.Windows.Forms.ComboBox();
+            this.pageCmbox = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -62,7 +63,7 @@
             // professorCmbox
             // 
             this.professorCmbox.FormattingEnabled = true;
-            this.professorCmbox.Location = new System.Drawing.Point(542, 180);
+            this.professorCmbox.Location = new System.Drawing.Point(562, 93);
             this.professorCmbox.Name = "professorCmbox";
             this.professorCmbox.Size = new System.Drawing.Size(121, 21);
             this.professorCmbox.TabIndex = 1;
@@ -71,7 +72,7 @@
             // courseCmbox
             // 
             this.courseCmbox.FormattingEnabled = true;
-            this.courseCmbox.Location = new System.Drawing.Point(405, 180);
+            this.courseCmbox.Location = new System.Drawing.Point(422, 92);
             this.courseCmbox.Name = "courseCmbox";
             this.courseCmbox.Size = new System.Drawing.Size(121, 21);
             this.courseCmbox.TabIndex = 2;
@@ -80,7 +81,7 @@
             // semesterCmbox
             // 
             this.semesterCmbox.FormattingEnabled = true;
-            this.semesterCmbox.Location = new System.Drawing.Point(269, 180);
+            this.semesterCmbox.Location = new System.Drawing.Point(281, 92);
             this.semesterCmbox.Name = "semesterCmbox";
             this.semesterCmbox.Size = new System.Drawing.Size(121, 21);
             this.semesterCmbox.TabIndex = 3;
@@ -230,7 +231,7 @@
             "2037-2038",
             "2038-2039",
             "2039-2040"});
-            this.yearCmbox.Location = new System.Drawing.Point(142, 180);
+            this.yearCmbox.Location = new System.Drawing.Point(142, 92);
             this.yearCmbox.Name = "yearCmbox";
             this.yearCmbox.Size = new System.Drawing.Size(121, 21);
             this.yearCmbox.TabIndex = 4;
@@ -238,9 +239,9 @@
             // 
             // filenameTxtbox
             // 
-            this.filenameTxtbox.Location = new System.Drawing.Point(686, 181);
+            this.filenameTxtbox.Location = new System.Drawing.Point(704, 94);
             this.filenameTxtbox.Name = "filenameTxtbox";
-            this.filenameTxtbox.Size = new System.Drawing.Size(100, 20);
+            this.filenameTxtbox.Size = new System.Drawing.Size(272, 20);
             this.filenameTxtbox.TabIndex = 5;
             this.filenameTxtbox.Text = "File Name";
             // 
@@ -249,7 +250,7 @@
             this.toUpload.HideSelection = false;
             this.toUpload.Location = new System.Drawing.Point(37, 23);
             this.toUpload.Name = "toUpload";
-            this.toUpload.Size = new System.Drawing.Size(314, 310);
+            this.toUpload.Size = new System.Drawing.Size(265, 262);
             this.toUpload.TabIndex = 6;
             this.toUpload.UseCompatibleStateImageBehavior = false;
             // 
@@ -258,16 +259,16 @@
             this.panel1.BackColor = System.Drawing.Color.RosyBrown;
             this.panel1.Controls.Add(this.uploadBtn);
             this.panel1.Controls.Add(this.toUpload);
-            this.panel1.Location = new System.Drawing.Point(24, 274);
+            this.panel1.Location = new System.Drawing.Point(614, 174);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(396, 416);
+            this.panel1.Size = new System.Drawing.Size(329, 372);
             this.panel1.TabIndex = 7;
             // 
             // uploadBtn
             // 
             this.uploadBtn.BackColor = System.Drawing.Color.Maroon;
             this.uploadBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uploadBtn.Location = new System.Drawing.Point(148, 349);
+            this.uploadBtn.Location = new System.Drawing.Point(118, 290);
             this.uploadBtn.Name = "uploadBtn";
             this.uploadBtn.Size = new System.Drawing.Size(103, 51);
             this.uploadBtn.TabIndex = 7;
@@ -277,9 +278,9 @@
             // currentImage
             // 
             this.currentImage.BackColor = System.Drawing.Color.MistyRose;
-            this.currentImage.Location = new System.Drawing.Point(460, 274);
+            this.currentImage.Location = new System.Drawing.Point(142, 174);
             this.currentImage.Name = "currentImage";
-            this.currentImage.Size = new System.Drawing.Size(497, 416);
+            this.currentImage.Size = new System.Drawing.Size(416, 372);
             this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.currentImage.TabIndex = 8;
             this.currentImage.TabStop = false;
@@ -288,50 +289,77 @@
             // 
             this.saveBtn.BackColor = System.Drawing.Color.Maroon;
             this.saveBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveBtn.Location = new System.Drawing.Point(650, 710);
+            this.saveBtn.Location = new System.Drawing.Point(250, 552);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(103, 51);
             this.saveBtn.TabIndex = 8;
             this.saveBtn.Text = "Save";
             this.saveBtn.UseVisualStyleBackColor = false;
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.RosyBrown;
-            this.panel2.Controls.Add(this.undoBtn);
-            this.panel2.Controls.Add(this.uploadedImgs);
-            this.panel2.Location = new System.Drawing.Point(976, 274);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(396, 416);
-            this.panel2.TabIndex = 9;
-            // 
             // undoBtn
             // 
             this.undoBtn.BackColor = System.Drawing.Color.Maroon;
             this.undoBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.undoBtn.Location = new System.Drawing.Point(145, 349);
+            this.undoBtn.Location = new System.Drawing.Point(142, 552);
             this.undoBtn.Name = "undoBtn";
             this.undoBtn.Size = new System.Drawing.Size(103, 51);
             this.undoBtn.TabIndex = 7;
             this.undoBtn.Text = "Undo";
             this.undoBtn.UseVisualStyleBackColor = false;
             // 
-            // uploadedImgs
+            // viewBtn
             // 
-            this.uploadedImgs.HideSelection = false;
-            this.uploadedImgs.Location = new System.Drawing.Point(41, 23);
-            this.uploadedImgs.Name = "uploadedImgs";
-            this.uploadedImgs.Size = new System.Drawing.Size(314, 310);
-            this.uploadedImgs.TabIndex = 6;
-            this.uploadedImgs.UseCompatibleStateImageBehavior = false;
+            this.viewBtn.BackColor = System.Drawing.Color.Maroon;
+            this.viewBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.viewBtn.Location = new System.Drawing.Point(454, 552);
+            this.viewBtn.Name = "viewBtn";
+            this.viewBtn.Size = new System.Drawing.Size(103, 51);
+            this.viewBtn.TabIndex = 9;
+            this.viewBtn.Text = "View";
+            this.viewBtn.UseVisualStyleBackColor = false;
+            this.viewBtn.Click += new System.EventHandler(this.viewBtn_Click);
+            // 
+            // yearLevelCmbox
+            // 
+            this.yearLevelCmbox.FormattingEnabled = true;
+            this.yearLevelCmbox.Location = new System.Drawing.Point(142, 124);
+            this.yearLevelCmbox.Margin = new System.Windows.Forms.Padding(2);
+            this.yearLevelCmbox.Name = "yearLevelCmbox";
+            this.yearLevelCmbox.Size = new System.Drawing.Size(121, 21);
+            this.yearLevelCmbox.TabIndex = 10;
+            this.yearLevelCmbox.Text = "Year Level";
+            // 
+            // programCmbox
+            // 
+            this.programCmbox.FormattingEnabled = true;
+            this.programCmbox.Location = new System.Drawing.Point(281, 124);
+            this.programCmbox.Margin = new System.Windows.Forms.Padding(2);
+            this.programCmbox.Name = "programCmbox";
+            this.programCmbox.Size = new System.Drawing.Size(121, 21);
+            this.programCmbox.TabIndex = 11;
+            this.programCmbox.Text = "Program ";
+            // 
+            // pageCmbox
+            // 
+            this.pageCmbox.FormattingEnabled = true;
+            this.pageCmbox.Location = new System.Drawing.Point(422, 124);
+            this.pageCmbox.Margin = new System.Windows.Forms.Padding(2);
+            this.pageCmbox.Name = "pageCmbox";
+            this.pageCmbox.Size = new System.Drawing.Size(121, 21);
+            this.pageCmbox.TabIndex = 12;
+            this.pageCmbox.Text = "Page";
             // 
             // frmBatchUpload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1429, 823);
-            this.Controls.Add(this.panel2);
+            this.BackColor = System.Drawing.Color.Bisque;
+            this.ClientSize = new System.Drawing.Size(867, 574);
+            this.Controls.Add(this.pageCmbox);
+            this.Controls.Add(this.programCmbox);
+            this.Controls.Add(this.yearLevelCmbox);
+            this.Controls.Add(this.viewBtn);
+            this.Controls.Add(this.undoBtn);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.currentImage);
             this.Controls.Add(this.filenameTxtbox);
@@ -348,7 +376,6 @@
             this.Load += new System.EventHandler(this.frmBatchUpload_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).EndInit();
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -367,8 +394,10 @@
         private System.Windows.Forms.Button uploadBtn;
         private System.Windows.Forms.PictureBox currentImage;
         private System.Windows.Forms.Button saveBtn;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button undoBtn;
-        private System.Windows.Forms.ListView uploadedImgs;
+        private System.Windows.Forms.Button viewBtn;
+        private System.Windows.Forms.ComboBox yearLevelCmbox;
+        private System.Windows.Forms.ComboBox programCmbox;
+        private System.Windows.Forms.ComboBox pageCmbox;
     }
 }
