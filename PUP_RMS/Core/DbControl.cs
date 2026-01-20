@@ -50,11 +50,11 @@ namespace PUP_RMS.Core
         }
 
 
-        public static List<ProgramModel> GetPrograms()
+        public static List<Programs> GetPrograms()
         {
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
-                return conn.Query<ProgramModel>(
+                return conn.Query<Programs>(
                     "SELECT ProgramID, ProgramCode FROM Program"
                 ).ToList();
             }

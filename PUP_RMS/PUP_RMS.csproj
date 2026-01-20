@@ -251,7 +251,7 @@
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\Faculty.cs" />
     <Compile Include="Model\GradeSheet.cs" />
-    <Compile Include="Model\Program.cs" />
+    <Compile Include="Model\Programs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomControls\RoundedButton.cs">
