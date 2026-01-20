@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Drawing;
+
 
 namespace PUP_RMS.Forms
 {
@@ -13,6 +15,7 @@ namespace PUP_RMS.Forms
             ConfigurationManager.ConnectionStrings["RMSDB"].ConnectionString;
 
         private bool isLoading = false;
+        private bool isFormShown = false;
 
         // Filter variables
         private string selectedSchoolYear = null;
@@ -36,6 +39,23 @@ namespace PUP_RMS.Forms
             this.cmbSemester.SelectedIndexChanged += this.cmbSemester_SelectedIndexChanged;
             this.cmbSchoolYear.SelectedIndexChanged += this.cmbSchoolYear_SelectedIndexChanged;
             this.cmbYearLevel.SelectedIndexChanged += this.cmbYearLevel_SelectedIndexChanged;
+
+            // Ensure we re-apply design after any data binding completes
+            this.dgvGradeSheets.DataBindingComplete += dgvGradeSheets_DataBindingComplete;
+
+            // Track when form has finished showing to avoid initialization side-effects (hover handlers)
+            this.Shown += frmSearch_Shown;
+        }
+
+        private void frmSearch_Shown(object sender, EventArgs e)
+        {
+            isFormShown = true;
+        }
+
+        private void dgvGradeSheets_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            // Re-apply design after binding - this ensures columns exist before we access them
+            DataGridDesign();
         }
 
         private void frmSearch_Load(object sender, EventArgs e)
@@ -48,27 +68,86 @@ namespace PUP_RMS.Forms
             LoadSchoolYears();
             LoadSemesters();
             LoadYearLevels();
+
             LoadAllGradeSheets();
+
+            dgvGradeSheets.ClearSelection();
+            dgvGradeSheets.CurrentCell = null;
 
             isLoading = false;
 
+            // DataGridDesign will also be called from DataBindingComplete; calling it here is safe because of defensive checks
             DataGridDesign();
+        }
+
+        private string FindColumnName(params string[] candidates)
+        {
+            if (dgvGradeSheets?.Columns == null) return null;
+            foreach (DataGridViewColumn col in dgvGradeSheets.Columns)
+            {
+                foreach (var cand in candidates)
+                {
+                    if (string.Equals(col.Name, cand, StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(col.HeaderText, cand, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return col.Name; // return actual column name to index into collection
+                    }
+                }
+            }
+            return null;
+        }
+
+        private void SafeSetColumnVisible(string nameCandidate, bool visible)
+        {
+            string found = FindColumnName(nameCandidate);
+            if (!string.IsNullOrEmpty(found))
+                dgvGradeSheets.Columns[found].Visible = visible;
+        }
+
+        private void SafeSetColumnWidth(string nameCandidate, int width)
+        {
+            string found = FindColumnName(nameCandidate);
+            if (!string.IsNullOrEmpty(found))
+                dgvGradeSheets.Columns[found].Width = width;
+        }
+
+        private void SafeSetHeaderText(string nameCandidate, string header)
+        {
+            string found = FindColumnName(nameCandidate);
+            if (!string.IsNullOrEmpty(found))
+                dgvGradeSheets.Columns[found].HeaderText = header;
         }
 
         private void DataGridDesign()
         {
-            dgvGradeSheets.Columns["GradeSheetID"].Visible = false;
-            dgvGradeSheets.Columns["Filepath"].Visible = false;
-            dgvGradeSheets.Columns["UploadedBy"].Visible = false;
+            // Hide columns if present (support possible aliases)
+            SafeSetColumnVisible("GradeSheetID", false);
+            SafeSetColumnVisible("Filepath", false);
+            SafeSetColumnVisible("UploadedBy", false);
 
-            dgvGradeSheets.Columns["Filename"].Width = 250;
-            dgvGradeSheets.Columns["SchoolYear"].Width = 60;
-            dgvGradeSheets.Columns["Semester"].Width = 25;
-            dgvGradeSheets.Columns["ProgramCode"].Width = 50;
-            dgvGradeSheets.Columns["YearLevel"].Width = 25;
-            dgvGradeSheets.Columns["CourseCode"].Width = 50;
-            dgvGradeSheets.Columns["Fullname"].Width = 100;
-            dgvGradeSheets.Columns["PageNumber"].Width = 25;
+            // Widths - support different name variants
+            SafeSetColumnWidth("Filename", 240);
+            SafeSetColumnWidth("SchoolYear", 50);
+            SafeSetColumnWidth("Semester", 38);
+            SafeSetColumnWidth("ProgramCode", 40);
+            SafeSetColumnWidth("YearLevel", 30);
+            SafeSetColumnWidth("CourseCode", 50);
+
+            // Fullname may be aliased as FullName or "Full Name"
+            string fullnameCandidate = FindColumnName("Fullname", "FullName", "Full Name", "FacultyName");
+            if (!string.IsNullOrEmpty(fullnameCandidate))
+                dgvGradeSheets.Columns[fullnameCandidate].Width = 90;
+
+            SafeSetColumnWidth("PageNumber", 45);
+
+            // Headers (set only if column found)
+            SafeSetHeaderText("SchoolYear", "School Year");
+            SafeSetHeaderText("ProgramCode", "Program Code");
+            SafeSetHeaderText("YearLevel", "Year Level");
+            SafeSetHeaderText("CourseCode", "Course Code");
+            if (!string.IsNullOrEmpty(fullnameCandidate))
+                dgvGradeSheets.Columns[fullnameCandidate].HeaderText = "Full Name";
+            SafeSetHeaderText("PageNumber", "Page No.");
         }
 
         // =========================
@@ -81,6 +160,60 @@ namespace PUP_RMS.Forms
 
             dgvGradeSheets.ClearSelection();
             dgvGradeSheets.CurrentCell = null;
+        }
+
+        private void LoadNewestGradeSheets()
+        {
+            try
+            {
+                // Replace with your actual connection string variable
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    // Querying top 100 newest entries based on ID
+                    string query = @"SELECT TOP 100 
+                                gs.GradeSheetID, 
+                                gs.Filepath,
+                                gs.Filename, 
+                                p.ProgramCode, 
+                                c.CourseCode, 
+                                f.FirstName + ' ' + f.LastName AS FullName,
+                                gs.SchoolYear, 
+                                gs.Semester, 
+                                gs.PageNumber,
+                                a.AccountID,
+                                gs.UploadedBy
+                             FROM GradeSheet gs
+                             JOIN Program p ON gs.ProgramID = p.ProgramID
+                             JOIN Course c ON gs.CourseID = c.CourseID
+                             JOIN Faculty f ON gs.FacultyID = f.FacultyID
+                             JOIN Account a ON f.AccountID = a.AccountID
+                             ORDER BY gs.GradeSheetID DESC";
+
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    // Bind to your DataGridView
+                    dgvGradeSheets.DataSource = dt;
+
+                    // Optional: Hide the ID column so users don't see the primary key
+                    if (dgvGradeSheets.Columns.Contains("GradeSheetID"))
+                    {
+                        dgvGradeSheets.Columns["GradeSheetID"].Visible = false;
+                    }
+
+                    // Apply your custom header names
+                    string p = FindColumnName("Filename");
+                    if (!string.IsNullOrEmpty(p)) dgvGradeSheets.Columns[p].HeaderText = "File Name";
+                    p = FindColumnName("ProgramCode");
+                    if (!string.IsNullOrEmpty(p)) dgvGradeSheets.Columns[p].HeaderText = "Program";
+                    // ... add other header renames here
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading data: " + ex.Message);
+            }
         }
 
         // =========================
@@ -423,8 +556,11 @@ namespace PUP_RMS.Forms
                         {
                             dgvGradeSheets.ClearSelection();
                             dgvGradeSheets.Rows[i].Selected = true;
-                            dgvGradeSheets.CurrentCell = dgvGradeSheets.Rows[i].Cells[0];
-                            // scroll into view
+                            string filenameCol = FindColumnName("Filename");
+                            if (!string.IsNullOrEmpty(filenameCol))
+                            {
+                                dgvGradeSheets.CurrentCell = dgvGradeSheets.Rows[i].Cells[filenameCol];
+                            }
                             dgvGradeSheets.FirstDisplayedScrollingRowIndex = Math.Max(0, i - 2);
                             break;
                         }
@@ -440,6 +576,28 @@ namespace PUP_RMS.Forms
         private void dgvGradeSheets_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void dgvGradeSheets_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ignore events fired during initialization before the form is shown
+            if (!isFormShown) return;
+
+            if (e.RowIndex >= 0)
+            {
+                dgvGradeSheets.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+            }
+        }
+
+        private void dgvGradeSheets_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ignore events fired during initialization before the form is shown
+            if (!isFormShown) return;
+
+            if (e.RowIndex >= 0)
+            {
+                dgvGradeSheets.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
+            }
         }
     }
 }

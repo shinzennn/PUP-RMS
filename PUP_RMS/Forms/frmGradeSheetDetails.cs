@@ -111,64 +111,12 @@ namespace PUP_RMS.Forms
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog ofd = new OpenFileDialog
-            {
-                Filter = "Image files (*.jpg;*.png)|*.jpg;*.png"
-            })
-            {
-                if (ofd.ShowDialog() != DialogResult.OK)
-                    return; // cancel = do nothing
-
-                stagedImagePath = ofd.FileName; // source only
-
-                LoadThumbnail(stagedImagePath); // preview only
-
-                imageChanged = true;
-                btnSave.Visible = true;
-                btnCancelImageChange.Visible = true;
-            }
+           
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!imageChanged || string.IsNullOrEmpty(stagedImagePath))
-            {
-                MessageBox.Show("No image selected.", "Info");
-                return;
-            }
-
-            string fileName = GenerateFileName();
-            string targetFolder = @"C:\Uploads\2025\";
-            Directory.CreateDirectory(targetFolder);
-
-            string finalPath = Path.Combine(targetFolder, fileName);
-
-            File.Copy(stagedImagePath, finalPath, true);
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(
-                @"UPDATE GradeSheet
-          SET Filename=@Filename, Filepath=@Filepath
-          WHERE GradeSheetID=@GradeSheetID", con))
-            {
-                cmd.Parameters.AddWithValue("@Filename", fileName);
-                cmd.Parameters.AddWithValue("@Filepath", targetFolder);
-                cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
-
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
-
-            // commit state
-            originalImagePath = finalPath;
-            currentFilePath = finalPath;
-            stagedImagePath = null;
-            imageChanged = false;
-
-            btnSave.Visible = false;
-            btnCancelImageChange.Visible = false;
-
-            MessageBox.Show("Image saved successfully.");
+            
         }
 
         private void btnCancelImageChange_Click(object sender, EventArgs e)
@@ -179,7 +127,7 @@ namespace PUP_RMS.Forms
             LoadThumbnail(originalImagePath);
 
             btnSave.Visible = false;
-            btnCancelImageChange.Visible = false;
+            btnCancel.Visible = false;
             btnEdit.Enabled = true;
         }
 
@@ -192,36 +140,12 @@ namespace PUP_RMS.Forms
 
         private void btnSaveGradeSheetDetails_Click(object sender, EventArgs e)
         {
-            txtFilename.Text = GenerateFileName();
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("sp_UpdateGradeSheet", con))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
-                cmd.Parameters.AddWithValue("@Filename", txtFilename.Text);
-                cmd.Parameters.AddWithValue("@Filepath", @"C:\Uploads\2025\");
-                cmd.Parameters.AddWithValue("@SchoolYear", cmbSchoolYear.SelectedValue);
-                cmd.Parameters.AddWithValue("@Semester", cmbSemester.SelectedValue);
-                cmd.Parameters.AddWithValue("@ProgramID", cmbProgram.SelectedValue);
-                cmd.Parameters.AddWithValue("@YearLevel", cmbYearLevel.SelectedValue);
-                cmd.Parameters.AddWithValue("@CourseID", cmbCourse.SelectedValue);
-                cmd.Parameters.AddWithValue("@FacultyID", cmbProfessor.SelectedValue);
-                cmd.Parameters.AddWithValue("@PageNumber", Convert.ToInt32(txtPageNumber.Text));
-
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
-
-            DisableEditMode();
-            MessageBox.Show("Grade sheet details updated.");
+           
         }
 
         private void btnCancelEdit_Click(object sender, EventArgs e)
         {
-            LoadGradeSheetData();
-            DisableEditMode();
+           
         }
 
         private void EnableEditMode()
@@ -239,8 +163,8 @@ namespace PUP_RMS.Forms
             cmbYearLevel.Enabled = true;
             cmbCourse.Enabled = true;
             cmbProfessor.Enabled = true;
-            btnSaveGradeSheetDetails.Visible = true;
-            btnCancelEdit.Visible = true;
+            btnSaves.Visible = true;
+            btnCancels.Visible = true;
             btnEdit.Enabled = false;
             btnEdit.Visible = false;
             btnUpload.Enabled = false;
@@ -262,8 +186,8 @@ namespace PUP_RMS.Forms
             cmbYearLevel.Enabled = false;
             cmbCourse.Enabled = false;
             cmbProfessor.Enabled = false;
-            btnSaveGradeSheetDetails.Visible = false;
-            btnCancelEdit.Visible = false;
+            btnSaves.Visible = false;
+            btnCancels.Visible = false;
             btnEdit.Enabled = true;
             btnEdit.Visible = true;
             btnUpload.Enabled = true;
@@ -292,8 +216,11 @@ namespace PUP_RMS.Forms
             string fullName = ((DataRowView)cmbProfessor.SelectedItem)["FullName"].ToString();
             string[] parts = fullName.Split(' ');
 
-            return parts[0].Substring(0, 4).ToUpper() +
-                   parts[1].Substring(0, 3).ToUpper();
+            // Added basic validation to prevent crash if parts are missing
+            string initial1 = parts.Length > 0 && parts[0].Length >= 4 ? parts[0].Substring(0, 4) : parts[0];
+            string initial2 = parts.Length > 1 && parts[1].Length >= 3 ? parts[1].Substring(0, 3) : (parts.Length > 1 ? parts[1] : "NA");
+
+            return (initial1 + initial2).ToUpper();
         }
 
         // ========================= COMBO LOADERS =========================
@@ -349,8 +276,172 @@ namespace PUP_RMS.Forms
             }
         }
 
-        private void btnClose_Click(object sender, EventArgs e) => Close();
+     
 
+        private void roundedButton1_Click(object sender, EventArgs e)
+        {
+            EnableEditMode();
+        }
 
+        private void btnSaves_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 1. Generate the NEW filename based on the current selections
+                string newFileName = GenerateFileName();
+                string targetFolder = @"C:\Uploads\2025\";
+                string newFullFilePath = Path.Combine(targetFolder, newFileName);
+
+                // 2. Physical File Rename Logic
+                // If the filename has actually changed, we need to move the file on disk
+                if (originalImagePath != newFullFilePath && File.Exists(originalImagePath))
+                {
+                    // Release the file lock so we can rename it
+                    pbPreview.Image?.Dispose();
+                    pbPreview.Image = null;
+
+                    // Rename the file
+                    File.Move(originalImagePath, newFullFilePath);
+
+                    // Update variables to reflect the new path
+                    originalImagePath = newFullFilePath;
+                    currentFilePath = newFullFilePath;
+                }
+
+                txtFilename.Text = newFileName;
+
+                // 3. Database Update
+                using (SqlConnection con = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("sp_UpdateGradeSheet", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
+                    cmd.Parameters.AddWithValue("@Filename", newFileName);
+                    cmd.Parameters.AddWithValue("@Filepath", targetFolder);
+                    cmd.Parameters.AddWithValue("@SchoolYear", cmbSchoolYear.SelectedValue);
+                    cmd.Parameters.AddWithValue("@Semester", cmbSemester.SelectedValue);
+                    cmd.Parameters.AddWithValue("@ProgramID", cmbProgram.SelectedValue);
+                    cmd.Parameters.AddWithValue("@YearLevel", cmbYearLevel.SelectedValue);
+                    cmd.Parameters.AddWithValue("@CourseID", cmbCourse.SelectedValue);
+                    cmd.Parameters.AddWithValue("@FacultyID", cmbProfessor.SelectedValue);
+                    cmd.Parameters.AddWithValue("@PageNumber", Convert.ToInt32(txtPageNumber.Text));
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                // 4. Cleanup UI
+                LoadThumbnail(originalImagePath); // Reload the image from the new path
+                DisableEditMode();
+                MessageBox.Show("Grade sheet details and filename updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error updating details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // If rename failed, try to reload data to stay consistent
+                LoadGradeSheetData();
+            }
+        }
+
+        private void btnCancels_Click(object sender, EventArgs e)
+        {
+            LoadGradeSheetData();
+            DisableEditMode();
+        }
+
+        private void roundedShadowPanel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void roundedShadowPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void roundedShadowPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnSave_Click_1(object sender, EventArgs e)
+        {
+            if (!imageChanged || string.IsNullOrEmpty(stagedImagePath))
+            {
+                MessageBox.Show("No image selected.", "Info");
+                return;
+            }
+
+            string fileName = GenerateFileName();
+            string targetFolder = @"C:\Uploads\2025\";
+            Directory.CreateDirectory(targetFolder);
+
+            string finalPath = Path.Combine(targetFolder, fileName);
+
+            File.Copy(stagedImagePath, finalPath, true);
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(
+                @"UPDATE GradeSheet
+          SET Filename=@Filename, Filepath=@Filepath
+          WHERE GradeSheetID=@GradeSheetID", con))
+            {
+                cmd.Parameters.AddWithValue("@Filename", fileName);
+                cmd.Parameters.AddWithValue("@Filepath", targetFolder);
+                cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            // commit state
+            originalImagePath = finalPath;
+            currentFilePath = finalPath;
+            stagedImagePath = null;
+            imageChanged = false;
+
+            btnSave.Visible = false;
+            btnCancel.Visible = false;
+            btnEdit.Enabled = true;
+
+            MessageBox.Show("Image saved successfully.");
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            stagedImagePath = null;
+            imageChanged = false;
+
+            LoadThumbnail(originalImagePath);
+
+            btnSave.Visible = false;
+            btnCancel.Visible = false;
+            btnEdit.Enabled = true;
+        }
+
+        private void btnUpload_Click_1(object sender, EventArgs e)
+        {
+            btnEdit.Enabled = false;
+            using (OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg;*.png)|*.jpg;*.png"
+            })
+            {
+                if (ofd.ShowDialog() != DialogResult.OK)
+                    return; // cancel = do nothing
+
+                stagedImagePath = ofd.FileName; // source only
+
+                LoadThumbnail(stagedImagePath); // preview only
+
+                imageChanged = true;
+                btnSave.Visible = true;
+                btnCancel.Visible = true;
+            }
+        }
+
+        private void btnClose_Click_1(object sender, EventArgs e)=>Close();
+        
     }
 }
