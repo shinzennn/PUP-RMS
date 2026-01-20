@@ -244,13 +244,16 @@
     </Compile>
     <Compile Include="Helper\AccountHelper.cs" />
     <Compile Include="Helper\ActivityLogger.cs" />
+    <Compile Include="Helper\CourseHelper.cs" />
     <Compile Include="Helper\DashboardHelper.cs" />
     <Compile Include="Helper\FacultyHelper.cs" />
+    <Compile Include="Helper\ProgramHelper.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ActivityLog.cs" />
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\Faculty.cs" />
     <Compile Include="Model\GradeSheet.cs" />
+    <Compile Include="Model\Programs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomControls\RoundedButton.cs">

@@ -25,7 +25,7 @@ namespace PUP_RMS.Helper
         public static DataTable GetAllCoursePerDescription(string courseDesc)
         {
             DataTable dt = new DataTable();
-           
+
             DbControl.AddParameter("@CourseDescription", courseDesc, SqlDbType.VarChar);
             dt = DbControl.ExecuteQuery("sp_GetAllCourseCodePerDescription");
 
@@ -158,7 +158,7 @@ namespace PUP_RMS.Helper
 
             // ADD PARAMETERS
             DbControl.AddParameter("@SearchTerm", searchTerm, SqlDbType.VarChar);
-           
+
 
             // EXECUTE QUERY AND CLEAR PARAMETERS
             dt = DbControl.ExecuteQuery(procedureName);
@@ -169,4 +169,3 @@ namespace PUP_RMS.Helper
 
 
 }
-

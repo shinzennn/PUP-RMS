@@ -97,7 +97,7 @@ namespace PUP_RMS.Helper
             LogActivity(account_id, description);
         }
 
-        public static void LogCourseModification(string courseID, string courseCode, string courseDescription)
+        public static void LogCourseModification(int courseID, string courseCode, string courseDescription)
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;

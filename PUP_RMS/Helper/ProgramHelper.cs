@@ -29,8 +29,8 @@ namespace PUP_RMS.Helper
             // ADD PARAMETERS
             DbControl.AddParameter("@ProgramCode", program.ProgramCode, SqlDbType.VarChar);
             DbControl.AddParameter("@ProgramDescription", program.ProgramDescription, SqlDbType.VarChar);
-          
-         
+
+
 
             // EXECUTE NON QUERY AND CLEAR PARAMETERS
             if (DbControl.ExecuteNonQuery(procedureName) >= 1)
@@ -54,7 +54,7 @@ namespace PUP_RMS.Helper
             DbControl.AddParameter("@ProgramID", program.ProgramID, SqlDbType.Int);
             DbControl.AddParameter("@ProgramCode", program.ProgramCode, SqlDbType.VarChar);
             DbControl.AddParameter("@ProgramDescription", program.ProgramDescription, SqlDbType.VarChar);
-            
+
 
             // EXECUTE NON QUERY AND CLEAR PARAMETERS
             if (DbControl.ExecuteNonQuery(procedureName) >= 1)
@@ -62,7 +62,7 @@ namespace PUP_RMS.Helper
                 MessageBox.Show("Program updated successfully.", "Record Created Successfully.", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // LOG ACTIVITY wala pang activity logger
-               // ActivityLogger.LogFacultyAddition(faculty.FirstName + " " + faculty.LastName);
+                // ActivityLogger.LogFacultyAddition(faculty.FirstName + " " + faculty.LastName);
             }
             else
             {
@@ -81,7 +81,7 @@ namespace PUP_RMS.Helper
 
             // ADD PARAMETERS
             DbControl.AddParameter("@SearchTerm", searchTerm, SqlDbType.VarChar);
-          
+
 
             // EXECUTE QUERY AND CLEAR PARAMETERS
             dt = DbControl.ExecuteQuery(procedureName);
