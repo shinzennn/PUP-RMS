@@ -179,7 +179,13 @@
     <Compile Include="Forms\frmEditCourse.Designer.cs">
       <DependentUpon>frmEditCourse.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmFaculty.cs">
+	  <Compile Include="Forms\frmGradeSheetDetails.cs">
+		  <SubType>Form</SubType>
+	  </Compile>
+	  <Compile Include="Forms\frmGradeSheetDetails.Designer.cs">
+		  <DependentUpon>frmGradeSheetDetails.cs</DependentUpon>
+	  </Compile>
+	  <Compile Include="Forms\frmFaculty.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmFaculty.Designer.cs">
@@ -271,6 +277,16 @@
     <Compile Include="CustomControls\RoundedShadowPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RMSDBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RMSDBDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="RMSDBDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RMSDBDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="StorageMonitor.cs" />
     <EmbeddedResource Include="CustomControls\CustomMsgBox.resx">
       <DependentUpon>CustomMsgBox.cs</DependentUpon>
@@ -308,6 +324,15 @@
     <EmbeddedResource Include="Forms\frmEditCourse.resx">
       <DependentUpon>frmEditCourse.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmEditProfessor.resx">
+      <DependentUpon>frmEditProfessor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmGradeSheetDetails.resx">
+      <DependentUpon>frmGradeSheetDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmIndividualUpload.resx">
+      <DependentUpon>frmIndividualUpload.cs</DependentUpon>
+	</EmbeddedResource>
     <EmbeddedResource Include="Forms\frmFaculty.resx">
       <DependentUpon>frmFaculty.cs</DependentUpon>
     </EmbeddedResource>
@@ -362,6 +387,28 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="RMSDBDataSet.xsc">
+      <DependentUpon>RMSDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="RMSDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RMSDBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RMSDBDataSet.xss">
+      <DependentUpon>RMSDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="RMSDBDataSet1.xsc">
+      <DependentUpon>RMSDBDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="RMSDBDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RMSDBDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RMSDBDataSet1.xss">
+      <DependentUpon>RMSDBDataSet1.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
