@@ -44,7 +44,6 @@
             this.lblSemester = new System.Windows.Forms.Label();
             this.lblProfessor = new System.Windows.Forms.Label();
             this.lblUploadedBy = new System.Windows.Forms.Label();
-            this.cmbAccount = new System.Windows.Forms.ComboBox();
             this.btnEdit = new System.Windows.Forms.Button();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.btnUpload = new System.Windows.Forms.Button();
@@ -53,6 +52,7 @@
             this.btnSaveGradeSheetDetails = new System.Windows.Forms.Button();
             this.btnCancelEdit = new System.Windows.Forms.Button();
             this.btnCancelImageChange = new System.Windows.Forms.Button();
+            this.txtUploader = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,7 +80,6 @@
             this.txtPageNumber.ReadOnly = true;
             this.txtPageNumber.Size = new System.Drawing.Size(100, 20);
             this.txtPageNumber.TabIndex = 2;
-            this.txtPageNumber.TextChanged += new System.EventHandler(this.txtPageNumber_TextChanged);
             // 
             // lblPageNumber
             // 
@@ -199,15 +198,6 @@
             this.lblUploadedBy.TabIndex = 15;
             this.lblUploadedBy.Text = "Uploaded by:";
             // 
-            // cmbAccount
-            // 
-            this.cmbAccount.Enabled = false;
-            this.cmbAccount.FormattingEnabled = true;
-            this.cmbAccount.Location = new System.Drawing.Point(184, 176);
-            this.cmbAccount.Name = "cmbAccount";
-            this.cmbAccount.Size = new System.Drawing.Size(199, 21);
-            this.cmbAccount.TabIndex = 16;
-            // 
             // btnEdit
             // 
             this.btnEdit.Location = new System.Drawing.Point(451, 174);
@@ -223,6 +213,7 @@
             this.pbPreview.Location = new System.Drawing.Point(111, 230);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(414, 373);
+            this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPreview.TabIndex = 18;
             this.pbPreview.TabStop = false;
             // 
@@ -290,11 +281,22 @@
             this.btnCancelImageChange.Visible = false;
             this.btnCancelImageChange.Click += new System.EventHandler(this.btnCancelImageChange_Click);
             // 
+            // txtUploader
+            // 
+            this.txtUploader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUploader.Location = new System.Drawing.Point(184, 174);
+            this.txtUploader.Name = "txtUploader";
+            this.txtUploader.ReadOnly = true;
+            this.txtUploader.Size = new System.Drawing.Size(175, 20);
+            this.txtUploader.TabIndex = 25;
+            this.txtUploader.TabStop = false;
+            // 
             // frmGradeSheetDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(634, 681);
+            this.Controls.Add(this.txtUploader);
             this.Controls.Add(this.btnCancelImageChange);
             this.Controls.Add(this.btnCancelEdit);
             this.Controls.Add(this.btnSaveGradeSheetDetails);
@@ -303,7 +305,6 @@
             this.Controls.Add(this.btnUpload);
             this.Controls.Add(this.pbPreview);
             this.Controls.Add(this.btnEdit);
-            this.Controls.Add(this.cmbAccount);
             this.Controls.Add(this.lblUploadedBy);
             this.Controls.Add(this.lblProfessor);
             this.Controls.Add(this.lblSemester);
@@ -349,7 +350,6 @@
         private System.Windows.Forms.Label lblSemester;
         private System.Windows.Forms.Label lblProfessor;
         private System.Windows.Forms.Label lblUploadedBy;
-        private System.Windows.Forms.ComboBox cmbAccount;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.PictureBox pbPreview;
         private System.Windows.Forms.Button btnUpload;
@@ -358,5 +358,6 @@
         private System.Windows.Forms.Button btnSaveGradeSheetDetails;
         private System.Windows.Forms.Button btnCancelEdit;
         private System.Windows.Forms.Button btnCancelImageChange;
+        private System.Windows.Forms.TextBox txtUploader;
     }
 }
