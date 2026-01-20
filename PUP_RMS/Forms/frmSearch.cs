@@ -51,6 +51,24 @@ namespace PUP_RMS.Forms
             LoadAllGradeSheets();
 
             isLoading = false;
+
+            DataGridDesign();
+        }
+
+        private void DataGridDesign()
+        {
+            dgvGradeSheets.Columns["GradeSheetID"].Visible = false;
+            dgvGradeSheets.Columns["Filepath"].Visible = false;
+            dgvGradeSheets.Columns["UploadedBy"].Visible = false;
+
+            dgvGradeSheets.Columns["Filename"].Width = 250;
+            dgvGradeSheets.Columns["SchoolYear"].Width = 60;
+            dgvGradeSheets.Columns["Semester"].Width = 25;
+            dgvGradeSheets.Columns["ProgramCode"].Width = 50;
+            dgvGradeSheets.Columns["YearLevel"].Width = 25;
+            dgvGradeSheets.Columns["CourseCode"].Width = 50;
+            dgvGradeSheets.Columns["Fullname"].Width = 100;
+            dgvGradeSheets.Columns["PageNumber"].Width = 25;
         }
 
         // =========================
@@ -166,6 +184,7 @@ namespace PUP_RMS.Forms
             dt.Rows.Add(0, "Semester");   // placeholder
             dt.Rows.Add(1, "1st Semester");
             dt.Rows.Add(2, "2nd Semester");
+            dt.Rows.Add(2, "Summer Semester");
 
             cmbSemester.DataSource = dt;
             cmbSemester.DisplayMember = "Name";
@@ -184,6 +203,7 @@ namespace PUP_RMS.Forms
             dt.Rows.Add(2, "2nd Year");
             dt.Rows.Add(3, "3rd Year");
             dt.Rows.Add(4, "4th Year");
+            dt.Rows.Add(4, "5th Year");
 
             cmbYearLevel.DataSource = dt;
             cmbYearLevel.DisplayMember = "Name";
@@ -417,5 +437,9 @@ namespace PUP_RMS.Forms
             }
         }
 
+        private void dgvGradeSheets_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
