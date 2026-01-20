@@ -125,12 +125,6 @@
     <Compile Include="Forms\frmAccountList.Designer.cs">
       <DependentUpon>frmAccountList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmAccounts.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmAccounts.Designer.cs">
-      <DependentUpon>frmAccounts.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\frmActivityLogs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -275,9 +269,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmAccountList.resx">
       <DependentUpon>frmAccountList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmAccounts.resx">
-      <DependentUpon>frmAccounts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmActivityLogs.resx">
       <DependentUpon>frmActivityLogs.cs</DependentUpon>
