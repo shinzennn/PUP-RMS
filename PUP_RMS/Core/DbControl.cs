@@ -268,6 +268,11 @@ namespace PUP_RMS.Core
             return dt;
         }
 
+        public static void ClearParameters()
+        {
+            sqlParameters.Clear();
+        }
+
         // Method to get a single value (Count, ID, Name, etc.)
         // ADD THIS TO DbControl.cs
         public static int ExecuteScalar(string procedureName)
