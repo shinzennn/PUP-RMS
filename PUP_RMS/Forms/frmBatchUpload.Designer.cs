@@ -260,7 +260,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.57143F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.857143F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 89F));
             this.tableLayoutPanel1.Controls.Add(this.label9, 6, 0);
             this.tableLayoutPanel1.Controls.Add(this.label8, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.label7, 4, 0);
@@ -295,9 +295,9 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label9.Location = new System.Drawing.Point(507, 0);
+            this.label9.Location = new System.Drawing.Point(505, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(37, 33);
+            this.label9.Size = new System.Drawing.Size(36, 33);
             this.label9.TabIndex = 35;
             this.label9.Text = "Page";
             // 
@@ -307,9 +307,9 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(405, 6);
+            this.label8.Location = new System.Drawing.Point(404, 6);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(96, 20);
+            this.label8.Size = new System.Drawing.Size(95, 20);
             this.label8.TabIndex = 34;
             this.label8.Text = "Professor";
             // 
@@ -319,7 +319,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(327, 6);
+            this.label7.Location = new System.Drawing.Point(326, 6);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(72, 20);
             this.label7.TabIndex = 33;
@@ -333,7 +333,7 @@
             this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label6.Location = new System.Drawing.Point(237, 6);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(84, 20);
+            this.label6.Size = new System.Drawing.Size(83, 20);
             this.label6.TabIndex = 32;
             this.label6.Text = "Program";
             // 
@@ -368,7 +368,7 @@
             this.btnProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProgram.Location = new System.Drawing.Point(237, 72);
             this.btnProgram.Name = "btnProgram";
-            this.btnProgram.Size = new System.Drawing.Size(84, 30);
+            this.btnProgram.Size = new System.Drawing.Size(83, 30);
             this.btnProgram.TabIndex = 28;
             this.btnProgram.Text = "Add Program";
             this.btnProgram.UseVisualStyleBackColor = false;
@@ -533,9 +533,9 @@
             this.btnProf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnProf.BackColor = System.Drawing.Color.Maroon;
             this.btnProf.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProf.Location = new System.Drawing.Point(405, 74);
+            this.btnProf.Location = new System.Drawing.Point(404, 74);
             this.btnProf.Name = "btnProf";
-            this.btnProf.Size = new System.Drawing.Size(96, 27);
+            this.btnProf.Size = new System.Drawing.Size(95, 27);
             this.btnProf.TabIndex = 27;
             this.btnProf.Text = "Add Professor";
             this.btnProf.UseVisualStyleBackColor = false;
@@ -557,10 +557,10 @@
             this.pageCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.pageCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pageCmbox.FormattingEnabled = true;
-            this.pageCmbox.Location = new System.Drawing.Point(506, 35);
+            this.pageCmbox.Location = new System.Drawing.Point(504, 35);
             this.pageCmbox.Margin = new System.Windows.Forms.Padding(2);
             this.pageCmbox.Name = "pageCmbox";
-            this.pageCmbox.Size = new System.Drawing.Size(39, 28);
+            this.pageCmbox.Size = new System.Drawing.Size(38, 28);
             this.pageCmbox.TabIndex = 12;
             this.pageCmbox.Text = "Page";
             // 
@@ -571,7 +571,7 @@
             this.courseCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.courseCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.courseCmbox.FormattingEnabled = true;
-            this.courseCmbox.Location = new System.Drawing.Point(327, 36);
+            this.courseCmbox.Location = new System.Drawing.Point(326, 36);
             this.courseCmbox.Name = "courseCmbox";
             this.courseCmbox.Size = new System.Drawing.Size(72, 28);
             this.courseCmbox.TabIndex = 2;
@@ -584,9 +584,9 @@
             this.professorCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.professorCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.professorCmbox.FormattingEnabled = true;
-            this.professorCmbox.Location = new System.Drawing.Point(405, 36);
+            this.professorCmbox.Location = new System.Drawing.Point(404, 36);
             this.professorCmbox.Name = "professorCmbox";
-            this.professorCmbox.Size = new System.Drawing.Size(96, 28);
+            this.professorCmbox.Size = new System.Drawing.Size(95, 28);
             this.professorCmbox.TabIndex = 1;
             this.professorCmbox.Text = "Professor";
             // 
@@ -596,9 +596,9 @@
             this.KeepCheckbox.AutoSize = true;
             this.KeepCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeepCheckbox.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.KeepCheckbox.Location = new System.Drawing.Point(550, 37);
+            this.KeepCheckbox.Location = new System.Drawing.Point(547, 37);
             this.KeepCheckbox.Name = "KeepCheckbox";
-            this.KeepCheckbox.Size = new System.Drawing.Size(83, 24);
+            this.KeepCheckbox.Size = new System.Drawing.Size(86, 24);
             this.KeepCheckbox.TabIndex = 13;
             this.KeepCheckbox.Text = "Keep";
             this.KeepCheckbox.UseVisualStyleBackColor = true;
@@ -613,7 +613,7 @@
             this.programCmbox.Location = new System.Drawing.Point(236, 35);
             this.programCmbox.Margin = new System.Windows.Forms.Padding(2);
             this.programCmbox.Name = "programCmbox";
-            this.programCmbox.Size = new System.Drawing.Size(86, 28);
+            this.programCmbox.Size = new System.Drawing.Size(85, 28);
             this.programCmbox.TabIndex = 11;
             this.programCmbox.Text = "Program ";
             // 
@@ -634,7 +634,7 @@
             this.btnCourse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCourse.BackColor = System.Drawing.Color.Maroon;
             this.btnCourse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCourse.Location = new System.Drawing.Point(327, 74);
+            this.btnCourse.Location = new System.Drawing.Point(326, 74);
             this.btnCourse.Name = "btnCourse";
             this.btnCourse.Size = new System.Drawing.Size(72, 27);
             this.btnCourse.TabIndex = 26;
