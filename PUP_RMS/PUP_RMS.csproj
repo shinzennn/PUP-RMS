@@ -417,6 +417,8 @@
     <None Include="Resources\Icons\Account_2.png" />
     <Content Include="Properties\view.png" />
     <None Include="Resources\619384472_920609864259422_4656079368386240362_n.jpg" />
+    <None Include="Resources\Blue_Black_modern_Building_Logo_Design__Logo_-removebg-preview.png" />
+    <None Include="Resources\Blue_Black_modern_Building_Logo_Design__Logo_-removebg-preview1.png" />
     <Content Include="Resources\Icons\batch upload.png" />
     <Content Include="Resources\Icons\browse.png" />
     <Content Include="Resources\Icons\dashboard.png" />

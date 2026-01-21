@@ -60,6 +60,7 @@
             this.pnlByProfessor = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProgram = new PUP_RMS.RecordDistributionPanelCard();
             this.timerActivityLog = new System.Windows.Forms.Timer(this.components);
+            this.lblAccountName = new GradientLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.roundedPanel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -103,6 +104,7 @@
             this.roundedPanel3.BorderColor = System.Drawing.Color.Transparent;
             this.roundedPanel3.BorderRadius = 10;
             this.roundedPanel3.BorderSize = 0;
+            this.roundedPanel3.Controls.Add(this.lblAccountName);
             this.roundedPanel3.Controls.Add(this.gradientLabel1);
             this.roundedPanel3.Controls.Add(this.label10);
             this.roundedPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -125,9 +127,9 @@
             this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.gradientLabel1.Location = new System.Drawing.Point(14, 9);
             this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(402, 32);
+            this.gradientLabel1.Size = new System.Drawing.Size(194, 32);
             this.gradientLabel1.TabIndex = 7;
-            this.gradientLabel1.Text = "Welcome Back, Justine Montante!";
+            this.gradientLabel1.Text = "Welcome Back, ";
             // 
             // label10
             // 
@@ -648,6 +650,17 @@
             this.timerActivityLog.Interval = 3000;
             this.timerActivityLog.Tick += new System.EventHandler(this.timerActivityLog_Tick);
             // 
+            // lblAccountName
+            // 
+            this.lblAccountName.AutoSize = true;
+            this.lblAccountName.BackColor = System.Drawing.Color.Transparent;
+            this.lblAccountName.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblAccountName.Location = new System.Drawing.Point(200, 9);
+            this.lblAccountName.Name = "lblAccountName";
+            this.lblAccountName.Size = new System.Drawing.Size(81, 32);
+            this.lblAccountName.TabIndex = 8;
+            this.lblAccountName.Text = "Name";
+            // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -709,5 +722,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colUploadedAt;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFileName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUploadedBy;
+        private GradientLabel lblAccountName;
     }
 }

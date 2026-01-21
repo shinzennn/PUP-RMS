@@ -175,6 +175,13 @@ namespace PUP_RMS.Forms
 
             LoadDashboardCounts();
             LoadRecentUploads();
+            string fullname = MainDashboard.CurrentAccount.FirstName + " " + MainDashboard.CurrentAccount.LastName;
+            LoadAccountName(fullname);
+        }
+
+        public void LoadAccountName(string fullname)
+        {
+            lblAccountName.Text = fullname;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)

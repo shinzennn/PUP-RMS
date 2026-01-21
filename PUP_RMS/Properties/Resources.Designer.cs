@@ -93,6 +93,26 @@ namespace PUP_RMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Blue_Black_modern_Building_Logo_Design__Logo__removebg_preview {
+            get {
+                object obj = ResourceManager.GetObject("Blue_Black_modern_Building_Logo_Design__Logo_-removebg-preview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Blue_Black_modern_Building_Logo_Design__Logo__removebg_preview1 {
+            get {
+                object obj = ResourceManager.GetObject("Blue_Black_modern_Building_Logo_Design__Logo_-removebg-preview1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap create {
             get {
                 object obj = ResourceManager.GetObject("create", resourceCulture);
