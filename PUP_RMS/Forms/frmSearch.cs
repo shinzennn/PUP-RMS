@@ -60,6 +60,7 @@ namespace PUP_RMS.Forms
 
         private void frmSearch_Load(object sender, EventArgs e)
         {
+            label10.Focus();
             isLoading = true;
 
             LoadPrograms();
@@ -78,6 +79,24 @@ namespace PUP_RMS.Forms
 
             // DataGridDesign will also be called from DataBindingComplete; calling it here is safe because of defensive checks
             DataGridDesign();
+
+            // 1. Remove the "Blue" text selection from all combos
+            DeselectComboText(cmbProgram);
+            DeselectComboText(cmbCourse);
+            DeselectComboText(cmbProfessor);
+            DeselectComboText(cmbSchoolYear);
+            DeselectComboText(cmbSemester);
+            DeselectComboText(cmbYearLevel);
+
+            // 2. Remove focus from the controls entirely
+            this.ActiveControl = null;
+
+        }
+
+        private void DeselectComboText(System.Windows.Forms.ComboBox cmb)
+        {
+            cmb.SelectionStart = 0;
+            cmb.SelectionLength = 0;
         }
 
         private string FindColumnName(params string[] candidates)

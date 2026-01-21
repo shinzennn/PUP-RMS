@@ -12,6 +12,8 @@ namespace PUP_RMS.Forms
         private readonly string connectionString =
             System.Configuration.ConfigurationManager.ConnectionStrings["RMSDB"].ConnectionString;
 
+        private readonly string baseImagePath = Path.Combine(Application.StartupPath, "GradeSheets");
+
         public int GradeSheetID { get; set; }
 
         private string currentFilePath = "";
@@ -289,7 +291,7 @@ namespace PUP_RMS.Forms
             {
                 // 1. Generate the NEW filename based on the current selections
                 string newFileName = GenerateFileName();
-                string targetFolder = @"C:\Uploads\2025\";
+                string targetFolder = BuildImageFolderPath();
                 string newFullFilePath = Path.Combine(targetFolder, newFileName);
 
                 // 2. Physical File Rename Logic
@@ -374,7 +376,9 @@ namespace PUP_RMS.Forms
             }
 
             string fileName = GenerateFileName();
-            string targetFolder = @"C:\Uploads\2025\";
+            //string targetFolder = Path.Combine(Application.StartupPath, "GradeSheets");
+            string targetFolder = BuildImageFolderPath();
+
             Directory.CreateDirectory(targetFolder);
 
             string finalPath = Path.Combine(targetFolder, fileName);
@@ -439,6 +443,17 @@ namespace PUP_RMS.Forms
                 btnSave.Visible = true;
                 btnCancel.Visible = true;
             }
+        }
+
+        private string BuildImageFolderPath()
+        {
+            return Path.Combine(baseImagePath, SanitizePath(cmbSchoolYear.Text), SanitizePath(cmbSemester.Text));
+        }
+
+        private string SanitizePath(string input)
+        {
+            foreach (char c in Path.GetInvalidFileNameChars()) input = input.Replace(c.ToString(), "");
+            return input.Trim();
         }
 
         private void btnClose_Click_1(object sender, EventArgs e)=>Close();

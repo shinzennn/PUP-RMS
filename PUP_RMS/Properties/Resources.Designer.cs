@@ -63,6 +63,16 @@ namespace PUP_RMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _619384472_920609864259422_4656079368386240362_n {
+            get {
+                object obj = ResourceManager.GetObject("619384472_920609864259422_4656079368386240362_n", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap account__1_ {
             get {
                 object obj = ResourceManager.GetObject("account__1_", resourceCulture);

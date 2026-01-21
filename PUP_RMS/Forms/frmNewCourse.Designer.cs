@@ -103,9 +103,9 @@
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(209, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(106, 18);
+            this.label3.Size = new System.Drawing.Size(102, 18);
             this.label3.TabIndex = 22;
-            this.label3.Text = ":Course Code";
+            this.label3.Text = "Course Code";
             // 
             // label4
             // 
@@ -277,9 +277,9 @@
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(31, 214);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(151, 20);
+            this.label5.Size = new System.Drawing.Size(144, 20);
             this.label5.TabIndex = 26;
-            this.label5.Text = ":Subject Description";
+            this.label5.Text = "Course Description";
             // 
             // label2
             // 
@@ -290,9 +290,9 @@
             this.label2.Location = new System.Drawing.Point(19, 25);
             this.label2.Margin = new System.Windows.Forms.Padding(25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(267, 31);
+            this.label2.Size = new System.Drawing.Size(263, 31);
             this.label2.TabIndex = 15;
-            this.label2.Text = "Subject Information";
+            this.label2.Text = "Course Information";
             // 
             // frmNewCourse
             // 
