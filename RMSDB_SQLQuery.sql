@@ -5,6 +5,7 @@ USE RMSDB;
 GO
 
 CREATE TABLE Account(
+
 	AccountID INT IDENTITY(1,1) PRIMARY KEY,
 	Username VARCHAR(50) UNIQUE NOT NULL,
 	Password VARCHAR(50) NOT NULL,
@@ -17,15 +18,21 @@ GO
 CREATE TABLE Program(
 	ProgramID INT IDENTITY(1,1) PRIMARY KEY,
 	ProgramCode VARCHAR(20) NOT NULL,
-	ProgramDescription VARCHAR(100) NOT NULL,
+	ProgramDescription VARCHAR(100) NOT NULL
 );
 GO
 
 CREATE TABLE Course(
-	CourseID INT IDENTITY(1,1) PRIMARY KEY,
-	CourseCode VARCHAR(20) NOT NULL,
-	CourseDescription VARCHAR(100) NOT NULL,
-    CurriculumYear VARCHAR(10)
+	 CourseID INT IDENTITY(1,1) PRIMARY KEY,       
+    CourseCode VARCHAR(20) NOT NULL,              
+    CourseDescription VARCHAR(100) NOT NULL,     
+    CurriculumYear VARCHAR(10) NOT NULL,         
+
+    -- Rule 1: Same CourseCode cannot exist in the same CurriculumYear
+    CONSTRAINT UQ_Course_Code_Year UNIQUE (CourseCode, CurriculumYear),
+
+    -- Rule 2: Same CourseDescription cannot exist in the same CurriculumYear
+    CONSTRAINT UQ_Course_Desc_Year UNIQUE (CourseDescription, CurriculumYear)
 );
 GO
 
@@ -51,7 +58,7 @@ CREATE TABLE GradeSheet(
 	FacultyID INT,
     PageNumber INT,
 	AccountID INT,
-    DateUploaded DATETIME DEFAULT GETDATE()
+    DateUploaded DATETIME DEFAULT GETDATE(),
 
     CONSTRAINT FK_ProgramID_GradeSheet FOREIGN KEY (ProgramID) REFERENCES Program(ProgramID),
 	CONSTRAINT FK_CourseID_GradeSheet FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
@@ -119,14 +126,40 @@ GO
 -- 1.1. CREATE COURSE //
 CREATE PROCEDURE sp_CreateCourse
     @CourseCode VARCHAR(20),
-    @CourseDescription VARCHAR(50),
-    @CurriculumYear VARCHAR(10)
+    @CourseDescription VARCHAR(100),
+     @CurriculumYear VARCHAR(10)
 AS
 BEGIN
-    SET NOCOUNT ON;
+       
 
-    INSERT INTO Course (CourseCode, CourseDescription, CurriculumYear)
-    VALUES (@CourseCode, @CourseDescription, @CurriculumYear);
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+            INSERT INTO Course (CourseCode, CourseDescription, CurriculumYear)
+            VALUES (@CourseCode, @CourseDescription, @CurriculumYear);
+            COMMIT TRANSACTION;
+
+    END TRY
+    BEGIN CATCH
+
+        -- Check error number for unique constraint violations
+        IF ERROR_NUMBER() IN (2627, 2601)
+        BEGIN
+            IF ERROR_MESSAGE() LIKE '%UQ_Course_Code_Year%'
+                RAISERROR('The Course Code already exists in the same Curriculum Year. Please use a different code.', 16, 1);
+            ELSE IF ERROR_MESSAGE() LIKE '%UQ_Course_Desc_Year%'
+                RAISERROR('The Course Description already exists in the same Curriculum Year. Please use a different description.', 16, 1);
+            ELSE
+                RAISERROR('A course with the same details already exists.', 16, 1);
+        END
+        ELSE
+        BEGIN
+            -- Other errors
+            DECLARE @ErrMsg NVARCHAR(4000) = ERROR_MESSAGE();
+            RAISERROR('Database error: %s', 16, 1, @ErrMsg);
+
+        END
+    END CATCH
 
 END
 
@@ -137,7 +170,6 @@ CREATE PROCEDURE sp_GetAllCourseDescription
 AS
 BEGIN
     SET NOCOUNT ON;
-
     WITH TrackedCourses AS (
         SELECT 
             CourseID, 
@@ -152,11 +184,17 @@ BEGIN
         FROM Course
     )
     SELECT 
-        CourseID, 
-        CourseDescription
+        CourseID,
+        CourseCode,
+        CourseDescription,
+        CurriculumYear
     FROM TrackedCourses
     WHERE RowNum = 1; -- Only take the first instance of each description
 END
+
+
+
+GO
 
 GO
 
@@ -181,14 +219,12 @@ GO
 CREATE PROCEDURE sp_SearchCourse
     @CurriculumYear VARCHAR(10) = NULL,
     @SearchTerm VARCHAR(100) = NULL,
-    @ProgramID INT = NULL
+    @ProgramID INT = NULL -- New Parameter
 AS
 BEGIN
     -- Prepare the search filter
     DECLARE @Filter VARCHAR(102) = '%' + ISNULL(@SearchTerm, '') + '%';
-
     SET NOCOUNT ON;
-
     WITH FilteredAndTracked AS (
         SELECT 
             CourseID, 
@@ -222,6 +258,7 @@ BEGIN
         RowNum = 1;
 END
 
+
 GO
 
 -- 1.5. UPDATE COURSE //
@@ -231,16 +268,33 @@ CREATE PROCEDURE sp_UpdateCourse
     @CourseDescription VARCHAR(100),
     @CurriculumYear VARCHAR(10)
 AS
-BEGIN
-    UPDATE 
-        Course
-    SET 
-        CourseCode = @CourseCode,
-        CourseDescription = @CourseDescription,
-        CurriculumYear = @CurriculumYear
-    WHERE 
-        CourseID = @CourseID;
-END
+
+    BEGIN TRY
+        UPDATE Course
+        SET 
+            CourseCode = @CourseCode,
+            CourseDescription = @CourseDescription,
+            CurriculumYear = @CurriculumYear
+        WHERE CourseID = @CourseID;
+    END TRY
+    BEGIN CATCH
+        -- Handle unique constraint violations
+        IF ERROR_NUMBER() IN (2627, 2601)
+        BEGIN
+            IF ERROR_MESSAGE() LIKE '%UQ_Course_Code_Year%'
+                RAISERROR('The Course Code already exists in the same Curriculum Year. Please use a different code.', 16, 1);
+            ELSE IF ERROR_MESSAGE() LIKE '%UQ_Course_Desc_Year%'
+                RAISERROR('The Course Description already exists in the same Curriculum Year. Please use a different description.', 16, 1);
+            ELSE
+                RAISERROR('A course with the same details already exists.', 16, 1);
+        END
+        ELSE
+        BEGIN
+            -- Other errors
+            DECLARE @ErrMsg NVARCHAR(4000) = ERROR_MESSAGE();
+            RAISERROR('Database error: %s', 16, 1, @ErrMsg);
+        END
+    END CATCH
 
 GO
 
@@ -461,7 +515,7 @@ GO
 
 -- 4. GRADESHEET STORED PROCEDURE ///
 -- 4.1. CREATE GRADESHEET //
-CREATE PROCEDURE sp_InsertGradeSheet
+CREATE PROCEDURE sp_InsertGradeSheet 
     @Filename     VARCHAR(100),
     @Filepath     VARCHAR(200),
     @SchoolYear   VARCHAR(20),
@@ -479,44 +533,27 @@ BEGIN
     -- Basic validation
     IF @Filename IS NULL OR @Filename = ''
     BEGIN
-    RAISERROR('Filename is required.', 16, 1);
-    RETURN;
-    END
-
-    IF @Filepath IS NULL OR @Filepath = ''
-    BEGIN
-    RAISERROR('Filepath is required.', 16, 1);
-    RETURN;
+        RAISERROR('Filename is required.', 16, 1);
+        RETURN;
     END
 
     -- Insert record
     INSERT INTO GradeSheet
     (
-        Filename,
-        Filepath,
-        SchoolYear,
-        Semester,
-        ProgramID,
-        YearLevel,
-        CourseID,
-        FacultyID,
-        PageNumber,
-        AccountID               
+        Filename, Filepath, SchoolYear, Semester, 
+        ProgramID, YearLevel, CourseID, FacultyID, 
+        PageNumber, AccountID               
     )
     VALUES
     (
-        @Filename,
-        @Filepath,
-        @SchoolYear,
-        @Semester,
-        @ProgramID,
-        @YearLevel,
-        @CourseID,
-        @FacultyID,
-        @PageNumber,
-        @AccountID
-    
-    )
+        @Filename, @Filepath, @SchoolYear, @Semester, 
+        @ProgramID, @YearLevel, @CourseID, @FacultyID, 
+        @PageNumber, @AccountID
+    );
+
+    -- >>> ADD THIS LINE BELOW <<<
+    -- This returns the new ID so Dapper's QuerySingle<int> can read it
+    SELECT CAST(SCOPE_IDENTITY() AS INT);
 END;
 
 GO
@@ -905,29 +942,148 @@ BEGIN
     ORDER BY gs.SchoolYear DESC, gs.Semester ASC;
 END
 
---7.8 GetGradesheetsBySubject
+--course filter in dashboard
+CREATE PROCEDURE sp_GetSubjectDetailsByName
+    @CourseDescription VARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
 
-/*
-CREATE PROCEDURE sp_GetGradeSheetsBySubject
-    @SubjectName VARCHAR(100)
+    SELECT DISTINCT
+        c.CourseCode,
+        f.LastName + ', ' + f.FirstName + ISNULL(' ' + LEFT(f.MiddleName, 1) + '.', '') AS FacultyName,
+        c.CurriculumYear
+    FROM 
+        GradeSheet gs
+    INNER JOIN 
+        Course c ON gs.CourseID = c.CourseID
+    INNER JOIN 
+        Faculty f ON gs.FacultyID = f.FacultyID
+    WHERE 
+        c.CourseDescription = @CourseDescription
+    ORDER BY 
+        c.CurriculumYear DESC, FacultyName ASC;
+END
+GO
+
+CREATE PROCEDURE sp_GetAllSchoolYears
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT DISTINCT SchoolYear 
+    FROM GradeSheet 
+    ORDER BY SchoolYear DESC;
+END
+GO
+
+CREATE PROCEDURE sp_GetDistributionByProgram_Filtered
+    @SchoolYear VARCHAR(20) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- If @SchoolYear is NULL, it gets all data. 
+    -- If provided, it filters by that year.
+    SELECT 
+        p.ProgramCode AS Label, 
+        COUNT(gs.GradeSheetID) AS Value
+    FROM GradeSheet gs
+    INNER JOIN Program p ON gs.ProgramID = p.ProgramID
+    WHERE (@SchoolYear IS NULL OR gs.SchoolYear = @SchoolYear)
+    GROUP BY p.ProgramCode
+    ORDER BY Value DESC;
+END
+GO
+
+--Filter faculty by school year 
+CREATE PROCEDURE sp_GetDistributionByFaculty_Filtered
+    @SchoolYear VARCHAR(20) = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
 
     SELECT 
-        gs.Filename,
-        f.LastName + ', ' + f.FirstName AS UploadedBy,
-        -- If you added DateUploaded in previous steps, use it. 
-        -- If not, we use GETDATE() or SchoolYear as a placeholder.
-        ISNULL(gs.DateUploaded, GETDATE()) AS DateUploaded 
-    FROM GradeSheet gs
-    INNER JOIN Course c ON gs.CourseID = c.CourseID
-    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    WHERE c.CourseDescription = @SubjectName
-    ORDER BY gs.Filename ASC;
+        f.LastName + ', ' + f.FirstName AS Name,
+        COUNT(gs.GradeSheetID) AS RecordCount
+    FROM 
+        GradeSheet gs
+    INNER JOIN 
+        Faculty f ON gs.FacultyID = f.FacultyID
+    WHERE 
+        (@SchoolYear IS NULL OR gs.SchoolYear = @SchoolYear)
+    GROUP BY 
+        f.LastName, f.FirstName
+    ORDER BY 
+        RecordCount DESC;
 END
 GO
-*/
--- di pa to nagagwa wala pang dateupload
+
+--GET ACTIVITY LOG ACTION
+CREATE or ALTER PROCEDURE sp_GetActivityLogWithUserDesc
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT TOP 20
+        AL.LogID,
+        A.Username,
+        AL.ActivityDescription,
+        AL.ActivityDate
+    FROM 
+        ActivityLog AL
+    INNER JOIN 
+        Account A ON AL.AccountID = A.AccountID
+    ORDER BY 
+        AL.ActivityDate DESC, -- Primary: Sort by Date/Time (Newest First)
+        AL.LogID DESC;        -- Secondary: If times are equal, higher ID comes first
+END
+GO
+
+--show recently upload gradesheet in dashboard
+CREATE PROCEDURE RecentUploadedGradeSheets
+AS BEGIN
+    SELECT TOP 10
+           g.Filename, 
+           c.CourseCode, 
+           a.Firstname + ' ' + a.LastName AS UploadedBy
+    FROM GradeSheet g
+    JOIN Course AS c
+        ON g.CourseID = c.CourseID
+    JOIN Account AS a  
+        ON g.AccountID = a.AccountID
+    ORDER BY g.GradeSheetID DESC
+END
+GO
+
+--count total prof
+CREATE OR ALTER PROCEDURE countTotalProgram
+AS 
+BEGIN
+    -- This counts unique ProgramCode values only
+    SELECT COUNT(DISTINCT ProgramCode) AS TotalProgram
+    FROM Program
+END
+GO
+
+--coursefilter in dashboard using schoolyear
+CREATE OR ALTER PROCEDURE sp_GetDistributionBySubject_FilteredSchoolYears
+    @SchoolYear VARCHAR(20) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        c.CourseDescription AS SubjectName, 
+        COUNT(gs.GradeSheetID) AS Count
+    FROM GradeSheet gs
+    INNER JOIN Course c ON gs.CourseID = c.CourseID
+    WHERE 
+        (@SchoolYear IS NULL OR gs.SchoolYear = @SchoolYear)
+    GROUP BY c.CourseDescription
+    ORDER BY Count DESC;
+END
+GO
+
+
 
 
