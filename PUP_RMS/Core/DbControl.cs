@@ -74,26 +74,34 @@ namespace PUP_RMS.Core
             int accountId
 )
         {
-            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            try
             {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Filename", filename);
-                parameters.Add("@Filepath", filepath);
-                parameters.Add("@SchoolYear", schoolYear);
-                parameters.Add("@Semester", semester);
-                parameters.Add("@ProgramID", programId);
-                parameters.Add("@YearLevel", yearLevel);
-                parameters.Add("@CourseID", courseId);
-                parameters.Add("@FacultyID", facultyId);
-                parameters.Add("@PageNumber", pageNumber);
-                parameters.Add("@AccountID", accountId);
+                using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@Filename", filename);
+                    parameters.Add("@Filepath", filepath);
+                    parameters.Add("@SchoolYear", schoolYear);
+                    parameters.Add("@Semester", semester);
+                    parameters.Add("@ProgramID", programId);
+                    parameters.Add("@YearLevel", yearLevel);
+                    parameters.Add("@CourseID", courseId);
+                    parameters.Add("@FacultyID", facultyId);
+                    parameters.Add("@PageNumber", pageNumber);
+                    parameters.Add("@AccountID", accountId);
 
-                // QuerySingle<int> expects the stored procedure to return the ID
-                return conn.QuerySingle<int>(
-                    "sp_InsertGradeSheet",
-                    parameters,
-                    commandType: CommandType.StoredProcedure
-                );
+                    // QuerySingle<int> expects the stored procedure to return the ID
+                    return conn.QuerySingle<int>(
+                        "sp_InsertGradeSheet",
+                        parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+                }
+            }
+            catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+            {
+                // Duplicate key / unique constraint violation
+                return -1;
             }
         }
 

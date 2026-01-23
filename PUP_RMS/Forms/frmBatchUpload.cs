@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using PUP_RMS.Core;
 using PUP_RMS.Model;
+using PUP_RMS.Helper;
 
 
 namespace PUP_RMS.Forms
@@ -268,8 +269,22 @@ namespace PUP_RMS.Forms
                     Convert.ToInt32(yearLevelCmbox.SelectedValue),
                     Convert.ToInt32(courseCmbox.SelectedValue),
                     Convert.ToInt32(professorCmbox.SelectedValue),
-                    1, loggedInAdminId
+                    Convert.ToInt32(pageCmbox.SelectedValue), loggedInAdminId
                 );
+
+                if (gradeSheetId == -1)
+                {
+                    MessageBox.Show(
+                        "Duplicated Filename Detected. Please change the filename.",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+
+                    filenameTxtbox.Focus();
+                    filenameTxtbox.SelectAll();
+                    return;
+                };
 
                 undoHistory.Push(new UndoItem
                 {
@@ -281,6 +296,8 @@ namespace PUP_RMS.Forms
                 toUpload.Items.RemoveAt(0);
                 DisplayCurrentImage();
                 MessageBox.Show("Grade sheet saved successfully.");
+
+                ActivityLogger.LogGradesheetUpload(yearCmbox.Text, semesterCmbox.Text, courseCmbox.Text, professorCmbox.Text);
             }
             catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
 
@@ -384,6 +401,11 @@ namespace PUP_RMS.Forms
             {
                 LoadPrograms();
             }
+
+        }
+
+        private void saveBtn_Click_1(object sender, EventArgs e)
+        {
 
         }
     }

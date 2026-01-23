@@ -49,8 +49,8 @@
             this.lblPassword = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
             this.roundedPanelPass = new PUP_RMS.RoundedPanel();
-            this.pictureBoxHidePassword = new System.Windows.Forms.PictureBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.pictureBoxHidePassword = new System.Windows.Forms.PictureBox();
             this.pictureBoxShowPassword = new System.Windows.Forms.PictureBox();
             this.pictureBoxPassword = new System.Windows.Forms.PictureBox();
             this.roundedPanelUser = new PUP_RMS.RoundedPanel();
@@ -108,7 +108,7 @@
             // roundedPanelAccountType
             // 
             this.roundedPanelAccountType.AutoSize = true;
-            this.roundedPanelAccountType.BackColor = System.Drawing.Color.Gainsboro;
+            this.roundedPanelAccountType.BackColor = System.Drawing.Color.White;
             this.roundedPanelAccountType.BorderColor = System.Drawing.Color.Black;
             this.roundedPanelAccountType.BorderRadius = 20;
             this.roundedPanelAccountType.BorderSize = 2;
@@ -151,6 +151,7 @@
             this.comboBoxAccountType.Name = "comboBoxAccountType";
             this.comboBoxAccountType.Size = new System.Drawing.Size(264, 28);
             this.comboBoxAccountType.TabIndex = 5;
+            this.comboBoxAccountType.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccountType_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -187,7 +188,7 @@
             // 
             // roundedPanelLast
             // 
-            this.roundedPanelLast.BackColor = System.Drawing.Color.Gainsboro;
+            this.roundedPanelLast.BackColor = System.Drawing.Color.White;
             this.roundedPanelLast.BorderColor = System.Drawing.Color.Black;
             this.roundedPanelLast.BorderRadius = 20;
             this.roundedPanelLast.BorderSize = 2;
@@ -209,7 +210,7 @@
             // 
             // textBoxLastName
             // 
-            this.textBoxLastName.BackColor = System.Drawing.Color.Gainsboro;
+            this.textBoxLastName.BackColor = System.Drawing.Color.White;
             this.textBoxLastName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxLastName.Location = new System.Drawing.Point(42, 11);
@@ -254,7 +255,7 @@
             // 
             // roundedPanelFirst
             // 
-            this.roundedPanelFirst.BackColor = System.Drawing.Color.Gainsboro;
+            this.roundedPanelFirst.BackColor = System.Drawing.Color.White;
             this.roundedPanelFirst.BorderColor = System.Drawing.Color.Black;
             this.roundedPanelFirst.BorderRadius = 20;
             this.roundedPanelFirst.BorderSize = 2;
@@ -276,7 +277,7 @@
             // 
             // textBoxFirstName
             // 
-            this.textBoxFirstName.BackColor = System.Drawing.Color.Gainsboro;
+            this.textBoxFirstName.BackColor = System.Drawing.Color.White;
             this.textBoxFirstName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxFirstName.Location = new System.Drawing.Point(42, 12);
@@ -357,7 +358,7 @@
             // roundedPanelPass
             // 
             this.roundedPanelPass.AutoSize = true;
-            this.roundedPanelPass.BackColor = System.Drawing.Color.Gainsboro;
+            this.roundedPanelPass.BackColor = System.Drawing.Color.White;
             this.roundedPanelPass.BorderColor = System.Drawing.Color.Black;
             this.roundedPanelPass.BorderRadius = 20;
             this.roundedPanelPass.BorderSize = 2;
@@ -379,6 +380,18 @@
             this.roundedPanelPass.Click += new System.EventHandler(this.roundedPanelPass_Click);
             this.roundedPanelPass.Paint += new System.Windows.Forms.PaintEventHandler(this.roundedPanelPass_Paint);
             // 
+            // textBoxPassword
+            // 
+            this.textBoxPassword.BackColor = System.Drawing.Color.White;
+            this.textBoxPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxPassword.Location = new System.Drawing.Point(42, 15);
+            this.textBoxPassword.Multiline = true;
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.PasswordChar = '*';
+            this.textBoxPassword.Size = new System.Drawing.Size(232, 20);
+            this.textBoxPassword.TabIndex = 4;
+            // 
             // pictureBoxHidePassword
             // 
             this.pictureBoxHidePassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxHidePassword.Image")));
@@ -389,18 +402,6 @@
             this.pictureBoxHidePassword.TabIndex = 3;
             this.pictureBoxHidePassword.TabStop = false;
             this.pictureBoxHidePassword.Click += new System.EventHandler(this.pictureBoxHidePassword_Click);
-            // 
-            // textBoxPassword
-            // 
-            this.textBoxPassword.BackColor = System.Drawing.Color.Gainsboro;
-            this.textBoxPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPassword.Location = new System.Drawing.Point(42, 15);
-            this.textBoxPassword.Multiline = true;
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.PasswordChar = '*';
-            this.textBoxPassword.Size = new System.Drawing.Size(232, 20);
-            this.textBoxPassword.TabIndex = 4;
             // 
             // pictureBoxShowPassword
             // 
@@ -427,7 +428,7 @@
             // 
             // roundedPanelUser
             // 
-            this.roundedPanelUser.BackColor = System.Drawing.Color.Gainsboro;
+            this.roundedPanelUser.BackColor = System.Drawing.Color.White;
             this.roundedPanelUser.BorderColor = System.Drawing.Color.Black;
             this.roundedPanelUser.BorderRadius = 20;
             this.roundedPanelUser.BorderSize = 2;
@@ -449,7 +450,7 @@
             // 
             // textBoxUsername
             // 
-            this.textBoxUsername.BackColor = System.Drawing.Color.Gainsboro;
+            this.textBoxUsername.BackColor = System.Drawing.Color.White;
             this.textBoxUsername.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxUsername.Location = new System.Drawing.Point(42, 11);

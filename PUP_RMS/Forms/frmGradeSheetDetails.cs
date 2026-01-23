@@ -289,28 +289,48 @@ namespace PUP_RMS.Forms
         {
             try
             {
-                // 1. Generate the NEW filename based on the current selections
+                // 1. Generate the NEW filename and Folder based on the current selections
                 string newFileName = GenerateFileName();
-                string targetFolder = BuildImageFolderPath();
-                string newFullFilePath = Path.Combine(targetFolder, newFileName);
+                string newTargetFolder = BuildImageFolderPath(); // Generates path based on Year/Sem
+                string newFullFilePath = Path.Combine(newTargetFolder, newFileName);
 
-                // 2. Physical File Rename Logic
-                // If the filename has actually changed, we need to move the file on disk
-                if (originalImagePath != newFullFilePath && File.Exists(originalImagePath))
+                // 2. Check if the details changed resulting in a new path/name
+                if (originalImagePath != newFullFilePath)
                 {
-                    // Release the file lock so we can rename it
-                    pbPreview.Image?.Dispose();
-                    pbPreview.Image = null;
+                    // A. Check if the original file actually exists before trying to move it
+                    if (File.Exists(originalImagePath))
+                    {
+                        // B. IMPORTANT: Dispose the image in the PictureBox to unlock the file
+                        if (pbPreview.Image != null)
+                        {
+                            pbPreview.Image.Dispose();
+                            pbPreview.Image = null;
+                        }
 
-                    // Rename the file
-                    File.Move(originalImagePath, newFullFilePath);
+                        // Force garbage collection to ensure the file handle is released immediately
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
 
-                    // Update variables to reflect the new path
-                    originalImagePath = newFullFilePath;
-                    currentFilePath = newFullFilePath;
+                        // C. Create the new directory if it doesn't exist (e.g. New School Year folder)
+                        if (!Directory.Exists(newTargetFolder))
+                        {
+                            Directory.CreateDirectory(newTargetFolder);
+                        }
+
+                        // D. Move (Rename) the file to the new location
+                        // This handles both renaming the file AND moving it to a new folder
+                        File.Move(originalImagePath, newFullFilePath);
+
+                        // Update internal tracking variables
+                        originalImagePath = newFullFilePath;
+                        currentFilePath = newFullFilePath;
+                    }
+                    else
+                    {
+                        MessageBox.Show("The original file could not be found. It may have been deleted or moved manually.",
+                                        "File Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
-
-                txtFilename.Text = newFileName;
 
                 // 3. Database Update
                 using (SqlConnection con = new SqlConnection(connectionString))
@@ -320,7 +340,7 @@ namespace PUP_RMS.Forms
 
                     cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
                     cmd.Parameters.AddWithValue("@Filename", newFileName);
-                    cmd.Parameters.AddWithValue("@Filepath", targetFolder);
+                    cmd.Parameters.AddWithValue("@Filepath", newTargetFolder); // Updates to the new folder path
                     cmd.Parameters.AddWithValue("@SchoolYear", cmbSchoolYear.SelectedValue);
                     cmd.Parameters.AddWithValue("@Semester", cmbSemester.SelectedValue);
                     cmd.Parameters.AddWithValue("@ProgramID", cmbProgram.SelectedValue);
@@ -333,17 +353,28 @@ namespace PUP_RMS.Forms
                     cmd.ExecuteNonQuery();
                 }
 
-                // 4. Cleanup UI
-                LoadThumbnail(originalImagePath); // Reload the image from the new path
+                // 4. Update UI
+                txtFilename.Text = newFileName;
+
+                // Reload the image from the NEW location to verify it works
+                LoadThumbnail(originalImagePath);
+
                 DisableEditMode();
-                MessageBox.Show("Grade sheet details and filename updated successfully.");
+                MessageBox.Show("Grade sheet details and file location updated successfully.");
+            }
+            catch (IOException ioEx)
+            {
+                MessageBox.Show("File Access Error (File might be open elsewhere): " + ioEx.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Attempt to reload original if move failed
+                LoadThumbnail(originalImagePath);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error updating details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // If rename failed, try to reload data to stay consistent
                 LoadGradeSheetData();
             }
+
         }
 
         private void btnCancels_Click(object sender, EventArgs e)
@@ -447,16 +478,40 @@ namespace PUP_RMS.Forms
 
         private string BuildImageFolderPath()
         {
-            return Path.Combine(baseImagePath, SanitizePath(cmbSchoolYear.Text), SanitizePath(cmbSemester.Text));
+            // Use the currently selected text from the dropdowns
+            string schoolYear = SanitizePath(cmbSchoolYear.Text);
+            string semester = SanitizePath(cmbSemester.Text);
+
+            // Combine: BasePath \ SchoolYear \ Semester
+            return Path.Combine(baseImagePath, schoolYear, semester);
         }
 
         private string SanitizePath(string input)
         {
-            foreach (char c in Path.GetInvalidFileNameChars()) input = input.Replace(c.ToString(), "");
+            if (string.IsNullOrWhiteSpace(input)) return "Unknown";
+
+            foreach (char c in Path.GetInvalidFileNameChars())
+            {
+                input = input.Replace(c.ToString(), "");
+            }
             return input.Trim();
         }
 
         private void btnClose_Click_1(object sender, EventArgs e)=>Close();
-        
+
+        private void roundedButton1_Click_1(object sender, EventArgs e)
+        {
+            if (pbPreview.Image == null)
+            {
+                MessageBox.Show("Image is required.");
+                return;
+            }
+            else
+            {
+                var previewForm = new currentpicturePreview();
+                previewForm.PassedImage = pbPreview.Image;
+                previewForm.Show();
+            }
+        }
     }
 }

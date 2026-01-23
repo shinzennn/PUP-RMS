@@ -60,6 +60,7 @@
             this.btnUpload = new PUP_RMS.RoundedButton();
             this.btnSave = new PUP_RMS.RoundedButton();
             this.btnCancel = new PUP_RMS.RoundedButton();
+            this.roundedButton1 = new PUP_RMS.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.roundedShadowPanel1.SuspendLayout();
@@ -254,9 +255,9 @@
             // 
             this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbPreview.Location = new System.Drawing.Point(76, 3);
+            this.pbPreview.Location = new System.Drawing.Point(75, 3);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(386, 349);
+            this.pbPreview.Size = new System.Drawing.Size(385, 349);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPreview.TabIndex = 18;
             this.pbPreview.TabStop = false;
@@ -452,7 +453,7 @@
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.69893F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.30108F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
             this.tableLayoutPanel4.Controls.Add(this.pbPreview, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
@@ -467,9 +468,10 @@
             this.tableLayoutPanel5.ColumnCount = 5;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.44828F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.55173F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 262F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
+            this.tableLayoutPanel5.Controls.Add(this.roundedButton1, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnClose, 4, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnUpload, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnSave, 3, 0);
@@ -495,7 +497,7 @@
             this.btnUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpload.ForeColor = System.Drawing.Color.White;
             this.btnUpload.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnUpload.Location = new System.Drawing.Point(33, 3);
+            this.btnUpload.Location = new System.Drawing.Point(59, 3);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(91, 18);
             this.btnUpload.TabIndex = 35;
@@ -549,6 +551,28 @@
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Visible = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // roundedButton1
+            // 
+            this.roundedButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.roundedButton1.BackColor = System.Drawing.Color.Goldenrod;
+            this.roundedButton1.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.roundedButton1.BorderRadius = 20;
+            this.roundedButton1.BorderSize = 0;
+            this.roundedButton1.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.roundedButton1.FlatAppearance.BorderSize = 0;
+            this.roundedButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.roundedButton1.ForeColor = System.Drawing.Color.White;
+            this.roundedButton1.HoverColor = System.Drawing.Color.DarkRed;
+            this.roundedButton1.Location = new System.Drawing.Point(3, 3);
+            this.roundedButton1.Name = "roundedButton1";
+            this.roundedButton1.Size = new System.Drawing.Size(50, 18);
+            this.roundedButton1.TabIndex = 38;
+            this.roundedButton1.Text = "View";
+            this.roundedButton1.TextColor = System.Drawing.Color.White;
+            this.roundedButton1.UseVisualStyleBackColor = false;
+            this.roundedButton1.Click += new System.EventHandler(this.roundedButton1_Click_1);
             // 
             // frmGradeSheetDetails
             // 
@@ -624,5 +648,6 @@
         private RoundedButton btnUpload;
         private RoundedButton btnSave;
         private RoundedButton btnCancel;
+        private RoundedButton roundedButton1;
     }
 }

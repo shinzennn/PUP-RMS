@@ -79,6 +79,7 @@ namespace PUP_RMS.Forms
         // ======================================================
         private void RegisterForm_Load(object sender, EventArgs e)
         {
+            comboBoxAccountType.BackColor = Color.Gainsboro;
             this.SuspendLayout();
 
             this.WindowState = FormWindowState.Normal;
@@ -315,5 +316,9 @@ namespace PUP_RMS.Forms
 
         }
 
+        private void comboBoxAccountType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
