@@ -30,9 +30,12 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnOpenCouse = new System.Windows.Forms.Button();
+            this.createNewFaculty = new System.Windows.Forms.Button();
+            this.cbxKeep = new System.Windows.Forms.CheckBox();
+            this.gradientLabel1 = new GradientLabel();
             this.pnlGradesheetForm = new PUP_RMS.RoundedShadowPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -63,9 +66,6 @@
             this.panelFacultyList = new PUP_RMS.RoundedPanel();
             this.uploadBtn = new System.Windows.Forms.Button();
             this.toUpload = new System.Windows.Forms.ListView();
-            this.btnOpenCouse = new System.Windows.Forms.Button();
-            this.createNewFaculty = new System.Windows.Forms.Button();
-            this.cbxKeep = new System.Windows.Forms.CheckBox();
             this.panelHeader.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.pnlGradesheetForm.SuspendLayout();
@@ -99,17 +99,6 @@
             this.panelHeader.Size = new System.Drawing.Size(1120, 90);
             this.panelHeader.TabIndex = 21;
             // 
-            // gradientLabel1
-            // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(264, 37);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "Upload Gradesheet";
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -141,6 +130,46 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1002, 547);
             this.tableLayoutPanel3.TabIndex = 25;
             this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
+            // 
+            // btnOpenCouse
+            // 
+            this.btnOpenCouse.Location = new System.Drawing.Point(12, 12);
+            this.btnOpenCouse.Name = "btnOpenCouse";
+            this.btnOpenCouse.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenCouse.TabIndex = 13;
+            this.btnOpenCouse.Text = "Create Course";
+            this.btnOpenCouse.UseVisualStyleBackColor = true;
+            // 
+            // createNewFaculty
+            // 
+            this.createNewFaculty.Location = new System.Drawing.Point(12, 41);
+            this.createNewFaculty.Name = "createNewFaculty";
+            this.createNewFaculty.Size = new System.Drawing.Size(75, 23);
+            this.createNewFaculty.TabIndex = 14;
+            this.createNewFaculty.Text = "Create Faculty";
+            this.createNewFaculty.UseVisualStyleBackColor = true;
+            // 
+            // cbxKeep
+            // 
+            this.cbxKeep.AutoSize = true;
+            this.cbxKeep.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cbxKeep.Location = new System.Drawing.Point(562, 128);
+            this.cbxKeep.Name = "cbxKeep";
+            this.cbxKeep.Size = new System.Drawing.Size(51, 17);
+            this.cbxKeep.TabIndex = 15;
+            this.cbxKeep.Text = "Keep";
+            this.cbxKeep.UseVisualStyleBackColor = true;
+            // 
+            // gradientLabel1
+            // 
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(264, 37);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "Upload Gradesheet";
             // 
             // pnlGradesheetForm
             // 
@@ -262,7 +291,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.57143F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.857143F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
             this.tableLayoutPanel1.Controls.Add(this.label9, 6, 0);
             this.tableLayoutPanel1.Controls.Add(this.label8, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.label7, 4, 0);
@@ -297,7 +326,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label9.Location = new System.Drawing.Point(474, 0);
+            this.label9.Location = new System.Drawing.Point(472, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(34, 33);
             this.label9.TabIndex = 35;
@@ -309,9 +338,9 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(379, 6);
+            this.label8.Location = new System.Drawing.Point(378, 6);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(89, 20);
+            this.label8.Size = new System.Drawing.Size(88, 20);
             this.label8.TabIndex = 34;
             this.label8.Text = "Professor";
             // 
@@ -321,7 +350,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(306, 6);
+            this.label7.Location = new System.Drawing.Point(305, 6);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(67, 20);
             this.label7.TabIndex = 33;
@@ -335,7 +364,7 @@
             this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label6.Location = new System.Drawing.Point(222, 6);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(78, 20);
+            this.label6.Size = new System.Drawing.Size(77, 20);
             this.label6.TabIndex = 32;
             this.label6.Text = "Program";
             // 
@@ -370,7 +399,7 @@
             this.btnProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProgram.Location = new System.Drawing.Point(222, 72);
             this.btnProgram.Name = "btnProgram";
-            this.btnProgram.Size = new System.Drawing.Size(78, 30);
+            this.btnProgram.Size = new System.Drawing.Size(77, 30);
             this.btnProgram.TabIndex = 28;
             this.btnProgram.Text = "Add Program";
             this.btnProgram.UseVisualStyleBackColor = false;
@@ -535,9 +564,9 @@
             this.btnProf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnProf.BackColor = System.Drawing.Color.Maroon;
             this.btnProf.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProf.Location = new System.Drawing.Point(379, 74);
+            this.btnProf.Location = new System.Drawing.Point(378, 74);
             this.btnProf.Name = "btnProf";
-            this.btnProf.Size = new System.Drawing.Size(89, 27);
+            this.btnProf.Size = new System.Drawing.Size(88, 27);
             this.btnProf.TabIndex = 27;
             this.btnProf.Text = "Add Professor";
             this.btnProf.UseVisualStyleBackColor = false;
@@ -559,7 +588,7 @@
             this.pageCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.pageCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pageCmbox.FormattingEnabled = true;
-            this.pageCmbox.Location = new System.Drawing.Point(473, 35);
+            this.pageCmbox.Location = new System.Drawing.Point(471, 35);
             this.pageCmbox.Margin = new System.Windows.Forms.Padding(2);
             this.pageCmbox.Name = "pageCmbox";
             this.pageCmbox.Size = new System.Drawing.Size(36, 28);
@@ -573,7 +602,7 @@
             this.courseCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.courseCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.courseCmbox.FormattingEnabled = true;
-            this.courseCmbox.Location = new System.Drawing.Point(306, 36);
+            this.courseCmbox.Location = new System.Drawing.Point(305, 36);
             this.courseCmbox.Name = "courseCmbox";
             this.courseCmbox.Size = new System.Drawing.Size(67, 28);
             this.courseCmbox.TabIndex = 2;
@@ -586,9 +615,9 @@
             this.professorCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.professorCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.professorCmbox.FormattingEnabled = true;
-            this.professorCmbox.Location = new System.Drawing.Point(379, 36);
+            this.professorCmbox.Location = new System.Drawing.Point(378, 36);
             this.professorCmbox.Name = "professorCmbox";
-            this.professorCmbox.Size = new System.Drawing.Size(89, 28);
+            this.professorCmbox.Size = new System.Drawing.Size(88, 28);
             this.professorCmbox.TabIndex = 1;
             this.professorCmbox.Text = "Professor";
             // 
@@ -598,9 +627,9 @@
             this.KeepCheckbox.AutoSize = true;
             this.KeepCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeepCheckbox.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.KeepCheckbox.Location = new System.Drawing.Point(514, 37);
+            this.KeepCheckbox.Location = new System.Drawing.Point(512, 37);
             this.KeepCheckbox.Name = "KeepCheckbox";
-            this.KeepCheckbox.Size = new System.Drawing.Size(119, 24);
+            this.KeepCheckbox.Size = new System.Drawing.Size(121, 24);
             this.KeepCheckbox.TabIndex = 13;
             this.KeepCheckbox.Text = "Keep";
             this.KeepCheckbox.UseVisualStyleBackColor = true;
@@ -615,7 +644,7 @@
             this.programCmbox.Location = new System.Drawing.Point(221, 35);
             this.programCmbox.Margin = new System.Windows.Forms.Padding(2);
             this.programCmbox.Name = "programCmbox";
-            this.programCmbox.Size = new System.Drawing.Size(80, 28);
+            this.programCmbox.Size = new System.Drawing.Size(79, 28);
             this.programCmbox.TabIndex = 11;
             this.programCmbox.Text = "Program ";
             // 
@@ -636,7 +665,7 @@
             this.btnCourse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCourse.BackColor = System.Drawing.Color.Maroon;
             this.btnCourse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCourse.Location = new System.Drawing.Point(306, 74);
+            this.btnCourse.Location = new System.Drawing.Point(305, 74);
             this.btnCourse.Name = "btnCourse";
             this.btnCourse.Size = new System.Drawing.Size(67, 27);
             this.btnCourse.TabIndex = 26;
@@ -718,35 +747,6 @@
             this.toUpload.Size = new System.Drawing.Size(226, 444);
             this.toUpload.TabIndex = 6;
             this.toUpload.UseCompatibleStateImageBehavior = false;
-            // 
-            // btnOpenCouse
-            // 
-            this.btnOpenCouse.Location = new System.Drawing.Point(12, 12);
-            this.btnOpenCouse.Name = "btnOpenCouse";
-            this.btnOpenCouse.Size = new System.Drawing.Size(75, 23);
-            this.btnOpenCouse.TabIndex = 13;
-            this.btnOpenCouse.Text = "Create Course";
-            this.btnOpenCouse.UseVisualStyleBackColor = true;
-            // 
-            // createNewFaculty
-            // 
-            this.createNewFaculty.Location = new System.Drawing.Point(12, 41);
-            this.createNewFaculty.Name = "createNewFaculty";
-            this.createNewFaculty.Size = new System.Drawing.Size(75, 23);
-            this.createNewFaculty.TabIndex = 14;
-            this.createNewFaculty.Text = "Create Faculty";
-            this.createNewFaculty.UseVisualStyleBackColor = true;
-            // 
-            // cbxKeep
-            // 
-            this.cbxKeep.AutoSize = true;
-            this.cbxKeep.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.cbxKeep.Location = new System.Drawing.Point(562, 128);
-            this.cbxKeep.Name = "cbxKeep";
-            this.cbxKeep.Size = new System.Drawing.Size(51, 17);
-            this.cbxKeep.TabIndex = 15;
-            this.cbxKeep.Text = "Keep";
-            this.cbxKeep.UseVisualStyleBackColor = true;
             // 
             // frmBatchUpload
             // 
