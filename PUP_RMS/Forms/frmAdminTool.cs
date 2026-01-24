@@ -16,5 +16,10 @@ namespace PUP_RMS.Forms
         {
             InitializeComponent();
         }
+
+        private void adminToolCardButton2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

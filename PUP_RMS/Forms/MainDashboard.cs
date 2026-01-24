@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using PUP_RMS.Controls;
@@ -56,14 +56,13 @@ namespace PUP_RMS.Forms
             // Assuming btnDashboard is at the top.
             btnSearch.Top = btnDashboard.Bottom + BUTTON_GAP;
             btnBatchUpload.Top = btnSearch.Bottom + BUTTON_GAP;     // Upload is now a normal button
-            btnCourse.Top = btnBatchUpload.Bottom + BUTTON_GAP;     // Course moves under Upload
-            btnProfessor.Top = btnCourse.Bottom + BUTTON_GAP;
+            btnAdminTool.Top = btnBatchUpload.Bottom + BUTTON_GAP;
 
             // If you added the Settings/Accounts button:
             // btnAccounts.Top = btnProfessor.Bottom + BUTTON_GAP; 
 
             // Logout usually sticks to bottom, or under the last button
-            btnLogout.Top = btnProfessor.Bottom + BUTTON_GAP + 20;
+            btnLogout.Top = btnAdminTool.Bottom + BUTTON_GAP + 20;
 
             pnlContent.BackColor = ChildFormBackgroundColor;
 
@@ -260,33 +259,13 @@ namespace PUP_RMS.Forms
 
 
         //------------------------------------------------------------
-        private void btnProgram_Click(object sender, EventArgs e)
+        private void btnAdminTool_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
             if (CanChangeWindow())
             {
                 ActivateButton(sender);
-                ShowForm(new frmProgram());
-            }
-        }
-
-        private void btnCourse_Click(object sender, EventArgs e)
-        {
-            if (currentActiveButton == sender) return;
-            if (CanChangeWindow())
-            {
-                ActivateButton(sender);
-                ShowForm(new frmCourse());
-            }
-        }
-
-        private void btnProfessor_Click(object sender, EventArgs e)
-        {
-            if (currentActiveButton == sender) return;
-            if (CanChangeWindow())
-            {
-                ActivateButton(sender);
-                ShowForm(new frmFaculty());
+                ShowForm(new frmAdminTool());
             }
         }
 
