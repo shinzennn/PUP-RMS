@@ -1,20 +1,622 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using FontAwesome.Sharp;
+using System;
+using System.Configuration;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Drawing;
+
 
 namespace PUP_RMS.Forms
 {
     public partial class frmSearch : Form
     {
+        private readonly string connectionString =
+            ConfigurationManager.ConnectionStrings["RMSDB"].ConnectionString;
+
+        private bool isLoading = false;
+        private bool isFormShown = false;
+
+        // Filter variables
+        private string selectedSchoolYear = null;
+        private int selectedSemester = 0;
+        private int selectedProgram = 0;
+        private int selectedYearLevel = 0;
+        private int selectedCourse = 0;
+        private int selectedProfessor = 0;
+
         public frmSearch()
         {
             InitializeComponent();
+
+            // Ensure event handlers are wired
+            this.btnSearch.Click += this.btnSearch_Click;
+            this.btnClear.Click += this.btnClear_Click;
+
+            this.cmbProgram.SelectedIndexChanged += this.cmbProgram_SelectedIndexChanged;
+            this.cmbCourse.SelectedIndexChanged += this.cmbCourse_SelectedIndexChanged;
+            this.cmbProfessor.SelectedIndexChanged += this.cmbProfessor_SelectedIndexChanged;
+            this.cmbSemester.SelectedIndexChanged += this.cmbSemester_SelectedIndexChanged;
+            this.cmbSchoolYear.SelectedIndexChanged += this.cmbSchoolYear_SelectedIndexChanged;
+            this.cmbYearLevel.SelectedIndexChanged += this.cmbYearLevel_SelectedIndexChanged;
+
+            // Ensure we re-apply design after any data binding completes
+            this.dgvGradeSheets.DataBindingComplete += dgvGradeSheets_DataBindingComplete;
+
+            // Track when form has finished showing to avoid initialization side-effects (hover handlers)
+            this.Shown += frmSearch_Shown;
+        }
+
+        private void frmSearch_Shown(object sender, EventArgs e)
+        {
+            isFormShown = true;
+        }
+
+        private void dgvGradeSheets_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            // Re-apply design after binding - this ensures columns exist before we access them
+            DataGridDesign();
+        }
+
+        private void frmSearch_Load(object sender, EventArgs e)
+        {
+            label10.Focus();
+            isLoading = true;
+
+            LoadPrograms();
+            LoadCourses();
+            LoadProfessors();
+            LoadSchoolYears();
+            LoadSemesters();
+            LoadYearLevels();
+
+            LoadAllGradeSheets();
+
+            dgvGradeSheets.ClearSelection();
+            dgvGradeSheets.CurrentCell = null;
+
+            isLoading = false;
+
+            // DataGridDesign will also be called from DataBindingComplete; calling it here is safe because of defensive checks
+            DataGridDesign();
+
+            // 1. Remove the "Blue" text selection from all combos
+            DeselectComboText(cmbProgram);
+            DeselectComboText(cmbCourse);
+            DeselectComboText(cmbProfessor);
+            DeselectComboText(cmbSchoolYear);
+            DeselectComboText(cmbSemester);
+            DeselectComboText(cmbYearLevel);
+
+            // 2. Remove focus from the controls entirely
+            this.ActiveControl = null;
+
+        }
+
+        private void DeselectComboText(System.Windows.Forms.ComboBox cmb)
+        {
+            cmb.SelectionStart = 0;
+            cmb.SelectionLength = 0;
+        }
+
+        private string FindColumnName(params string[] candidates)
+        {
+            if (dgvGradeSheets?.Columns == null) return null;
+            foreach (DataGridViewColumn col in dgvGradeSheets.Columns)
+            {
+                foreach (var cand in candidates)
+                {
+                    if (string.Equals(col.Name, cand, StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(col.HeaderText, cand, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return col.Name; // return actual column name to index into collection
+                    }
+                }
+            }
+            return null;
+        }
+
+        private void SafeSetColumnVisible(string nameCandidate, bool visible)
+        {
+            string found = FindColumnName(nameCandidate);
+            if (!string.IsNullOrEmpty(found))
+                dgvGradeSheets.Columns[found].Visible = visible;
+        }
+
+        private void SafeSetColumnWidth(string nameCandidate, int width)
+        {
+            string found = FindColumnName(nameCandidate);
+            if (!string.IsNullOrEmpty(found))
+                dgvGradeSheets.Columns[found].Width = width;
+        }
+
+        private void SafeSetHeaderText(string nameCandidate, string header)
+        {
+            string found = FindColumnName(nameCandidate);
+            if (!string.IsNullOrEmpty(found))
+                dgvGradeSheets.Columns[found].HeaderText = header;
+        }
+
+        private void DataGridDesign()
+        {
+            // Hide columns if present (support possible aliases)
+            SafeSetColumnVisible("GradeSheetID", false);
+            SafeSetColumnVisible("Filepath", false);
+            SafeSetColumnVisible("UploadedBy", false);
+
+            // Widths - support different name variants
+            SafeSetColumnWidth("Filename", 240);
+            SafeSetColumnWidth("SchoolYear", 50);
+            SafeSetColumnWidth("Semester", 38);
+            SafeSetColumnWidth("ProgramCode", 40);
+            SafeSetColumnWidth("YearLevel", 30);
+            SafeSetColumnWidth("CourseCode", 50);
+
+            // Fullname may be aliased as FullName or "Full Name"
+            string fullnameCandidate = FindColumnName("Fullname", "FullName", "Full Name", "FacultyName");
+            if (!string.IsNullOrEmpty(fullnameCandidate))
+                dgvGradeSheets.Columns[fullnameCandidate].Width = 90;
+
+            SafeSetColumnWidth("PageNumber", 45);
+
+            // Headers (set only if column found)
+            SafeSetHeaderText("SchoolYear", "School Year");
+            SafeSetHeaderText("ProgramCode", "Program Code");
+            SafeSetHeaderText("YearLevel", "Year Level");
+            SafeSetHeaderText("CourseCode", "Course Code");
+            if (!string.IsNullOrEmpty(fullnameCandidate))
+                dgvGradeSheets.Columns[fullnameCandidate].HeaderText = "Full Name";
+            SafeSetHeaderText("PageNumber", "Page No.");
+        }
+
+        // =========================
+        // LOAD ALL GRADESHEETS
+        // =========================
+        private void LoadAllGradeSheets()
+        {
+            dgvGradeSheets.DataSource =
+                Core.DbControl.GetData("EXEC sp_GetAllGradeSheets");
+
+            dgvGradeSheets.ClearSelection();
+            dgvGradeSheets.CurrentCell = null;
+        }
+
+        private void LoadNewestGradeSheets()
+        {
+            try
+            {
+                // Replace with your actual connection string variable
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    // Querying top 100 newest entries based on ID
+                    string query = @"SELECT TOP 100 
+                                gs.GradeSheetID, 
+                                gs.Filepath,
+                                gs.Filename, 
+                                p.ProgramCode, 
+                                c.CourseCode, 
+                                f.FirstName + ' ' + f.LastName AS FullName,
+                                gs.SchoolYear, 
+                                gs.Semester, 
+                                gs.PageNumber,
+                                a.AccountID,
+                                gs.UploadedBy
+                             FROM GradeSheet gs
+                             JOIN Program p ON gs.ProgramID = p.ProgramID
+                             JOIN Course c ON gs.CourseID = c.CourseID
+                             JOIN Faculty f ON gs.FacultyID = f.FacultyID
+                             JOIN Account a ON f.AccountID = a.AccountID
+                             ORDER BY gs.GradeSheetID DESC";
+
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    // Bind to your DataGridView
+                    dgvGradeSheets.DataSource = dt;
+
+                    // Optional: Hide the ID column so users don't see the primary key
+                    if (dgvGradeSheets.Columns.Contains("GradeSheetID"))
+                    {
+                        dgvGradeSheets.Columns["GradeSheetID"].Visible = false;
+                    }
+
+                    // Apply your custom header names
+                    string p = FindColumnName("Filename");
+                    if (!string.IsNullOrEmpty(p)) dgvGradeSheets.Columns[p].HeaderText = "File Name";
+                    p = FindColumnName("ProgramCode");
+                    if (!string.IsNullOrEmpty(p)) dgvGradeSheets.Columns[p].HeaderText = "Program";
+                    // ... add other header renames here
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading data: " + ex.Message);
+            }
+        }
+
+        // =========================
+        // LOAD COMBOBOXES
+        // =========================
+        private void LoadPrograms()
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(
+                "SELECT ProgramID, ProgramCode FROM Program ORDER BY ProgramCode", con))
+            {
+                DataTable dt = new DataTable();
+                con.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                // Placeholder row
+                DataRow placeholder = dt.NewRow();
+                placeholder["ProgramID"] = 0;
+                placeholder["ProgramCode"] = "Program";
+                dt.Rows.InsertAt(placeholder, 0);
+
+                cmbProgram.DataSource = dt;
+                cmbProgram.DisplayMember = "ProgramCode";
+                cmbProgram.ValueMember = "ProgramID";
+                cmbProgram.SelectedIndex = 0;
+            }
+        }
+
+        private void LoadCourses()
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(
+                "SELECT CourseID, CourseCode FROM Course ORDER BY CourseCode", con))
+            {
+                DataTable dt = new DataTable();
+                con.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                DataRow placeholder = dt.NewRow();
+                placeholder["CourseID"] = 0;
+                placeholder["CourseCode"] = "Course";
+                dt.Rows.InsertAt(placeholder, 0);
+
+                cmbCourse.DataSource = dt;
+                cmbCourse.DisplayMember = "CourseCode";
+                cmbCourse.ValueMember = "CourseID";
+                cmbCourse.SelectedIndex = 0;
+            }
+        }
+
+        private void LoadProfessors()
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(
+                "SELECT FacultyID, FirstName + ' ' + LastName AS FacultyName FROM Faculty ORDER BY LastName, FirstName", con))
+            {
+                DataTable dt = new DataTable();
+                con.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                DataRow placeholder = dt.NewRow();
+                placeholder["FacultyID"] = 0;
+                placeholder["FacultyName"] = "Professor";
+                dt.Rows.InsertAt(placeholder, 0);
+
+                cmbProfessor.DataSource = dt;
+                cmbProfessor.DisplayMember = "FacultyName";
+                cmbProfessor.ValueMember = "FacultyID";
+                cmbProfessor.SelectedIndex = 0;
+            }
+        }
+
+        private void LoadSchoolYears()
+        {
+            // Example: populate with distinct years from database
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(
+                "SELECT DISTINCT SchoolYear FROM GradeSheet ORDER BY SchoolYear DESC", con))
+            {
+                DataTable dt = new DataTable();
+                con.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                DataRow placeholder = dt.NewRow();
+                placeholder["SchoolYear"] = "School Year";
+                dt.Rows.InsertAt(placeholder, 0);
+
+                cmbSchoolYear.DataSource = dt;
+                cmbSchoolYear.DisplayMember = "SchoolYear";
+                cmbSchoolYear.ValueMember = "SchoolYear";
+                cmbSchoolYear.SelectedIndex = 0;
+            }
+        }
+
+        private void LoadSemesters()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Name", typeof(string));
+
+            dt.Rows.Add(0, "Semester");   // placeholder
+            dt.Rows.Add(1, "1st Semester");
+            dt.Rows.Add(2, "2nd Semester");
+            dt.Rows.Add(2, "Summer Semester");
+
+            cmbSemester.DataSource = dt;
+            cmbSemester.DisplayMember = "Name";
+            cmbSemester.ValueMember = "ID";
+            cmbSemester.SelectedIndex = 0;
+        }
+
+        private void LoadYearLevels()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Name", typeof(string));
+
+            dt.Rows.Add(0, "Year Level");   // placeholder
+            dt.Rows.Add(1, "1st Year");
+            dt.Rows.Add(2, "2nd Year");
+            dt.Rows.Add(3, "3rd Year");
+            dt.Rows.Add(4, "4th Year");
+            dt.Rows.Add(4, "5th Year");
+
+            cmbYearLevel.DataSource = dt;
+            cmbYearLevel.DisplayMember = "Name";
+            cmbYearLevel.ValueMember = "ID";
+            cmbYearLevel.SelectedIndex = 0;
+        }
+
+        // =========================
+        // COMBOBOX SELECTION EVENTS
+        // =========================
+        private void cmbSchoolYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+
+            selectedSchoolYear = cmbSchoolYear.SelectedIndex > 0
+                ? cmbSchoolYear.SelectedValue.ToString()
+                : null;
+        }
+
+        private void cmbSemester_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            selectedSemester = cmbSemester.SelectedValue != null
+                ? Convert.ToInt32(cmbSemester.SelectedValue)
+                : 0;
+        }
+
+        private void cmbYearLevel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            selectedYearLevel = cmbYearLevel.SelectedValue != null
+                ? Convert.ToInt32(cmbYearLevel.SelectedValue)
+                : 0;
+        }
+
+        private void cmbProgram_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            selectedProgram = cmbProgram.SelectedValue != null
+                ? Convert.ToInt32(cmbProgram.SelectedValue)
+                : 0;
+        }
+
+        private void cmbCourse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            selectedCourse = cmbCourse.SelectedValue != null
+                ? Convert.ToInt32(cmbCourse.SelectedValue)
+                : 0;
+        }
+
+        private void cmbProfessor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            selectedProfessor = cmbProfessor.SelectedValue != null
+                ? Convert.ToInt32(cmbProfessor.SelectedValue)
+                : 0;
+        }
+
+        // =========================
+        // SEARCH BUTTON
+        // =========================
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("sp_SearchGradeSheet", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@SchoolYear", SqlDbType.VarChar, 20)
+                        .Value = string.IsNullOrEmpty(selectedSchoolYear) ? (object)DBNull.Value : selectedSchoolYear;
+                    cmd.Parameters.Add("@Semester", SqlDbType.Int)
+                        .Value = selectedSemester == 0 ? (object)DBNull.Value : selectedSemester;
+                    cmd.Parameters.Add("@ProgramID", SqlDbType.Int)
+                        .Value = selectedProgram == 0 ? (object)DBNull.Value : selectedProgram;
+                    cmd.Parameters.Add("@YearLevel", SqlDbType.Int)
+                        .Value = selectedYearLevel == 0 ? (object)DBNull.Value : selectedYearLevel;
+                    cmd.Parameters.Add("@CourseID", SqlDbType.Int)
+                        .Value = selectedCourse == 0 ? (object)DBNull.Value : selectedCourse;
+                    cmd.Parameters.Add("@FacultyID", SqlDbType.Int)
+                        .Value = selectedProfessor == 0 ? (object)DBNull.Value : selectedProfessor;
+
+                    DataTable dt = new DataTable();
+                    con.Open();
+                    dt.Load(cmd.ExecuteReader());
+
+                    dgvGradeSheets.DataSource = dt;
+                    dgvGradeSheets.ClearSelection();
+                    dgvGradeSheets.CurrentCell = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error performing search: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // =========================
+        // CLEAR BUTTON
+        // =========================
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            isLoading = true;
+
+            // Reset all ComboBoxes to placeholder
+            cmbSchoolYear.SelectedIndex = 0;
+            cmbSemester.SelectedIndex = 0;
+            cmbYearLevel.SelectedIndex = 0;
+            cmbProgram.SelectedIndex = 0;
+            cmbCourse.SelectedIndex = 0;
+            cmbProfessor.SelectedIndex = 0;
+
+            // Reset filter variables
+            selectedSchoolYear = null;
+            selectedSemester = 0;
+            selectedYearLevel = 0;
+            selectedProgram = 0;
+            selectedCourse = 0;
+            selectedProfessor = 0;
+
+            LoadAllGradeSheets();
+            isLoading = false;
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            if (dgvGradeSheets.CurrentRow == null) return;
+            OpenGradeSheetDetailsFromGrid(dgvGradeSheets.CurrentRow.Index);
+        }
+
+        private void dgvGradeSheets_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            OpenGradeSheetDetailsFromGrid(e.RowIndex);
+        }
+
+        // New helper: refresh grid using currently selected filters (or load all if none)
+        private void RefreshGridUsingCurrentFilters()
+        {
+            try
+            {
+                // If no filters selected, show all
+                bool noFilters =
+                    string.IsNullOrEmpty(selectedSchoolYear) &&
+                    selectedSemester == 0 &&
+                    selectedProgram == 0 &&
+                    selectedYearLevel == 0 &&
+                    selectedCourse == 0 &&
+                    selectedProfessor == 0;
+
+                if (noFilters)
+                {
+                    LoadAllGradeSheets();
+                    return;
+                }
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("sp_SearchGradeSheet", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@SchoolYear", SqlDbType.VarChar, 20)
+                        .Value = string.IsNullOrEmpty(selectedSchoolYear) ? (object)DBNull.Value : selectedSchoolYear;
+                    cmd.Parameters.Add("@Semester", SqlDbType.Int)
+                        .Value = selectedSemester == 0 ? (object)DBNull.Value : selectedSemester;
+                    cmd.Parameters.Add("@ProgramID", SqlDbType.Int)
+                        .Value = selectedProgram == 0 ? (object)DBNull.Value : selectedProgram;
+                    cmd.Parameters.Add("@YearLevel", SqlDbType.Int)
+                        .Value = selectedYearLevel == 0 ? (object)DBNull.Value : selectedYearLevel;
+                    cmd.Parameters.Add("@CourseID", SqlDbType.Int)
+                        .Value = selectedCourse == 0 ? (object)DBNull.Value : selectedCourse;
+                    cmd.Parameters.Add("@FacultyID", SqlDbType.Int)
+                        .Value = selectedProfessor == 0 ? (object)DBNull.Value : selectedProfessor;
+
+                    DataTable dt = new DataTable();
+                    con.Open();
+                    dt.Load(cmd.ExecuteReader());
+
+                    dgvGradeSheets.DataSource = dt;
+                    dgvGradeSheets.ClearSelection();
+                    dgvGradeSheets.CurrentCell = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error refreshing grid: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Modified: open details and refresh using current filters (and try to re-select the same row)
+        private void OpenGradeSheetDetailsFromGrid(int rowIndex)
+        {
+            try
+            {
+                int gradeSheetID = 0;
+                if (!int.TryParse(dgvGradeSheets.Rows[rowIndex].Cells["GradeSheetID"].Value.ToString(), out gradeSheetID))
+                {
+                    MessageBox.Show("Invalid GradeSheet selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                using (frmGradeSheetDetails frm = new frmGradeSheetDetails())
+                {
+                    frm.GradeSheetID = gradeSheetID;
+                    frm.ShowDialog(); // modal
+
+                    // Refresh grid according to current filters (don't always reset to "all")
+                    RefreshGridUsingCurrentFilters();
+
+                    // Try to find and re-select the same grade sheet row after refresh
+                    for (int i = 0; i < dgvGradeSheets.Rows.Count; i++)
+                    {
+                        object cellVal = dgvGradeSheets.Rows[i].Cells["GradeSheetID"].Value;
+                        if (cellVal != null && int.TryParse(cellVal.ToString(), out int id) && id == gradeSheetID)
+                        {
+                            dgvGradeSheets.ClearSelection();
+                            dgvGradeSheets.Rows[i].Selected = true;
+                            string filenameCol = FindColumnName("Filename");
+                            if (!string.IsNullOrEmpty(filenameCol))
+                            {
+                                dgvGradeSheets.CurrentCell = dgvGradeSheets.Rows[i].Cells[filenameCol];
+                            }
+                            dgvGradeSheets.FirstDisplayedScrollingRowIndex = Math.Max(0, i - 2);
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to open GradeSheet details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvGradeSheets_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvGradeSheets_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ignore events fired during initialization before the form is shown
+            if (!isFormShown) return;
+
+            if (e.RowIndex >= 0)
+            {
+                dgvGradeSheets.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+            }
+        }
+
+        private void dgvGradeSheets_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ignore events fired during initialization before the form is shown
+            if (!isFormShown) return;
+
+            if (e.RowIndex >= 0)
+            {
+                dgvGradeSheets.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
+            }
         }
     }
 }

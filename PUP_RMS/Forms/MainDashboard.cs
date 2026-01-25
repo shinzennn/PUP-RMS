@@ -30,6 +30,8 @@ namespace PUP_RMS.Forms
         private readonly Color ButtonMaroon = Color.FromArgb(128, 0, 0);
         private readonly Color ChildFormBackgroundColor = Color.FromArgb(240, 240, 240);
 
+
+
         public MainDashboard()
         {
             this.Opacity = 0;
@@ -162,10 +164,16 @@ namespace PUP_RMS.Forms
 
             activeForm = childForm;
 
+
             if (!pnlContent.Controls.Contains(childForm))
             {
                 PrepareChildForm(childForm);
+
+
             }
+
+            
+
 
             childForm.BringToFront();
             childForm.Show();
@@ -192,16 +200,28 @@ namespace PUP_RMS.Forms
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(_dashboardInstance);
+
+                if (currentActiveButton == sender) return;
+
+                if (CanChangeWindow())
+                {
+                    ActivateButton(sender);
+                    ShowForm(_dashboardInstance);
+                }
+
+
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(new frmSearch());
+
+            if (CanChangeWindow())
+            {
+                ActivateButton(sender);
+                ShowForm(new frmSearch());
+            }
+
         }
 
         // --- UPDATED UPLOAD BUTTON ---
@@ -209,42 +229,80 @@ namespace PUP_RMS.Forms
         private void btnUpload_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            ActivateButton(sender);
+            if (CanChangeWindow())
+            {
+                ActivateButton(sender);
+                ShowForm(new frmBatchUpload());
+            }
 
-            // Directly show the Batch Upload Form
-            ShowForm(new frmBatchUpload());
+
         }
+
+        // --------------- HELPER FOR UPLOAD BUTTON ------------------
+
+
+        private bool CanChangeWindow()
+        {
+            // Check if the current active form is the Batch Upload form
+            if (activeForm != null && activeForm is frmBatchUpload)
+            {
+                DialogResult result = MessageBox.Show(
+                    "Leaving this window will reset your uploaded data. Do you want to continue?",
+                    "Confirm Navigation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                return result == DialogResult.Yes;
+            }
+
+            return true; // Safe to change if not on the upload form
+        }
+
+
+        //------------------------------------------------------------
         private void btnProgram_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-
-            ShowForm(new frmProgram());
+            if (CanChangeWindow())
+            {
+                ActivateButton(sender);
+                ShowForm(new frmProgram());
+            }
         }
 
         private void btnCourse_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(new frmCourse());
+            if (CanChangeWindow())
+            {
+                ActivateButton(sender);
+                ShowForm(new frmCourse());
+            }
         }
 
         private void btnProfessor_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(new frmProfessor());
+            if (CanChangeWindow())
+            {
+                ActivateButton(sender);
+                ShowForm(new frmFaculty());
+            }
         }
 
         private void btnAccounts_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            ActivateButton(sender);
-            ShowForm(new frmAccounts());
+            if (CanChangeWindow())
+            {
+                ActivateButton(sender);
+                ShowForm(new frmAccount());
+            }
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
+            if (!CanChangeWindow()) return;
             DialogResult result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
@@ -263,5 +321,13 @@ namespace PUP_RMS.Forms
         {
 
         }
+
+        private void flowLayoutPanelMain_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+
+
     }
 }

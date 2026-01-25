@@ -30,22 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.roundedShadowPanel2 = new PUP_RMS.RoundedShadowPanel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.checkBoxRememberMe = new System.Windows.Forms.CheckBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.roundedButtonSignIn = new PUP_RMS.RoundedButton();
-            this.label6 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.roundedPanel3 = new PUP_RMS.RoundedPanel();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.pictureBoxHide = new System.Windows.Forms.PictureBox();
             this.pictureBoxShow = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.roundedPanel2 = new PUP_RMS.RoundedPanel();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -65,14 +62,11 @@
             this.roundedShadowPanel2.BorderColor = System.Drawing.Color.Transparent;
             this.roundedShadowPanel2.BorderRadius = 20;
             this.roundedShadowPanel2.BorderSize = 2;
-            this.roundedShadowPanel2.Controls.Add(this.linkLabel2);
             this.roundedShadowPanel2.Controls.Add(this.checkBoxRememberMe);
             this.roundedShadowPanel2.Controls.Add(this.pictureBox3);
             this.roundedShadowPanel2.Controls.Add(this.label8);
             this.roundedShadowPanel2.Controls.Add(this.label7);
             this.roundedShadowPanel2.Controls.Add(this.roundedButtonSignIn);
-            this.roundedShadowPanel2.Controls.Add(this.label6);
-            this.roundedShadowPanel2.Controls.Add(this.linkLabel1);
             this.roundedShadowPanel2.Controls.Add(this.label5);
             this.roundedShadowPanel2.Controls.Add(this.label4);
             this.roundedShadowPanel2.Controls.Add(this.label3);
@@ -89,21 +83,6 @@
             this.roundedShadowPanel2.ShadowShift = 12;
             this.roundedShadowPanel2.Size = new System.Drawing.Size(420, 530);
             this.roundedShadowPanel2.TabIndex = 5;
-            // 
-            // linkLabel2
-            // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel2.ForeColor = System.Drawing.Color.Blue;
-            this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.linkLabel2.LinkColor = System.Drawing.Color.Blue;
-            this.linkLabel2.Location = new System.Drawing.Point(259, 477);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(52, 16);
-            this.linkLabel2.TabIndex = 44;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Sign up";
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSignUp);
             // 
             // checkBoxRememberMe
             // 
@@ -168,31 +147,6 @@
             this.roundedButtonSignIn.UseVisualStyleBackColor = false;
             this.roundedButtonSignIn.Click += new System.EventHandler(this.roundedButton_Click_1);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(111, 478);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(146, 16);
-            this.label6.TabIndex = 38;
-            this.label6.Text = "Don\'t have an account?";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.ForeColor = System.Drawing.Color.Blue;
-            this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.linkLabel1.LinkColor = System.Drawing.Color.Blue;
-            this.linkLabel1.Location = new System.Drawing.Point(254, 387);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(116, 16);
-            this.linkLabel1.TabIndex = 37;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Forgot Password?";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -235,10 +189,10 @@
             this.roundedPanel3.BorderColor = System.Drawing.Color.Goldenrod;
             this.roundedPanel3.BorderRadius = 20;
             this.roundedPanel3.BorderSize = 2;
+            this.roundedPanel3.Controls.Add(this.textBox4);
             this.roundedPanel3.Controls.Add(this.pictureBoxHide);
             this.roundedPanel3.Controls.Add(this.pictureBoxShow);
             this.roundedPanel3.Controls.Add(this.pictureBox1);
-            this.roundedPanel3.Controls.Add(this.textBox4);
             this.roundedPanel3.HoverBackColor = System.Drawing.Color.Gainsboro;
             this.roundedPanel3.HoverBorderColor = System.Drawing.Color.Maroon;
             this.roundedPanel3.Location = new System.Drawing.Point(50, 330);
@@ -251,6 +205,19 @@
             this.roundedPanel3.Size = new System.Drawing.Size(317, 49);
             this.roundedPanel3.TabIndex = 32;
             this.roundedPanel3.Click += new System.EventHandler(this.roundedPanel3_Click);
+            // 
+            // textBox4
+            // 
+            this.textBox4.BackColor = System.Drawing.Color.Gainsboro;
+            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox4.Location = new System.Drawing.Point(40, 13);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.PasswordChar = '●';
+            this.textBox4.Size = new System.Drawing.Size(234, 19);
+            this.textBox4.TabIndex = 1;
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.textBox4.Enter += new System.EventHandler(this.textBox4_Enter);
             // 
             // pictureBoxHide
             // 
@@ -285,18 +252,6 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.passIcon_click);
-            // 
-            // textBox4
-            // 
-            this.textBox4.BackColor = System.Drawing.Color.Gainsboro;
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(40, 13);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.PasswordChar = '●';
-            this.textBox4.Size = new System.Drawing.Size(234, 19);
-            this.textBox4.TabIndex = 1;
-            this.textBox4.Enter += new System.EventHandler(this.textBox4_Enter);
             // 
             // roundedPanel2
             // 
@@ -384,7 +339,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private RoundedButton roundedButtonSignIn;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -397,8 +351,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.CheckBox checkBoxRememberMe;
-        private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

@@ -10,10 +10,15 @@ namespace PUP_RMS.Model
     {
         public int GradeSheetID { get; set; }
         public string Filename { get; set; }
+        public string Filepath { get; set; }
         public string SchoolYear { get; set; }
         public string Semester { get; set; }
+        public int ProgramID { get; set; }
+        public int YearLevel { get; set; }
         public int CourseID { get; set; }
-        public int ProfessorID { get; set; }
-        public int AdminID { get; set; }
+        public int FacultyID { get; set; }
+        public int PageNumber { get; set; }
+        public int AccountID { get; set; }
+        public DateTime DateUploaded { get; set; }
     }
 }

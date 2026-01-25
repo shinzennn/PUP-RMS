@@ -1,11 +1,15 @@
-﻿using System;
+﻿using PUP_RMS.Core;
+using PUP_RMS.Helper; 
+using System;
+using System.Data;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace PUP_RMS.Forms
 {
+
     public partial class frmDashboard : Form
     {
         // --- FADE TIMER ---
@@ -58,12 +62,6 @@ namespace PUP_RMS.Forms
                 this.cpDriveUsage.Parent.Resize += (s, e) => ResizeChart();
             }
 
-            //// 3. TARGETED BUFFERING (Top Cards)
-            //ForceDoubleBuffer(pnlTotalGradesSheets);
-            //ForceDoubleBuffer(pnlTotalSubjects);
-            //ForceDoubleBuffer(pnlTotalProfessors);
-            //ForceDoubleBuffer(pnlTotalRecentlyUploads);
-
             // 4. GLOBAL RECURSIVE BUFFERING
             ApplyDoubleBufferingRecursively(this.Controls);
 
@@ -81,6 +79,7 @@ namespace PUP_RMS.Forms
                 this.timerStorageUpdate.Tick += TimerStorageUpdate_Tick;
             }
         }
+
 
         // --- PERFORMANCE FIX: WS_CLIPCHILDREN ---
         protected override CreateParams CreateParams
@@ -157,6 +156,8 @@ namespace PUP_RMS.Forms
 
         private void FrmDashboard_Load(object sender, EventArgs e)
         {
+            LoadDashboardCounts();
+
             // Capture the Gradient Colors set in the Designer Properties
             if (this.cpDriveUsage != null)
             {
@@ -171,6 +172,16 @@ namespace PUP_RMS.Forms
             // Run storage check immediately
             UpdateDriveStatus();
             if (timerStorageUpdate != null) timerStorageUpdate.Start();
+
+            LoadDashboardCounts();
+            LoadRecentUploads();
+            string fullname = MainDashboard.CurrentAccount.FirstName + " " + MainDashboard.CurrentAccount.LastName;
+            LoadAccountName(fullname);
+        }
+
+        public void LoadAccountName(string fullname)
+        {
+            lblAccountName.Text = fullname;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -208,7 +219,8 @@ namespace PUP_RMS.Forms
             AttachHoverEffects(dcTotalGradesheets);
             AttachHoverEffects(dcTotalSubjects);
             AttachHoverEffects(dcTotalProfessors);
-            AttachHoverEffects(dcRecentlyUploaded);
+            AttachHoverEffects(dcTotalProgram);
+            AttachHoverEffects(dcTotalProgram);
 
         }
 
@@ -226,13 +238,24 @@ namespace PUP_RMS.Forms
         // =========================================================================
         // SECTION C: DATA GRID VIEW STYLING LOGIC
         // =========================================================================
+        // 1. ADD THIS VARIABLE at the top of your class (inside frmDashboard)
+        // 1. ADD THIS VARIABLE at the top of your class (inside frmDashboard)
+        private Point _hoveredActionCell = new Point(-1, -1);
+
+        // 2. REPLACE your SetupDataGridView method
         private void SetupDataGridView(DataGridView dgv, string type)
         {
+            // Enable Double Buffering
             typeof(DataGridView).InvokeMember("DoubleBuffered",
                 BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
                 null, dgv, new object[] { true });
 
+            dgv.ReadOnly = true;
+            dgv.MultiSelect = false;
+
             dgv.BackgroundColor = ControlBaseColor;
+            dgv.RowTemplate.Height = 45;
+            dgv.ColumnHeadersHeight = 40;
             dgv.BorderStyle = BorderStyle.None;
             dgv.RowHeadersVisible = false;
             dgv.AllowUserToAddRows = false;
@@ -241,22 +264,25 @@ namespace PUP_RMS.Forms
             dgv.GridColor = Color.FromArgb(221, 221, 221);
             dgv.EnableHeadersVisualStyles = false;
 
+            // Header Style
             DataGridViewCellStyle headerStyle = new DataGridViewCellStyle();
             headerStyle.BackColor = AccentMaroon;
             headerStyle.ForeColor = Color.White;
             headerStyle.Font = new Font(dgv.Font.FontFamily, 9, FontStyle.Bold);
             headerStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             headerStyle.SelectionBackColor = AccentMaroon;
+            headerStyle.SelectionForeColor = Color.White;
             headerStyle.Padding = new Padding(5);
             dgv.ColumnHeadersDefaultCellStyle = headerStyle;
             dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dgv.ColumnHeadersHeight = 30;
             dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 
+            // Default Cell Styles
             DataGridViewCellStyle defaultCellStyle = new DataGridViewCellStyle();
             defaultCellStyle.BackColor = ControlBaseColor;
             defaultCellStyle.ForeColor = Color.Black;
-            defaultCellStyle.SelectionBackColor = Color.FromArgb(215, 150, 150);
+            defaultCellStyle.SelectionBackColor = ControlBaseColor;
             defaultCellStyle.SelectionForeColor = Color.Black;
             defaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv.DefaultCellStyle = defaultCellStyle;
@@ -264,7 +290,7 @@ namespace PUP_RMS.Forms
             DataGridViewCellStyle alternatingStyle = new DataGridViewCellStyle();
             alternatingStyle.BackColor = BackgroundLight;
             alternatingStyle.ForeColor = Color.Black;
-            alternatingStyle.SelectionBackColor = Color.FromArgb(215, 150, 150);
+            alternatingStyle.SelectionBackColor = BackgroundLight;
             alternatingStyle.SelectionForeColor = Color.Black;
             alternatingStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv.AlternatingRowsDefaultCellStyle = alternatingStyle;
@@ -273,77 +299,115 @@ namespace PUP_RMS.Forms
 
             if (type == "Uploads")
             {
-                dgv.Columns.Add("colTimestamp", "Timestamp");
                 dgv.Columns.Add("colFilename", "File Name");
-                dgv.Columns.Add("colSubject", "Subject");
+                dgv.Columns.Add("colCourse", "Course");
                 dgv.Columns.Add("colUploadedBy", "Uploaded By");
 
-                dgv.Columns.Add(new DataGridViewButtonColumn
-                {
-                    Name = "colAction",
-                    HeaderText = "Action",
-                    Text = "View",
-                    UseColumnTextForButtonValue = true
-                });
+               
 
-                dgv.Columns["colTimestamp"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                // Sizing
                 dgv.Columns["colFilename"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dgv.Columns["colSubject"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dgv.Columns["colUploadedBy"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dgv.Columns["colAction"].Width = 70;
-                dgv.Columns["colAction"].MinimumWidth = 60;
+                dgv.Columns["colCourse"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgv.Columns["colUploadedBy"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                
 
-                dgv.Columns["colTimestamp"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgv.Columns["colSubject"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgv.Columns["colAction"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dgv.Columns["colFilename"].FillWeight = 45;
+                dgv.Columns["colUploadedBy"].FillWeight = 25;
+                dgv.Columns["colCourse"].FillWeight = 15;
+                
 
+                // Alignment
+                dgv.Columns["colFilename"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                dgv.Columns["colCourse"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dgv.Columns["colUploadedBy"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                
+
+                dgv.AlternatingRowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.NotSet;
+
+                // --- HOOK EVENTS FOR PAINTING AND HOVER ---
                 dgv.CellPainting -= dgvRecentUploads_CellPainting;
                 dgv.CellPainting += dgvRecentUploads_CellPainting;
+
+                dgv.CellMouseEnter -= dgvRecentUploads_CellMouseEnter;
+                dgv.CellMouseEnter += dgvRecentUploads_CellMouseEnter;
+
+                dgv.CellMouseLeave -= dgvRecentUploads_CellMouseLeave;
+                dgv.CellMouseLeave += dgvRecentUploads_CellMouseLeave;
             }
             else if (type == "ActivityLog")
             {
+                // Activity Log Logic
                 dgv.Columns.Add("colActivityDate", "Date");
                 dgv.Columns.Add("colActivityUser", "User");
                 dgv.Columns.Add("colActivityAction", "Action");
                 dgv.Columns.Add("colActivityDetails", "Details");
-
                 dgv.Columns["colActivityDate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgv.Columns["colActivityUser"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgv.Columns["colActivityAction"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgv.Columns["colActivityDetails"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
                 dgv.Columns["colActivityDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgv.Columns["colActivityUser"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgv.Columns["colActivityAction"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
         }
 
-        // =========================================================================
-        // SECTION D: CUSTOM BUTTON RENDERING
-        // =========================================================================
+        // 3. ADD Mouse Enter Event
+        private void dgvRecentUploads_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvRecentUploads.Columns[e.ColumnIndex].Name == "colAction")
+            {
+                _hoveredActionCell = new Point(e.ColumnIndex, e.RowIndex);
+                dgvRecentUploads.InvalidateCell(e.ColumnIndex, e.RowIndex); // Force repaint for color change
+                dgvRecentUploads.Cursor = Cursors.Hand;
+            }
+        }
+
+        // 4. ADD Mouse Leave Event
+        private void dgvRecentUploads_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvRecentUploads.Columns[e.ColumnIndex].Name == "colAction")
+            {
+                _hoveredActionCell = new Point(-1, -1); // Reset
+                dgvRecentUploads.InvalidateCell(e.ColumnIndex, e.RowIndex); // Force repaint to reset color
+                dgvRecentUploads.Cursor = Cursors.Default;
+            }
+        }
+
+        // 5. REPLACE CellPainting Event (Draws Text + Hover Color)
         private void dgvRecentUploads_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0 &&
                 dgvRecentUploads.Columns.Contains("colAction") &&
                 dgvRecentUploads.Columns[e.ColumnIndex].Name == "colAction")
             {
+                // 1. Paint the standard cell background
                 e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.Border);
-                Rectangle buttonBounds = e.CellBounds;
-                buttonBounds.Inflate(-5, -5);
 
-                using (SolidBrush brush = new SolidBrush(AccentMaroon))
+                // 2. Define the "Button" size
+                // Inflate(-15, -10) shrinks the colored box so it is smaller than the cell
+                Rectangle buttonBounds = e.CellBounds;
+                buttonBounds.Inflate(-15, -10);
+
+                // 3. Determine Color (Green if hovered, Maroon if not)
+                bool isHovered = (e.ColumnIndex == _hoveredActionCell.X && e.RowIndex == _hoveredActionCell.Y);
+                Color buttonColor = isHovered ? Color.Goldenrod: AccentMaroon;
+
+                // 4. Draw the Colored Button Background
+                using (SolidBrush brush = new SolidBrush(buttonColor))
                 {
                     e.Graphics.FillRectangle(brush, buttonBounds);
                 }
 
+                // 5. Draw the Text "View"
+                // We use "View" explicitly here.
                 TextRenderer.DrawText(e.Graphics,
-                    (string)e.Value,
-                    e.CellStyle.Font,
+                    "View",
+                    new Font(e.CellStyle.Font.FontFamily, 8, FontStyle.Regular),
                     buttonBounds,
                     Color.White,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
 
-                e.Handled = true;
+                e.Handled = true; // Tell system we finished painting
             }
         }
 
@@ -440,6 +504,33 @@ namespace PUP_RMS.Forms
             {
                 // Silent fail or set text to error
                 this.lblStorageUsageDetails.Text = "Storage Error";
+            }
+        }
+        private void LoadDashboardCounts()
+        {
+            // Now the Form doesn't know about SQL. It just asks the Helper.
+
+            // 1. Grade Sheets
+            if (dcTotalGradesheets != null)
+            {
+                dcTotalGradesheets.ValueText = DashboardHelper.GetGradeSheetCount();
+            }
+
+            // 2. Subjects
+            if (dcTotalSubjects != null)
+            {
+                dcTotalSubjects.ValueText = DashboardHelper.GetSubjectCount();
+            }
+
+            // 3. Professors
+            if (dcTotalProfessors != null)
+            {
+                dcTotalProfessors.ValueText = DashboardHelper.GetProfessorCount();
+            }
+
+            if (dcTotalProgram != null)
+            {
+                dcTotalProgram.ValueText = DashboardHelper.GetProgramCount();
             }
         }
 
@@ -598,6 +689,70 @@ namespace PUP_RMS.Forms
         private void cpDriveUsage_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void dcTotalGradesheets_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dvgActivityLog_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void timerActivityLog_Tick(object sender, EventArgs e)
+        {
+             // We call the public load method we created earlier
+                recentActivityLog1.LoadDefaultActivities();
+                LoadDashboardCounts();
+
+        }
+
+        public void RefreshActivityLog()
+        {
+            if (Application.OpenForms["frmDashboard"] is frmDashboard dash)
+            {
+                dash.recentActivityLog1.LoadDefaultActivities();
+            }
+        }
+
+        // Add this method inside frmDashboard class
+        private void LoadRecentUploads()
+        {
+            try
+            {
+                // 1. Get data from the Helper
+                DataTable dt = DashboardHelper.recentlyUploads();
+
+                // 2. Clear existing rows to prevent duplicates
+                if (dgvRecentUploads != null)
+                {
+                    dgvRecentUploads.Rows.Clear();
+
+                    // 3. Loop through database rows and add to Grid
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            dgvRecentUploads.Rows.Add(
+                                row["Filename"].ToString(),       
+                                row["CourseCode"].ToString(),     
+                                row["UploadedBy"].ToString(),    
+                                "View"                            
+                            );
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error loading recent uploads: " + ex.Message);
+            }
+        }
+        private void dgvRecentUploads_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            DashboardHelper.recentlyUploads();
         }
     }
 }

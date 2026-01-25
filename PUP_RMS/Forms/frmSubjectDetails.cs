@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using PUP_RMS.Helper; // This connects to your DashboardHelper
 
 namespace PUP_RMS.Forms
 {
@@ -15,7 +17,7 @@ namespace PUP_RMS.Forms
         private readonly Color ClrMaroon = Color.FromArgb(108, 42, 51);
         private readonly Color ClrGold = Color.FromArgb(229, 178, 66);
 
-        // Window Dragging
+        // Window Dragging Variables
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;
@@ -34,7 +36,7 @@ namespace PUP_RMS.Forms
             InitializeComponent();
             _subjectName = subjectName;
 
-            // Enable Double Buffering
+            // Enable Double Buffering for smooth rendering
             SetStyle(ControlStyles.AllPaintingInWmPaint |
                      ControlStyles.UserPaint |
                      ControlStyles.DoubleBuffer |
@@ -45,7 +47,7 @@ namespace PUP_RMS.Forms
 
         private void frmSubjectDetails_Load(object sender, EventArgs e)
         {
-            LoadFakeData();
+            LoadData();
         }
 
         private void SetupFormDesign()
@@ -53,21 +55,20 @@ namespace PUP_RMS.Forms
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterParent;
             this.ShowInTaskbar = false;
-            this.Size = new Size(580, 400); // Slightly smaller as requested
+            this.Size = new Size(700, 450); // Adjusted size to fit data better
             this.BackColor = Color.White;
             this.Padding = new Padding(0);
 
-            // Wire up Mouse Events for dragging
+            // Wire up Mouse Events for dragging the window
             this.MouseDown += Form_MouseDown;
             this.MouseMove += Form_MouseMove;
             this.MouseUp += Form_MouseUp;
 
-            // --- DATA GRID ---
+            // --- DATA GRID SETUP ---
             dgv = new DataGridView
             {
                 Name = "dgvDetails",
-                // Manually position below the painted header (50px)
-                Location = new Point(0, 50),
+                Location = new Point(0, 50), // Position below the 50px header
                 Size = new Size(Width, Height - 50),
                 BackgroundColor = Color.White,
                 BorderStyle = BorderStyle.None,
@@ -79,12 +80,13 @@ namespace PUP_RMS.Forms
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 ReadOnly = true,
                 GridColor = Color.WhiteSmoke,
-                RowTemplate = { Height = 30 }
+                RowTemplate = { Height = 35 }
             };
 
+            // Header Style
             DataGridViewCellStyle headerStyle = new DataGridViewCellStyle
             {
-                BackColor = Color.FromArgb(214, 161, 46),
+                BackColor = Color.FromArgb(214, 161, 46), // Gold
                 ForeColor = Color.Black,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleLeft,
@@ -96,32 +98,38 @@ namespace PUP_RMS.Forms
             dgv.ColumnHeadersHeight = 40;
             dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
 
+            // Row Style
             DataGridViewCellStyle rowStyle = new DataGridViewCellStyle
             {
                 BackColor = Color.White,
                 ForeColor = Color.Black,
-                SelectionBackColor = Color.FromArgb(100, 100, 100),
+                SelectionBackColor = ClrMaroon, // Maroon highlight
                 SelectionForeColor = Color.White,
-                Font = new Font("Segoe UI", 10)
+                Font = new Font("Segoe UI", 10),
+                Padding = new Padding(5, 0, 0, 0)
             };
 
             dgv.DefaultCellStyle = rowStyle;
 
-            dgv.Columns.Add("colFile", "File Name");
-            dgv.Columns["colFile"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgv.Columns["colFile"].FillWeight = 50;
+            // --- DEFINE COLUMNS ---
 
-            dgv.Columns.Add("colProf", "Uploaded By");
-            dgv.Columns["colProf"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgv.Columns["colProf"].FillWeight = 30;
+            // 1. Course Code
+            dgv.Columns.Add("colCode", "Course Code");
+            dgv.Columns["colCode"].Width = 120;
 
-            dgv.Columns.Add("colDate", "Date");
-            dgv.Columns["colDate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgv.Columns["colDate"].FillWeight = 20;
+            // 2. Faculty Name (Fills remaining space)
+            dgv.Columns.Add("colFaculty", "Faculty Name");
+            dgv.Columns["colFaculty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            // 3. Curriculum Year
+            dgv.Columns.Add("colCurrYear", "Curriculum Year");
+            dgv.Columns["colCurrYear"].Width = 140;
+            dgv.Columns["colCurrYear"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.Columns["colCurrYear"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             this.Controls.Add(dgv);
 
-            // Handle Resize to keep Grid correct
+            // Handle Form Resize
             this.Resize += (s, e) =>
             {
                 dgv.Size = new Size(Width, Height - 50);
@@ -129,15 +137,33 @@ namespace PUP_RMS.Forms
             };
         }
 
-        private void LoadFakeData()
+        private void LoadData()
         {
-            dgv.Rows.Add($"{_subjectName}_Midterm_Grades.pdf", "Prof. Dela Cruz", "2023-10-15");
-            dgv.Rows.Add($"{_subjectName}_Final_Grades.xlsx", "Prof. Santos", "2024-01-20");
-            dgv.Rows.Add($"{_subjectName}_Masterlist.csv", "Prof. Bautista", "2023-09-05");
+            // Call the static helper method to get data from SQL
+            DataTable dt = DashboardHelper.GetSubjectDetails(_subjectName);
+
+            dgv.Rows.Clear();
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    dgv.Rows.Add(
+                        row["CourseCode"].ToString(),
+                        row["FacultyName"].ToString(),
+                        row["CurriculumYear"].ToString()
+                    );
+                }
+            }
+            else
+            {
+                // Optional: You can display a "No records found" row or leave it empty
+                // dgv.Rows.Add("N/A", "No records found", "-");
+            }
         }
 
         // ==============================
-        // PAINTING (HEADER & BUTTONS)
+        // PAINTING (CUSTOM HEADER)
         // ==============================
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -157,13 +183,17 @@ namespace PUP_RMS.Forms
             using (Font titleFont = new Font("Segoe UI", 12, FontStyle.Bold))
             using (Brush textBrush = new SolidBrush(ClrGold))
             {
-                g.DrawString($"Subject Records: {_subjectName}", titleFont, textBrush, 20, 14);
+                // Truncate if title is too long
+                string displayTitle = $"Course Details: {_subjectName}";
+                if (displayTitle.Length > 60) displayTitle = displayTitle.Substring(0, 57) + "...";
+
+                g.DrawString(displayTitle, titleFont, textBrush, 20, 14);
             }
 
-            // 3. Draw Window Buttons
+            // 3. Draw Window Buttons (Close/Max)
             DrawWindowButtons(g);
 
-            // 4. Draw Border
+            // 4. Draw Border around form
             ControlPaint.DrawBorder(g, ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
         }
 
@@ -184,7 +214,7 @@ namespace PUP_RMS.Forms
 
             using (Pen p = new Pen(ClrGold, 1.5f))
             {
-                // Close
+                // Close Button (X)
                 g.DrawEllipse(p, _closeBtnRect);
                 float cx = _closeBtnRect.X + _closeBtnRect.Width / 2f;
                 float cy = _closeBtnRect.Y + _closeBtnRect.Height / 2f;
@@ -192,7 +222,7 @@ namespace PUP_RMS.Forms
                 g.DrawLine(p, cx - off, cy - off, cx + off, cy + off);
                 g.DrawLine(p, cx + off, cy - off, cx - off, cy + off);
 
-                // Max
+                // Maximize Button (Box)
                 g.DrawEllipse(p, _maxBtnRect);
                 float mx = _maxBtnRect.X + _maxBtnRect.Width / 2f;
                 float my = _maxBtnRect.Y + _maxBtnRect.Height / 2f;
@@ -202,11 +232,11 @@ namespace PUP_RMS.Forms
         }
 
         // ==============================
-        // MOUSE EVENTS
+        // MOUSE EVENTS (DRAGGING & CLICKS)
         // ==============================
         private void Form_MouseDown(object sender, MouseEventArgs e)
         {
-            // Buttons
+            // Button Clicks
             if (_closeBtnRect.Contains(e.Location))
             {
                 this.Close();
@@ -226,7 +256,7 @@ namespace PUP_RMS.Forms
                 return;
             }
 
-            // Dragging (Top 50px)
+            // Dragging (Only if clicking the top header area)
             if (e.Button == MouseButtons.Left && e.Y < 50)
             {
                 dragging = true;
@@ -251,7 +281,7 @@ namespace PUP_RMS.Forms
             {
                 _isHoveringClose = hoverClose;
                 _isHoveringMax = hoverMax;
-                Invalidate(new Rectangle(0, 0, Width, 50));
+                Invalidate(new Rectangle(0, 0, Width, 50)); 
             }
 
             if (hoverClose || hoverMax) Cursor = Cursors.Hand;

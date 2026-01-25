@@ -1,9 +1,11 @@
-﻿using System;
+﻿using PUP_RMS.Helper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 
 namespace PUP_RMS.Forms
 {
@@ -28,6 +30,10 @@ namespace PUP_RMS.Forms
         private List<(string Name, int Count)> subjectData;
         private Panel treemapContainer;
 
+        // FILTERS
+        private ComboBox cbFilterYear;
+        private bool isLoading = true;
+
         private const int CS_DROPSHADOW = 0x00020000;
 
         public frmDistributionSubject()
@@ -39,16 +45,23 @@ namespace PUP_RMS.Forms
                      ControlStyles.DoubleBuffer |
                      ControlStyles.ResizeRedraw, true);
 
-            subjectData = new List<(string Name, int Count)>
-            {
-                ("Programming 1", 550), ("History", 680), ("Physics", 520),
-                ("Web Dev", 410), ("Accounting", 320), ("Calculus", 250),
-                ("Pathfit", 200), ("Physics 1", 180), ("Ethics", 70), ("Rizal", 40),
-                ("Webdev", 200), ("Physics 2", 180), ("UTS", 70), ("Bonifacio", 40),
-                ("OS", 250), ("MMW", 130), ("DSA", 210), ("DSA", 130), 
-            };
+            subjectData = new List<(string Name, int Count)>();
 
+            // 1. Setup UI
             SetupFormDesign();
+            SetupFilters();
+
+            // 2. Load Data Immediately
+            LoadSchoolYears();
+            isLoading = false;
+            LoadData();
+        }
+
+        // Ensures the Treemap draws correctly after the form animation finishes
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            RenderTreemap();
         }
 
         protected override CreateParams CreateParams
@@ -111,7 +124,138 @@ namespace PUP_RMS.Forms
             };
         }
 
-        private void frmDistributionSubject_Load(object sender, EventArgs e) => RenderTreemap();
+        private void SetupFilters()
+        {
+            // Settings for layout
+            int comboWidth = 140;
+            int headerHeight = 50;
+            int comboHeight = 25;
+            int topMargin = (headerHeight - comboHeight) / 2; // Center Vertically (approx 12px)
+            int rightMargin = 80; // Space reserved for Close/Max buttons
+            int gap = 5; // Space between Label and Combo
+
+            // 1. Setup School Year ComboBox
+            cbFilterYear = new ComboBox();
+            cbFilterYear.Size = new Size(comboWidth, comboHeight);
+            // Position: Width - ButtonSpace - ComboWidth
+            cbFilterYear.Location = new Point(this.Width - rightMargin - comboWidth, topMargin);
+            cbFilterYear.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cbFilterYear.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbFilterYear.FlatStyle = FlatStyle.Flat;
+            cbFilterYear.BackColor = Color.White;
+            cbFilterYear.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+
+            // 2. Setup Label "Filter by School Year:"
+            Label lblFilter = new Label();
+            lblFilter.Text = "Filter by School Year:";
+            lblFilter.AutoSize = true;
+            lblFilter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblFilter.ForeColor = ClrGold; // Match Title Color
+            lblFilter.BackColor = ClrMaroon; // Match Header Background
+
+            // Position: To the left of the ComboBox
+            // We calculate X after creating it so we know its width, but AutoSize happens slightly later.
+            // A quick measure or doing it in Paint is common, but setting location here works if AutoSize triggers.
+            // For safety, we estimate or set location after adding logic.
+
+            // Add Controls
+            this.Controls.Add(cbFilterYear);
+            this.Controls.Add(lblFilter);
+
+            // Adjust Label Location now that it's added (to calculate width)
+            lblFilter.Location = new Point(cbFilterYear.Left - lblFilter.PreferredWidth - gap, topMargin + 2); // +2 for visual vertical alignment
+            lblFilter.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+
+            // Wire Events
+            cbFilterYear.SelectedIndexChanged += Filter_Changed;
+        }
+
+        private void LoadSchoolYears()
+        {
+            try
+            {
+                DataTable dt = DashboardHelper.GetSchoolYears();
+                cbFilterYear.Items.Clear();
+                cbFilterYear.Items.Add("All Years");
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        cbFilterYear.Items.Add(row["SchoolYear"].ToString());
+                    }
+                }
+                cbFilterYear.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading Years: " + ex.Message);
+            }
+        }
+
+        private void Filter_Changed(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            subjectData.Clear();
+
+            // 1. Get Values from Filter
+            string selectedYear = cbFilterYear.SelectedItem?.ToString();
+            if (selectedYear == "All Years") selectedYear = null;
+
+            try
+            {
+                // 2. Call Helper (Using the Year-Only Logic)
+                // Note: Ensure DashboardHelper.GetSubjectDistribution handles a single string argument
+                DataTable dt = DashboardHelper.GetSubjectDistribution(selectedYear);
+
+                // 3. Process Data
+                int limit = 18;
+                int othersCount = 0;
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        DataRow row = dt.Rows[i];
+                        string name = row["SubjectName"].ToString();
+                        int count = Convert.ToInt32(row["Count"]);
+
+                        if (i < limit)
+                        {
+                            subjectData.Add((name, count));
+                        }
+                        else
+                        {
+                            othersCount += count;
+                        }
+                    }
+                }
+
+                if (othersCount > 0)
+                {
+                    subjectData.Add(("Others", othersCount));
+                }
+
+                if (subjectData.Count == 0)
+                    subjectData.Add(("No Data Found", 1));
+            }
+            catch (Exception ex)
+            {
+                subjectData.Add(("Error", 1));
+            }
+
+            // 4. Render
+            RenderTreemap();
+        }
+
+        // ==========================================
+        // PAINTING & WINDOW CONTROLS
+        // ==========================================
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -119,16 +263,19 @@ namespace PUP_RMS.Forms
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
+            // Draw Header Bar
             Rectangle headerRect = new Rectangle(0, 0, Width, 50);
             using (SolidBrush brush = new SolidBrush(ClrMaroon))
                 g.FillRectangle(brush, headerRect);
 
+            // Draw Title
             using (Font titleFont = new Font("Segoe UI", 12, FontStyle.Bold))
             using (Brush textBrush = new SolidBrush(ClrGold))
-                g.DrawString("Grade Sheets Distribution by Subject", titleFont, textBrush, 20, 14);
+                g.DrawString("Course Distribution", titleFont, textBrush, 20, 14);
 
             DrawWindowButtons(g);
 
+            // Draw Border
             using (Pen borderPen = new Pen(Color.FromArgb(150, 150, 150), 1))
                 g.DrawRectangle(borderPen, 0, 0, Width - 1, Height - 1);
         }
@@ -137,6 +284,7 @@ namespace PUP_RMS.Forms
         {
             int btnSize = 24;
             int margin = 13;
+            // Positioned at the very right
             _closeBtnRect = new Rectangle(Width - margin - btnSize, margin, btnSize, btnSize);
             _maxBtnRect = new Rectangle(_closeBtnRect.X - margin - btnSize, margin, btnSize, btnSize);
 
@@ -195,14 +343,25 @@ namespace PUP_RMS.Forms
 
         private void Form_MouseUp(object sender, MouseEventArgs e) => dragging = false;
 
+        // ==========================================
+        // TREEMAP LOGIC
+        // ==========================================
+
         private void RenderTreemap()
         {
-            if (treemapContainer == null || treemapContainer.Width == 0 || treemapContainer.Height == 0) return;
+            if (treemapContainer == null || treemapContainer.Width <= 0 || treemapContainer.Height <= 0) return;
+
             treemapContainer.SuspendLayout();
             treemapContainer.Controls.Clear();
 
             var sorted = subjectData.OrderByDescending(x => x.Count).ToList();
             double totalWeight = sorted.Sum(x => x.Count);
+
+            if (totalWeight == 0)
+            {
+                treemapContainer.ResumeLayout();
+                return;
+            }
 
             RectangleF drawingArea = new RectangleF(
                 treemapContainer.Padding.Left,
@@ -243,9 +402,6 @@ namespace PUP_RMS.Forms
                 GenerateTreemapTiles(data.Skip(1).ToList(), total - firstItem.Count, remainingArea);
         }
 
-        // ============================================================
-        // MODIFIED TILE CREATION WITH RESPONSIVE FONT & TEXT FORMATTING
-        // ============================================================
         private void CreateTileControl(string name, int count, RectangleF rect)
         {
             Rectangle originalBounds = Rectangle.Round(rect);
@@ -253,51 +409,45 @@ namespace PUP_RMS.Forms
 
             Button tile = new Button
             {
-                Text = string.Empty, // We draw the text manually below
+                Text = string.Empty,
                 Bounds = originalBounds,
                 FlatStyle = FlatStyle.Flat,
                 BackColor = GetColorForValue(count),
                 Cursor = Cursors.Hand,
-                Tag = (name, originalBounds) // Stores both for Click and Hover events
+                Tag = (name, originalBounds)
             };
 
             tile.FlatAppearance.BorderSize = 2;
             tile.FlatAppearance.BorderColor = ClrStandoutBack;
 
-            // --- RE-ADDED DRAWING LOGIC ---
             tile.Paint += (s, e) =>
             {
                 Graphics g = e.Graphics;
                 g.SmoothingMode = SmoothingMode.HighQuality;
                 g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-                // Calculate dynamic font sizes based on tile size
                 float subjectFontSize = GetMaxFontSize(g, name, tile.Width - 8, tile.Height * 0.5f, "Segoe UI", FontStyle.Bold);
                 float countFontSize = Math.Max(5.5f, subjectFontSize * 0.75f);
 
                 using (Font subjectFont = new Font("Segoe UI", subjectFontSize, FontStyle.Bold))
                 using (Font countFont = new Font("Segoe UI", countFontSize, FontStyle.Regular))
                 {
-                    // Measure text to center it vertically as a block
                     Size subSz = TextRenderer.MeasureText(name, subjectFont, new Size(tile.Width - 4, tile.Height), TextFormatFlags.WordBreak);
                     Size cntSz = TextRenderer.MeasureText(countText, countFont, new Size(tile.Width - 4, tile.Height), TextFormatFlags.WordBreak);
 
                     int totalH = subSz.Height + cntSz.Height;
                     int startY = (tile.Height - totalH) / 2;
 
-                    // 1. Draw Subject Name (White)
                     Rectangle subRect = new Rectangle(2, startY, tile.Width - 4, subSz.Height);
                     TextRenderer.DrawText(g, name, subjectFont, subRect, Color.White,
                         TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.VerticalCenter);
 
-                    // 2. Draw Count (Light Gold)
                     Rectangle cntRect = new Rectangle(2, startY + subSz.Height, tile.Width - 4, cntSz.Height);
                     TextRenderer.DrawText(g, countText, countFont, cntRect, Color.FromArgb(255, 230, 150),
                         TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.Top);
                 }
             };
 
-            // Wire up the events
             tile.Click += Tile_Click;
             tile.MouseEnter += Tile_MouseEnter;
             tile.MouseLeave += Tile_MouseLeave;
@@ -306,21 +456,19 @@ namespace PUP_RMS.Forms
             treemapContainer.Controls.Add(tile);
         }
 
-
         private void Tile_Click(object sender, EventArgs e)
         {
             if (sender is Button tile && tile.Tag is ValueTuple<string, Rectangle> data)
             {
-                string subjectName = data.Item1; // Extract the name
-
-                // Show your details form with the dimmer effect
-                frmSubjectDetails details = new frmSubjectDetails(subjectName);
-                details.StartPosition = FormStartPosition.CenterParent;
-                details.ShowDialog();
+                if (data.Item1 != "No Data Found" && data.Item1 != "No Data Uploaded")
+                {
+                    frmSubjectDetails details = new frmSubjectDetails(data.Item1);
+                    details.StartPosition = FormStartPosition.CenterParent;
+                    details.ShowDialog();
+                }
             }
         }
 
-        // Helper to calculate the best font size for narrow tiles
         private float GetMaxFontSize(Graphics g, string text, float maxWidth, float maxHeight, string fontName, FontStyle style)
         {
             float fontSize = 14f;
@@ -340,7 +488,7 @@ namespace PUP_RMS.Forms
         {
             if (sender is Button tile && tile.Tag is ValueTuple<string, Rectangle> data)
             {
-                Rectangle rect = data.Item2; // Extract the original rectangle
+                Rectangle rect = data.Item2;
                 int expansion = 5;
                 tile.Bounds = new Rectangle(rect.X - expansion, rect.Y - expansion,
                                            rect.Width + (expansion * 2), rect.Height + (expansion * 2));
@@ -353,42 +501,9 @@ namespace PUP_RMS.Forms
         {
             if (sender is Button tile && tile.Tag is ValueTuple<string, Rectangle> data)
             {
-                tile.Bounds = data.Item2; // Restore original size
+                tile.Bounds = data.Item2;
                 ApplyRoundedCorners(tile, 12);
             }
-        }
-
-        // Helper to get count back from the text string for color restoration
-        private int ExtractCountFromText(string text)
-        {
-            try
-            {
-                string[] lines = text.Split('\n');
-                string countPart = lines[1].Split(' ')[0];
-                return int.Parse(countPart);
-            }
-            catch { return 0; }
-        }
-        private Font GetBestFitFont(Graphics g, string text, Size containerSize, Font baseFont)
-        {
-            // Start with a reasonable max size and scale down until it fits
-            float fontSize = 14f;
-
-            // Adjust starting font based on tile size to save cycles
-            if (containerSize.Width < 80 || containerSize.Height < 40) fontSize = 8f;
-            else if (containerSize.Width < 150) fontSize = 10f;
-
-            while (fontSize > 5f)
-            {
-                using (Font f = new Font(baseFont.FontFamily, fontSize, baseFont.Style))
-                {
-                    Size sz = TextRenderer.MeasureText(text, f, containerSize, TextFormatFlags.WordBreak);
-                    if (sz.Width <= containerSize.Width - 10 && sz.Height <= containerSize.Height - 10)
-                        return new Font(baseFont.FontFamily, fontSize, baseFont.Style);
-                }
-                fontSize -= 0.5f;
-            }
-            return new Font(baseFont.FontFamily, 5f, baseFont.Style);
         }
 
         private Color GetColorForValue(int value)
@@ -413,11 +528,6 @@ namespace PUP_RMS.Forms
             path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
             path.CloseFigure();
             control.Region = new Region(path);
-        }
-
-        private void frmDistributionSubject_Load_1(object sender, EventArgs e)
-        {
-
         }
     }
 }

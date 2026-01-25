@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using PUP_RMS.Core;
 using PUP_RMS.Forms;
+using PUP_RMS.Helper;
+using PUP_RMS.Model;
 
 namespace PUP_RMS.Forms
 {
@@ -77,6 +79,7 @@ namespace PUP_RMS.Forms
         // ======================================================
         private void RegisterForm_Load(object sender, EventArgs e)
         {
+            comboBoxAccountType.BackColor = Color.Gainsboro;
             this.SuspendLayout();
 
             this.WindowState = FormWindowState.Normal;
@@ -88,13 +91,14 @@ namespace PUP_RMS.Forms
             this.MinimizeBox = true;
             this.ControlBox = true;
 
-            textBoxPassword.UseSystemPasswordChar = true;
-            textBoxConfirmPassword.UseSystemPasswordChar = true;
 
-            pictureBoxShowPassword.Visible = true;
+            textBoxPassword.UseSystemPasswordChar = true;
             pictureBoxHidePassword.Visible = false;
-            pictureBoxShowConfirmPass.Visible = true;
-            pictureBoxHideConfirmPass.Visible = false;
+            pictureBoxShowPassword.Visible = true;
+            
+
+
+
 
             // --- IMPORTANT: CONNECT THE EVENTS HERE ---
             // 1. Username Events
@@ -105,12 +109,8 @@ namespace PUP_RMS.Forms
             textBoxPassword.Enter += textBoxPassword_Enter;
             textBoxPassword.Leave += textBoxPassword_Leave;
 
-            // 3. Confirm Password Events
-            textBoxConfirmPassword.Enter += textBoxConfirmPassword_Enter;
-            textBoxConfirmPassword.Leave += textBoxConfirmPassword_Leave;
-
-            AttachClickEvent(this);
-            this.MouseDown += Background_Click;
+            //AttachClickEvent(this);
+            //this.MouseDown += Background_Click;
 
             this.ResumeLayout(true);
 
@@ -120,96 +120,104 @@ namespace PUP_RMS.Forms
 
         private void roundedButtonSignUp_Click(object sender, EventArgs e)
         {
+            string firstname = textBoxFirstName.Text.Trim();
+            string lastname = textBoxLastName.Text.Trim();
             string username = textBoxUsername.Text.Trim();
             string password = textBoxPassword.Text.Trim();
-            string confirmPassword = textBoxConfirmPassword.Text.Trim();
+            string accountType = comboBoxAccountType.Text;
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+            if (string.IsNullOrEmpty(firstname) || string.IsNullOrEmpty(lastname) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || comboBoxAccountType.SelectedIndex == -1)
             {
                 new CustomMsgBox("⚠ All fields are required.").ShowDialog(this);
                 return;
             }
 
-            if (password != confirmPassword)
-            {
-                new CustomMsgBox("⚠ Password and Confirm Password do not match.").ShowDialog(this);
-                textBoxPassword.Clear();
-                textBoxConfirmPassword.Clear();
-                return;
-            }
-
-            string checkUserQuery = $"SELECT COUNT(*) FROM Admin WHERE Username = '{username}'";
+            string checkUserQuery = $"SELECT COUNT(*) FROM Account WHERE Username = '{username}'";
             DataTable dt = DbControl.GetData(checkUserQuery);
-
             if (dt != null && dt.Rows.Count > 0 && Convert.ToInt32(dt.Rows[0][0]) > 0)
             {
                 new CustomMsgBox("⚠ Username already exists! Please choose another.").ShowDialog(this);
                 return;
             }
 
-            string insertQuery = $"INSERT INTO Admin (Username, Password) VALUES ('{username}', '{password}')";
-            bool success = DbControl.SetData(insertQuery);
-
-            if (success)
+            // CREATE ACCUNT OBJECT
+            Account newAccount = new Account
             {
-                new CustomMsgBox("Registration Successful! You can now log in.").ShowDialog(this);
-                LoginForm loginForm = new LoginForm();
-                loginForm.Show();
-                this.Close();
-            }
-            else
-            {
-                new CustomMsgBox("❌ Registration Failed. Please check your inputs or connection.").ShowDialog(this);
-            }
-        }
+                FirstName = firstname,
+                LastName = lastname,
+                Username = username,
+                Password = password,
+                AccountType = accountType
+            };
 
-        private void linkLabelSignUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            LoginForm loginForm = new LoginForm();
-            loginForm.Show(); // Triggers Fade-in of Login Form
+            // INSERT INTO DATABASE
+            AccountHelper.CreateAccount(newAccount);
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
         // --- Visual Helpers ---
         private void pictureBoxHidePassword_Click(object sender, EventArgs e)
         {
-            textBoxPassword.UseSystemPasswordChar = true;
-            pictureBoxShowPassword.Visible = true;
+            textBoxPassword.PasswordChar = '●';
+           
+            
+
             pictureBoxHidePassword.Visible = false;
+            pictureBoxShowPassword.Visible = true;
+            textBoxPassword.UseSystemPasswordChar = true;
         }
+
 
         private void pictureBoxShowPassword_Click(object sender, EventArgs e)
         {
-            textBoxPassword.UseSystemPasswordChar = false;
+            
+            textBoxPassword.PasswordChar = '\0';
+
             pictureBoxShowPassword.Visible = false;
             pictureBoxHidePassword.Visible = true;
+            textBoxPassword.UseSystemPasswordChar = false;
+
+
         }
 
-        private void pictureBoxHideConfirmPass_Click(object sender, EventArgs e)
-        {
-            textBoxConfirmPassword.UseSystemPasswordChar = true;
-            pictureBoxShowConfirmPass.Visible = true;
-            pictureBoxHideConfirmPass.Visible = false;
-        }
-
-        private void pictureBoxShowConfirmPass_Click(object sender, EventArgs e)
-        {
-            textBoxConfirmPassword.UseSystemPasswordChar = false;
-            pictureBoxShowConfirmPass.Visible = false;
-            pictureBoxHideConfirmPass.Visible = true;
-        }
 
         private void ResetBorders()
         {
             // Reset ALL borders to normal
             if (roundedPanelUser != null) roundedPanelUser.SetBorderHover(false);
             if (roundedPanelPass != null) roundedPanelPass.SetBorderHover(false);
-            if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(false);
+            if (roundedPanelAccountType != null) roundedPanelAccountType.SetBorderHover(false);
+            if (roundedPanelFirst != null) roundedPanelFirst.SetBorderHover(false);
+            if (roundedPanelLast != null) roundedPanelLast.SetBorderHover(false);
         }
 
         // ======================================================
         // FOCUS EVENTS - BORDER COLOR CHANGE LOGIC
         // ======================================================
+        // --- FIRST NAME ---
+        private void roundedPanelFirst_Enter(object sender, EventArgs e)
+        {
+            ResetBorders();
+            if (roundedPanelFirst != null) roundedPanelFirst.SetBorderHover(true); // Turn Maroon ON
+        }
+
+        private void roundedPanelFirst_Leave(object sender, EventArgs e)
+        {
+            if (roundedPanelFirst != null) roundedPanelFirst.SetBorderHover(false);
+        }
+
+        // --- LAST NAME ---
+        private void roundedPanelLast_Enter(object sender, EventArgs e)
+        {
+            ResetBorders();
+            if (roundedPanelLast != null) roundedPanelLast.SetBorderHover(true); // Turn Maroon ON
+        }
+
+        private void roundedPanelLast_Leave(object sender, EventArgs e)
+        {
+            if (roundedPanelLast != null) roundedPanelLast.SetBorderHover(false);
+        }
 
         // --- USERNAME ---
         private void textBoxUsername_Enter(object sender, EventArgs e)
@@ -239,18 +247,19 @@ namespace PUP_RMS.Forms
         private void textBoxConfirmPassword_Enter(object sender, EventArgs e)
         {
             ResetBorders();
-            if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(true); // Turn Maroon ON
+            if (roundedPanelAccountType != null) roundedPanelAccountType.SetBorderHover(true); // Turn Maroon ON
         }
 
         private void textBoxConfirmPassword_Leave(object sender, EventArgs e)
         {
-            if (roundedPanelConfirmPass != null) roundedPanelConfirmPass.SetBorderHover(false); // Turn Maroon OFF
+            if (roundedPanelAccountType != null) roundedPanelAccountType.SetBorderHover(false); // Turn Maroon OFF
         }
 
         private void pictureBoxUsername_Click(object sender, EventArgs e) { textBoxUsername.Focus(); }
         private void pictureBoxPassword_Click(object sender, EventArgs e) { textBoxPassword.Focus(); }
-        private void pictureBoxConfirmPassword_Click(object sender, EventArgs e) { textBoxConfirmPassword.Focus(); }
-
+        private void pictureBoxFirstName_Click(object sender, EventArgs e) { textBoxFirstName.Focus(); }
+        private void pictureBoxLastName_Click(object sender, EventArgs e) { textBoxLastName.Focus(); }
+        
         private void AttachClickEvent(Control parent)
         {
             foreach (Control c in parent.Controls)
@@ -278,29 +287,13 @@ namespace PUP_RMS.Forms
         private void roundedPanelUser_Paint(object sender, PaintEventArgs e) { }
         private void roundedPanelPass_Paint(object sender, PaintEventArgs e) { }
         private void roundedPanelConfirmPass_Paint(object sender, PaintEventArgs e) { }
-
+        private void linkLabelSignUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) { }
 
         private void lblUsername_Click(object sender, EventArgs e){textBoxUsername.Focus(); }
-
-        private void pictureBoxUsername_Click_1(object sender, EventArgs e){textBoxUsername.Focus(); }
 
         private void lblPassword_Click(object sender, EventArgs e)
         {
             textBoxPassword.Focus();
-        }
-        private void pictureBoxPassword_Click_1(object sender, EventArgs e)
-        {
-            textBoxPassword.Focus();
-        }
-
-        private void lblConfirmPassword_Click(object sender, EventArgs e)
-        {
-            textBoxConfirmPassword.Focus();
-        }
-
-        private void pictureBoxConfirmPassword_Click_1(object sender, EventArgs e)
-        {
-            textBoxConfirmPassword.Focus();
         }
 
         private void roundedPanelUser_Click(object sender, EventArgs e)
@@ -313,12 +306,17 @@ namespace PUP_RMS.Forms
             textBoxPassword.Focus();
         }
 
-        private void roundedPanelConfirmPass_Click(object sender, EventArgs e)
+        private void roundedShadowPanelSignUp_Paint(object sender, PaintEventArgs e)
         {
-            textBoxConfirmPassword.Focus();
+
         }
 
-        private void roundedShadowPanelSignUp_Paint(object sender, PaintEventArgs e)
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxAccountType_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

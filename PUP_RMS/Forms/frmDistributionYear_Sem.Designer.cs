@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "frmDistributionYear_Sem";
             this.Text = "frmDistributionYear_Sem";
+            this.Load += new System.EventHandler(this.frmDistributionYear_Sem_Load);
             this.ResumeLayout(false);
 
         }

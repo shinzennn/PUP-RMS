@@ -107,11 +107,35 @@
     <Compile Include="CustomControls\SubjectTile.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\frmAccounts.cs">
+    <Compile Include="Forms\currentpicturePreview.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmAccounts.Designer.cs">
-      <DependentUpon>frmAccounts.cs</DependentUpon>
+    <Compile Include="Forms\currentpicturePreview.Designer.cs">
+      <DependentUpon>currentpicturePreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAccount.Designer.cs">
+      <DependentUpon>frmAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmAccountList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAccountList.Designer.cs">
+      <DependentUpon>frmAccountList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmActivityLogs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmActivityLogs.Designer.cs">
+      <DependentUpon>frmActivityLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmCourseDescription.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmCourseDescription.Designer.cs">
+      <DependentUpon>frmCourseDescription.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmDistributionProfessor.cs">
       <SubType>Form</SubType>
@@ -155,17 +179,17 @@
     <Compile Include="Forms\frmEditCourse.Designer.cs">
       <DependentUpon>frmEditCourse.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmEditProfessor.cs">
+    <Compile Include="Forms\frmGradeSheetDetails.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmEditProfessor.Designer.cs">
-      <DependentUpon>frmEditProfessor.cs</DependentUpon>
+    <Compile Include="Forms\frmGradeSheetDetails.Designer.cs">
+      <DependentUpon>frmGradeSheetDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmIndividualUpload.cs">
+    <Compile Include="Forms\frmFaculty.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmIndividualUpload.Designer.cs">
-      <DependentUpon>frmIndividualUpload.cs</DependentUpon>
+    <Compile Include="Forms\frmFaculty.Designer.cs">
+      <DependentUpon>frmFaculty.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmNewCourse.cs">
       <SubType>Form</SubType>
@@ -173,17 +197,11 @@
     <Compile Include="Forms\frmNewCourse.Designer.cs">
       <DependentUpon>frmNewCourse.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmNewProfessor.cs">
+    <Compile Include="Forms\frmnewProgram.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmNewProfessor.Designer.cs">
-      <DependentUpon>frmNewProfessor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmProfessor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmProfessor.Designer.cs">
-      <DependentUpon>frmProfessor.cs</DependentUpon>
+    <Compile Include="Forms\frmnewProgram.Designer.cs">
+      <DependentUpon>frmnewProgram.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmProgram.cs">
       <SubType>Form</SubType>
@@ -224,18 +242,30 @@
     <Compile Include="Forms\MainDashboard.Designer.cs">
       <DependentUpon>MainDashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\newFaculty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\newFaculty.Designer.cs">
+      <DependentUpon>newFaculty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\AccountHelper.cs" />
     <Compile Include="Helper\ActivityLogger.cs" />
+    <Compile Include="Helper\CourseHelper.cs" />
+    <Compile Include="Helper\DashboardHelper.cs" />
+    <Compile Include="Helper\FacultyHelper.cs" />
+    <Compile Include="Helper\ProgramHelper.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ActivityLog.cs" />
     <Compile Include="Model\Course.cs" />
+    <Compile Include="Model\Faculty.cs" />
     <Compile Include="Model\GradeSheet.cs" />
-    <Compile Include="Model\Professor.cs" />
+    <Compile Include="Model\Programs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomControls\RoundedButton.cs">
@@ -247,12 +277,31 @@
     <Compile Include="CustomControls\RoundedShadowPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RMSDBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RMSDBDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="RMSDBDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RMSDBDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="StorageMonitor.cs" />
     <EmbeddedResource Include="CustomControls\CustomMsgBox.resx">
       <DependentUpon>CustomMsgBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmAccounts.resx">
-      <DependentUpon>frmAccounts.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\currentpicturePreview.resx">
+      <DependentUpon>currentpicturePreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAccount.resx">
+      <DependentUpon>frmAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAccountList.resx">
+      <DependentUpon>frmAccountList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmActivityLogs.resx">
+      <DependentUpon>frmActivityLogs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDistributionProfessor.resx">
       <DependentUpon>frmDistributionProfessor.cs</DependentUpon>
@@ -275,20 +324,17 @@
     <EmbeddedResource Include="Forms\frmEditCourse.resx">
       <DependentUpon>frmEditCourse.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmEditProfessor.resx">
-      <DependentUpon>frmEditProfessor.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\frmGradeSheetDetails.resx">
+      <DependentUpon>frmGradeSheetDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmIndividualUpload.resx">
-      <DependentUpon>frmIndividualUpload.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\frmFaculty.resx">
+      <DependentUpon>frmFaculty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmNewCourse.resx">
       <DependentUpon>frmNewCourse.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmNewProfessor.resx">
-      <DependentUpon>frmNewProfessor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmProfessor.resx">
-      <DependentUpon>frmProfessor.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\frmnewProgram.resx">
+      <DependentUpon>frmnewProgram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmProgram.resx">
       <DependentUpon>frmProgram.cs</DependentUpon>
@@ -309,6 +355,9 @@
       <DependentUpon>MainDashboard.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\newFaculty.resx">
+      <DependentUpon>newFaculty.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -320,6 +369,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -331,6 +381,28 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="RMSDBDataSet.xsc">
+      <DependentUpon>RMSDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="RMSDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RMSDBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RMSDBDataSet.xss">
+      <DependentUpon>RMSDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="RMSDBDataSet1.xsc">
+      <DependentUpon>RMSDBDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="RMSDBDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RMSDBDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RMSDBDataSet1.xss">
+      <DependentUpon>RMSDBDataSet1.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -339,6 +411,14 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\AccountIcon.png" />
+    <None Include="Resources\Icons\account %281%29.png" />
+    <None Include="Resources\Icons\740b6f73-591a-445a-9bdd-ae960fb84374_removalai_preview%281%29.png" />
+    <None Include="Resources\Icons\Account_2.png" />
+    <Content Include="Properties\view.png" />
+    <None Include="Resources\619384472_920609864259422_4656079368386240362_n.jpg" />
+    <None Include="Resources\Blue_Black_modern_Building_Logo_Design__Logo_-removebg-preview.png" />
+    <None Include="Resources\Blue_Black_modern_Building_Logo_Design__Logo_-removebg-preview1.png" />
     <Content Include="Resources\Icons\batch upload.png" />
     <Content Include="Resources\Icons\browse.png" />
     <Content Include="Resources\Icons\dashboard.png" />

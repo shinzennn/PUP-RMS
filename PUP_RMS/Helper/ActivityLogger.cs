@@ -15,13 +15,19 @@ namespace PUP_RMS.Helper
 {
     public static class ActivityLogger
     {
-        public static void LogActivity(int account_id, string activityDescription)
+        public static DataTable GetAllActivityLog()
+        {
+            DataTable dt = new DataTable();
+            dt = DbControl.ExecuteQuery("sp_GetAllActivityLog");
+            return dt;
+        }
+        private static void LogActivity(int account_id, string activityDescription)
         {
             DateTime date = DateTime.Now;
             using (IDbConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
             {
                 string query = $"INSERT INTO ActivityLog (AccountID, ActivityDescription, ActivityDate) " +
-                               $"VALUES (@account_id, '@activity_desc', @activity_date)";
+                               $"VALUES (@account_id, @activity_desc, @activity_date)";
                 int rowsAffected = conn.Execute(query, new
                 {
                     account_id = account_id,
@@ -35,13 +41,30 @@ namespace PUP_RMS.Helper
                 }
             }
         }
-        
+        // ACCOUNT ACTIVITY LOGGING
         public static void LogUserLogin()
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;
-            string description = $"User {username} - ID:{account_id} logged in.";
+            string description = $"Account {username} - ID:{account_id} logged in.";
             
+            LogActivity(account_id, description);
+        }
+        public static void LogAccountRegistration(string newUsername)
+        {
+            int account_id = MainDashboard.CurrentAccount.AccountID;
+            string username = MainDashboard.CurrentAccount.Username;
+            string description = $"Admin: {username} - ID:{account_id} registered new account - {newUsername}.";
+
+            LogActivity(account_id, description);
+        }
+
+        public static void AccountModification( int accountID, string fullname)
+        {
+            int account_id = MainDashboard.CurrentAccount.AccountID;
+            string username = MainDashboard.CurrentAccount.Username;
+            string description = $"Admin: {username} - ID:{account_id} modified account id: {accountID} to {fullname}.";
+
             LogActivity(account_id, description);
         }
 
@@ -83,7 +106,7 @@ namespace PUP_RMS.Helper
             LogActivity(account_id, description);
         }
 
-        public static void LogCourseModification(string courseID, string courseCode, string courseDescription)
+        public static void LogCourseModification(int courseID, string courseCode, string courseDescription)
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;
@@ -101,8 +124,8 @@ namespace PUP_RMS.Helper
             LogActivity(account_id, description);
         }
 
-        // PROFESSOR ACTIVITY LOGGING
-        public static void LogProfessorAddition(string professorName)
+        // FACULTY ACTIVITY LOGGING
+        public static void LogFacultyAddition(string professorName)
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;
@@ -110,7 +133,7 @@ namespace PUP_RMS.Helper
             
             LogActivity(account_id, description);
         }
-        public static void LogProfessorModification(string professorID, string professorName)
+        public static void LogFacultyModification(string professorID, string professorName)
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;
@@ -118,7 +141,7 @@ namespace PUP_RMS.Helper
             
             LogActivity(account_id, description);
         }
-        public static void LogProfessorDeletion(string professorName)
+        public static void LogFacultyDeletion(string professorName)
         {
             int account_id = MainDashboard.CurrentAccount.AccountID;
             string username = MainDashboard.CurrentAccount.Username;

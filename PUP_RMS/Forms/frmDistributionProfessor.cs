@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PUP_RMS.Helper;
+using System;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -22,7 +23,10 @@ namespace PUP_RMS.Forms
         private bool _isHoveringClose, _isHoveringMax;
         private FlowLayoutPanel listContainer;
 
-        // Shadow and Form Styles
+        // Filter Controls
+        private Label lblFilter;
+        private ComboBox cmbSchoolYear;
+
         private const int CS_DROPSHADOW = 0x00020000;
 
         public frmDistributionProfessor()
@@ -32,10 +36,10 @@ namespace PUP_RMS.Forms
                      ControlStyles.DoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             SetupFormDesign();
+            SetupFilterControls();
             LoadFacultyData();
         }
 
-        // Native Shadow Effect
         protected override CreateParams CreateParams
         {
             get
@@ -46,7 +50,6 @@ namespace PUP_RMS.Forms
             }
         }
 
-        // --- METHOD TO CALL FOR DIMMED BACKGROUND ---
         public static void ShowWithDimmer(Form parent, frmDistributionProfessor child)
         {
             using (Form dimmer = new Form())
@@ -55,9 +58,7 @@ namespace PUP_RMS.Forms
                 dimmer.FormBorderStyle = FormBorderStyle.None;
                 dimmer.AllowTransparency = true;
                 dimmer.BackColor = Color.Black;
-                dimmer.Opacity = 0.45; // Adjust this for "not too dark" (0.1 to 0.5)
-
-                // Cover the parent form or the whole screen
+                dimmer.Opacity = 0.45;
                 dimmer.Size = parent.Size;
                 dimmer.Location = parent.Location;
                 dimmer.ShowInTaskbar = false;
@@ -76,7 +77,6 @@ namespace PUP_RMS.Forms
             this.Size = new Size(880, 540);
             this.BackColor = ClrStandoutBack;
 
-            // 1. MUST Initialize the container BEFORE using it
             listContainer = new FlowLayoutPanel
             {
                 Location = new Point(0, 50),
@@ -88,26 +88,22 @@ namespace PUP_RMS.Forms
                 BackColor = Color.Transparent
             };
 
-            // 2. Now apply the DoubleBuffered fix using Reflection
+            // Double Buffer Fix
             typeof(FlowLayoutPanel).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
                 null, listContainer, new object[] { true });
 
             this.Controls.Add(listContainer);
 
-            // 3. Updated Resize logic for better scrollbar handling
             this.Resize += (s, e) =>
             {
                 listContainer.Size = new Size(this.Width, this.Height - 50);
-
                 foreach (Control ctrl in listContainer.Controls)
                 {
                     if (ctrl is Panel row)
-                    {
-                        // Use ClientSize.Width to automatically account for the scrollbar's width
                         row.Width = listContainer.ClientSize.Width - (listContainer.Padding.Left + listContainer.Padding.Right);
-                    }
                 }
+                RepositionFilterControls(); // Reposition filters on resize
                 this.Invalidate();
             };
 
@@ -116,24 +112,107 @@ namespace PUP_RMS.Forms
             this.MouseUp += Form_MouseUp;
         }
 
-        private void LoadFacultyData()
+        // =========================================================
+        // SETUP FILTER CONTROLS
+        // =========================================================
+        private void SetupFilterControls()
         {
-            var facultyList = new List<(string Name, int Progress, int Records)> {
-                ("Prof. Maria Santos", 85, 550),
-                ("Prof. John Cruz", 70, 320),
-                ("Prof. David Lee", 45, 180),
-                ("Prof. Anna Belen", 30, 70)
+            lblFilter = new Label();
+            lblFilter.Text = "Filter by School Year:";
+            lblFilter.ForeColor = ClrGold;
+            lblFilter.BackColor = ClrMaroon;
+            lblFilter.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            lblFilter.AutoSize = true;
+
+            cmbSchoolYear = new ComboBox();
+            cmbSchoolYear.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+            cmbSchoolYear.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSchoolYear.Width = 140;
+            cmbSchoolYear.BackColor = Color.White;
+            cmbSchoolYear.FlatStyle = FlatStyle.Flat;
+
+            cmbSchoolYear.Items.Add("All");
+            try
+            {
+                DataTable dt = DashboardHelper.GetSchoolYears();
+                if (dt != null)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        cmbSchoolYear.Items.Add(row["SchoolYear"].ToString());
+                    }
+                }
+            }
+            catch { }
+
+            if (cmbSchoolYear.Items.Count > 0) cmbSchoolYear.SelectedIndex = 0;
+
+            cmbSchoolYear.SelectedIndexChanged += (s, e) =>
+            {
+                LoadFacultyData();
             };
 
-            foreach (var faculty in facultyList)
-                listContainer.Controls.Add(CreateFacultyRow(faculty.Name, faculty.Progress, faculty.Records));
+            this.Controls.Add(cmbSchoolYear);
+            this.Controls.Add(lblFilter);
+
+            RepositionFilterControls();
+        }
+
+        private void RepositionFilterControls()
+        {
+            if (lblFilter == null || cmbSchoolYear == null) return;
+
+            int headerHeight = 50;
+            // Position near the top-right, leaving space for window buttons (~80px)
+            int comboX = this.Width - cmbSchoolYear.Width - 80;
+            int comboY = (headerHeight - cmbSchoolYear.Height) / 2;
+
+            int labelX = comboX - lblFilter.Width - 10;
+            int labelY = (headerHeight - lblFilter.Height) / 2;
+
+            cmbSchoolYear.Location = new Point(comboX, comboY);
+            lblFilter.Location = new Point(labelX, labelY);
+
+            cmbSchoolYear.BringToFront();
+            lblFilter.BringToFront();
+        }
+
+        // =========================================================
+        // DATA LOADING
+        // =========================================================
+        private void LoadFacultyData()
+        {
+            listContainer.Controls.Clear();
+
+            string selectedYear = null;
+            if (cmbSchoolYear != null && cmbSchoolYear.SelectedItem != null)
+            {
+                selectedYear = cmbSchoolYear.SelectedItem.ToString();
+            }
+
+            // Call the overloaded method with filter
+            DataTable dt = DashboardHelper.GetFacultyDistribution(selectedYear);
+
+            if (dt.Rows.Count == 0) return;
+
+            int maxRecords = Convert.ToInt32(dt.Rows[0]["RecordCount"]);
+            if (maxRecords == 0) maxRecords = 1;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string name = row["Name"].ToString();
+                int records = Convert.ToInt32(row["RecordCount"]);
+                int progress = (int)((double)records / maxRecords * 100);
+
+                listContainer.Controls.Add(CreateFacultyRow(name, progress, records));
+            }
         }
 
         private Panel CreateFacultyRow(string name, int progress, int records)
         {
             Panel row = new Panel
             {
-                Width = listContainer.Width - 80,
+                Width = listContainer.ClientSize.Width - (listContainer.Padding.Left + listContainer.Padding.Right),
                 Height = 100,
                 Margin = new Padding(0, 0, 0, 15),
                 BackColor = ClrCardWhite
@@ -151,7 +230,18 @@ namespace PUP_RMS.Forms
                 ForeColor = Color.FromArgb(45, 45, 45)
             };
 
-            Panel progressBar = new Panel { Location = new Point(100, 58), Size = new Size(400, 10), BackColor = Color.FromArgb(230, 230, 230) };
+            // Responsive Progress Bar Container
+            Panel progressBar = new Panel
+            {
+                Location = new Point(100, 58),
+                Height = 10,
+                BackColor = Color.FromArgb(230, 230, 230),
+                Anchor = AnchorStyles.Left | AnchorStyles.Right // Allows stretching
+            };
+
+            // Set initial width based on current row width minus margins
+            progressBar.Width = row.Width - 250;
+
             progressBar.Paint += (s, e) => {
                 float fillWidth = (progress / 100f) * progressBar.Width;
                 if (fillWidth > 0)
@@ -164,13 +254,26 @@ namespace PUP_RMS.Forms
             Label lblRecords = new Label
             {
                 Text = $"{records} Grade Sheets",
-                Location = new Point(515, 54),
                 AutoSize = true,
                 Font = new Font("Segoe UI", 10f),
-                ForeColor = Color.Gray
+                ForeColor = Color.Gray,
+                Anchor = AnchorStyles.Right
             };
+            // Position label at the end of the progress bar area
+            lblRecords.Location = new Point(progressBar.Right + 15, 54);
 
-            row.Controls.Add(picAvatar); row.Controls.Add(lblName); row.Controls.Add(progressBar); row.Controls.Add(lblRecords);
+            row.Controls.Add(picAvatar);
+            row.Controls.Add(lblName);
+            row.Controls.Add(progressBar);
+            row.Controls.Add(lblRecords);
+
+            // Handle resize within row
+            row.Resize += (s, e) =>
+            {
+                progressBar.Width = row.Width - 250;
+                lblRecords.Location = new Point(progressBar.Right + 15, 54);
+                progressBar.Invalidate();
+            };
 
             row.Paint += (s, e) => {
                 using (Pen p = new Pen(Color.FromArgb(210, 210, 210), 1))
@@ -257,25 +360,29 @@ namespace PUP_RMS.Forms
             }
         }
 
-        private void frmDistributionProfessor_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void frmDistributionProfessor_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form_MouseMove(object sender, MouseEventArgs e)
         {
-            if (dragging) this.Location = Point.Add(dragFormPoint, new Size(Point.Subtract(Cursor.Position, new Size(dragCursorPoint))));
-            _isHoveringClose = _closeBtnRect.Contains(e.Location);
-            _isHoveringMax = _maxBtnRect.Contains(e.Location);
-            Invalidate(new Rectangle(0, 0, Width, 50));
-            Cursor = (_isHoveringClose || _isHoveringMax) ? Cursors.Hand : Cursors.Default;
+            if (dragging)
+            {
+                Point dif = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
+                this.Location = Point.Add(dragFormPoint, new Size(dif));
+                return;
+            }
+            bool hoverClose = _closeBtnRect.Contains(e.Location);
+            bool hoverMax = _maxBtnRect.Contains(e.Location);
+
+            if (hoverClose != _isHoveringClose || hoverMax != _isHoveringMax)
+            {
+                _isHoveringClose = hoverClose;
+                _isHoveringMax = hoverMax;
+                Invalidate(new Rectangle(0, 0, Width, 50));
+            }
+
+            Cursor = (hoverClose || hoverMax) ? Cursors.Hand : Cursors.Default;
         }
 
         private void Form_MouseUp(object sender, MouseEventArgs e) => dragging = false;
+
+        private void frmDistributionProfessor_Load(object sender, EventArgs e) { }
     }
 }

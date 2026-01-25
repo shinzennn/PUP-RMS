@@ -32,13 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainDashboard));
             this.pnlContent = new System.Windows.Forms.Panel();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.flowLayoutPanelUpload = new System.Windows.Forms.FlowLayoutPanel();
             this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnDashboard = new PUP_RMS.Controls.iconButton();
             this.btnSearch = new PUP_RMS.Controls.iconButton();
             this.btnBatchUpload = new PUP_RMS.Controls.iconButton();
@@ -49,9 +49,9 @@
             this.btnLogout = new PUP_RMS.Controls.iconButton();
             this.pnlContent.SuspendLayout();
             this.flowLayoutPanelMain.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlContent
@@ -84,32 +84,13 @@
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
             this.flowLayoutPanelMain.Size = new System.Drawing.Size(250, 749);
             this.flowLayoutPanelMain.TabIndex = 10;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(247, 147);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 11;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(3, 156);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(247, 35);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 11;
-            this.pictureBox2.TabStop = false;
+            this.flowLayoutPanelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanelMain_Paint);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Location = new System.Drawing.Point(3, 197);
+            this.panel1.Location = new System.Drawing.Point(3, 200);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(247, 18);
             this.panel1.TabIndex = 11;
@@ -135,10 +116,30 @@
             // flowLayoutPanelUpload
             // 
             this.flowLayoutPanelUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.flowLayoutPanelUpload.Location = new System.Drawing.Point(3, 743);
+            this.flowLayoutPanelUpload.Location = new System.Drawing.Point(3, 746);
             this.flowLayoutPanelUpload.Name = "flowLayoutPanelUpload";
             this.flowLayoutPanelUpload.Size = new System.Drawing.Size(244, 60);
             this.flowLayoutPanelUpload.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::PUP_RMS.Properties.Resources.Blue_Black_modern_Building_Logo_Design__Logo__removebg_preview1;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(250, 150);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(3, 159);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(247, 35);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 11;
+            this.pictureBox2.TabStop = false;
             // 
             // btnDashboard
             // 
@@ -157,7 +158,7 @@
             this.btnDashboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDashboard.IndentLevel = 0;
             this.btnDashboard.IsActive = false;
-            this.btnDashboard.Location = new System.Drawing.Point(3, 221);
+            this.btnDashboard.Location = new System.Drawing.Point(3, 224);
             this.btnDashboard.Name = "btnDashboard";
             this.btnDashboard.Size = new System.Drawing.Size(244, 60);
             this.btnDashboard.TabIndex = 5;
@@ -184,7 +185,7 @@
             this.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSearch.IndentLevel = 0;
             this.btnSearch.IsActive = false;
-            this.btnSearch.Location = new System.Drawing.Point(3, 287);
+            this.btnSearch.Location = new System.Drawing.Point(3, 290);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(244, 60);
             this.btnSearch.TabIndex = 6;
@@ -211,10 +212,10 @@
             this.btnBatchUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnBatchUpload.IndentLevel = 0;
             this.btnBatchUpload.IsActive = false;
-            this.btnBatchUpload.Location = new System.Drawing.Point(0, 350);
+            this.btnBatchUpload.Location = new System.Drawing.Point(0, 353);
             this.btnBatchUpload.Margin = new System.Windows.Forms.Padding(0);
             this.btnBatchUpload.Name = "btnBatchUpload";
-            this.btnBatchUpload.Size = new System.Drawing.Size(244, 60);
+            this.btnBatchUpload.Size = new System.Drawing.Size(250, 60);
             this.btnBatchUpload.TabIndex = 7;
             this.btnBatchUpload.Text = "Batch Upload";
             this.btnBatchUpload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -239,7 +240,7 @@
             this.btnProgram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnProgram.IndentLevel = 0;
             this.btnProgram.IsActive = false;
-            this.btnProgram.Location = new System.Drawing.Point(3, 413);
+            this.btnProgram.Location = new System.Drawing.Point(3, 416);
             this.btnProgram.Name = "btnProgram";
             this.btnProgram.Size = new System.Drawing.Size(244, 60);
             this.btnProgram.TabIndex = 15;
@@ -266,7 +267,7 @@
             this.btnCourse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCourse.IndentLevel = 0;
             this.btnCourse.IsActive = false;
-            this.btnCourse.Location = new System.Drawing.Point(3, 479);
+            this.btnCourse.Location = new System.Drawing.Point(3, 482);
             this.btnCourse.Name = "btnCourse";
             this.btnCourse.Size = new System.Drawing.Size(244, 60);
             this.btnCourse.TabIndex = 12;
@@ -293,7 +294,7 @@
             this.btnProfessor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnProfessor.IndentLevel = 0;
             this.btnProfessor.IsActive = false;
-            this.btnProfessor.Location = new System.Drawing.Point(3, 545);
+            this.btnProfessor.Location = new System.Drawing.Point(3, 548);
             this.btnProfessor.Name = "btnProfessor";
             this.btnProfessor.Size = new System.Drawing.Size(244, 60);
             this.btnProfessor.TabIndex = 13;
@@ -320,7 +321,7 @@
             this.btnAccounts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAccounts.IndentLevel = 0;
             this.btnAccounts.IsActive = false;
-            this.btnAccounts.Location = new System.Drawing.Point(3, 611);
+            this.btnAccounts.Location = new System.Drawing.Point(3, 614);
             this.btnAccounts.Name = "btnAccounts";
             this.btnAccounts.Size = new System.Drawing.Size(244, 60);
             this.btnAccounts.TabIndex = 14;
@@ -347,7 +348,7 @@
             this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogout.IndentLevel = 0;
             this.btnLogout.IsActive = false;
-            this.btnLogout.Location = new System.Drawing.Point(3, 677);
+            this.btnLogout.Location = new System.Drawing.Point(3, 680);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(244, 60);
             this.btnLogout.TabIndex = 8;
@@ -370,10 +371,10 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnlContent.ResumeLayout(false);
             this.flowLayoutPanelMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }

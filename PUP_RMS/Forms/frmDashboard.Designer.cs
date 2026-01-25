@@ -44,12 +44,10 @@
             this.dgvRecentUploads = new System.Windows.Forms.DataGridView();
             this.colUploadedAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSubject = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUploadedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAction = new System.Windows.Forms.DataGridViewButtonColumn();
             this.headerPanelCard5 = new PUP_RMS.CustomControls.HeaderPanelCard();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.dcRecentlyUploaded = new PUP_RMS.CustomControls.DashboardCard();
+            this.dcTotalProgram = new PUP_RMS.CustomControls.DashboardCard();
             this.dcTotalProfessors = new PUP_RMS.CustomControls.DashboardCard();
             this.dcTotalSubjects = new PUP_RMS.CustomControls.DashboardCard();
             this.dcTotalGradesheets = new PUP_RMS.CustomControls.DashboardCard();
@@ -61,6 +59,8 @@
             this.pnlByYear_Sem = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProfessor = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProgram = new PUP_RMS.RecordDistributionPanelCard();
+            this.timerActivityLog = new System.Windows.Forms.Timer(this.components);
+            this.lblAccountName = new GradientLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.roundedPanel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -104,6 +104,7 @@
             this.roundedPanel3.BorderColor = System.Drawing.Color.Transparent;
             this.roundedPanel3.BorderRadius = 10;
             this.roundedPanel3.BorderSize = 0;
+            this.roundedPanel3.Controls.Add(this.lblAccountName);
             this.roundedPanel3.Controls.Add(this.gradientLabel1);
             this.roundedPanel3.Controls.Add(this.label10);
             this.roundedPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -126,9 +127,9 @@
             this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.gradientLabel1.Location = new System.Drawing.Point(14, 9);
             this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(402, 32);
+            this.gradientLabel1.Size = new System.Drawing.Size(194, 32);
             this.gradientLabel1.TabIndex = 7;
-            this.gradientLabel1.Text = "Welcome Back, Justine Montante!";
+            this.gradientLabel1.Text = "Welcome Back, ";
             // 
             // label10
             // 
@@ -269,39 +270,28 @@
             this.dgvRecentUploads.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colUploadedAt,
             this.colFileName,
-            this.colSubject,
-            this.colUploadedBy,
-            this.colAction});
+            this.colUploadedBy});
             this.dgvRecentUploads.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvRecentUploads.Location = new System.Drawing.Point(15, 50);
             this.dgvRecentUploads.Name = "dgvRecentUploads";
             this.dgvRecentUploads.Size = new System.Drawing.Size(688, 187);
             this.dgvRecentUploads.TabIndex = 8;
+            this.dgvRecentUploads.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRecentUploads_CellContentClick_1);
             // 
             // colUploadedAt
             // 
-            this.colUploadedAt.HeaderText = "Date Uploaded";
+            this.colUploadedAt.HeaderText = "File Name";
             this.colUploadedAt.Name = "colUploadedAt";
             // 
             // colFileName
             // 
-            this.colFileName.HeaderText = "File Name";
+            this.colFileName.HeaderText = "Course Description";
             this.colFileName.Name = "colFileName";
-            // 
-            // colSubject
-            // 
-            this.colSubject.HeaderText = "Subject";
-            this.colSubject.Name = "colSubject";
             // 
             // colUploadedBy
             // 
             this.colUploadedBy.HeaderText = "Uploaded By";
             this.colUploadedBy.Name = "colUploadedBy";
-            // 
-            // colAction
-            // 
-            this.colAction.HeaderText = "Action";
-            this.colAction.Name = "colAction";
             // 
             // headerPanelCard5
             // 
@@ -339,7 +329,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.Controls.Add(this.dcRecentlyUploaded, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.dcTotalProgram, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.dcTotalProfessors, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.dcTotalSubjects, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.dcTotalGradesheets, 0, 0);
@@ -352,32 +342,32 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1082, 110);
             this.tableLayoutPanel2.TabIndex = 10;
             // 
-            // dcRecentlyUploaded
+            // dcTotalProgram
             // 
-            this.dcRecentlyUploaded.BackColor = System.Drawing.Color.Transparent;
-            this.dcRecentlyUploaded.BorderRadius = 15;
-            this.dcRecentlyUploaded.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dcRecentlyUploaded.HeaderFontSize = 9F;
-            this.dcRecentlyUploaded.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
-            this.dcRecentlyUploaded.HeaderText = "RECENTLY UPLOADED";
-            this.dcRecentlyUploaded.IconBackColor = System.Drawing.Color.Goldenrod;
-            this.dcRecentlyUploaded.IconCircleSize = 50;
-            this.dcRecentlyUploaded.IconImage = ((System.Drawing.Image)(resources.GetObject("dcRecentlyUploaded.IconImage")));
-            this.dcRecentlyUploaded.Location = new System.Drawing.Point(815, 0);
-            this.dcRecentlyUploaded.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.dcRecentlyUploaded.Name = "dcRecentlyUploaded";
-            this.dcRecentlyUploaded.PanelBackColor = System.Drawing.Color.White;
-            this.dcRecentlyUploaded.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.dcRecentlyUploaded.ShadowDepth = 15;
-            this.dcRecentlyUploaded.ShadowPadding = 10;
-            this.dcRecentlyUploaded.ShowShadow = true;
-            this.dcRecentlyUploaded.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
-            this.dcRecentlyUploaded.SideBarWidth = 5;
-            this.dcRecentlyUploaded.Size = new System.Drawing.Size(262, 110);
-            this.dcRecentlyUploaded.TabIndex = 12;
-            this.dcRecentlyUploaded.ValueFontSize = 24F;
-            this.dcRecentlyUploaded.ValueForeColor = System.Drawing.Color.Black;
-            this.dcRecentlyUploaded.ValueText = "0";
+            this.dcTotalProgram.BackColor = System.Drawing.Color.Transparent;
+            this.dcTotalProgram.BorderRadius = 15;
+            this.dcTotalProgram.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dcTotalProgram.HeaderFontSize = 9F;
+            this.dcTotalProgram.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
+            this.dcTotalProgram.HeaderText = "TOTAL PROGRAM";
+            this.dcTotalProgram.IconBackColor = System.Drawing.Color.Goldenrod;
+            this.dcTotalProgram.IconCircleSize = 50;
+            this.dcTotalProgram.IconImage = ((System.Drawing.Image)(resources.GetObject("dcTotalProgram.IconImage")));
+            this.dcTotalProgram.Location = new System.Drawing.Point(815, 0);
+            this.dcTotalProgram.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.dcTotalProgram.Name = "dcTotalProgram";
+            this.dcTotalProgram.PanelBackColor = System.Drawing.Color.White;
+            this.dcTotalProgram.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.dcTotalProgram.ShadowDepth = 15;
+            this.dcTotalProgram.ShadowPadding = 10;
+            this.dcTotalProgram.ShowShadow = true;
+            this.dcTotalProgram.SideBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(175)))), ((int)(((byte)(55)))));
+            this.dcTotalProgram.SideBarWidth = 5;
+            this.dcTotalProgram.Size = new System.Drawing.Size(262, 110);
+            this.dcTotalProgram.TabIndex = 12;
+            this.dcTotalProgram.ValueFontSize = 24F;
+            this.dcTotalProgram.ValueForeColor = System.Drawing.Color.Black;
+            this.dcTotalProgram.ValueText = "0";
             // 
             // dcTotalProfessors
             // 
@@ -413,7 +403,7 @@
             this.dcTotalSubjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dcTotalSubjects.HeaderFontSize = 9F;
             this.dcTotalSubjects.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(86)))), ((int)(((byte)(106)))));
-            this.dcTotalSubjects.HeaderText = "TOTAL SUBJECTS";
+            this.dcTotalSubjects.HeaderText = "TOTAL COURSES";
             this.dcTotalSubjects.IconBackColor = System.Drawing.Color.Goldenrod;
             this.dcTotalSubjects.IconCircleSize = 50;
             this.dcTotalSubjects.IconImage = ((System.Drawing.Image)(resources.GetObject("dcTotalSubjects.IconImage")));
@@ -459,6 +449,7 @@
             this.dcTotalGradesheets.ValueFontSize = 24F;
             this.dcTotalGradesheets.ValueForeColor = System.Drawing.Color.Black;
             this.dcTotalGradesheets.ValueText = "0";
+            this.dcTotalGradesheets.Paint += new System.Windows.Forms.PaintEventHandler(this.dcTotalGradesheets_Paint_1);
             // 
             // tableLayoutPanel4
             // 
@@ -557,7 +548,7 @@
             this.pnlBySubject.BorderRadius = 15;
             this.pnlBySubject.BorderSize = 2;
             this.pnlBySubject.CardIcon = ((System.Drawing.Image)(resources.GetObject("pnlBySubject.CardIcon")));
-            this.pnlBySubject.CardLabel = "By Subject";
+            this.pnlBySubject.CardLabel = "By Course";
             this.pnlBySubject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlBySubject.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(243)))), ((int)(((byte)(209)))));
             this.pnlBySubject.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(169)))), ((int)(((byte)(0)))));
@@ -653,11 +644,29 @@
             this.pnlByProgram.Click += new System.EventHandler(this.pnlByProgram_Click_1);
             this.pnlByProgram.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlByProgram_Paint);
             // 
+            // timerActivityLog
+            // 
+            this.timerActivityLog.Enabled = true;
+            this.timerActivityLog.Interval = 3000;
+            this.timerActivityLog.Tick += new System.EventHandler(this.timerActivityLog_Tick);
+            // 
+            // lblAccountName
+            // 
+            this.lblAccountName.AutoSize = true;
+            this.lblAccountName.BackColor = System.Drawing.Color.Transparent;
+            this.lblAccountName.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblAccountName.Location = new System.Drawing.Point(200, 9);
+            this.lblAccountName.Name = "lblAccountName";
+            this.lblAccountName.Size = new System.Drawing.Size(81, 32);
+            this.lblAccountName.TabIndex = 8;
+            this.lblAccountName.Text = "Name";
+            // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(237)))), ((int)(((byte)(233)))));
+            this.BackgroundImage = global::PUP_RMS.Properties.Resources._619384472_920609864259422_4656079368386240362_n;
             this.ClientSize = new System.Drawing.Size(1120, 788);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -691,7 +700,7 @@
         private System.Windows.Forms.Label label10;
         private CustomControls.HeaderPanelCard headerPanelCard5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private CustomControls.DashboardCard dcRecentlyUploaded;
+        private CustomControls.DashboardCard dcTotalProgram;
         private CustomControls.DashboardCard dcTotalProfessors;
         private CustomControls.DashboardCard dcTotalSubjects;
         private CustomControls.DashboardCard dcTotalGradesheets;
@@ -699,11 +708,6 @@
         private CustomControls.HeaderPanelCard headerPanelCard4;
         private CustomControls.HeaderPanelCard headerPanelCard3;
         private System.Windows.Forms.DataGridView dgvRecentUploads;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colUploadedAt;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFileName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSubject;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colUploadedBy;
-        private System.Windows.Forms.DataGridViewButtonColumn colAction;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private CustomControls.HeaderPanelCard headerPanelCard1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
@@ -714,5 +718,10 @@
         private System.Windows.Forms.Label lblStorageUsageDetails;
         private CircularProgressBar cpDriveUsage;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.Timer timerActivityLog;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colUploadedAt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFileName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colUploadedBy;
+        private GradientLabel lblAccountName;
     }
 }
