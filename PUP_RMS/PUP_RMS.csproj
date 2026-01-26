@@ -230,6 +230,12 @@
     <Compile Include="Forms\frmBatchUpload.Designer.cs">
       <DependentUpon>frmBatchUpload.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmStorageDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmStorageDetails.Designer.cs">
+      <DependentUpon>frmStorageDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmSubjectDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -356,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmBatchUpload.resx">
       <DependentUpon>frmBatchUpload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmStorageDetails.resx">
+      <DependentUpon>frmStorageDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmSubjectDetails.resx">
       <DependentUpon>frmSubjectDetails.cs</DependentUpon>

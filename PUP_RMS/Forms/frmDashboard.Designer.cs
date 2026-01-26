@@ -33,6 +33,7 @@
             this.timerStorageUpdate = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.roundedPanel3 = new PUP_RMS.RoundedPanel();
+            this.lblAccountName = new GradientLabel();
             this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -60,7 +61,7 @@
             this.pnlByProfessor = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProgram = new PUP_RMS.RecordDistributionPanelCard();
             this.timerActivityLog = new System.Windows.Forms.Timer(this.components);
-            this.lblAccountName = new GradientLabel();
+            this.lnkViewStorage = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.roundedPanel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -120,6 +121,17 @@
             this.roundedPanel3.TabIndex = 15;
             this.roundedPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.roundedPanel3_Paint);
             // 
+            // lblAccountName
+            // 
+            this.lblAccountName.AutoSize = true;
+            this.lblAccountName.BackColor = System.Drawing.Color.Transparent;
+            this.lblAccountName.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblAccountName.Location = new System.Drawing.Point(200, 9);
+            this.lblAccountName.Name = "lblAccountName";
+            this.lblAccountName.Size = new System.Drawing.Size(81, 32);
+            this.lblAccountName.TabIndex = 8;
+            this.lblAccountName.Text = "Name";
+            // 
             // gradientLabel1
             // 
             this.gradientLabel1.AutoSize = true;
@@ -166,6 +178,7 @@
             this.headerPanelCard4.BorderRadius = 20;
             this.headerPanelCard4.BorderThickness = 0;
             this.headerPanelCard4.ContentBackColor = System.Drawing.Color.White;
+            this.headerPanelCard4.Controls.Add(this.lnkViewStorage);
             this.headerPanelCard4.Controls.Add(this.tableLayoutPanel6);
             this.headerPanelCard4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.headerPanelCard4.EnableHoverEffect = false;
@@ -650,16 +663,17 @@
             this.timerActivityLog.Interval = 3000;
             this.timerActivityLog.Tick += new System.EventHandler(this.timerActivityLog_Tick);
             // 
-            // lblAccountName
+            // lnkViewStorage
             // 
-            this.lblAccountName.AutoSize = true;
-            this.lblAccountName.BackColor = System.Drawing.Color.Transparent;
-            this.lblAccountName.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblAccountName.Location = new System.Drawing.Point(200, 9);
-            this.lblAccountName.Name = "lblAccountName";
-            this.lblAccountName.Size = new System.Drawing.Size(81, 32);
-            this.lblAccountName.TabIndex = 8;
-            this.lblAccountName.Text = "Name";
+            this.lnkViewStorage.AutoSize = true;
+            this.lnkViewStorage.LinkColor = System.Drawing.Color.Maroon;
+            this.lnkViewStorage.Location = new System.Drawing.Point(306, 22);
+            this.lnkViewStorage.Name = "lnkViewStorage";
+            this.lnkViewStorage.Size = new System.Drawing.Size(65, 13);
+            this.lnkViewStorage.TabIndex = 10;
+            this.lnkViewStorage.TabStop = true;
+            this.lnkViewStorage.Text = "View Details";
+            this.lnkViewStorage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkViewStorage_LinkClicked);
             // 
             // frmDashboard
             // 
@@ -678,6 +692,7 @@
             this.roundedPanel3.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.headerPanelCard4.ResumeLayout(false);
+            this.headerPanelCard4.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
             this.headerPanelCard3.ResumeLayout(false);
@@ -723,5 +738,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colFileName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUploadedBy;
         private GradientLabel lblAccountName;
+        private System.Windows.Forms.LinkLabel lnkViewStorage;
     }
 }
