@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection; // Required for Double Buffer logic
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,11 +13,62 @@ namespace PUP_RMS.Forms
 {
     public partial class frmAdminTool : Form
     {
+        // Forms to be loaded into the panel
+        private frmProgram _programForm;
+        private frmCourse _courseForm;    // Changed from Label to Form
+        private frmFaculty _facultyForm;  // Changed from Label to Form
+
+        // Keep curriculum as placeholder for now (unless you have a frmCurriculum)
+        private Label _curriculumPlaceholder;
+
         public frmAdminTool()
         {
+            // 1. ENABLE GLOBAL DOUBLE BUFFERING FOR THIS FORM
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.UserPaint |
+                          ControlStyles.DoubleBuffer |
+                          ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.ResizeRedraw, true);
+            this.UpdateStyles();
+
             InitializeComponent();
-            // Set initial state - Manage Curriculums selected, others white
+
+            // 2. FORCE PANEL TO BE DOUBLE BUFFERED
+            SetDoubleBuffered(panelMainContent);
+
             SetInitialButtonState();
+        }
+
+        // 3. PREVENT BACKGROUND PAINTING FLICKER (WS_EX_COMPOSITED)
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // WS_EX_COMPOSITED (Paint all descendants at once)
+                return cp;
+            }
+        }
+
+        // 4. HELPER TO FORCE DOUBLE BUFFERING ON PANELS
+        public static void SetDoubleBuffered(System.Windows.Forms.Control c)
+        {
+            if (System.Windows.Forms.SystemInformation.TerminalServerSession) return;
+            System.Reflection.PropertyInfo aProp = typeof(System.Windows.Forms.Control).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (aProp != null) aProp.SetValue(c, true, null);
+        }
+
+        private void FrmAdminToolLoad(object sender, EventArgs e)
+        {
+            // Suspend layout during initial load to prevent visual stutter
+            this.SuspendLayout();
+            panelMainContent.SuspendLayout();
+
+            InitializeContentControls();
+
+            // Resume layout after controls are created
+            panelMainContent.ResumeLayout();
+            this.ResumeLayout();
         }
 
         private void SetInitialButtonState()
@@ -24,7 +76,6 @@ namespace PUP_RMS.Forms
             Color whiteColor = Color.FromArgb(253, 243, 230);
             Color goldColor = Color.Goldenrod;
 
-            // Set all buttons to white background initially
             btnManageCurriculums.BackColor = whiteColor;
             btnManageCurriculums.ForeColor = goldColor;
             btnManagePrograms.BackColor = whiteColor;
@@ -34,57 +85,66 @@ namespace PUP_RMS.Forms
             btnManageFaculties.BackColor = whiteColor;
             btnManageFaculties.ForeColor = goldColor;
 
-            // Set Manage Curriculums as initially selected (maroon background)
+            // Default selection
             btnManageCurriculums.BackColor = Color.FromArgb(93, 16, 10);
         }
 
-        private void adminToolCardButton2_Click(object sender, EventArgs e)
+        private void BtnManageCurriculumsClick(object sender, EventArgs e)
         {
+            // 5. FREEZE UI WHILE SWITCHING
+            panelMainContent.SuspendLayout();
 
-        }
-
-        private void btnManageCurriculums_Click(object sender, EventArgs e)
-        {
             ResetButtonColors();
             btnManageCurriculums.BackColor = Color.FromArgb(93, 16, 10);
             btnManageCurriculums.ForeColor = Color.Goldenrod;
-            
-            // Clear existing content and load curriculum management
-            ClearMainContent();
-            LoadCurriculumManagement();
+
+            HideAllContent();
+            ShowOnly(_curriculumPlaceholder);
+
+            // 6. UNFREEZE UI
+            panelMainContent.ResumeLayout();
         }
 
-        private void btnManagePrograms_Click(object sender, EventArgs e)
+        private void BtnManageProgramsClick(object sender, EventArgs e)
         {
+            panelMainContent.SuspendLayout();
+
             ResetButtonColors();
             btnManagePrograms.BackColor = Color.FromArgb(93, 16, 10);
             btnManagePrograms.ForeColor = Color.Goldenrod;
-            
-            // Clear existing content and load frmProgram
-            ClearMainContent();
-            LoadProgramManagement();
+
+            HideAllContent();
+            ShowOnly(_programForm);
+
+            panelMainContent.ResumeLayout();
         }
 
-        private void btnManageCourses_Click(object sender, EventArgs e)
+        private void BtnManageCoursesClick(object sender, EventArgs e)
         {
+            panelMainContent.SuspendLayout();
+
             ResetButtonColors();
             btnManageCourses.BackColor = Color.FromArgb(93, 16, 10);
             btnManageCourses.ForeColor = Color.Goldenrod;
-            
-            // Clear existing content and load course management
-            ClearMainContent();
-            LoadCourseManagement();
+
+            HideAllContent();
+            ShowOnly(_courseForm); // Show the Course Form
+
+            panelMainContent.ResumeLayout();
         }
 
-        private void btnManageFaculties_Click(object sender, EventArgs e)
+        private void BtnManageFacultiesClick(object sender, EventArgs e)
         {
+            panelMainContent.SuspendLayout();
+
             ResetButtonColors();
             btnManageFaculties.BackColor = Color.FromArgb(93, 16, 10);
             btnManageFaculties.ForeColor = Color.Goldenrod;
-            
-            // Clear existing content and load faculty management
-            ClearMainContent();
-            LoadFacultyManagement();
+
+            HideAllContent();
+            ShowOnly(_facultyForm); // Show the Faculty Form
+
+            panelMainContent.ResumeLayout();
         }
 
         private void ResetButtonColors()
@@ -92,7 +152,6 @@ namespace PUP_RMS.Forms
             Color whiteColor = Color.FromArgb(253, 243, 230);
             Color goldColor = Color.Goldenrod;
 
-            // Reset all buttons to white background with gold text
             btnManageCurriculums.BackColor = whiteColor;
             btnManageCurriculums.ForeColor = goldColor;
             btnManagePrograms.BackColor = whiteColor;
@@ -103,59 +162,82 @@ namespace PUP_RMS.Forms
             btnManageFaculties.ForeColor = goldColor;
         }
 
-        private void ClearMainContent()
+        private void InitializeContentControls()
         {
-            // Clear any existing controls from the main content panel
-            panelMainContent.Controls.Clear();
+            var maroonColor = Color.FromArgb(93, 16, 10);
+            var boldFont = new Font("Segoe UI", 16, FontStyle.Bold);
+
+            // -- 1. Initialize Program Form --
+            _programForm = new frmProgram
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill,
+                Visible = false
+            };
+            SetDoubleBuffered(_programForm);
+
+            // -- 2. Initialize Course Form (New) --
+            _courseForm = new frmCourse
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill,
+                Visible = false
+            };
+            SetDoubleBuffered(_courseForm);
+
+            // -- 3. Initialize Faculty Form (New) --
+            _facultyForm = new frmFaculty
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill,
+                Visible = false
+            };
+            SetDoubleBuffered(_facultyForm);
+
+            // -- 4. Initialize Placeholder (Only for Curriculum now) --
+            _curriculumPlaceholder = CreatePlaceholder("Curriculum Management Module", boldFont, maroonColor);
+
+            // -- 5. Add ALL to panel immediately (Pre-loading) --
+            panelMainContent.Controls.Add(_programForm);
+            panelMainContent.Controls.Add(_courseForm);
+            panelMainContent.Controls.Add(_facultyForm);
+            panelMainContent.Controls.Add(_curriculumPlaceholder);
+
+            // Show default
+            _curriculumPlaceholder.Visible = true;
         }
 
-        private void LoadProgramManagement()
+        private Label CreatePlaceholder(string text, Font font, Color color)
         {
-            // Create and show frmProgram within the main content panel
-            frmProgram programForm = new frmProgram();
-            programForm.TopLevel = false; // Make it a child control
-            programForm.FormBorderStyle = FormBorderStyle.None;
-            programForm.Dock = DockStyle.Fill;
-
-            panelMainContent.Controls.Add(programForm);
-            programForm.Show();
+            return new Label
+            {
+                Text = text,
+                Font = font,
+                ForeColor = color,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Fill,
+                Visible = false // Start hidden
+            };
         }
 
-        private void LoadCurriculumManagement()
+        private void HideAllContent()
         {
-            // TODO: Load curriculum management form/UserControl here
-            // For now, show placeholder
-            Label placeholder = new Label();
-            placeholder.Text = "Curriculum Management Module";
-            placeholder.Font = new Font("Segoe UI", 16, FontStyle.Bold);
-            placeholder.ForeColor = Color.FromArgb(93, 16, 10);
-            placeholder.TextAlign = ContentAlignment.MiddleCenter;
-            placeholder.Dock = DockStyle.Fill;
-            panelMainContent.Controls.Add(placeholder);
+            if (_programForm != null) _programForm.Visible = false;
+            if (_courseForm != null) _courseForm.Visible = false;
+            if (_facultyForm != null) _facultyForm.Visible = false;
+            if (_curriculumPlaceholder != null) _curriculumPlaceholder.Visible = false;
         }
 
-        private void LoadCourseManagement()
+        private void ShowOnly(Control controlToShow)
         {
-            // TODO: Load course management form/UserControl here
-            Label placeholder = new Label();
-            placeholder.Text = "Course Management Module";
-            placeholder.Font = new Font("Segoe UI", 16, FontStyle.Bold);
-            placeholder.ForeColor = Color.FromArgb(93, 16, 10);
-            placeholder.TextAlign = ContentAlignment.MiddleCenter;
-            placeholder.Dock = DockStyle.Fill;
-            panelMainContent.Controls.Add(placeholder);
-        }
-
-        private void LoadFacultyManagement()
-        {
-            // TODO: Load faculty management form/UserControl here
-            Label placeholder = new Label();
-            placeholder.Text = "Faculty Management Module";
-            placeholder.Font = new Font("Segoe UI", 16, FontStyle.Bold);
-            placeholder.ForeColor = Color.FromArgb(93, 16, 10);
-            placeholder.TextAlign = ContentAlignment.MiddleCenter;
-            placeholder.Dock = DockStyle.Fill;
-            panelMainContent.Controls.Add(placeholder);
+            if (controlToShow != null)
+            {
+                controlToShow.Visible = true;
+                controlToShow.BringToFront();
+            }
         }
     }
 }

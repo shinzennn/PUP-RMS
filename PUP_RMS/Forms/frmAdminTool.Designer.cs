@@ -154,7 +154,7 @@ namespace PUP_RMS.Forms
             this.btnManageCurriculums.Text = "Manage Curriculums";
             this.btnManageCurriculums.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnManageCurriculums.UseVisualStyleBackColor = false;
-            this.btnManageCurriculums.Click += new System.EventHandler(this.btnManageCurriculums_Click);
+            this.btnManageCurriculums.Click += new System.EventHandler(this.BtnManageCurriculumsClick);
             // 
             // btnManagePrograms
             // 
@@ -178,7 +178,7 @@ namespace PUP_RMS.Forms
             this.btnManagePrograms.Text = "Manage Programs";
             this.btnManagePrograms.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnManagePrograms.UseVisualStyleBackColor = false;
-            this.btnManagePrograms.Click += new System.EventHandler(this.btnManagePrograms_Click);
+            this.btnManagePrograms.Click += new System.EventHandler(this.BtnManageProgramsClick);
             // 
             // btnManageCourses
             // 
@@ -202,7 +202,7 @@ namespace PUP_RMS.Forms
             this.btnManageCourses.Text = "Manage Courses";
             this.btnManageCourses.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnManageCourses.UseVisualStyleBackColor = false;
-            this.btnManageCourses.Click += new System.EventHandler(this.btnManageCourses_Click);
+            this.btnManageCourses.Click += new System.EventHandler(this.BtnManageCoursesClick);
             // 
             // btnManageFaculties
             // 
@@ -226,15 +226,16 @@ namespace PUP_RMS.Forms
             this.btnManageFaculties.Text = "Manage Faculties";
             this.btnManageFaculties.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnManageFaculties.UseVisualStyleBackColor = false;
-            this.btnManageFaculties.Click += new System.EventHandler(this.btnManageFaculties_Click);
+            this.btnManageFaculties.Click += new System.EventHandler(this.BtnManageFacultiesClick);
             // 
             // panelMainContent
             // 
             this.panelMainContent.BackColor = System.Drawing.Color.Transparent;
             this.panelMainContent.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.panelMainContent.BorderRadius = 20;
+            this.panelMainContent.BorderRadius = 10;
             this.panelMainContent.BorderSize = 2;
-            this.panelMainContent.Location = new System.Drawing.Point(3, 143);
+            this.panelMainContent.Location = new System.Drawing.Point(0, 140);
+            this.panelMainContent.Margin = new System.Windows.Forms.Padding(0);
             this.panelMainContent.Name = "panelMainContent";
             this.panelMainContent.PanelColor = System.Drawing.Color.Transparent;
             this.panelMainContent.PanelImage = null;
@@ -242,7 +243,7 @@ namespace PUP_RMS.Forms
             this.panelMainContent.ShadowDepth = 10;
             this.panelMainContent.ShadowEnabled = true;
             this.panelMainContent.ShadowShift = 5;
-            this.panelMainContent.Size = new System.Drawing.Size(1360, 622);
+            this.panelMainContent.Size = new System.Drawing.Size(1360, 628);
             this.panelMainContent.TabIndex = 19;
             // 
             // panelNavigationLine
@@ -253,6 +254,7 @@ namespace PUP_RMS.Forms
             this.panelNavigationLine.Name = "panelNavigationLine";
             this.panelNavigationLine.Size = new System.Drawing.Size(750, 3);
             this.panelNavigationLine.TabIndex = 18;
+            this.Load += new System.EventHandler(this.FrmAdminToolLoad);
             // 
             // frmAdminTool
             // 
