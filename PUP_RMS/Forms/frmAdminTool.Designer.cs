@@ -30,19 +30,19 @@ namespace PUP_RMS.Forms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdminTool));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelNavigation = new System.Windows.Forms.TableLayoutPanel();
+            this.panelNavigationLine = new System.Windows.Forms.Panel();
             this.roundedPanel3 = new PUP_RMS.RoundedPanel();
             this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
-            this.tableLayoutPanelNavigation = new System.Windows.Forms.TableLayoutPanel();
             this.btnManageCurriculums = new PUP_RMS.Controls.iconButton();
             this.btnManagePrograms = new PUP_RMS.Controls.iconButton();
             this.btnManageCourses = new PUP_RMS.Controls.iconButton();
             this.btnManageFaculties = new PUP_RMS.Controls.iconButton();
             this.panelMainContent = new PUP_RMS.RoundedShadowPanel();
-            this.panelNavigationLine = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
-            this.roundedPanel3.SuspendLayout();
             this.tableLayoutPanelNavigation.SuspendLayout();
+            this.roundedPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -64,6 +64,41 @@ namespace PUP_RMS.Forms
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1366, 768);
             this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // tableLayoutPanelNavigation
+            // 
+            this.tableLayoutPanelNavigation.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanelNavigation.ColumnCount = 7;
+            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanelNavigation.Controls.Add(this.btnManageCurriculums, 1, 0);
+            this.tableLayoutPanelNavigation.Controls.Add(this.btnManagePrograms, 2, 0);
+            this.tableLayoutPanelNavigation.Controls.Add(this.btnManageCourses, 3, 0);
+            this.tableLayoutPanelNavigation.Controls.Add(this.btnManageFaculties, 4, 0);
+            this.tableLayoutPanelNavigation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelNavigation.Location = new System.Drawing.Point(3, 80);
+            this.tableLayoutPanelNavigation.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.tableLayoutPanelNavigation.Name = "tableLayoutPanelNavigation";
+            this.tableLayoutPanelNavigation.RowCount = 1;
+            this.tableLayoutPanelNavigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelNavigation.Size = new System.Drawing.Size(1360, 50);
+            this.tableLayoutPanelNavigation.TabIndex = 16;
+            // 
+            // panelNavigationLine
+            // 
+            this.panelNavigationLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelNavigationLine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
+            this.panelNavigationLine.Location = new System.Drawing.Point(150, 133);
+            this.panelNavigationLine.Margin = new System.Windows.Forms.Padding(150, 3, 160, 3);
+            this.panelNavigationLine.Name = "panelNavigationLine";
+            this.panelNavigationLine.Size = new System.Drawing.Size(1056, 3);
+            this.panelNavigationLine.TabIndex = 18;
             // 
             // roundedPanel3
             // 
@@ -107,30 +142,6 @@ namespace PUP_RMS.Forms
             this.label10.Size = new System.Drawing.Size(133, 21);
             this.label10.TabIndex = 8;
             this.label10.Text = "Manage Records";
-            // 
-            // tableLayoutPanelNavigation
-            // 
-            this.tableLayoutPanelNavigation.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanelNavigation.ColumnCount = 7;
-            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelNavigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanelNavigation.Controls.Add(this.btnManageCurriculums, 1, 0);
-            this.tableLayoutPanelNavigation.Controls.Add(this.btnManagePrograms, 2, 0);
-            this.tableLayoutPanelNavigation.Controls.Add(this.btnManageCourses, 3, 0);
-            this.tableLayoutPanelNavigation.Controls.Add(this.btnManageFaculties, 4, 0);
-            this.tableLayoutPanelNavigation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelNavigation.Location = new System.Drawing.Point(3, 80);
-            this.tableLayoutPanelNavigation.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.tableLayoutPanelNavigation.Name = "tableLayoutPanelNavigation";
-            this.tableLayoutPanelNavigation.RowCount = 1;
-            this.tableLayoutPanelNavigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelNavigation.Size = new System.Drawing.Size(1360, 50);
-            this.tableLayoutPanelNavigation.TabIndex = 16;
             // 
             // btnManageCurriculums
             // 
@@ -231,9 +242,12 @@ namespace PUP_RMS.Forms
             // panelMainContent
             // 
             this.panelMainContent.BackColor = System.Drawing.Color.Transparent;
+            this.panelMainContent.BackgroundImage = global::PUP_RMS.Properties.Resources._619384472_920609864259422_4656079368386240362_n;
+            this.panelMainContent.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panelMainContent.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
             this.panelMainContent.BorderRadius = 10;
             this.panelMainContent.BorderSize = 2;
+            this.panelMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContent.Location = new System.Drawing.Point(0, 140);
             this.panelMainContent.Margin = new System.Windows.Forms.Padding(0);
             this.panelMainContent.Name = "panelMainContent";
@@ -243,35 +257,25 @@ namespace PUP_RMS.Forms
             this.panelMainContent.ShadowDepth = 10;
             this.panelMainContent.ShadowEnabled = true;
             this.panelMainContent.ShadowShift = 5;
-            this.panelMainContent.Size = new System.Drawing.Size(1360, 628);
+            this.panelMainContent.Size = new System.Drawing.Size(1366, 628);
             this.panelMainContent.TabIndex = 19;
-            // 
-            // panelNavigationLine
-            // 
-            this.panelNavigationLine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.panelNavigationLine.Location = new System.Drawing.Point(183, 133);
-            this.panelNavigationLine.Margin = new System.Windows.Forms.Padding(183, 3, 160, 3);
-            this.panelNavigationLine.Name = "panelNavigationLine";
-            this.panelNavigationLine.Size = new System.Drawing.Size(750, 3);
-            this.panelNavigationLine.TabIndex = 18;
-            this.Load += new System.EventHandler(this.FrmAdminToolLoad);
             // 
             // frmAdminTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.BackgroundImage = global::PUP_RMS.Properties.Resources._619384472_920609864259422_4656079368386240362_n;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmAdminTool";
             this.Text = "frmAdminTool";
+            this.Load += new System.EventHandler(this.FrmAdminToolLoad);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanelNavigation.ResumeLayout(false);
             this.roundedPanel3.ResumeLayout(false);
             this.roundedPanel3.PerformLayout();
-            this.tableLayoutPanelNavigation.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
