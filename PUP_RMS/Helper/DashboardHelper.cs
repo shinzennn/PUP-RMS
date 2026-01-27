@@ -10,59 +10,45 @@ namespace PUP_RMS.Helper
 {
     public static class DashboardHelper
     {
-        // =============================================================
+        
         // SECTION 1: COUNTS (DASHBOARD CARDS)
-        // =============================================================
-
         public static string GetGradeSheetCount()
         {
-            try
-            {
+            try{
                 int count = DbControl.ExecuteScalar("sp_GetGradeSheetCount");
                 return count.ToString();
-            }
-            catch { return "0"; }
+            }catch { return "0"; }
         }
 
         public static string GetSubjectCount()
         {
-            try
-            {
+            try{
                 int count = DbControl.ExecuteScalar("sp_GetSubjectCount");
                 return count.ToString();
-            }
-            catch { return "0"; }
+            }catch { return "0"; }
         }
 
         public static string GetProfessorCount()
         {
-            try
-            {
+            try{
                 int count = DbControl.ExecuteScalar("sp_GetFacultyCount");
                 return count.ToString();
-            }
-            catch { return "0"; }
+            }catch { return "0"; }
         }
 
         public static string GetProgramCount()
         {
-            try
-            {
+            try{
                 int count = DbControl.ExecuteScalar("countTotalProgram");
                 return count.ToString();
-            }
-            catch { return "0"; }
+            }catch { return "0"; }
         }
 
-        // =============================================================
         // SECTION 2: CHARTS & DISTRIBUTIONS
-        // =============================================================
-
         // 1. PROGRAM DISTRIBUTION (Merged Logic)
         public static DataTable GetProgramDistribution(string schoolYear = null)
         {
             DbControl.sqlParameters.Clear();
-
             // If a specific year is provided
             if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
             {
@@ -80,7 +66,6 @@ namespace PUP_RMS.Helper
         public static DataTable GetFacultyDistribution(string schoolYear = null, string curriculumYear = null)
         {
             DbControl.sqlParameters.Clear();
-
             // Parameter 1: School Year
             if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
                 DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
@@ -101,7 +86,6 @@ namespace PUP_RMS.Helper
         public static DataTable GetSubjectDistribution(string schoolYear = null)
         {
             DbControl.sqlParameters.Clear();
-
             if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All" && schoolYear != "All Years")
             {
                 DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
@@ -149,10 +133,8 @@ namespace PUP_RMS.Helper
             return DbControl.ExecuteQuery("sp_GetAllCurriculumYears");
         }
 
-        // =============================================================
         // SECTION 4: MISC & DETAILS
-        // =============================================================
-
+      
         public static DataTable GetSubjectDetails(string courseDescription)
         {
             DbControl.sqlParameters.Clear();
@@ -171,7 +153,6 @@ namespace PUP_RMS.Helper
         }
 
         // Add this inside the DashboardHelper class in PUP_RMS.Helper namespace
-
         public static DataTable GetGradeSheetsByFaculty(string facultyName, string schoolYear, string curriculumYear)
         {
             DbControl.sqlParameters.Clear();

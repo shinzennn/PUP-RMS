@@ -43,32 +43,30 @@ namespace PUP_RMS.Forms
                 Padding = new Padding(15, 0, 0, 0)
             };
 
-            // Close Button
-           // --- CONTROL BUTTONS (Min, Max, Close) ---
-
             // 1. Close Button
             btnClose = new Button
             {
                 Text = "✕", // Unicode Cross
                 Size = new Size(30, 30),
-                Location = new Point(lblTitle.Width - 35, 10), // Far Right
-                Anchor = AnchorStyles.Top | AnchorStyles.Right, // Keeps it on the right when resized
+                Location = new Point(lblTitle.Width - 35, 10), 
+                Anchor = AnchorStyles.Top | AnchorStyles.Right, 
                 FlatStyle = FlatStyle.Flat,
                 ForeColor = Color.White,
                 BackColor = Color.Transparent,
                 Cursor = Cursors.Hand,
                 Font = new Font("Segoe UI", 10, FontStyle.Regular)
             };
+
             btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.FlatAppearance.MouseOverBackColor = Color.Red; // Hover effect
+            btnClose.FlatAppearance.MouseOverBackColor = Color.Red; 
             btnClose.Click += (s, e) => this.Close();
 
             // 2. Maximize / Restore Button
             Button btnMax = new Button
             {
-                Text = "☐", // Unicode Square
+                Text = "☐", 
                 Size = new Size(30, 30),
-                Location = new Point(lblTitle.Width - 70, 10), // Left of Close
+                Location = new Point(lblTitle.Width - 70, 10), 
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 FlatStyle = FlatStyle.Flat,
                 ForeColor = Color.White,
@@ -82,18 +80,17 @@ namespace PUP_RMS.Forms
                 if (this.WindowState == FormWindowState.Maximized)
                 {
                     this.WindowState = FormWindowState.Normal;
-                    btnMax.Text = "☐"; // Square icon
+                    btnMax.Text = "☐"; 
                 }
                 else
                 {
                     // Prevent covering the taskbar when maximizing
                     this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
                     this.WindowState = FormWindowState.Maximized;
-                    btnMax.Text = "❐"; // Overlapping squares icon
+                    btnMax.Text = "❐"; 
                 }
             };
 
-            
             // Add buttons to the Title Label
             lblTitle.Controls.Add(btnClose);
             lblTitle.Controls.Add(btnMax);
@@ -153,7 +150,6 @@ namespace PUP_RMS.Forms
             dgvDetails.RowTemplate.Height = 42;
             dgvDetails.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             
-
             // Optional: Adjust column headers if needed
             if (dgvDetails.Columns["File Name"] != null)
                 dgvDetails.Columns["File Name"].HeaderText = "Grade Sheet Filename";
@@ -171,53 +167,3 @@ namespace PUP_RMS.Forms
     }
 }
 
-/*CREATE OR ALTER PROCEDURE sp_GetDistributionByFaculty_Filtered
-    @SchoolYear VARCHAR(20) = NULL,
-    @CurriculumYear VARCHAR(10) = NULL
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-SELECT
-        f.LastName + ', ' + f.FirstName AS Name,
-        COUNT(gs.GradeSheetID) AS RecordCount
-    FROM GradeSheet gs
-    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    -- We use LEFT JOIN here in case a gradesheet wasn't tagged with a curriculum (optional safety)
-    LEFT JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID 
-    WHERE 
-        (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-        AND
-        (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
-    GROUP BY f.LastName, f.FirstName
-    ORDER BY RecordCount DESC;
-END
-GO
-
---Stored Procedure that fetches the specific files based on the Professor's name and the active filters
-CREATE OR ALTER PROCEDURE sp_GetGradeSheetsByFacultyDetails
-    @FacultyName VARCHAR(100), -- Matches the format "LastName, FirstName"
-    @SchoolYear VARCHAR(20) = NULL,
-    @CurriculumYear VARCHAR(10) = NULL
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-SELECT
-        gs.Filename AS[File Name],
-        c.CourseCode AS [Course Code],
-        gs.DateUploaded AS[Date Uploaded]
-    FROM GradeSheet gs
-    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    INNER JOIN Course c ON gs.CourseID = c.CourseID
-    LEFT JOIN Curriculum curr ON gs.CurriculumID = curr.CurriculumID
-    WHERE 
-        (f.LastName + ', ' + f.FirstName) = @FacultyName
-        AND
-        (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-        AND
-        (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR curr.CurriculumYear = @CurriculumYear)
-    ORDER BY 
-        gs.DateUploaded DESC;
-END
-GO*/

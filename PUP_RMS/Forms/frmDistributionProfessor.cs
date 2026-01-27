@@ -37,7 +37,7 @@ namespace PUP_RMS.Forms
         {
             InitializeComponent();
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint |
-                     ControlStyles.DoubleBuffer | ControlStyles.ResizeRedraw, true);
+            ControlStyles.DoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             SetupFormDesign();
             SetupFilterControls();
@@ -96,7 +96,9 @@ namespace PUP_RMS.Forms
 
             // Double Buffer Fix
             typeof(FlowLayoutPanel).InvokeMember("DoubleBuffered",
-                System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
+                System.Reflection.BindingFlags.SetProperty | 
+                System.Reflection.BindingFlags.Instance | 
+                System.Reflection.BindingFlags.NonPublic,
                 null, listContainer, new object[] { true });
 
             this.Controls.Add(listContainer);
@@ -118,9 +120,7 @@ namespace PUP_RMS.Forms
             this.MouseUp += Form_MouseUp;
         }
 
-        // =========================================================
         // SETUP FILTER CONTROLS
-        // =========================================================
         private void SetupFilterControls()
         {
             // --- 1. School Year Filter ---
@@ -208,7 +208,7 @@ namespace PUP_RMS.Forms
 
             int headerHeight = 50;
             int gap = 10;
-            int sectionGap = 20; // Space between the two filters
+            int sectionGap = 20;
 
             // Right margin to avoid window buttons (Close/Max)
             int startX = this.Width - 90;
@@ -229,9 +229,7 @@ namespace PUP_RMS.Forms
             lblFilterCurriculum.BringToFront();
         }
 
-        // =========================================================
         // DATA LOADING
-        // =========================================================
         private void LoadFacultyData()
         {
             listContainer.Controls.Clear();
@@ -247,8 +245,6 @@ namespace PUP_RMS.Forms
             if (cmbCurriculum != null && cmbCurriculum.SelectedItem != null)
                 selectedCurriculum = cmbCurriculum.SelectedItem.ToString();
 
-            // Call Helper with BOTH filters
-            // Make sure your Helper method accepts two arguments now: GetFacultyDistribution(schoolYear, curriculumYear)
             DataTable dt = DashboardHelper.GetFacultyDistribution(selectedSchoolYear, selectedCurriculum);
 
             if (dt == null || dt.Rows.Count == 0)
@@ -290,7 +286,8 @@ namespace PUP_RMS.Forms
                 Cursor = Cursors.Hand // Change cursor to indicate clickability
             };
 
-            PictureBox picAvatar = new PictureBox { Size = new Size(65, 65), Location = new Point(20, 17), BackColor = Color.Transparent };
+            PictureBox picAvatar = new PictureBox { Size = new Size(65, 65), 
+                Location = new Point(20, 17), BackColor = Color.Transparent };
             picAvatar.Paint += (s, e) => DrawProfileWithStar(e.Graphics, picAvatar.ClientRectangle);
 
             Label lblName = new Label
