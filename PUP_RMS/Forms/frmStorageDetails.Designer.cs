@@ -37,17 +37,20 @@
             this.dgvStorage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStorage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvStorage.Location = new System.Drawing.Point(0, 0);
+            this.dgvStorage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvStorage.Name = "dgvStorage";
-            this.dgvStorage.Size = new System.Drawing.Size(800, 450);
+            this.dgvStorage.RowHeadersWidth = 51;
+            this.dgvStorage.Size = new System.Drawing.Size(1067, 554);
             this.dgvStorage.TabIndex = 0;
-     
+            this.dgvStorage.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStorage_CellContentClick);
             // 
             // frmStorageDetails
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.dgvStorage);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmStorageDetails";
             this.Text = "frmStorageDetails";
             ((System.ComponentModel.ISupportInitialize)(this.dgvStorage)).EndInit();

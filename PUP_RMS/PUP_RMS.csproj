@@ -146,6 +146,12 @@
     <Compile Include="Forms\frmCourseDescription.Designer.cs">
       <DependentUpon>frmCourseDescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmCurriculum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmCurriculum.Designer.cs">
+      <DependentUpon>frmCurriculum.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmDistributionProfessor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -320,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmAdminTool.resx">
       <DependentUpon>frmAdminTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmCurriculum.resx">
+      <DependentUpon>frmCurriculum.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDistributionProfessor.resx">
       <DependentUpon>frmDistributionProfessor.cs</DependentUpon>

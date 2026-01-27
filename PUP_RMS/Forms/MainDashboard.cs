@@ -125,46 +125,28 @@ namespace PUP_RMS.Forms
         }
 
         // --- SUB MENUS (Open specific forms) ---
-
-        private void btnProgram_Click(object sender, EventArgs e)
+        private void btnProgram_Click_1(object sender, EventArgs e)
         {
-            ActivateButton(sender);
-
-            // Lazy Load: Create only if null
-            if (_programForm == null || _programForm.IsDisposed)
-                _programForm = new frmProgram();
-
-            ShowForm(_programForm);
+            frmProgram programForm = new frmProgram();
+            ShowForm(programForm);
         }
 
-        private void btnCourse_Click(object sender, EventArgs e)
+        private void btnCourse_Click_1(object sender, EventArgs e)
         {
-            ActivateButton(sender);
-
-            if (_courseForm == null || _courseForm.IsDisposed)
-                _courseForm = new frmCourse();
-
-            ShowForm(_courseForm);
+            frmCourse courseForm = new frmCourse();
+            ShowForm(courseForm);
         }
 
-        private void btnFaculty_Click(object sender, EventArgs e)
+        private void btnFaculty_Click_1(object sender, EventArgs e)
         {
-            ActivateButton(sender);
-
-            if (_facultyForm == null || _facultyForm.IsDisposed)
-                _facultyForm = new frmFaculty();
-
-            ShowForm(_facultyForm);
+            frmFaculty facultyForm = new frmFaculty();
+            ShowForm(facultyForm);
         }
 
-        private void btnCurriculum_Click(object sender, EventArgs e)
+        private void btnCurriculum_Click_1(object sender, EventArgs e)
         {
-            ActivateButton(sender);
-
-            // Uncomment when form is ready:
-            // if (_curriculumForm == null || _curriculumForm.IsDisposed) 
-            //     _curriculumForm = new frmCurriculum();
-            // ShowForm(_curriculumForm);
+            frmCurriculum curriculumForm = new frmCurriculum();
+            ShowForm(curriculumForm);
         }
 
         // --- STANDARD BUTTONS ---
@@ -338,22 +320,6 @@ namespace PUP_RMS.Forms
             if (prop != null) prop.SetValue(c, true, null);
         }
 
-        private void btnProgram_Click_1(object sender, EventArgs e)
-        {
-            frmProgram programForm = new frmProgram();
-            ShowForm(programForm);
-        }
 
-        private void btnCourse_Click_1(object sender, EventArgs e)
-        {
-            frmCourse courseForm = new frmCourse();
-            ShowForm(courseForm);
-        }
-
-        private void btnFaculty_Click_1(object sender, EventArgs e)
-        {
-            frmFaculty facultyForm = new frmFaculty();
-            ShowForm(facultyForm);
-        }
     }
 }

@@ -38,6 +38,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.headerPanelCard4 = new PUP_RMS.CustomControls.HeaderPanelCard();
+            this.lnkViewStorage = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.lblStorageUsageDetails = new System.Windows.Forms.Label();
             this.cpDriveUsage = new CircularProgressBar();
@@ -61,7 +62,6 @@
             this.pnlByProfessor = new PUP_RMS.RecordDistributionPanelCard();
             this.pnlByProgram = new PUP_RMS.RecordDistributionPanelCard();
             this.timerActivityLog = new System.Windows.Forms.Timer(this.components);
-            this.lnkViewStorage = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.roundedPanel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -198,6 +198,20 @@
             this.headerPanelCard4.ShowShadow = true;
             this.headerPanelCard4.Size = new System.Drawing.Size(384, 252);
             this.headerPanelCard4.TabIndex = 13;
+            // 
+            // lnkViewStorage
+            // 
+            this.lnkViewStorage.AutoSize = true;
+            this.lnkViewStorage.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lnkViewStorage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkViewStorage.LinkColor = System.Drawing.Color.Maroon;
+            this.lnkViewStorage.Location = new System.Drawing.Point(15, 50);
+            this.lnkViewStorage.Name = "lnkViewStorage";
+            this.lnkViewStorage.Size = new System.Drawing.Size(81, 16);
+            this.lnkViewStorage.TabIndex = 10;
+            this.lnkViewStorage.TabStop = true;
+            this.lnkViewStorage.Text = "View Details";
+            this.lnkViewStorage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkViewStorage_LinkClicked);
             // 
             // tableLayoutPanel6
             // 
@@ -662,18 +676,6 @@
             this.timerActivityLog.Enabled = true;
             this.timerActivityLog.Interval = 3000;
             this.timerActivityLog.Tick += new System.EventHandler(this.timerActivityLog_Tick);
-            // 
-            // lnkViewStorage
-            // 
-            this.lnkViewStorage.AutoSize = true;
-            this.lnkViewStorage.LinkColor = System.Drawing.Color.Maroon;
-            this.lnkViewStorage.Location = new System.Drawing.Point(306, 22);
-            this.lnkViewStorage.Name = "lnkViewStorage";
-            this.lnkViewStorage.Size = new System.Drawing.Size(65, 13);
-            this.lnkViewStorage.TabIndex = 10;
-            this.lnkViewStorage.TabStop = true;
-            this.lnkViewStorage.Text = "View Details";
-            this.lnkViewStorage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkViewStorage_LinkClicked);
             // 
             // frmDashboard
             // 

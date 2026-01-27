@@ -1,5 +1,6 @@
-﻿using PUP_RMS.Core;
-using PUP_RMS.Helper; 
+﻿
+using PUP_RMS.Core;
+using PUP_RMS.Helper;
 using System;
 using System.Data;
 using System.Drawing;
@@ -51,7 +52,7 @@ namespace PUP_RMS.Forms
 
             InitializeComponent();
 
-            if(this.cpDriveUsage != null) this.cpDriveUsage.Anchor = AnchorStyles.None;
+            if (this.cpDriveUsage != null) this.cpDriveUsage.Anchor = AnchorStyles.None;
 
             // Run the math every time the Dashboard resizes
             this.Resize += (s, e) => ResizeChart();
@@ -303,24 +304,24 @@ namespace PUP_RMS.Forms
                 dgv.Columns.Add("colCourse", "Course");
                 dgv.Columns.Add("colUploadedBy", "Uploaded By");
 
-               
+
 
                 // Sizing
                 dgv.Columns["colFilename"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgv.Columns["colCourse"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgv.Columns["colUploadedBy"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                
+
 
                 dgv.Columns["colFilename"].FillWeight = 45;
                 dgv.Columns["colUploadedBy"].FillWeight = 25;
                 dgv.Columns["colCourse"].FillWeight = 15;
-                
+
 
                 // Alignment
                 dgv.Columns["colFilename"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
                 dgv.Columns["colCourse"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgv.Columns["colUploadedBy"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                
+
 
                 dgv.AlternatingRowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.NotSet;
 
@@ -390,7 +391,7 @@ namespace PUP_RMS.Forms
 
                 // 3. Determine Color (Green if hovered, Maroon if not)
                 bool isHovered = (e.ColumnIndex == _hoveredActionCell.X && e.RowIndex == _hoveredActionCell.Y);
-                Color buttonColor = isHovered ? Color.Goldenrod: AccentMaroon;
+                Color buttonColor = isHovered ? Color.Goldenrod : AccentMaroon;
 
                 // 4. Draw the Colored Button Background
                 using (SolidBrush brush = new SolidBrush(buttonColor))
@@ -624,7 +625,7 @@ namespace PUP_RMS.Forms
 
         }
 
-     
+
 
         private void pnlByProgram_Click_1(object sender, EventArgs e)
         {
@@ -696,7 +697,7 @@ namespace PUP_RMS.Forms
 
         }
 
-   
+
         private void pnlBySubject_Paint_1(object sender, PaintEventArgs e)
         {
 
@@ -724,9 +725,9 @@ namespace PUP_RMS.Forms
 
         private void timerActivityLog_Tick(object sender, EventArgs e)
         {
-             // We call the public load method we created earlier
-                recentActivityLog1.LoadDefaultActivities();
-                LoadDashboardCounts();
+            // We call the public load method we created earlier
+            recentActivityLog1.LoadDefaultActivities();
+            LoadDashboardCounts();
 
         }
 
@@ -757,10 +758,10 @@ namespace PUP_RMS.Forms
                         foreach (DataRow row in dt.Rows)
                         {
                             dgvRecentUploads.Rows.Add(
-                                row["Filename"].ToString(),       
-                                row["CourseCode"].ToString(),     
-                                row["UploadedBy"].ToString(),    
-                                "View"                            
+                                row["Filename"].ToString(),
+                                row["CourseCode"].ToString(),
+                                row["UploadedBy"].ToString(),
+                                "View"
                             );
                         }
                     }
