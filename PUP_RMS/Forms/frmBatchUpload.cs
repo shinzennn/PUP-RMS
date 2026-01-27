@@ -29,6 +29,7 @@ namespace PUP_RMS.Forms
             InitializeComponent();
             this.Load += frmBatchUpload_Load;
 
+            // FOR FILE NAME UPDATING
 
             yearCmbox.TextChanged += UpdateFileName;
             semesterCmbox.SelectedIndexChanged += UpdateFileName;
@@ -37,12 +38,14 @@ namespace PUP_RMS.Forms
             courseCmbox.SelectedIndexChanged += UpdateFileName;
             professorCmbox.SelectedIndexChanged += UpdateFileName;
             pageCmbox.SelectedIndexChanged += UpdateFileName;
+            curriculumCmbox.SelectedIndexChanged += UpdateFileName;
+            sectionCmbox.SelectedIndexChanged += UpdateFileName;
+
+            // FOR RIGHT CLICK CONTEXT MENU
+
             toUpload.SelectedIndexChanged += toUpload_SelectedIndexChanged;
             removeItemMenu.Click += removeItemMenu_Click;
             toUpload.MouseDown += toUpload_MouseDown;
-
-
-
             uploadBtn.Click += uploadBtn_Click;
             saveBtn.Click += saveBtn_Click;
             undoBtn.Click += undoBtn_Click;
@@ -50,17 +53,17 @@ namespace PUP_RMS.Forms
 
         private void frmBatchUpload_Load(object sender, EventArgs e)
         {
-            LoadCourses();
             LoadProfessors();
             LoadSemester();
             InitializeImageList();
             LoadPrograms();
             LoadYearLevels();
+
+            
             LoadPageNumber();
             LoadAcademicYears();
-            yearCmbox.Text = "";
+            yearCmbox.Text = ""; 
             LoadSection();
-            LoadCurriculum();
 
         }
 
@@ -79,13 +82,6 @@ namespace PUP_RMS.Forms
         // =========================
         // DATA LOADING
         // =========================
-        private void LoadCourses()
-        {
-            //courseCmbox.DataSource = DbControl.GetCourses();
-            //courseCmbox.DisplayMember = "CourseCode";
-            //courseCmbox.ValueMember = "CourseID";
-            //courseCmbox.SelectedIndex = -1;
-        }
 
         private void LoadProfessors()
         {
@@ -119,6 +115,17 @@ namespace PUP_RMS.Forms
             yearLevelCmbox.ValueMember = "Value";
             yearLevelCmbox.SelectedIndex = -1;
         }
+        private void LoadSection()
+        {
+            sectionCmbox.DataSource = new List<ComboItem> {
+                new ComboItem { Text = "1", Value = 1 },
+                new ComboItem { Text = "2", Value = 2 },
+                new ComboItem { Text = "3", Value = 3 }
+            };
+            sectionCmbox.DisplayMember = "Text";
+            sectionCmbox.ValueMember = "Value";
+            sectionCmbox.SelectedIndex = -1;
+        }
 
         private void LoadPageNumber()
         {
@@ -138,6 +145,19 @@ namespace PUP_RMS.Forms
             programCmbox.DisplayMember = "ProgramCode";
             programCmbox.ValueMember = "ProgramID";
             programCmbox.SelectedIndex = -1;
+        }
+
+        private void LoadCurriculum()
+        {
+            if (programCmbox.SelectedValue == null)
+                return;
+
+            int programId = Convert.ToInt32(programCmbox.SelectedValue);
+
+            curriculumCmbox.DataSource = DbControl.GetCurriculumsByProgram(programId);
+            curriculumCmbox.DisplayMember = "CurriculumYear";
+            curriculumCmbox.ValueMember = "CurriculumID";
+            curriculumCmbox.SelectedIndex = -1;
         }
 
         private void LoadAcademicYears()
@@ -167,24 +187,7 @@ namespace PUP_RMS.Forms
         }
 
 
-        private void LoadSection()
-        {
-            sectionCmbox.DataSource = new List<ComboItem> {
-                new ComboItem { Text = "1", Value = 1 },
-                new ComboItem { Text = "2", Value = 2 },
-                new ComboItem { Text = "3", Value = 3 }
-            };
-            sectionCmbox.DisplayMember = "Text";
-            sectionCmbox.ValueMember = "Value";
-            sectionCmbox.SelectedIndex = -1;
-        }
 
-        private DataTable GetAllCurriculum()
-        {
-            DataTable dt = new DataTable();
-            dt = DbControl.ExecuteQuery("SELECT DISTINCT CurriculumYear FROM Curriculum");
-            return dt;
-        }
 
         // filter program based on selected curriculum year
         
@@ -196,11 +199,13 @@ namespace PUP_RMS.Forms
         {
             if (string.IsNullOrWhiteSpace(yearCmbox.Text) ||
                 pageCmbox.SelectedValue == null ||
+                curriculumCmbox.SelectedValue == null ||
                 semesterCmbox.SelectedItem == null ||
                 programCmbox.SelectedItem == null ||
+                sectionCmbox.SelectedValue == null ||
                 yearLevelCmbox.SelectedItem == null ||
-                courseCmbox.SelectedItem == null ||
-                professorCmbox.SelectedItem == null)
+                courseCmbox.SelectedItem == null)// ||
+               // professorCmbox.SelectedItem == null)
             {
                 return;
             }
@@ -217,11 +222,15 @@ namespace PUP_RMS.Forms
                 string yrLevel = (yearLevelCmbox.SelectedItem as ComboItem)?.Value.ToString() ?? "0";
                 string section = sectionCmbox.Text;
                 string courseCode = courseCmbox.Text;
-                string facultyInitials = (professorCmbox.SelectedItem as Faculty)?.Initials ?? "UNK";
+                string facultyInitials = (professorCmbox.SelectedValue as Faculty)?.Initials ?? "UNK";
                 string pageNum = "P" + pageCmbox.SelectedValue;
 
+                string initials = getFacultyIntials(Convert.ToInt32(professorCmbox.SelectedValue));
+
+
+
                 filenameTxtbox.Text =
-                    $"PUPLQ_GRSH_{shortYear}_{semCode}_{progCode}_{yrLevel}_{section}_{courseCode}_{facultyInitials}_{pageNum}";
+                    $"PUPLQ_GRSH_{shortYear}_{semCode}_{progCode}_{yrLevel}_{section}_{courseCode}_{initials}_{pageNum}";
             }
             catch (Exception ex)
             {
@@ -337,10 +346,7 @@ namespace PUP_RMS.Forms
 
         // =========================
         // RIGHT CLICK LOGIC
-        // =========================
-
-
-
+        // 
         private void removeItemMenu_Click(object sender, EventArgs e)
         {
             if (toUpload.SelectedItems.Count == 0) return;
@@ -416,7 +422,7 @@ namespace PUP_RMS.Forms
 
             try
             {
-                                string sourcePath = toUpload.Items[0].Tag.ToString();
+                string sourcePath = toUpload.Items[0].Tag.ToString();
                 string extension = Path.GetExtension(sourcePath);
                 string folderPath = BuildImageFolderPath();
                 Directory.CreateDirectory(folderPath);
@@ -503,30 +509,13 @@ namespace PUP_RMS.Forms
             return currID;
         }
 
-        private void undoBtn_Click(object sender, EventArgs e)
-        {
-            if (undoHistory.Count == 0) return;
-
-            UndoItem undo = undoHistory.Pop();
-            DbControl.DeleteGradeSheet(undo.GradeSheetID);
-
-            if (File.Exists(undo.SavedFilePath)) File.Delete(undo.SavedFilePath);
-
-            Image thumb = CreateThumbnail(undo.SourceFilePath);
-            uploadImageList.Images.Add(undo.SourceFilePath, thumb);
-            toUpload.Items.Insert(0, new ListViewItem(Path.GetFileName(undo.SourceFilePath))
-            {
-                Tag = undo.SourceFilePath,
-                ImageKey = undo.SourceFilePath
-            });
-
-            DisplayCurrentImage();
-            MessageBox.Show("Last upload undone.");
-        }
+        // =========================
+        // FOR BUILDING IMAGE PATH
+        // =========================
 
         private string BuildImageFolderPath()
         {
-            // return Path.Combine(baseImagePath, SanitizePath(yearCmbox.Text), SanitizePath(semesterCmbox.Text));
+           
             string year = SanitizePath(yearCmbox.Text);
             string semester = SanitizePath(semesterCmbox.Text);
             string program = SanitizePath(programCmbox.Text);
@@ -574,37 +563,25 @@ namespace PUP_RMS.Forms
 
         }
 
-        private void btnCourse_Click(object sender, EventArgs e)
+        private void undoBtn_Click(object sender, EventArgs e)
         {
-            frmNewCourse openCouse = new frmNewCourse();
-            openCouse.ShowDialog();
+            if (undoHistory.Count == 0) return;
 
-            if (openCouse.DialogResult == DialogResult.OK)
+            UndoItem undo = undoHistory.Pop();
+            DbControl.DeleteGradeSheet(undo.GradeSheetID);
+
+            if (File.Exists(undo.SavedFilePath)) File.Delete(undo.SavedFilePath);
+
+            Image thumb = CreateThumbnail(undo.SourceFilePath);
+            uploadImageList.Images.Add(undo.SourceFilePath, thumb);
+            toUpload.Items.Insert(0, new ListViewItem(Path.GetFileName(undo.SourceFilePath))
             {
-                LoadCourses();
-            }
-        }
+                Tag = undo.SourceFilePath,
+                ImageKey = undo.SourceFilePath
+            });
 
-        private void btnProf_Click(object sender, EventArgs e)
-        {
-            newFaculty NewFaculty = new newFaculty();
-            NewFaculty.ShowDialog();
-
-            if (NewFaculty.DialogResult == DialogResult.OK)
-            {
-                LoadProfessors();
-            }
-        }
-
-        private void btnProgram_Click(object sender, EventArgs e)
-        {
-            frmnewProgram newPrograms = new frmnewProgram();
-            newPrograms.ShowDialog();
-            if (newPrograms.DialogResult == DialogResult.OK)
-            {
-                LoadPrograms();
-            }
-
+            DisplayCurrentImage();
+            MessageBox.Show("Last upload undone.");
         }
 
         private void saveBtn_Click_1(object sender, EventArgs e)
@@ -612,8 +589,10 @@ namespace PUP_RMS.Forms
 
         }
 
+        // COMBO BOX FILTERING LOGIC
         private void courseCmbox_Click(object sender, EventArgs e)
         {
+            // wag na gawing stored proc tangina
             string query = "SELECT \r\n\tCO.CourseID,\r\n    CO.CourseCode AS [Description]\r\nFROM Curriculum C\r\nJOIN CurriculumCourse CC ON C.CurriculumID = CC.CurriculumID\r\nJOIN Course CO ON CC.CourseID = CO.CourseID\r\nWHERE\r\n\tc.CurriculumYear = @CurriculumYear AND c.ProgramID = @ProgramID and c.YearLevel = @YearLevel and c.Semester = @Semester\r\nORDER BY CO.CourseCode;";
 
             string curriculumYear = curriculumCmbox.Text;
@@ -634,53 +613,65 @@ namespace PUP_RMS.Forms
 
         }
         
-        private void LoadCurriculum()
-        {
-            if (programCmbox.SelectedValue == null)
-                return;
 
-            int programId = Convert.ToInt32(programCmbox.SelectedValue);
-
-            curriculumCmbox.DataSource = DbControl.GetCurriculumsByProgram(programId);
-            curriculumCmbox.DisplayMember = "CurriculumYear";
-            curriculumCmbox.ValueMember = "CurriculumID";
-            curriculumCmbox.SelectedIndex = -1;
-        }
         private void curriculumCmbox_Click(object sender, EventArgs e)
         {
             LoadCurriculum();
-            //LoadCourses();
+        }
+
+        private void courseCmbox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string curriculumYear = curriculumCmbox.Text;
+            int programID = programCmbox.SelectedValue != null ? Convert.ToInt32(programCmbox.SelectedValue) : 0;
+            int yearLevel = yearLevelCmbox.SelectedValue != null ? Convert.ToInt32(yearLevelCmbox.SelectedValue) : 0;
+            int semester = semesterCmbox.SelectedValue != null ? Convert.ToInt32(semesterCmbox.SelectedValue) : 0;
+            
+            int curriculumID = getCurriculumID(curriculumYear, programID, yearLevel, semester);
+            int courseID = courseCmbox.SelectedValue != null ? Convert.ToInt32(courseCmbox.SelectedValue) : 0;
+            
+            // wag na gawing stored proc
+            string query = "select\r\n    F.LastName + ', ' + F.FirstName + ' ' + F.MiddleName AS FullName, F.FacultyID \r\nFROM\r\n    CurriculumCourse CC\r\nJOIN Faculty F ON CC.FacultyID = F.FacultyID\r\nWhere \r\n    CurriculumID = @CurriculumID and CourseID = @CourseID";
+
+            DbControl.AddParameter("@CurriculumID", curriculumID, SqlDbType.Int);
+            DbControl.AddParameter("@CourseID", courseID, SqlDbType.Int);
+            DataTable dt = DbControl.ExecuteQuery(query);
+            //string fullname = Convert.ToString(dt.Rows[0]["FullName"]);
+            //professorCmbox.Text = fullname;
+            professorCmbox.DisplayMember = "Fullname";
+            professorCmbox.ValueMember = "FacultyID";
+            professorCmbox.DataSource = dt;
+            lblFacultyID.Text = professorCmbox.SelectedValue.ToString();
+
+
+
+
+        }
+
+        private static string getFacultyIntials(int facultyID)
+        {
+            string query = "Select Initials FROM Faculty WHERE FacultyID = @FacultyID";
+            DbControl.AddParameter("@FacultyID", facultyID, SqlDbType.Int);
+            DataTable dt = DbControl.ExecuteQuery(query);
+
+            return Convert.ToString(dt.Rows[0]["Initials"]);
         }
     }
 
 
     public class UndoItem
-    {
-        public int GradeSheetID { get; set; }
-        public string SourceFilePath { get; set; }
-        public string SavedFilePath { get; set; }
-    }
-
-    public class ComboItem
-    {
-        public string Text { get; set; }
-        public int Value { get; set; }
-        public string Code { get; set; } // Used for A, B, C Semester codes
-
-
-        private void btnOpenCouse_Click(object sender, EventArgs e)
         {
-            frmNewCourse openCouse = new frmNewCourse();
-            openCouse.ShowDialog();
-
+            public int GradeSheetID { get; set; }
+            public string SourceFilePath { get; set; }
+            public string SavedFilePath { get; set; }
         }
 
-        private void createNewFaculty_Click(object sender, EventArgs e)
+        public class ComboItem
         {
-            newFaculty NewFaculty = new newFaculty();
-            NewFaculty.ShowDialog();
+            public string Text { get; set; }
+            public int Value { get; set; }
+            public string Code { get; set; } // Used for A, B, C Semester codes
+
         }
-    }
 }
 
 

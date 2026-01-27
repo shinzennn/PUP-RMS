@@ -40,11 +40,12 @@ namespace PUP_RMS.Core
                 return conn.Query<Faculty>(@"
             SELECT 
                 FacultyID, 
-                Initials, -- Add this here
+                Initials, 
                 UPPER(LastName) + ', ' + UPPER(FirstName) + ' ' + 
                 ISNULL(UPPER(MiddleName), '') AS DisplayName
             FROM Faculty
             ORDER BY LastName, FirstName"
+
                 ).ToList();
             }
         }
@@ -63,7 +64,7 @@ namespace PUP_RMS.Core
         {
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
-                // Notice the aliases: [Subject Code] is now SubjectCode
+               
                 string sql = @"
 
                 SELECT Distinct CurriculumYear
