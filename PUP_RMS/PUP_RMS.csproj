@@ -290,6 +290,7 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ActivityLog.cs" />
     <Compile Include="Model\Course.cs" />
+    <Compile Include="Model\Curriculum.cs" />
     <Compile Include="Model\Faculty.cs" />
     <Compile Include="Model\GradeSheet.cs" />
     <Compile Include="Model\Programs.cs" />

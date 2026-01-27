@@ -1,12 +1,17 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
-using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using PUP_RMS.Core;   // Ensure this namespace exists in your project
-using PUP_RMS.Model;  // Ensure this namespace exists in your project
-using PUP_RMS.Helper; // Ensure this namespace exists in your project
+using System.IO;
+using PUP_RMS.Core;
+using PUP_RMS.Model;
+using PUP_RMS.Helper;
+
 
 namespace PUP_RMS.Forms
 {
@@ -22,7 +27,7 @@ namespace PUP_RMS.Forms
             InitializeComponent();
             this.Load += frmBatchUpload_Load;
 
-            // Wire up events for Auto-naming
+
             yearCmbox.TextChanged += UpdateFileName;
             semesterCmbox.SelectedIndexChanged += UpdateFileName;
             programCmbox.SelectedIndexChanged += UpdateFileName;
@@ -30,8 +35,12 @@ namespace PUP_RMS.Forms
             courseCmbox.SelectedIndexChanged += UpdateFileName;
             professorCmbox.SelectedIndexChanged += UpdateFileName;
             pageCmbox.SelectedIndexChanged += UpdateFileName;
+            toUpload.SelectedIndexChanged += toUpload_SelectedIndexChanged;
+            removeItemMenu.Click += removeItemMenu_Click;
+            toUpload.MouseDown += toUpload_MouseDown;
 
-            // Wire up Buttons
+
+
             uploadBtn.Click += uploadBtn_Click;
             saveBtn.Click += saveBtn_Click;
             undoBtn.Click += undoBtn_Click;
@@ -46,7 +55,11 @@ namespace PUP_RMS.Forms
             LoadPrograms();
             LoadYearLevels();
             LoadPageNumber();
+            LoadAcademicYears();
             yearCmbox.Text = "";
+            LoadSection();
+            LoadCurriculum();
+
         }
 
         private void InitializeImageList()
@@ -54,6 +67,11 @@ namespace PUP_RMS.Forms
             uploadImageList = new ImageList { ImageSize = new Size(96, 96), ColorDepth = ColorDepth.Depth32Bit };
             toUpload.View = View.LargeIcon;
             toUpload.LargeImageList = uploadImageList;
+
+            toUpload.AllowDrop = true;
+            toUpload.DragEnter += toUpload_DragEnter;
+            toUpload.DragDrop += toUpload_DragDrop;
+
         }
 
         // =========================
@@ -103,10 +121,9 @@ namespace PUP_RMS.Forms
         private void LoadPageNumber()
         {
             pageCmbox.DataSource = new List<ComboItem> {
-                new ComboItem { Text = "Page 1", Value = 1 },
-                new ComboItem { Text = "Page 2", Value = 2 },
-                new ComboItem { Text = "Page 3", Value = 3 },
-                new ComboItem { Text = "Page 4", Value = 4 }
+                new ComboItem { Text = "1", Value = 1 },
+                new ComboItem { Text = "2", Value = 2 },
+                new ComboItem { Text = "3", Value = 3 }
             };
             pageCmbox.DisplayMember = "Text";
             pageCmbox.ValueMember = "Value";
@@ -120,6 +137,58 @@ namespace PUP_RMS.Forms
             programCmbox.ValueMember = "ProgramID";
             programCmbox.SelectedIndex = -1;
         }
+
+        private void LoadAcademicYears()
+        {
+            yearCmbox.Items.Clear();
+
+            int startYear = 1970;
+            int currentAYStart = GetCurrentAcademicYearStart();
+
+            for (int year = startYear; year <= currentAYStart; year++)
+            {
+                string academicYear = $"{year}-{year + 1}";
+                yearCmbox.Items.Add(academicYear);
+            }
+
+
+            yearCmbox.SelectedItem = $"{currentAYStart}-{currentAYStart + 1}";
+        }
+
+        private int GetCurrentAcademicYearStart()
+        {
+            DateTime now = DateTime.Now;
+
+            return now.Month >= 6
+                ? now.Year
+                : now.Year - 1;
+        }
+
+
+        private void LoadSection()
+        {
+            sectionCmbox.DataSource = new List<ComboItem> {
+                new ComboItem { Text = "1", Value = 1 },
+                new ComboItem { Text = "2", Value = 2 },
+                new ComboItem { Text = "3", Value = 3 }
+            };
+            sectionCmbox.DisplayMember = "Text";
+            sectionCmbox.ValueMember = "Value";
+            sectionCmbox.SelectedIndex = -1;
+        }
+
+        private void LoadCurriculum()
+        {
+            curriculumCmbox.DataSource = new List<ComboItem> {
+                new ComboItem { Text = "2020-2021", Value = 1 },
+                new ComboItem { Text = "2025-2026", Value = 2 },
+                new ComboItem { Text = "2015-2016", Value = 3 }
+            };
+            curriculumCmbox.DisplayMember = "Text";
+            curriculumCmbox.ValueMember = "Value";
+            curriculumCmbox.SelectedIndex = -1;
+        }
+
 
         // =========================
         // NAMING CONVENTION LOGIC
@@ -147,17 +216,19 @@ namespace PUP_RMS.Forms
                 string semCode = (semesterCmbox.SelectedItem as ComboItem)?.Code ?? "X";
                 string progCode = programCmbox.Text;
                 string yrLevel = (yearLevelCmbox.SelectedItem as ComboItem)?.Value.ToString() ?? "0";
+                string section = sectionCmbox.Text;
                 string courseCode = courseCmbox.Text;
                 string facultyInitials = (professorCmbox.SelectedItem as Faculty)?.Initials ?? "UNK";
                 string pageNum = "P" + pageCmbox.SelectedValue;
 
                 filenameTxtbox.Text =
-                    $"PUPLQ_GRSH_{shortYear}_{semCode}_{progCode}_{yrLevel}_{courseCode}_{facultyInitials}_{pageNum}";
+                    $"PUPLQ_GRSH_{shortYear}_{semCode}_{progCode}_{yrLevel}_{section}_{courseCode}_{facultyInitials}_{pageNum}";
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error generating filename: " + ex.Message);
             }
+
         }
 
         private Image CreateThumbnail(string path)
@@ -167,10 +238,6 @@ namespace PUP_RMS.Forms
                 return img.GetThumbnailImage(96, 96, () => false, IntPtr.Zero);
             }
         }
-
-        // =========================
-        // BUTTON EVENTS
-        // =========================
 
         private void uploadBtn_Click(object sender, EventArgs e)
         {
@@ -182,13 +249,13 @@ namespace PUP_RMS.Forms
 
             if (ofd.ShowDialog() != DialogResult.OK) return;
 
-            // Clear previous if you only want single batch logic, or keep appending
             if (toUpload.Items.Count < 0)
             {
                 toUpload.Items.Clear();
                 uploadImageList.Images.Clear();
                 undoHistory.Clear();
             }
+
 
             foreach (string file in ofd.FileNames)
             {
@@ -203,8 +270,9 @@ namespace PUP_RMS.Forms
                 toUpload.Items.Add(item);
             }
             DisplayCurrentImage();
-        }
 
+
+        }
         private void DisplayCurrentImage()
         {
             if (toUpload.Items.Count == 0)
@@ -216,14 +284,114 @@ namespace PUP_RMS.Forms
 
             string path = toUpload.Items[0].Tag.ToString();
             currentImage.Image?.Dispose();
-            // Load via stream or new Bitmap to avoid locking the file if possible, but simple Bitmap is okay for now
             using (Bitmap bmp = new Bitmap(path)) { currentImage.Image = new Bitmap(bmp); }
         }
 
-        // --- CORRECTED SAVE BUTTON LOGIC ---
+        // =========================
+        // DRAG AND DROP LOGIC
+        // =========================
+
+        private void toUpload_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+
+        private void toUpload_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            foreach (string file in files)
+            {
+                if (!IsImageFile(file)) continue;
+
+                // Prevent duplicates
+                if (toUpload.Items.Cast<ListViewItem>()
+                    .Any(i => i.Tag.ToString().Equals(file, StringComparison.OrdinalIgnoreCase)))
+                    continue;
+
+                Image thumb = CreateThumbnail(file);
+                uploadImageList.Images.Add(file, thumb);
+
+                ListViewItem item = new ListViewItem(Path.GetFileName(file))
+                {
+                    Tag = file,
+                    ImageKey = file
+                };
+
+                toUpload.Items.Add(item);
+            }
+
+            DisplayCurrentImage();
+        }
+
+        private bool IsImageFile(string path)
+        {
+            string ext = Path.GetExtension(path).ToLower();
+            return ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".bmp";
+        }
+
+
+
+        // =========================
+        // RIGHT CLICK LOGIC
+        // =========================
+
+
+
+        private void removeItemMenu_Click(object sender, EventArgs e)
+        {
+            if (toUpload.SelectedItems.Count == 0) return;
+
+            ListViewItem item = toUpload.SelectedItems[0];
+
+            // Remove thumbnail
+            uploadImageList.Images.RemoveByKey(item.ImageKey);
+
+            // Remove item
+            toUpload.Items.Remove(item);
+
+            DisplayCurrentImage();
+        }
+
+        private void toUpload_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (toUpload.SelectedItems.Count == 0) return;
+
+            string path = toUpload.SelectedItems[0].Tag.ToString();
+
+            currentImage.Image?.Dispose();
+            using (Bitmap bmp = new Bitmap(path))
+            {
+                currentImage.Image = new Bitmap(bmp);
+            }
+        }
+
+        private void toUpload_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+
+            var item = toUpload.GetItemAt(e.X, e.Y);
+            if (item != null)
+            {
+                item.Selected = true;
+                toUpload.FocusedItem = item;
+            }
+        }
+
+
+
+        // =========================
+
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            // 1. Validate Inputs
+            //if (toUpload.Items.Count == 0)
+            //{
+            //    return;
+            //}
             if (yearCmbox.SelectedItem == null ||
                 pageCmbox.SelectedValue == null ||
                 semesterCmbox.SelectedItem == null ||
@@ -245,61 +413,37 @@ namespace PUP_RMS.Forms
                 MessageBox.Show("Image is required.");
                 return;
             }
-            if (toUpload.Items.Count == 0)
-            {
-                MessageBox.Show("No image uploaded to save.");
-                return;
-            }
 
             try
             {
-                // 2. Prepare Paths
                 string sourcePath = toUpload.Items[0].Tag.ToString();
                 string extension = Path.GetExtension(sourcePath);
                 string folderPath = BuildImageFolderPath();
-
-                // Ensure directory exists
                 Directory.CreateDirectory(folderPath);
 
                 string savedFileName = filenameTxtbox.Text + extension;
                 string savedFilePath = Path.Combine(folderPath, savedFileName);
 
-                // 3. CHECK if file physically exists BEFORE copying
-                if (File.Exists(savedFilePath))
-                {
-                    MessageBox.Show("A file with this name already exists in the destination folder.\nPlease rename or check your records.", "File Exists");
-                    return; // Stop here. Do not copy. Do not insert.
-                }
-
-                // 4. Copy the file
                 File.Copy(sourcePath, savedFilePath, true);
 
-                // 5. Insert into Database
                 int gradeSheetId = DbControl.InsertGradeSheet(
                     savedFileName, folderPath, yearCmbox.Text,
-                    Convert.ToInt32(semesterCmbox.SelectedValue),
-                    Convert.ToInt32(programCmbox.SelectedValue),
-                    Convert.ToInt32(yearLevelCmbox.SelectedValue),
+                    Convert.ToInt32(curriculumCmbox.SelectedValue),
+                    Convert.ToInt32(sectionCmbox.SelectedValue),
                     Convert.ToInt32(courseCmbox.SelectedValue),
                     Convert.ToInt32(professorCmbox.SelectedValue),
                     Convert.ToInt32(pageCmbox.SelectedValue), loggedInAdminId
                 );
 
-                // 6. Handle Database Error (e.g., Duplicate ID)
                 if (gradeSheetId == -1)
                 {
-                    // CLEANUP: Delete the file we just copied because it's not valid in the DB
-                    if (File.Exists(savedFilePath))
-                    {
-                        File.Delete(savedFilePath);
-                    }
-
                     MessageBox.Show(
-                        "Duplicated Filename Detected in Database. Please change the filename.",
+                        "Duplicated Filename Detected. Please change the filename.",
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
+
 
                     filenameTxtbox.Focus();
                     filenameTxtbox.SelectAll();
@@ -307,7 +451,6 @@ namespace PUP_RMS.Forms
                 }
                 ;
 
-                // 7. Success - Update History and UI
                 undoHistory.Push(new UndoItem
                 {
                     GradeSheetID = gradeSheetId,
@@ -319,22 +462,12 @@ namespace PUP_RMS.Forms
                 DisplayCurrentImage();
                 MessageBox.Show("Grade sheet saved successfully.");
 
-                // 8. Log Activity
                 ActivityLogger.LogGradesheetUpload(yearCmbox.Text, semesterCmbox.Text, courseCmbox.Text, professorCmbox.Text);
-
-                // 9. Refresh Dashboard if open (To update charts immediately)
-                if (Application.OpenForms["frmDashboard"] is frmDashboard dash)
-                {
-                    dash.RefreshActivityLog(); // Assuming you have a public refresh method
-                    // dash.LoadDashboardCounts(); // If you have this method made public
-                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
 
-            // 10. Reset Form if Keep is not checked
+
+
             if (!KeepCheckbox.Checked)
             {
                 yearCmbox.Text = "";
@@ -345,6 +478,7 @@ namespace PUP_RMS.Forms
                 programCmbox.Text = "";
                 pageCmbox.Text = "";
                 filenameTxtbox.Text = "";
+
             }
         }
 
@@ -369,6 +503,34 @@ namespace PUP_RMS.Forms
             MessageBox.Show("Last upload undone.");
         }
 
+        private string BuildImageFolderPath()
+        {
+            // return Path.Combine(baseImagePath, SanitizePath(yearCmbox.Text), SanitizePath(semesterCmbox.Text));
+            string year = SanitizePath(yearCmbox.Text);
+            string semester = SanitizePath(semesterCmbox.Text);
+            string program = SanitizePath(programCmbox.Text);
+            string section = SanitizePath(sectionCmbox.Text);
+            string course = SanitizePath(courseCmbox.Text);
+            string professor = SanitizePath(professorCmbox.Text);
+
+            return Path.Combine(
+                baseImagePath,
+                year,
+                semester,
+                program,
+                section
+            );
+        }
+
+        private string SanitizePath(string input)
+        {
+            foreach (char c in Path.GetInvalidFileNameChars())
+            {
+                input = input.Replace(c.ToString(), "");
+            }
+            return input.Trim();
+        }
+
         private void viewBtn_Click(object sender, EventArgs e)
         {
             if (currentImage.Image == null)
@@ -382,23 +544,15 @@ namespace PUP_RMS.Forms
                 previewForm.PassedImage = currentImage.Image;
                 previewForm.Show();
             }
+
+
         }
 
-        // --- HELPER METHODS ---
-
-        private string BuildImageFolderPath()
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
         {
-            return Path.Combine(baseImagePath, SanitizePath(yearCmbox.Text), SanitizePath(semesterCmbox.Text));
+
         }
 
-        private string SanitizePath(string input)
-        {
-            foreach (char c in Path.GetInvalidFileNameChars()) input = input.Replace(c.ToString(), "");
-            return input.Trim();
-        }
-
-        // --- THESE METHODS WERE WRONGLY PLACED IN COMBOITEM BEFORE ---
-        // --- NOW THEY ARE CORRECTLY INSIDE THE FORM CLASS ---
         private void btnCourse_Click(object sender, EventArgs e)
         {
             frmNewCourse openCouse = new frmNewCourse();
@@ -429,28 +583,15 @@ namespace PUP_RMS.Forms
             {
                 LoadPrograms();
             }
+
         }
 
-        // Duplicate method names you had before, linking them to the same logic or removing if unused
-        private void btnOpenCouse_Click(object sender, EventArgs e)
+        private void saveBtn_Click_1(object sender, EventArgs e)
         {
-            btnCourse_Click(sender, e);
+
         }
+    }
 
-        private void createNewFaculty_Click(object sender, EventArgs e)
-        {
-            btnProf_Click(sender, e);
-        }
-
-        // Empty events (Can be removed if not linked in Designer)
-        private void saveBtn_Click_1(object sender, EventArgs e) { }
-        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e) { }
-
-    } // <--- END OF FORM CLASS
-
-    // =========================
-    // HELPER CLASSES (OUTSIDE)
-    // =========================
 
     public class UndoItem
     {
@@ -464,5 +605,21 @@ namespace PUP_RMS.Forms
         public string Text { get; set; }
         public int Value { get; set; }
         public string Code { get; set; } // Used for A, B, C Semester codes
+
+
+        private void btnOpenCouse_Click(object sender, EventArgs e)
+        {
+            frmNewCourse openCouse = new frmNewCourse();
+            openCouse.ShowDialog();
+
+        }
+
+        private void createNewFaculty_Click(object sender, EventArgs e)
+        {
+            newFaculty NewFaculty = new newFaculty();
+            NewFaculty.ShowDialog();
+        }
     }
 }
+
+
