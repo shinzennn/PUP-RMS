@@ -116,6 +116,12 @@
     <Compile Include="Forms\currentpicturePreview.Designer.cs">
       <DependentUpon>currentpicturePreview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmProfessorDrillDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmProfessorDrillDown.Designer.cs">
+      <DependentUpon>frmProfessorDrillDown.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmAccount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -314,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\currentpicturePreview.resx">
       <DependentUpon>currentpicturePreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmProfessorDrillDown.resx">
+      <DependentUpon>frmProfessorDrillDown.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmAccount.resx">
       <DependentUpon>frmAccount.cs</DependentUpon>

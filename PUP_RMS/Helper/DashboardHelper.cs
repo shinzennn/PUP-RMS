@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using PUP_RMS.Core; // Import your Database Control
+using PUP_RMS.Core;
 
 namespace PUP_RMS.Helper
 {
     public static class DashboardHelper
     {
-        // 1. Get Grade Sheets Count
+        // =============================================================
+        // SECTION 1: COUNTS (DASHBOARD CARDS)
+        // =============================================================
+
         public static string GetGradeSheetCount()
         {
             try
@@ -18,13 +21,9 @@ namespace PUP_RMS.Helper
                 int count = DbControl.ExecuteScalar("sp_GetGradeSheetCount");
                 return count.ToString();
             }
-            catch
-            {
-                return "0"; // Return 0 if there is an error
-            }
+            catch { return "0"; }
         }
 
-        // 2. Get Subjects Count
         public static string GetSubjectCount()
         {
             try
@@ -32,13 +31,9 @@ namespace PUP_RMS.Helper
                 int count = DbControl.ExecuteScalar("sp_GetSubjectCount");
                 return count.ToString();
             }
-            catch
-            {
-                return "0";
-            }
+            catch { return "0"; }
         }
 
-        // 3. Get Professors Count
         public static string GetProfessorCount()
         {
             try
@@ -46,12 +41,9 @@ namespace PUP_RMS.Helper
                 int count = DbControl.ExecuteScalar("sp_GetFacultyCount");
                 return count.ToString();
             }
-            catch
-            {
-                return "0";
-            }
+            catch { return "0"; }
         }
-        // 3. Get Program Count
+
         public static string GetProgramCount()
         {
             try
@@ -59,103 +51,113 @@ namespace PUP_RMS.Helper
                 int count = DbControl.ExecuteScalar("countTotalProgram");
                 return count.ToString();
             }
-            catch
-            {
-                return "0";
-            }
+            catch { return "0"; }
         }
 
+        // =============================================================
+        // SECTION 2: CHARTS & DISTRIBUTIONS
+        // =============================================================
 
-        public static DataTable GetProgramDistribution()
-        {
-            return DbControl.ExecuteQuery("sp_GetDistributionByProgram");
-        }
-
+        // 1. PROGRAM DISTRIBUTION (Merged Logic)
         public static DataTable GetProgramDistribution(string schoolYear = null)
         {
             DbControl.sqlParameters.Clear();
 
-            // If a specific year is selected (not null, not empty, and not "All")
+            // If a specific year is provided
             if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
             {
                 DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
+                return DbControl.ExecuteQuery("sp_GetDistributionByProgram_Filtered");
             }
             else
             {
-                // Pass NULL to get all records
-                DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
+                // If "All" or null, use the standard non-filtered SP
+                return DbControl.ExecuteQuery("sp_GetDistributionByProgram");
             }
-
-            // Make sure you have created this Stored Procedure in SQL (sp_GetDistributionByProgram_Filtered)
-            return DbControl.ExecuteQuery("sp_GetDistributionByProgram_Filtered");
         }
 
-
-        public static DataTable GetFacultyDistribution()
-        {
-            return DbControl.ExecuteQuery("sp_GetDistributionByFaculty");
-        }
-
-        //Filter grasheet per School Year in By Faculty
-        public static DataTable GetFacultyDistribution(string schoolYear = null)
+        // 2. FACULTY DISTRIBUTION (Merged Logic - Fixes your error)
+        public static DataTable GetFacultyDistribution(string schoolYear = null, string curriculumYear = null)
         {
             DbControl.sqlParameters.Clear();
 
+            // Parameter 1: School Year
             if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
-            {
                 DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
-            }
             else
-            {
                 DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
-            }
 
+            // Parameter 2: Curriculum Year
+            if (!string.IsNullOrEmpty(curriculumYear) && curriculumYear != "All")
+                DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@CurriculumYear", DBNull.Value, SqlDbType.VarChar);
+
+            // Calls the SP that handles both parameters
             return DbControl.ExecuteQuery("sp_GetDistributionByFaculty_Filtered");
         }
 
-
-        public static DataTable GetSubjectDistribution()
+        // 3. SUBJECT DISTRIBUTION (Merged Logic)
+        public static DataTable GetSubjectDistribution(string schoolYear = null)
         {
-            return DbControl.ExecuteQuery("sp_GetDistributionBySubject");
-        }
-
-        public static DataTable GetSubjectDetails(string courseDescription)
-        {
-            // Clear any previous parameters to avoid conflicts
             DbControl.sqlParameters.Clear();
 
-            // Add the parameter expected by the Stored Procedure
-            DbControl.AddParameter("@CourseDescription", courseDescription, SqlDbType.VarChar);
-
-            // Execute the stored procedure
-            return DbControl.ExecuteQuery("sp_GetSubjectDetailsByName");
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All" && schoolYear != "All Years")
+            {
+                DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
+                return DbControl.ExecuteQuery("sp_GetDistributionBySubject_FilteredSchoolYears");
+            }
+            else
+            {
+                // Use the basic one if no filter
+                return DbControl.ExecuteQuery("sp_GetDistributionBySubject");
+            }
         }
 
+        // 4. YEAR/SEM DISTRIBUTION
         public static DataTable GetYearSemDistribution(string prog = null, string prof = null, string subj = null, string year = null)
         {
             DbControl.sqlParameters.Clear();
 
-            // Only add parameters if they have a value
-            if (!string.IsNullOrEmpty(prog)) DbControl.AddParameter("@Program", prog, System.Data.SqlDbType.VarChar);
-            else DbControl.AddParameter("@Program", DBNull.Value, System.Data.SqlDbType.VarChar);
+            if (!string.IsNullOrEmpty(prog)) DbControl.AddParameter("@Program", prog, SqlDbType.VarChar);
+            else DbControl.AddParameter("@Program", DBNull.Value, SqlDbType.VarChar);
 
-            if (!string.IsNullOrEmpty(prof)) DbControl.AddParameter("@Faculty", prof, System.Data.SqlDbType.VarChar);
-            else DbControl.AddParameter("@Faculty", DBNull.Value, System.Data.SqlDbType.VarChar);
+            if (!string.IsNullOrEmpty(prof)) DbControl.AddParameter("@Faculty", prof, SqlDbType.VarChar);
+            else DbControl.AddParameter("@Faculty", DBNull.Value, SqlDbType.VarChar);
 
+            if (!string.IsNullOrEmpty(subj)) DbControl.AddParameter("@Subject", subj, SqlDbType.VarChar);
+            else DbControl.AddParameter("@Subject", DBNull.Value, SqlDbType.VarChar);
 
-            if (!string.IsNullOrEmpty(subj)) DbControl.AddParameter("@Subject", subj, System.Data.SqlDbType.VarChar);
-            else DbControl.AddParameter("@Subject", DBNull.Value, System.Data.SqlDbType.VarChar);
-
-            if (!string.IsNullOrEmpty(year)) DbControl.AddParameter("@SchoolYear", year, System.Data.SqlDbType.VarChar);
-            else DbControl.AddParameter("@SchoolYear", DBNull.Value, System.Data.SqlDbType.VarChar);
+            if (!string.IsNullOrEmpty(year)) DbControl.AddParameter("@SchoolYear", year, SqlDbType.VarChar);
+            else DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
 
             return DbControl.ExecuteQuery("sp_GetDistributionByYearSem");
         }
 
-        //Filter grasheet per School Year in By program
+        // =============================================================
+        // SECTION 3: DROPDOWN HELPERS
+        // =============================================================
+
         public static DataTable GetSchoolYears()
         {
             return DbControl.ExecuteQuery("sp_GetAllSchoolYears");
+        }
+
+        // Removed the duplicate definition of this method
+        public static DataTable GetCurriculumYears()
+        {
+            return DbControl.ExecuteQuery("sp_GetAllCurriculumYears");
+        }
+
+        // =============================================================
+        // SECTION 4: MISC & DETAILS
+        // =============================================================
+
+        public static DataTable GetSubjectDetails(string courseDescription)
+        {
+            DbControl.sqlParameters.Clear();
+            DbControl.AddParameter("@CourseDescription", courseDescription, SqlDbType.VarChar);
+            return DbControl.ExecuteQuery("sp_GetSubjectDetailsByName");
         }
 
         public static DataTable GetRecentActivities()
@@ -168,25 +170,28 @@ namespace PUP_RMS.Helper
             return DbControl.ExecuteQuery("RecentUploadedGradeSheets");
         }
 
-        //filter by schoolyear in subject distribution 
-        public static DataTable GetSubjectDistribution(string schoolYear = null)
+        // Add this inside the DashboardHelper class in PUP_RMS.Helper namespace
+
+        public static DataTable GetGradeSheetsByFaculty(string facultyName, string schoolYear, string curriculumYear)
         {
             DbControl.sqlParameters.Clear();
 
-            // If a specific year is selected (not null, empty, or "All Years")
-            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All Years")
-            {
-                DbControl.AddParameter("@SchoolYear", schoolYear, System.Data.SqlDbType.VarChar);
-            }
+            // Parameter 1: Name
+            DbControl.AddParameter("@FacultyName", facultyName, SqlDbType.VarChar);
+
+            // Parameter 2: School Year
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
+                DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
             else
-            {
-                // Pass NULL to get all records
-                DbControl.AddParameter("@SchoolYear", DBNull.Value, System.Data.SqlDbType.VarChar);
-            }
+                DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
 
-            return DbControl.ExecuteQuery("sp_GetDistributionBySubject_FilteredSchoolYears");
+            // Parameter 3: Curriculum Year
+            if (!string.IsNullOrEmpty(curriculumYear) && curriculumYear != "All")
+                DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@CurriculumYear", DBNull.Value, SqlDbType.VarChar);
+
+            return DbControl.ExecuteQuery("sp_GetGradeSheetsByFacultyDetails");
         }
-
     }
 }
-
