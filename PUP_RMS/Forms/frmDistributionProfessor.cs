@@ -24,8 +24,12 @@ namespace PUP_RMS.Forms
         private FlowLayoutPanel listContainer;
 
         // Filter Controls
-        private Label lblFilter;
+        private Label lblFilterYear;
         private ComboBox cmbSchoolYear;
+
+        // NEW: Curriculum Controls
+        private Label lblFilterCurriculum;
+        private ComboBox cmbCurriculum;
 
         private const int CS_DROPSHADOW = 0x00020000;
 
@@ -37,6 +41,8 @@ namespace PUP_RMS.Forms
 
             SetupFormDesign();
             SetupFilterControls();
+
+            // Load initial data
             LoadFacultyData();
         }
 
@@ -50,7 +56,7 @@ namespace PUP_RMS.Forms
             }
         }
 
-        public static void ShowWithDimmer(Form parent, frmDistributionProfessor child)
+        public static void ShowWithDimmer(Form parent, Form child)
         {
             using (Form dimmer = new Form())
             {
@@ -74,7 +80,7 @@ namespace PUP_RMS.Forms
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterParent;
-            this.Size = new Size(880, 540);
+            this.Size = new Size(950, 560); // Slightly wider to fit two filters
             this.BackColor = ClrStandoutBack;
 
             listContainer = new FlowLayoutPanel
@@ -103,7 +109,7 @@ namespace PUP_RMS.Forms
                     if (ctrl is Panel row)
                         row.Width = listContainer.ClientSize.Width - (listContainer.Padding.Left + listContainer.Padding.Right);
                 }
-                RepositionFilterControls(); // Reposition filters on resize
+                RepositionFilterControls();
                 this.Invalidate();
             };
 
@@ -117,20 +123,26 @@ namespace PUP_RMS.Forms
         // =========================================================
         private void SetupFilterControls()
         {
-            lblFilter = new Label();
-            lblFilter.Text = "Filter by School Year:";
-            lblFilter.ForeColor = ClrGold;
-            lblFilter.BackColor = ClrMaroon;
-            lblFilter.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            lblFilter.AutoSize = true;
+            // --- 1. School Year Filter ---
+            lblFilterYear = new Label
+            {
+                Text = "School Year:",
+                ForeColor = ClrGold,
+                BackColor = ClrMaroon,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                AutoSize = true
+            };
 
-            cmbSchoolYear = new ComboBox();
-            cmbSchoolYear.Font = new Font("Segoe UI", 9, FontStyle.Regular);
-            cmbSchoolYear.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbSchoolYear.Width = 140;
-            cmbSchoolYear.BackColor = Color.White;
-            cmbSchoolYear.FlatStyle = FlatStyle.Flat;
+            cmbSchoolYear = new ComboBox
+            {
+                Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Width = 120,
+                BackColor = Color.White,
+                FlatStyle = FlatStyle.Flat
+            };
 
+            // Load School Years
             cmbSchoolYear.Items.Add("All");
             try
             {
@@ -138,43 +150,83 @@ namespace PUP_RMS.Forms
                 if (dt != null)
                 {
                     foreach (DataRow row in dt.Rows)
-                    {
                         cmbSchoolYear.Items.Add(row["SchoolYear"].ToString());
-                    }
                 }
             }
             catch { }
-
             if (cmbSchoolYear.Items.Count > 0) cmbSchoolYear.SelectedIndex = 0;
+            cmbSchoolYear.SelectedIndexChanged += (s, e) => LoadFacultyData();
 
-            cmbSchoolYear.SelectedIndexChanged += (s, e) =>
+
+            // --- 2. Curriculum Filter (NEW) ---
+            lblFilterCurriculum = new Label
             {
-                LoadFacultyData();
+                Text = "Curriculum:",
+                ForeColor = ClrGold,
+                BackColor = ClrMaroon,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                AutoSize = true
             };
 
+            cmbCurriculum = new ComboBox
+            {
+                Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Width = 100,
+                BackColor = Color.White,
+                FlatStyle = FlatStyle.Flat
+            };
+
+            // Load Curriculum Years
+            cmbCurriculum.Items.Add("All");
+            try
+            {
+                // Ensure you have DashboardHelper.GetCurriculumYears() implemented
+                DataTable dtCurr = DashboardHelper.GetCurriculums();
+                if (dtCurr != null)
+                {
+                    foreach (DataRow row in dtCurr.Rows)
+                        cmbCurriculum.Items.Add(row["CurriculumYear"].ToString());
+                }
+            }
+            catch { }
+            if (cmbCurriculum.Items.Count > 0) cmbCurriculum.SelectedIndex = 0;
+            cmbCurriculum.SelectedIndexChanged += (s, e) => LoadFacultyData();
+
+            // Add to form
             this.Controls.Add(cmbSchoolYear);
-            this.Controls.Add(lblFilter);
+            this.Controls.Add(lblFilterYear);
+            this.Controls.Add(cmbCurriculum);
+            this.Controls.Add(lblFilterCurriculum);
 
             RepositionFilterControls();
         }
 
         private void RepositionFilterControls()
         {
-            if (lblFilter == null || cmbSchoolYear == null) return;
+            if (lblFilterYear == null || cmbSchoolYear == null || lblFilterCurriculum == null || cmbCurriculum == null) return;
 
             int headerHeight = 50;
-            // Position near the top-right, leaving space for window buttons (~80px)
-            int comboX = this.Width - cmbSchoolYear.Width - 80;
+            int gap = 10;
+            int sectionGap = 20; // Space between the two filters
+
+            // Right margin to avoid window buttons (Close/Max)
+            int startX = this.Width - 90;
             int comboY = (headerHeight - cmbSchoolYear.Height) / 2;
+            int labelY = (headerHeight - lblFilterYear.Height) / 2;
 
-            int labelX = comboX - lblFilter.Width - 10;
-            int labelY = (headerHeight - lblFilter.Height) / 2;
+            // 1. Position School Year (Rightmost)
+            cmbSchoolYear.Location = new Point(startX - cmbSchoolYear.Width, comboY);
+            lblFilterYear.Location = new Point(cmbSchoolYear.Left - lblFilterYear.Width - gap, labelY);
 
-            cmbSchoolYear.Location = new Point(comboX, comboY);
-            lblFilter.Location = new Point(labelX, labelY);
+            // 2. Position Curriculum (To the left of School Year)
+            cmbCurriculum.Location = new Point(lblFilterYear.Left - cmbCurriculum.Width - sectionGap, comboY);
+            lblFilterCurriculum.Location = new Point(cmbCurriculum.Left - lblFilterCurriculum.Width - gap, labelY);
 
             cmbSchoolYear.BringToFront();
-            lblFilter.BringToFront();
+            lblFilterYear.BringToFront();
+            cmbCurriculum.BringToFront();
+            lblFilterCurriculum.BringToFront();
         }
 
         // =========================================================
@@ -184,16 +236,35 @@ namespace PUP_RMS.Forms
         {
             listContainer.Controls.Clear();
 
-            string selectedYear = null;
+            string selectedSchoolYear = null;
+            string selectedCurriculum = null;
+
+            // Get School Year Value
             if (cmbSchoolYear != null && cmbSchoolYear.SelectedItem != null)
+                selectedSchoolYear = cmbSchoolYear.SelectedItem.ToString();
+
+            // Get Curriculum Value
+            if (cmbCurriculum != null && cmbCurriculum.SelectedItem != null)
+                selectedCurriculum = cmbCurriculum.SelectedItem.ToString();
+
+            // Call Helper with BOTH filters
+            // Make sure your Helper method accepts two arguments now: GetFacultyDistribution(schoolYear, curriculumYear)
+            DataTable dt = DashboardHelper.GetFacultyDistribution(selectedSchoolYear, selectedCurriculum);
+
+            if (dt == null || dt.Rows.Count == 0)
             {
-                selectedYear = cmbSchoolYear.SelectedItem.ToString();
+                // Optional: Show "No Records" label
+                Label lblNoData = new Label
+                {
+                    Text = "No records found for this filter.",
+                    AutoSize = true,
+                    ForeColor = Color.DimGray,
+                    Font = new Font("Segoe UI", 12),
+                    Padding = new Padding(20)
+                };
+                listContainer.Controls.Add(lblNoData);
+                return;
             }
-
-            // Call the overloaded method with filter
-            DataTable dt = DashboardHelper.GetFacultyDistribution(selectedYear);
-
-            if (dt.Rows.Count == 0) return;
 
             int maxRecords = Convert.ToInt32(dt.Rows[0]["RecordCount"]);
             if (maxRecords == 0) maxRecords = 1;
@@ -215,7 +286,8 @@ namespace PUP_RMS.Forms
                 Width = listContainer.ClientSize.Width - (listContainer.Padding.Left + listContainer.Padding.Right),
                 Height = 100,
                 Margin = new Padding(0, 0, 0, 15),
-                BackColor = ClrCardWhite
+                BackColor = ClrCardWhite,
+                Cursor = Cursors.Hand // Change cursor to indicate clickability
             };
 
             PictureBox picAvatar = new PictureBox { Size = new Size(65, 65), Location = new Point(20, 17), BackColor = Color.Transparent };
@@ -230,16 +302,13 @@ namespace PUP_RMS.Forms
                 ForeColor = Color.FromArgb(45, 45, 45)
             };
 
-            // Responsive Progress Bar Container
             Panel progressBar = new Panel
             {
                 Location = new Point(100, 58),
                 Height = 10,
                 BackColor = Color.FromArgb(230, 230, 230),
-                Anchor = AnchorStyles.Left | AnchorStyles.Right // Allows stretching
+                Anchor = AnchorStyles.Left | AnchorStyles.Right
             };
-
-            // Set initial width based on current row width minus margins
             progressBar.Width = row.Width - 250;
 
             progressBar.Paint += (s, e) => {
@@ -259,7 +328,6 @@ namespace PUP_RMS.Forms
                 ForeColor = Color.Gray,
                 Anchor = AnchorStyles.Right
             };
-            // Position label at the end of the progress bar area
             lblRecords.Location = new Point(progressBar.Right + 15, 54);
 
             row.Controls.Add(picAvatar);
@@ -267,7 +335,29 @@ namespace PUP_RMS.Forms
             row.Controls.Add(progressBar);
             row.Controls.Add(lblRecords);
 
-            // Handle resize within row
+            // --- CLICK EVENT HANDLER (Drill Down) ---
+            EventHandler openDetails = (s, e) =>
+            {
+                // 1. Get current filter values
+                string selectedSY = (cmbSchoolYear.SelectedItem != null) ? cmbSchoolYear.SelectedItem.ToString() : null;
+                string selectedCurr = (cmbCurriculum.SelectedItem != null) ? cmbCurriculum.SelectedItem.ToString() : null;
+
+                // 2. Open the Drill Down Form
+                frmProfessorDrillDown detailsForm = new frmProfessorDrillDown(name, selectedSY, selectedCurr);
+
+                // 3. Show with Dimmer (Reuse your existing dimmer method logic)
+                ShowWithDimmer(this, detailsForm);
+            };
+
+            // Attach event to ALL controls in the row so clicking anywhere works
+            row.Click += openDetails;
+            lblName.Click += openDetails;
+            picAvatar.Click += openDetails;
+            lblRecords.Click += openDetails;
+            progressBar.Click += openDetails;
+
+            // --- End Click Event Handler ---
+
             row.Resize += (s, e) =>
             {
                 progressBar.Width = row.Width - 250;
@@ -283,6 +373,9 @@ namespace PUP_RMS.Forms
             return row;
         }
 
+        // =========================================================
+        // GRAPHICS & PAINTING
+        // =========================================================
         private void DrawProfileWithStar(Graphics g, Rectangle bounds)
         {
             g.SmoothingMode = SmoothingMode.HighQuality;
@@ -315,7 +408,7 @@ namespace PUP_RMS.Forms
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             using (SolidBrush brush = new SolidBrush(ClrMaroon)) e.Graphics.FillRectangle(brush, 0, 0, Width, 50);
             using (Font f = new Font("Segoe UI Semibold", 12))
-                e.Graphics.DrawString("Grade Sheets Distribution by Professor", f, new SolidBrush(ClrGold), 20, 14);
+                e.Graphics.DrawString("Grade Sheets by Professor", f, new SolidBrush(ClrGold), 20, 14);
             DrawWindowButtons(e.Graphics);
             using (Pen innerBorder = new Pen(Color.FromArgb(180, 180, 180), 1))
                 e.Graphics.DrawRectangle(innerBorder, 0, 0, Width - 1, Height - 1);

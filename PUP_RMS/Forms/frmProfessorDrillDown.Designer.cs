@@ -1,6 +1,6 @@
 ﻿namespace PUP_RMS.Forms
 {
-    partial class frmDistributionYear_Sem
+    partial class frmProfessorDrillDown
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // frmDistributionYear_Sem
+            // frmProfessorDrillDown
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "frmDistributionYear_Sem";
-            this.Text = "frmDistributionYear_Sem";
-
+            this.Name = "frmProfessorDrillDown";
+            this.Text = "Form Professor Drill Down";
+            this.Load += new System.EventHandler(this.frmProfessorDrillDown_Load);
             this.ResumeLayout(false);
 
         }

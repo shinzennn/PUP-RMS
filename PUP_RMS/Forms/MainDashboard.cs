@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using PUP_RMS.Controls; // Assuming your iconButton is here
+using PUP_RMS.Controls;
 using PUP_RMS.Forms;
 
 namespace PUP_RMS.Forms
@@ -15,15 +15,14 @@ namespace PUP_RMS.Forms
 
         // Layout Constants
         private const int BUTTON_GAP = 5;
-        private bool isAdminExpanded = false; // Tracks if Admin menu is open
+        private bool isAdminExpanded = false;
 
-        // Caching Variables (To keep forms alive)
+        // Caching Variables
         private Form activeForm = null;
-        private frmDashPlaceHolder _dashboardInstance = null;
+        private frmDashboard _dashboardInstance = null; // We will use this instance
         private frmProgram _programForm = null;
         private frmCourse _courseForm = null;
         private frmFaculty _facultyForm = null;
-        // private frmCurriculum _curriculumForm = null; 
 
         // UI Tracking
         private iconButton currentActiveButton = null;
@@ -50,60 +49,63 @@ namespace PUP_RMS.Forms
             ApplyDoubleBufferingRecursively(this.Controls);
             InitializeFadeTimer();
 
+            // Hook up the Load event
             this.Load += MainDashboard_Load;
 
             // 2. Initial Setup
             pnlContent.BackColor = ChildFormBackgroundColor;
 
-            // 3. Pre-load Dashboard
-            _dashboardInstance = new frmDashPlaceHolder();
-            PrepareChildForm(_dashboardInstance);
+            // REMOVED: Do not call ShowForm() or ArrangeSidebar() here.
+            // We moved that logic to MainDashboard_Load below.
+        }
 
-            // 4. Initial Layout Calculation
+        // ==========================================
+        // LOAD EVENT (Logic Moved Here)
+        // ==========================================
+        private void MainDashboard_Load(object sender, EventArgs e)
+        {
+            // 1. Layout Calculation
             ArrangeSidebar();
 
-            // 5. Load Default
+            // 2. Initialize Dashboard Instance if null
+            if (_dashboardInstance == null)
+            {
+                _dashboardInstance = new frmDashboard();
+                PrepareChildForm(_dashboardInstance);
+            }
+
+            // 3. Load Default View
             ActivateButton(btnDashboard);
             ShowForm(_dashboardInstance);
+
+            // 4. Start Animation
+            tmrFadeIn.Start();
         }
 
         // ======================================================
-        // SECTION: LAYOUT LOGIC (THE FIX)
+        // SECTION: LAYOUT LOGIC
         // ======================================================
         private void ArrangeSidebar()
         {
-            // 1. Stack the Top Buttons
-            // (Assumes btnDashboard is fixed at the top in Designer)
             btnSearch.Top = btnDashboard.Bottom + BUTTON_GAP;
             btnBatchUpload.Top = btnSearch.Bottom + BUTTON_GAP;
             btnAdminTool.Top = btnBatchUpload.Bottom + BUTTON_GAP;
 
-            // 2. Position the Sub-Menu Panel
-            // It must always sit directly under the Admin Tool button
             pnlAdminSubMenu.Top = btnAdminTool.Bottom;
             pnlAdminSubMenu.Left = btnAdminTool.Left;
             pnlAdminSubMenu.Width = btnAdminTool.Width;
 
-            // 3. Expand / Collapse Logic
             if (isAdminExpanded)
             {
-                // SHOW the panel
                 pnlAdminSubMenu.Visible = true;
-
-                // Position subsequent buttons (Accounts, Logout) BELOW the panel
-                // We use pnlAdminSubMenu.Bottom to push them down
                 btnAccounts.Top = pnlAdminSubMenu.Bottom + BUTTON_GAP;
             }
             else
             {
-                // HIDE the panel
                 pnlAdminSubMenu.Visible = false;
-
-                // Position subsequent buttons directly BELOW the Admin Tool button
                 btnAccounts.Top = btnAdminTool.Bottom + BUTTON_GAP;
             }
 
-            // 4. Logout always sits below Accounts
             btnLogout.Top = btnAccounts.Bottom + BUTTON_GAP + 20;
         }
 
@@ -111,36 +113,41 @@ namespace PUP_RMS.Forms
         // SECTION: BUTTON CLICK EVENTS
         // ======================================================
 
-        // --- MAIN ADMIN TOGGLE ---
         private void btnAdminTool_Click(object sender, EventArgs e)
         {
-            // 1. Toggle the state
             isAdminExpanded = !isAdminExpanded;
-
-            // 2. Update the sidebar layout
             ArrangeSidebar();
-
-            // 3. Optional: Highlight the button
             ActivateButton(sender);
         }
 
-        // --- SUB MENUS (Open specific forms) ---
         private void btnProgram_Click_1(object sender, EventArgs e)
         {
-            frmProgram programForm = new frmProgram();
-            ShowForm(programForm);
+            if (_programForm == null || _programForm.IsDisposed)
+            {
+                _programForm = new frmProgram();
+                PrepareChildForm(_programForm);
+            }
+            ShowForm(_programForm);
         }
 
         private void btnCourse_Click_1(object sender, EventArgs e)
         {
-            frmCourse courseForm = new frmCourse();
-            ShowForm(courseForm);
+            if (_courseForm == null || _courseForm.IsDisposed)
+            {
+                _courseForm = new frmCourse();
+                PrepareChildForm(_courseForm);
+            }
+            ShowForm(_courseForm);
         }
 
         private void btnFaculty_Click_1(object sender, EventArgs e)
         {
-            frmFaculty facultyForm = new frmFaculty();
-            ShowForm(facultyForm);
+            if (_facultyForm == null || _facultyForm.IsDisposed)
+            {
+                _facultyForm = new frmFaculty();
+                PrepareChildForm(_facultyForm);
+            }
+            ShowForm(_facultyForm);
         }
 
         private void btnCurriculum_Click_1(object sender, EventArgs e)
@@ -157,6 +164,15 @@ namespace PUP_RMS.Forms
             if (CanChangeWindow())
             {
                 ActivateButton(sender);
+
+                // FIXED: Use the cached instance instead of 'new frmDashboard()'
+                // This ensures you don't lose state and it matches the Load event logic
+                if (_dashboardInstance == null || _dashboardInstance.IsDisposed)
+                {
+                    _dashboardInstance = new frmDashboard();
+                    PrepareChildForm(_dashboardInstance);
+                }
+
                 ShowForm(_dashboardInstance);
             }
         }
@@ -167,7 +183,7 @@ namespace PUP_RMS.Forms
             if (CanChangeWindow())
             {
                 ActivateButton(sender);
-                ShowForm(new frmSearch()); // Search usually resets, so new instance is fine
+                ShowForm(new frmSearch());
             }
         }
 
@@ -202,7 +218,7 @@ namespace PUP_RMS.Forms
         }
 
         // ======================================================
-        // SECTION: HELPERS (ShowForm & ActivateButton)
+        // SECTION: HELPERS
         // ======================================================
 
         private void ShowForm(Form childForm)
@@ -211,7 +227,7 @@ namespace PUP_RMS.Forms
 
             if (activeForm != null)
             {
-                // HIDE these forms to keep their state/data
+                // If the active form is one of our "Cached" main forms, just Hide it.
                 if (activeForm == _dashboardInstance ||
                     activeForm == _programForm ||
                     activeForm == _courseForm ||
@@ -221,13 +237,14 @@ namespace PUP_RMS.Forms
                 }
                 else
                 {
-                    // CLOSE other forms (like Search/Upload) to reset them
+                    // Otherwise (like Search or Upload), Close it to reset.
                     activeForm.Close();
                 }
             }
 
             activeForm = childForm;
 
+            // Ensure the form is added to the panel if it wasn't already
             if (!pnlContent.Controls.Contains(childForm))
             {
                 PrepareChildForm(childForm);
@@ -251,22 +268,17 @@ namespace PUP_RMS.Forms
         {
             if (btnSender == null) return;
 
-            // Safely cast to Control first
             Control newBtn = (Control)btnSender;
             iconButton newIconBtn = btnSender as iconButton;
 
-            // 1. Reset Old Button
             if (currentActiveButton != null && currentActiveButton != newIconBtn)
             {
                 currentActiveButton.IsActive = false;
-
-                // Force Reset Logic (Fixes stuck colors)
                 currentActiveButton.Enabled = false;
                 currentActiveButton.Enabled = true;
                 currentActiveButton.BackColor = ButtonMaroon;
             }
 
-            // 2. Activate New Button (Only if it is an iconButton)
             if (newIconBtn != null)
             {
                 newIconBtn.IsActive = true;
@@ -297,8 +309,6 @@ namespace PUP_RMS.Forms
             tmrFadeIn.Tick += (s, e) => { if (Opacity < 1) Opacity += 0.05; else tmrFadeIn.Stop(); };
         }
 
-        private void MainDashboard_Load(object sender, EventArgs e) => tmrFadeIn.Start();
-
         protected override CreateParams CreateParams
         {
             get { CreateParams cp = base.CreateParams; cp.Style |= 0x02000000; return cp; }
@@ -319,7 +329,5 @@ namespace PUP_RMS.Forms
             var prop = typeof(Control).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             if (prop != null) prop.SetValue(c, true, null);
         }
-
-
     }
 }

@@ -54,8 +54,11 @@ namespace PUP_RMS.Forms
         private const float BASE_HEIGHT = 600f;
 
         // Filter Controls
-        private Label lblFilter;
+        private Label lblFilter;      // School Year Label
         private ComboBox cmbSchoolYear;
+
+        private Label lblCurriculum;  // Curriculum Label
+        private ComboBox cmbCurriculum;
 
         public frmDistributionProgram()
         {
@@ -90,10 +93,47 @@ namespace PUP_RMS.Forms
         // =========================================================
         private void SetupFilterControls()
         {
+            // --- 1. Curriculum Controls (Left) ---
+            lblCurriculum = new Label();
+            lblCurriculum.Text = "Curriculum:";
+            lblCurriculum.ForeColor = ClrTextGray; // CHANGED: Gray text for light background
+            lblCurriculum.BackColor = Color.Transparent; // CHANGED: Transparent background
+            lblCurriculum.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            lblCurriculum.AutoSize = true;
+
+            cmbCurriculum = new ComboBox();
+            cmbCurriculum.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+            cmbCurriculum.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCurriculum.Width = 140;
+            cmbCurriculum.BackColor = Color.White;
+            cmbCurriculum.FlatStyle = FlatStyle.Flat;
+
+            // Load Curriculums
+            cmbCurriculum.Items.Add("All");
+            try
+            {
+                DataTable dt = DashboardHelper.GetCurriculums();
+                if (dt != null)
+                {
+                    foreach (DataRow row in dt.Rows)
+                        cmbCurriculum.Items.Add(row["CurriculumYear"].ToString());
+                }
+            }
+            catch { }
+            cmbCurriculum.SelectedIndex = 0;
+
+            // EVENT
+            cmbCurriculum.SelectedIndexChanged += (s, e) =>
+            {
+                LoadSchoolYearCombo();
+                LoadMainData();
+            };
+
+            // --- 2. School Year Controls (Right) ---
             lblFilter = new Label();
-            lblFilter.Text = "Filter by School Year:";
-            lblFilter.ForeColor = ClrGold;
-            lblFilter.BackColor = ClrMaroon;
+            lblFilter.Text = "School Year:";
+            lblFilter.ForeColor = ClrTextGray; // CHANGED: Gray text
+            lblFilter.BackColor = Color.Transparent; // CHANGED: Transparent
             lblFilter.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             lblFilter.AutoSize = true;
 
@@ -104,10 +144,32 @@ namespace PUP_RMS.Forms
             cmbSchoolYear.BackColor = Color.White;
             cmbSchoolYear.FlatStyle = FlatStyle.Flat;
 
+            // Load Initial School Years
+            LoadSchoolYearCombo();
+
+            // EVENT
+            cmbSchoolYear.SelectedIndexChanged += (s, e) => { LoadMainData(); };
+
+            // Add Controls
+            this.Controls.Add(cmbSchoolYear);
+            this.Controls.Add(lblFilter);
+            this.Controls.Add(cmbCurriculum);
+            this.Controls.Add(lblCurriculum);
+
+            RepositionFilterControls();
+        }
+
+        private void LoadSchoolYearCombo()
+        {
+            string selectedCurr = cmbCurriculum.SelectedItem?.ToString();
+            string currentYear = cmbSchoolYear.SelectedItem?.ToString();
+
+            cmbSchoolYear.Items.Clear();
             cmbSchoolYear.Items.Add("All");
+
             try
             {
-                DataTable dt = DashboardHelper.GetSchoolYears();
+                DataTable dt = DashboardHelper.GetSchoolYears(selectedCurr);
                 if (dt != null)
                 {
                     foreach (DataRow row in dt.Rows)
@@ -118,17 +180,7 @@ namespace PUP_RMS.Forms
             }
             catch { }
 
-            if (cmbSchoolYear.Items.Count > 0) cmbSchoolYear.SelectedIndex = 0;
-
-            cmbSchoolYear.SelectedIndexChanged += (s, e) =>
-            {
-                LoadMainData();
-            };
-
-            this.Controls.Add(cmbSchoolYear);
-            this.Controls.Add(lblFilter);
-
-            RepositionFilterControls();
+            cmbSchoolYear.SelectedIndex = 0;
         }
 
         protected override void OnResize(EventArgs e)
@@ -137,25 +189,46 @@ namespace PUP_RMS.Forms
             RepositionFilterControls();
         }
 
+        // =========================================================
+        // REPOSITIONING LOGIC (UPDATED FOR CENTER ALIGNMENT)
+        // =========================================================
         private void RepositionFilterControls()
         {
-            if (lblFilter == null || cmbSchoolYear == null) return;
+            if (lblFilter == null || cmbSchoolYear == null || lblCurriculum == null || cmbCurriculum == null) return;
 
             float scale = GetScaleFactor();
+
+            // 1. Calculate Header Height (Controls sit BELOW this)
             int headerHeight = (int)(50 * scale);
             if (headerHeight < 50) headerHeight = 50;
 
-            int comboX = this.Width - cmbSchoolYear.Width - (int)(80 * scale);
-            int comboY = (headerHeight - cmbSchoolYear.Height) / 2;
+            // 2. Define spacing and Y position
+            int padding = 10;
+            int groupSpacing = (int)(40 * scale); // Space between Curriculum group and Year group
+            int yPos = headerHeight + (int)(15 * scale); // 15px below the maroon header
 
-            int labelX = comboX - lblFilter.Width - 10;
-            int labelY = (headerHeight - lblFilter.Height) / 2;
+            // 3. Calculate Total Width of the entire filter strip to center it
+            int currGroupWidth = lblCurriculum.Width + padding + cmbCurriculum.Width;
+            int yearGroupWidth = lblFilter.Width + padding + cmbSchoolYear.Width;
+            int totalWidth = currGroupWidth + groupSpacing + yearGroupWidth;
 
-            cmbSchoolYear.Location = new Point(comboX, comboY);
-            lblFilter.Location = new Point(labelX, labelY);
+            // 4. Calculate Starting X
+            int startX = (this.Width - totalWidth) / 2;
 
+            // 5. Position Curriculum (Left)
+            lblCurriculum.Location = new Point(startX, yPos + 3); // +3 to align text vertically with combo
+            cmbCurriculum.Location = new Point(lblCurriculum.Right + padding, yPos);
+
+            // 6. Position School Year (Right)
+            int yearStartX = cmbCurriculum.Right + groupSpacing;
+            lblFilter.Location = new Point(yearStartX, yPos + 3);
+            cmbSchoolYear.Location = new Point(lblFilter.Right + padding, yPos);
+
+            // Ensure they are on top
             cmbSchoolYear.BringToFront();
             lblFilter.BringToFront();
+            cmbCurriculum.BringToFront();
+            lblCurriculum.BringToFront();
         }
 
         // =========================================================
@@ -164,7 +237,6 @@ namespace PUP_RMS.Forms
         private void LoadMainData()
         {
             _isDrilledDown = false;
-
             _mainSegments = new List<ChartSegment>();
 
             string selectedYear = null;
@@ -173,7 +245,14 @@ namespace PUP_RMS.Forms
                 selectedYear = cmbSchoolYear.SelectedItem.ToString();
             }
 
-            DataTable dt = DashboardHelper.GetProgramDistribution(selectedYear);
+            string selectedCurriculum = null;
+            if (cmbCurriculum != null && cmbCurriculum.SelectedItem != null)
+            {
+                selectedCurriculum = cmbCurriculum.SelectedItem.ToString();
+            }
+
+            // Standard backend call
+            DataTable dt = DashboardHelper.GetProgramDistribution(selectedYear, selectedCurriculum);
 
             Color[] colors = {
                 ClrMaroon, ClrGold, Color.FromArgb(180, 130, 40), Color.CadetBlue,
@@ -228,8 +307,6 @@ namespace PUP_RMS.Forms
             _drilledProgramName = parentProgram.Label;
 
             int total = parentProgram.Value;
-
-            // Simulating Year Level Distribution
             int y1 = (int)(total * 0.35);
             int y2 = (int)(total * 0.25);
             int y3 = (int)(total * 0.22);
@@ -262,17 +339,21 @@ namespace PUP_RMS.Forms
 
             float scale = GetScaleFactor();
 
-            // Header
+            // Header Height
             int headerHeight = (int)(50 * scale);
             if (headerHeight < 50) headerHeight = 50;
             Rectangle headerRect = new Rectangle(0, 0, Width, headerHeight);
 
+            // Filter Area Height (To push the chart down)
+            int filterAreaHeight = (int)(50 * scale);
+
+            // 1. Draw Header
             using (SolidBrush brush = new SolidBrush(ClrMaroon))
             {
                 g.FillRectangle(brush, headerRect);
             }
 
-            // Title Logic
+            // 2. Draw Title
             string title;
             if (_isDrilledDown)
                 title = $"Program > {_drilledProgramName}";
@@ -288,8 +369,10 @@ namespace PUP_RMS.Forms
 
             DrawWindowButtons(g, scale);
 
-            // Chart Bounds
-            Rectangle contentRect = new Rectangle(0, headerHeight, Width, Height - headerHeight);
+            // 3. Calculate Content Rect (Pushing it down by filterAreaHeight)
+            int totalTopOffset = headerHeight + filterAreaHeight;
+            Rectangle contentRect = new Rectangle(0, totalTopOffset, Width, Height - totalTopOffset);
+
             if (contentRect.Width < 50 || contentRect.Height < 50) return;
 
             long total = _currentSegments.Sum(s => (long)s.Value);
@@ -298,7 +381,9 @@ namespace PUP_RMS.Forms
             float chartSize = 380 * scale;
             float thickness = 70 * scale;
             float chartX = 60 * scale;
-            float chartY = headerHeight + (contentRect.Height - chartSize) / 2;
+
+            // Center the chart vertically in the remaining space
+            float chartY = totalTopOffset + (contentRect.Height - chartSize) / 2;
 
             _lastChartBounds = new RectangleF(chartX, chartY, chartSize, chartSize);
 
@@ -308,7 +393,8 @@ namespace PUP_RMS.Forms
 
             // Draw Legend
             float legendX = _lastChartBounds.Right + (80 * scale);
-            float legendY = headerHeight + (30 * scale);
+            // Adjust legend Y so it lines up with the new chart position
+            float legendY = chartY + (30 * scale);
             DrawLegendColumns(g, legendX, legendY, total, scale);
 
             using (Pen borderPen = new Pen(Color.FromArgb(150, 150, 150), 1))
@@ -369,13 +455,11 @@ namespace PUP_RMS.Forms
 
             if (_isDrilledDown)
             {
-                // DRILL DOWN: Show Program Name + Total Count
                 label = _drilledProgramName;
                 value = total.ToString();
             }
             else
             {
-                // MAIN: Show Largest Slice + Percentage
                 ChartSegment largest = _currentSegments.OrderByDescending(s => s.Value).FirstOrDefault();
                 if (largest != null)
                 {
@@ -684,12 +768,10 @@ namespace PUP_RMS.Forms
             return Math.Min(scaleX, scaleY);
         }
 
-        // ADDED TO FIX ERROR
         private void frmDistributionProgram_Load(object sender, EventArgs e)
         {
         }
 
-        // ADDED TO FIX ERROR
         public static void ShowWithDimmer(Form parent, frmDistributionProgram child)
         {
             using (Form dimmer = new Form())
