@@ -1,5 +1,6 @@
-﻿using PUP_RMS.Core;
-using PUP_RMS.Helper; 
+﻿
+using PUP_RMS.Core;
+using PUP_RMS.Helper;
 using System;
 using System.Data;
 using System.Drawing;
@@ -51,7 +52,7 @@ namespace PUP_RMS.Forms
 
             InitializeComponent();
 
-            if(this.cpDriveUsage != null) this.cpDriveUsage.Anchor = AnchorStyles.None;
+            if (this.cpDriveUsage != null) this.cpDriveUsage.Anchor = AnchorStyles.None;
 
             // Run the math every time the Dashboard resizes
             this.Resize += (s, e) => ResizeChart();
@@ -303,24 +304,24 @@ namespace PUP_RMS.Forms
                 dgv.Columns.Add("colCourse", "Course");
                 dgv.Columns.Add("colUploadedBy", "Uploaded By");
 
-               
+
 
                 // Sizing
                 dgv.Columns["colFilename"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgv.Columns["colCourse"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgv.Columns["colUploadedBy"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                
+
 
                 dgv.Columns["colFilename"].FillWeight = 45;
                 dgv.Columns["colUploadedBy"].FillWeight = 25;
                 dgv.Columns["colCourse"].FillWeight = 15;
-                
+
 
                 // Alignment
                 dgv.Columns["colFilename"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
                 dgv.Columns["colCourse"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgv.Columns["colUploadedBy"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                
+
 
                 dgv.AlternatingRowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.NotSet;
 
@@ -390,7 +391,7 @@ namespace PUP_RMS.Forms
 
                 // 3. Determine Color (Green if hovered, Maroon if not)
                 bool isHovered = (e.ColumnIndex == _hoveredActionCell.X && e.RowIndex == _hoveredActionCell.Y);
-                Color buttonColor = isHovered ? Color.Goldenrod: AccentMaroon;
+                Color buttonColor = isHovered ? Color.Goldenrod : AccentMaroon;
 
                 // 4. Draw the Colored Button Background
                 using (SolidBrush brush = new SolidBrush(buttonColor))
@@ -460,52 +461,73 @@ namespace PUP_RMS.Forms
 
             try
             {
-                // 1. Get Drive Info directly (No external class needed)
-                DriveInfo drive = new DriveInfo("C");
+                // 1. TARGET THE SPECIFIC FOLDER
+                // This matches the path you used in frmBatchUpload
+                string folderPath = Path.Combine(Application.StartupPath, "GradeSheets");
+
+                // 2. GET FOLDER SIZE
+                long usedSpace = GetDirectorySize(folderPath);
+
+                // 3. GET TOTAL DRIVE SIZE (For calculation context)
+                // We still need the drive info to know the "Maximum" capacity
+                string driveRoot = Path.GetPathRoot(folderPath);
+                DriveInfo drive = new DriveInfo(driveRoot);
 
                 if (drive.IsReady)
                 {
                     long totalSpace = drive.TotalSize;
-                    long freeSpace = drive.TotalFreeSpace;
-                    long usedSpace = totalSpace - freeSpace;
 
-                    // 2. Calculate Percentage
-                    int percent = (int)((double)usedSpace / totalSpace * 100);
+                    // 4. CALCULATE PERCENTAGE
+                    // Logic: (Folder Size / Total Hard Drive Size) * 100
+                    // Note: Since GradeSheets are small compared to a 500GB+ drive, 
+                    // the bar might look empty (0-1%) most of the time. This is normal.
+                    double percentRaw = ((double)usedSpace / totalSpace) * 100;
+                    int percent = (int)percentRaw;
 
-                    // 3. Update Progress Bar
-                    this.cpDriveUsage.Value = Math.Min(percent, 100);
+                    // Optional: If you want to see the bar move, you can set a "Fake Quota"
+                    // Example: Assume 10GB is the limit. Uncomment the line below:
+                    // long fakeLimit = 10L * 1024 * 1024 * 1024; // 10GB
+                    // percent = (int)(((double)usedSpace / fakeLimit) * 100);
 
-                    // 4. Handle Colors (Only override if Warning/Critical)
-                    // If Normal, we restore the colors captured in Load event (The Designer Properties)
+                    // 5. UPDATE PROGRESS BAR
+                    // Ensure value is between 0 and 100
+                    if (percent < 0) percent = 0;
+                    if (percent > 100) percent = 100;
+
+                    // If there is data but less than 1%, show 1% so the user sees something
+                    if (usedSpace > 0 && percent == 0) percent = 1;
+
+                    this.cpDriveUsage.Value = percent;
+
+                    // 6. UPDATE COLORS (Based on your original logic)
                     if (percent >= CriticalThreshold)
                     {
                         this.cpDriveUsage.GradientStart = CriticalRed;
-                        this.cpDriveUsage.GradientEnd = CriticalRed; // Solid Red
+                        this.cpDriveUsage.GradientEnd = CriticalRed;
                     }
                     else if (percent >= WarningThreshold)
                     {
                         this.cpDriveUsage.GradientStart = WarningOrange;
-                        this.cpDriveUsage.GradientEnd = WarningOrange; // Solid Orange
+                        this.cpDriveUsage.GradientEnd = WarningOrange;
                     }
                     else
                     {
-                        // Restore Designer Properties (Maroon Gradient)
                         this.cpDriveUsage.GradientStart = _defaultGradientStart;
                         this.cpDriveUsage.GradientEnd = _defaultGradientEnd;
                     }
 
-                    // 5. Update Text
+                    // 7. UPDATE TEXT
+                    // This will now show: "RMS Data: 120.5 MB"
                     string usedText = FormatBytes(usedSpace);
-                    string totalText = FormatBytes(totalSpace);
-                    this.lblStorageUsageDetails.Text = $"{usedText} / {totalText}";
+                    this.lblStorageUsageDetails.Text = $"RMS Data: {usedText}";
                 }
             }
             catch
             {
-                // Silent fail or set text to error
                 this.lblStorageUsageDetails.Text = "Storage Error";
             }
         }
+
         private void LoadDashboardCounts()
         {
             // Now the Form doesn't know about SQL. It just asks the Helper.
@@ -603,7 +625,7 @@ namespace PUP_RMS.Forms
 
         }
 
-     
+
 
         private void pnlByProgram_Click_1(object sender, EventArgs e)
         {
@@ -675,7 +697,7 @@ namespace PUP_RMS.Forms
 
         }
 
-   
+
         private void pnlBySubject_Paint_1(object sender, PaintEventArgs e)
         {
 
@@ -703,9 +725,9 @@ namespace PUP_RMS.Forms
 
         private void timerActivityLog_Tick(object sender, EventArgs e)
         {
-             // We call the public load method we created earlier
-                recentActivityLog1.LoadDefaultActivities();
-                LoadDashboardCounts();
+            // We call the public load method we created earlier
+            recentActivityLog1.LoadDefaultActivities();
+            LoadDashboardCounts();
 
         }
 
@@ -736,10 +758,10 @@ namespace PUP_RMS.Forms
                         foreach (DataRow row in dt.Rows)
                         {
                             dgvRecentUploads.Rows.Add(
-                                row["Filename"].ToString(),       
-                                row["CourseCode"].ToString(),     
-                                row["UploadedBy"].ToString(),    
-                                "View"                            
+                                row["Filename"].ToString(),
+                                row["CourseCode"].ToString(),
+                                row["UploadedBy"].ToString(),
+                                "View"
                             );
                         }
                     }
@@ -753,6 +775,60 @@ namespace PUP_RMS.Forms
         private void dgvRecentUploads_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             DashboardHelper.recentlyUploads();
+        }
+
+        // --- HELPER: CALCULATE SPECIFIC FOLDER SIZE ---
+        private long GetDirectorySize(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                return 0;
+            }
+
+            try
+            {
+                long startDirectorySize = 0;
+                string[] fileNames = Directory.GetFiles(folderPath, "*.*", SearchOption.AllDirectories);
+
+                foreach (string name in fileNames)
+                {
+                    FileInfo info = new FileInfo(name);
+                    startDirectorySize += info.Length;
+                }
+
+                return startDirectorySize;
+            }
+            catch (Exception ex)
+            {
+                // Log error if needed, or return 0
+                Console.WriteLine("Error calculating folder size: " + ex.Message);
+                return 0;
+            }
+        }
+
+        private void lnkViewStorage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // 1. Create the dim background effect (Optional, keeps your style consistent)
+            Form dimmer = new Form();
+            dimmer.StartPosition = FormStartPosition.Manual;
+            dimmer.FormBorderStyle = FormBorderStyle.None;
+            dimmer.Opacity = 0.50d;
+            dimmer.BackColor = Color.Black;
+            dimmer.ShowInTaskbar = false;
+            dimmer.Location = this.Location;
+            dimmer.Size = this.Size;
+            dimmer.Owner = this;
+            dimmer.Show();
+
+            // 2. Open the details form
+            frmStorageDetails frm = new frmStorageDetails();
+            frm.StartPosition = FormStartPosition.CenterParent;
+
+            // Show as Dialog (pops up over the dashboard)
+            frm.ShowDialog(dimmer);
+
+            // 3. Clean up dimmer when closed
+            dimmer.Dispose();
         }
     }
 }

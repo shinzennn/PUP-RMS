@@ -35,6 +35,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gradientLabel1 = new GradientLabel();
+            this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnRefresh = new PUP_RMS.RoundedButton();
             this.panelSearch = new PUP_RMS.RoundedShadowPanel();
@@ -44,27 +45,32 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnCreate = new PUP_RMS.RoundedButton();
             this.panelProginfo = new PUP_RMS.RoundedShadowPanel();
-            this.btnCancel = new PUP_RMS.RoundedButton();
-            this.btnSave = new PUP_RMS.RoundedButton();
-            this.roundedShadowPanel5 = new PUP_RMS.RoundedShadowPanel();
-            this.txtProgramDesc = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.tlpFormInterior = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.roundedShadowPanel4 = new PUP_RMS.RoundedShadowPanel();
             this.txtProgamCode = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.roundedShadowPanel5 = new PUP_RMS.RoundedShadowPanel();
+            this.txtProgramDesc = new System.Windows.Forms.TextBox();
+            this.tlpSaveCancel = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSave = new PUP_RMS.RoundedButton();
+            this.btnCancel = new PUP_RMS.RoundedButton();
             this.roundedShadowPanel6 = new PUP_RMS.RoundedShadowPanel();
             this.label7 = new System.Windows.Forms.Label();
             this.dgvProgram = new System.Windows.Forms.DataGridView();
             this.btnEdit = new PUP_RMS.RoundedButton();
             this.panel1.SuspendLayout();
+            this.tlpMain.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelSearch.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panelProginfo.SuspendLayout();
-            this.roundedShadowPanel5.SuspendLayout();
+            this.tlpFormInterior.SuspendLayout();
             this.roundedShadowPanel4.SuspendLayout();
+            this.roundedShadowPanel5.SuspendLayout();
+            this.tlpSaveCancel.SuspendLayout();
             this.roundedShadowPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProgram)).BeginInit();
             this.SuspendLayout();
@@ -87,10 +93,10 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.gradientLabel1);
             this.panel1.Controls.Add(this.label10);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1120, 90);
+            this.panel1.Size = new System.Drawing.Size(1114, 84);
             this.panel1.TabIndex = 21;
             // 
             // gradientLabel1
@@ -104,25 +110,41 @@
             this.gradientLabel1.TabIndex = 9;
             this.gradientLabel1.Text = "Program Management ";
             // 
+            // tlpMain
+            // 
+            this.tlpMain.BackColor = System.Drawing.Color.Transparent;
+            this.tlpMain.ColumnCount = 1;
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.Controls.Add(this.panel1, 0, 0);
+            this.tlpMain.Controls.Add(this.tableLayoutPanel1, 0, 1);
+            this.tlpMain.Controls.Add(this.tableLayoutPanel2, 0, 2);
+            this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMain.Location = new System.Drawing.Point(0, 0);
+            this.tlpMain.Name = "tlpMain";
+            this.tlpMain.RowCount = 3;
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.Size = new System.Drawing.Size(1120, 749);
+            this.tlpMain.TabIndex = 27;
+            // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.20462F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 138F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.tableLayoutPanel1.Controls.Add(this.btnRefresh, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelSearch, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnSearch, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(59, 106);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(25);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(25, 105);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(25, 15, 25, 15);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1002, 64);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1070, 70);
             this.tableLayoutPanel1.TabIndex = 22;
             // 
             // btnRefresh
@@ -138,9 +160,9 @@
             this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.ForeColor = System.Drawing.Color.White;
             this.btnRefresh.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnRefresh.Location = new System.Drawing.Point(883, 3);
+            this.btnRefresh.Location = new System.Drawing.Point(943, 3);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(116, 58);
+            this.btnRefresh.Size = new System.Drawing.Size(124, 64);
             this.btnRefresh.TabIndex = 27;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.TextColor = System.Drawing.Color.White;
@@ -164,7 +186,7 @@
             this.panelSearch.ShadowDepth = 10;
             this.panelSearch.ShadowEnabled = true;
             this.panelSearch.ShadowShift = 5;
-            this.panelSearch.Size = new System.Drawing.Size(722, 64);
+            this.panelSearch.Size = new System.Drawing.Size(770, 70);
             this.panelSearch.TabIndex = 23;
             // 
             // txtSearch
@@ -173,10 +195,10 @@
             this.txtSearch.BackColor = System.Drawing.Color.LightGray;
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.Location = new System.Drawing.Point(22, 24);
+            this.txtSearch.Location = new System.Drawing.Point(22, 26);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtSearch.Size = new System.Drawing.Size(675, 19);
+            this.txtSearch.Size = new System.Drawing.Size(723, 19);
             this.txtSearch.TabIndex = 4;
             this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -187,14 +209,15 @@
             this.btnSearch.BorderRadius = 20;
             this.btnSearch.BorderSize = 0;
             this.btnSearch.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnSearch.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.White;
             this.btnSearch.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSearch.Location = new System.Drawing.Point(745, 3);
+            this.btnSearch.Location = new System.Drawing.Point(793, 3);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(132, 57);
+            this.btnSearch.Size = new System.Drawing.Size(144, 64);
             this.btnSearch.TabIndex = 23;
             this.btnSearch.Text = "Search";
             this.btnSearch.TextColor = System.Drawing.Color.White;
@@ -203,46 +226,42 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.AutoSize = true;
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.roundedShadowPanel6, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnEdit, 1, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(59, 194);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(50, 25, 50, 50);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(30, 200);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(30, 10, 30, 30);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 89.82726F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.17274F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1002, 508);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1060, 519);
             this.tableLayoutPanel2.TabIndex = 26;
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.btnCreate, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.panelProginfo, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.91304F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.08696F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(495, 450);
+            this.tableLayoutPanel2.SetRowSpan(this.tableLayoutPanel3, 2);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(524, 513);
             this.tableLayoutPanel3.TabIndex = 26;
             // 
             // btnCreate
             // 
-            this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.btnCreate.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnCreate.BackColor = System.Drawing.Color.Maroon;
             this.btnCreate.BorderColor = System.Drawing.Color.PaleVioletRed;
             this.btnCreate.BorderRadius = 20;
@@ -253,7 +272,7 @@
             this.btnCreate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreate.ForeColor = System.Drawing.Color.White;
             this.btnCreate.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCreate.Location = new System.Drawing.Point(133, 403);
+            this.btnCreate.Location = new System.Drawing.Point(148, 461);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btnCreate.Size = new System.Drawing.Size(228, 44);
@@ -265,19 +284,12 @@
             // 
             // panelProginfo
             // 
-            this.panelProginfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelProginfo.BackColor = System.Drawing.Color.Transparent;
             this.panelProginfo.BorderColor = System.Drawing.Color.Transparent;
             this.panelProginfo.BorderRadius = 20;
             this.panelProginfo.BorderSize = 0;
-            this.panelProginfo.Controls.Add(this.btnCancel);
-            this.panelProginfo.Controls.Add(this.btnSave);
-            this.panelProginfo.Controls.Add(this.roundedShadowPanel5);
-            this.panelProginfo.Controls.Add(this.label5);
-            this.panelProginfo.Controls.Add(this.roundedShadowPanel4);
-            this.panelProginfo.Controls.Add(this.label3);
-            this.panelProginfo.Controls.Add(this.label2);
+            this.panelProginfo.Controls.Add(this.tlpFormInterior);
+            this.panelProginfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelProginfo.Enabled = false;
             this.panelProginfo.Location = new System.Drawing.Point(3, 3);
             this.panelProginfo.Margin = new System.Windows.Forms.Padding(3, 3, 25, 3);
@@ -288,114 +300,71 @@
             this.panelProginfo.ShadowDepth = 10;
             this.panelProginfo.ShadowEnabled = true;
             this.panelProginfo.ShadowShift = 5;
-            this.panelProginfo.Size = new System.Drawing.Size(467, 394);
+            this.panelProginfo.Size = new System.Drawing.Size(496, 447);
             this.panelProginfo.TabIndex = 21;
             // 
-            // btnCancel
+            // tlpFormInterior
             // 
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnCancel.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnCancel.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCancel.BorderRadius = 20;
-            this.btnCancel.BorderSize = 0;
-            this.btnCancel.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnCancel.FlatAppearance.BorderSize = 0;
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCancel.Location = new System.Drawing.Point(248, 324);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(152, 40);
-            this.btnCancel.TabIndex = 29;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.TextColor = System.Drawing.Color.White;
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Visible = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.tlpFormInterior.ColumnCount = 1;
+            this.tlpFormInterior.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpFormInterior.Controls.Add(this.label2, 0, 0);
+            this.tlpFormInterior.Controls.Add(this.label3, 0, 1);
+            this.tlpFormInterior.Controls.Add(this.roundedShadowPanel4, 0, 2);
+            this.tlpFormInterior.Controls.Add(this.label5, 0, 3);
+            this.tlpFormInterior.Controls.Add(this.roundedShadowPanel5, 0, 4);
+            this.tlpFormInterior.Controls.Add(this.tlpSaveCancel, 0, 6);
+            this.tlpFormInterior.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpFormInterior.Location = new System.Drawing.Point(0, 0);
+            this.tlpFormInterior.Name = "tlpFormInterior";
+            this.tlpFormInterior.Padding = new System.Windows.Forms.Padding(20);
+            this.tlpFormInterior.RowCount = 7;
+            this.tlpFormInterior.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F)); // Header
+            this.tlpFormInterior.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F)); // Label 1
+            this.tlpFormInterior.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F)); // Input 1
+            this.tlpFormInterior.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F)); // Label 2
+            this.tlpFormInterior.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F)); // Input 2
+            this.tlpFormInterior.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F)); // Spacer
+            this.tlpFormInterior.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F)); // Buttons
+            this.tlpFormInterior.Size = new System.Drawing.Size(496, 447);
+            this.tlpFormInterior.TabIndex = 0;
             // 
-            // btnSave
+            // label2
             // 
-            this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnSave.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnSave.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSave.BorderRadius = 20;
-            this.btnSave.BorderSize = 0;
-            this.btnSave.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnSave.FlatAppearance.BorderSize = 0;
-            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSave.Location = new System.Drawing.Point(74, 324);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(152, 40);
-            this.btnSave.TabIndex = 28;
-            this.btnSave.Text = "Save";
-            this.btnSave.TextColor = System.Drawing.Color.White;
-            this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Visible = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.label2.AutoSize = true;
+            this.label2.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(23, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(450, 50);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Program Information";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // roundedShadowPanel5
+            // label3
             // 
-            this.roundedShadowPanel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.roundedShadowPanel5.BackColor = System.Drawing.Color.Transparent;
-            this.roundedShadowPanel5.BorderColor = System.Drawing.Color.Transparent;
-            this.roundedShadowPanel5.BorderRadius = 20;
-            this.roundedShadowPanel5.BorderSize = 0;
-            this.roundedShadowPanel5.Controls.Add(this.txtProgramDesc);
-            this.roundedShadowPanel5.Location = new System.Drawing.Point(31, 244);
-            this.roundedShadowPanel5.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.roundedShadowPanel5.Name = "roundedShadowPanel5";
-            this.roundedShadowPanel5.PanelColor = System.Drawing.Color.LightGray;
-            this.roundedShadowPanel5.PanelImage = null;
-            this.roundedShadowPanel5.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.roundedShadowPanel5.ShadowDepth = 10;
-            this.roundedShadowPanel5.ShadowEnabled = true;
-            this.roundedShadowPanel5.ShadowShift = 5;
-            this.roundedShadowPanel5.Size = new System.Drawing.Size(409, 64);
-            this.roundedShadowPanel5.TabIndex = 27;
-            // 
-            // txtProgramDesc
-            // 
-            this.txtProgramDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtProgramDesc.BackColor = System.Drawing.Color.LightGray;
-            this.txtProgramDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtProgramDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProgramDesc.Location = new System.Drawing.Point(24, 21);
-            this.txtProgramDesc.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
-            this.txtProgramDesc.Name = "txtProgramDesc";
-            this.txtProgramDesc.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtProgramDesc.Size = new System.Drawing.Size(363, 19);
-            this.txtProgramDesc.TabIndex = 20;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(31, 214);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(157, 20);
-            this.label5.TabIndex = 26;
-            this.label5.Text = "Program Description:";
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(30, 80);
+            this.label3.Margin = new System.Windows.Forms.Padding(10, 0, 3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(443, 20);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Program Code:";
             // 
             // roundedShadowPanel4
             // 
-            this.roundedShadowPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.roundedShadowPanel4.BackColor = System.Drawing.Color.Transparent;
             this.roundedShadowPanel4.BorderColor = System.Drawing.Color.Transparent;
             this.roundedShadowPanel4.BorderRadius = 20;
             this.roundedShadowPanel4.BorderSize = 0;
             this.roundedShadowPanel4.Controls.Add(this.txtProgamCode);
-            this.roundedShadowPanel4.Location = new System.Drawing.Point(31, 121);
-            this.roundedShadowPanel4.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.roundedShadowPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.roundedShadowPanel4.Location = new System.Drawing.Point(30, 100);
+            this.roundedShadowPanel4.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.roundedShadowPanel4.Name = "roundedShadowPanel4";
             this.roundedShadowPanel4.PanelColor = System.Drawing.Color.LightGray;
             this.roundedShadowPanel4.PanelImage = null;
@@ -403,48 +372,128 @@
             this.roundedShadowPanel4.ShadowDepth = 10;
             this.roundedShadowPanel4.ShadowEnabled = true;
             this.roundedShadowPanel4.ShadowShift = 5;
-            this.roundedShadowPanel4.Size = new System.Drawing.Size(409, 64);
+            this.roundedShadowPanel4.Size = new System.Drawing.Size(436, 70);
             this.roundedShadowPanel4.TabIndex = 23;
             // 
             // txtProgamCode
             // 
-            this.txtProgamCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtProgamCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtProgamCode.BackColor = System.Drawing.Color.LightGray;
             this.txtProgamCode.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtProgamCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProgamCode.Location = new System.Drawing.Point(24, 21);
-            this.txtProgamCode.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
+            this.txtProgamCode.Location = new System.Drawing.Point(24, 25);
+            this.txtProgamCode.Margin = new System.Windows.Forms.Padding(20);
             this.txtProgamCode.Name = "txtProgamCode";
             this.txtProgamCode.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtProgamCode.Size = new System.Drawing.Size(368, 19);
+            this.txtProgamCode.Size = new System.Drawing.Size(390, 19);
             this.txtProgamCode.TabIndex = 20;
             // 
-            // label3
+            // label5
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(31, 91);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(115, 20);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Program Code:";
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(30, 190);
+            this.label5.Margin = new System.Windows.Forms.Padding(10, 0, 3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(443, 20);
+            this.label5.TabIndex = 26;
+            this.label5.Text = "Program Description:";
             // 
-            // label2
+            // roundedShadowPanel5
             // 
-            this.label2.AutoSize = true;
-            this.label2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(19, 25);
-            this.label2.Margin = new System.Windows.Forms.Padding(25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(279, 31);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Program Information";
+            this.roundedShadowPanel5.BackColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel5.BorderColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel5.BorderRadius = 20;
+            this.roundedShadowPanel5.BorderSize = 0;
+            this.roundedShadowPanel5.Controls.Add(this.txtProgramDesc);
+            this.roundedShadowPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.roundedShadowPanel5.Location = new System.Drawing.Point(30, 210);
+            this.roundedShadowPanel5.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
+            this.roundedShadowPanel5.Name = "roundedShadowPanel5";
+            this.roundedShadowPanel5.PanelColor = System.Drawing.Color.LightGray;
+            this.roundedShadowPanel5.PanelImage = null;
+            this.roundedShadowPanel5.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.roundedShadowPanel5.ShadowDepth = 10;
+            this.roundedShadowPanel5.ShadowEnabled = true;
+            this.roundedShadowPanel5.ShadowShift = 5;
+            this.roundedShadowPanel5.Size = new System.Drawing.Size(436, 70);
+            this.roundedShadowPanel5.TabIndex = 27;
+            // 
+            // txtProgramDesc
+            // 
+            this.txtProgramDesc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtProgramDesc.BackColor = System.Drawing.Color.LightGray;
+            this.txtProgramDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtProgramDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProgramDesc.Location = new System.Drawing.Point(24, 25);
+            this.txtProgramDesc.Margin = new System.Windows.Forms.Padding(20);
+            this.txtProgramDesc.Name = "txtProgramDesc";
+            this.txtProgramDesc.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtProgramDesc.Size = new System.Drawing.Size(390, 19);
+            this.txtProgramDesc.TabIndex = 20;
+            // 
+            // tlpSaveCancel
+            // 
+            this.tlpSaveCancel.ColumnCount = 2;
+            this.tlpSaveCancel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpSaveCancel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpSaveCancel.Controls.Add(this.btnSave, 0, 0);
+            this.tlpSaveCancel.Controls.Add(this.btnCancel, 1, 0);
+            this.tlpSaveCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpSaveCancel.Location = new System.Drawing.Point(23, 370);
+            this.tlpSaveCancel.Name = "tlpSaveCancel";
+            this.tlpSaveCancel.RowCount = 1;
+            this.tlpSaveCancel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpSaveCancel.Size = new System.Drawing.Size(450, 54);
+            this.tlpSaveCancel.TabIndex = 28;
+            // 
+            // btnSave
+            // 
+            this.btnSave.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnSave.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSave.BorderRadius = 20;
+            this.btnSave.BorderSize = 0;
+            this.btnSave.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.ForeColor = System.Drawing.Color.White;
+            this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnSave.Location = new System.Drawing.Point(3, 3);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(219, 48);
+            this.btnSave.TabIndex = 28;
+            this.btnSave.Text = "Save";
+            this.btnSave.TextColor = System.Drawing.Color.White;
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Visible = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnCancel.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCancel.BorderRadius = 20;
+            this.btnCancel.BorderSize = 0;
+            this.btnCancel.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnCancel.Location = new System.Drawing.Point(228, 3);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(219, 48);
+            this.btnCancel.TabIndex = 29;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.TextColor = System.Drawing.Color.White;
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Visible = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // roundedShadowPanel6
             // 
@@ -455,7 +504,7 @@
             this.roundedShadowPanel6.Controls.Add(this.label7);
             this.roundedShadowPanel6.Controls.Add(this.dgvProgram);
             this.roundedShadowPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedShadowPanel6.Location = new System.Drawing.Point(526, 3);
+            this.roundedShadowPanel6.Location = new System.Drawing.Point(555, 3);
             this.roundedShadowPanel6.Margin = new System.Windows.Forms.Padding(25, 3, 3, 3);
             this.roundedShadowPanel6.Name = "roundedShadowPanel6";
             this.roundedShadowPanel6.PanelColor = System.Drawing.Color.LightGray;
@@ -464,7 +513,7 @@
             this.roundedShadowPanel6.ShadowDepth = 10;
             this.roundedShadowPanel6.ShadowEnabled = true;
             this.roundedShadowPanel6.ShadowShift = 5;
-            this.roundedShadowPanel6.Size = new System.Drawing.Size(473, 450);
+            this.roundedShadowPanel6.Size = new System.Drawing.Size(502, 453);
             this.roundedShadowPanel6.TabIndex = 23;
             // 
             // label7
@@ -486,8 +535,8 @@
             this.dgvProgram.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             this.dgvProgram.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvProgram.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProgram.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
@@ -532,7 +581,7 @@
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvProgram.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvProgram.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProgram.Size = new System.Drawing.Size(393, 352);
+            this.dgvProgram.Size = new System.Drawing.Size(422, 355);
             this.dgvProgram.TabIndex = 2;
             this.dgvProgram.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProgram_CellClick);
             this.dgvProgram.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProgram_CellMouseEnter);
@@ -551,7 +600,7 @@
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.ForeColor = System.Drawing.Color.White;
             this.btnEdit.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnEdit.Location = new System.Drawing.Point(812, 459);
+            this.btnEdit.Location = new System.Drawing.Point(870, 462);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(187, 46);
             this.btnEdit.TabIndex = 24;
@@ -568,36 +617,38 @@
             this.BackgroundImage = global::PUP_RMS.Properties.Resources._619384472_920609864259422_4656079368386240362_n;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1120, 749);
-            this.Controls.Add(this.tableLayoutPanel2);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.tlpMain);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmProgram";
             this.Text = "frmProgram";
             this.Load += new System.EventHandler(this.frmProgram_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tlpMain.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelSearch.ResumeLayout(false);
             this.panelSearch.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.panelProginfo.ResumeLayout(false);
-            this.panelProginfo.PerformLayout();
-            this.roundedShadowPanel5.ResumeLayout(false);
-            this.roundedShadowPanel5.PerformLayout();
+            this.tlpFormInterior.ResumeLayout(false);
+            this.tlpFormInterior.PerformLayout();
             this.roundedShadowPanel4.ResumeLayout(false);
             this.roundedShadowPanel4.PerformLayout();
+            this.roundedShadowPanel5.ResumeLayout(false);
+            this.roundedShadowPanel5.PerformLayout();
+            this.tlpSaveCancel.ResumeLayout(false);
             this.roundedShadowPanel6.ResumeLayout(false);
             this.roundedShadowPanel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProgram)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
+        private System.Windows.Forms.TableLayoutPanel tlpMain;
         private GradientLabel gradientLabel1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel1;
@@ -609,6 +660,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private RoundedButton btnCreate;
         private RoundedShadowPanel panelProginfo;
+        private System.Windows.Forms.TableLayoutPanel tlpFormInterior;
+        private System.Windows.Forms.TableLayoutPanel tlpSaveCancel;
         private RoundedButton btnCancel;
         private RoundedButton btnSave;
         private RoundedShadowPanel roundedShadowPanel5;

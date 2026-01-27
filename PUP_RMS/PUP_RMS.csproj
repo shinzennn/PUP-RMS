@@ -70,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DbControl.cs" />
+    <Compile Include="CustomControls\AdminToolCardButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CustomControls\ChartSegment.cs" />
     <Compile Include="CustomControls\CircularProgressBar.cs">
       <SubType>Component</SubType>
@@ -131,11 +134,23 @@
     <Compile Include="Forms\frmActivityLogs.Designer.cs">
       <DependentUpon>frmActivityLogs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmAdminTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAdminTool.Designer.cs">
+      <DependentUpon>frmAdminTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmCourseDescription.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmCourseDescription.Designer.cs">
       <DependentUpon>frmCourseDescription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmCurriculum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmCurriculum.Designer.cs">
+      <DependentUpon>frmCurriculum.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmDistributionProfessor.cs">
       <SubType>Form</SubType>
@@ -221,6 +236,12 @@
     <Compile Include="Forms\frmBatchUpload.Designer.cs">
       <DependentUpon>frmBatchUpload.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmStorageDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmStorageDetails.Designer.cs">
+      <DependentUpon>frmStorageDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmSubjectDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -303,6 +324,12 @@
     <EmbeddedResource Include="Forms\frmActivityLogs.resx">
       <DependentUpon>frmActivityLogs.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAdminTool.resx">
+      <DependentUpon>frmAdminTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmCurriculum.resx">
+      <DependentUpon>frmCurriculum.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDistributionProfessor.resx">
       <DependentUpon>frmDistributionProfessor.cs</DependentUpon>
     </EmbeddedResource>
@@ -344,6 +371,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmBatchUpload.resx">
       <DependentUpon>frmBatchUpload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmStorageDetails.resx">
+      <DependentUpon>frmStorageDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmSubjectDetails.resx">
       <DependentUpon>frmSubjectDetails.cs</DependentUpon>
