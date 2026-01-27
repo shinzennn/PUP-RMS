@@ -19,7 +19,7 @@ namespace PUP_RMS.Forms
 
         // Caching Variables (To keep forms alive)
         private Form activeForm = null;
-        private frmDashboard _dashboardInstance = null;
+        private frmDashPlaceHolder _dashboardInstance = null;
         private frmProgram _programForm = null;
         private frmCourse _courseForm = null;
         private frmFaculty _facultyForm = null;
@@ -56,7 +56,7 @@ namespace PUP_RMS.Forms
             pnlContent.BackColor = ChildFormBackgroundColor;
 
             // 3. Pre-load Dashboard
-            _dashboardInstance = new frmDashboard();
+            _dashboardInstance = new frmDashPlaceHolder();
             PrepareChildForm(_dashboardInstance);
 
             // 4. Initial Layout Calculation
