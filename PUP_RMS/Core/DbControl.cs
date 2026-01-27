@@ -55,39 +55,60 @@ namespace PUP_RMS.Core
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
                 return conn.Query<Programs>(
-                    "SELECT ProgramID, ProgramCode FROM Program"
+                    "SELECT ProgramID, ProgramCode FROM Program "
                 ).ToList();
+            }
+        }
+        public static List<Curriculum> GetCurriculumsByProgram(int programId)
+        {
+            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                // Notice the aliases: [Subject Code] is now SubjectCode
+                string sql = @"
+
+                SELECT Distinct CurriculumYear
+                  FROM Curriculum
+                 WHERE ProgramID = @ProgramID
+                ORDER BY CurriculumYear DESC; ";
+
+                return conn.Query<Curriculum>(sql, new
+                {
+
+                    ProgramID = programId
+                }).ToList();
             }
         }
 
         public static List<Curriculum> GetCurriculum(string curriculumYear, int semester, int yearLevel)
         {
-            string query = @"SELECT CurriculumID, CurriculumYear 
+            string query = @"SELECT DISTINCT CurriculumID, CurriculumYear 
                      FROM Curriculum
                      WHERE CurriculumYear = @CurriculumYear
                        AND Semester = @Semester
                        AND YearLevel = @YearLevel";
 
             using (SqlConnection conn = new SqlConnection(ConnString("RMSDB")))
-            using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@CurriculumYear", curriculumYear);
-                cmd.Parameters.AddWithValue("@Semester", semester);
-                cmd.Parameters.AddWithValue("@YearLevel", yearLevel);
-
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                List<Curriculum> list = new List<Curriculum>();
-                while (reader.Read())
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    list.Add(new Curriculum
+                    cmd.Parameters.AddWithValue("@CurriculumYear", curriculumYear);
+                    cmd.Parameters.AddWithValue("@Semester", semester);
+                    cmd.Parameters.AddWithValue("@YearLevel", yearLevel);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<Curriculum> list = new List<Curriculum>();
+                    while (reader.Read())
                     {
-                        CurriculumID = reader.GetInt32(0),
-                        CurriculumYear = reader.GetString(1)
-                    });
+                        list.Add(new Curriculum
+                        {
+                            CurriculumID = reader.GetInt32(0),
+                            CurriculumYear = reader.GetString(1)
+                        });
+                    }
+                    return list;
                 }
-                return list;
             }
         }
 
@@ -279,7 +300,7 @@ namespace PUP_RMS.Core
             {
                 using (SqlCommand cmd = new SqlCommand(procedureName, conn))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    //cmd.CommandType = CommandType.StoredProcedure;
                     if (sqlParameters != null)
                     {
                         cmd.Parameters.AddRange(sqlParameters.ToArray());

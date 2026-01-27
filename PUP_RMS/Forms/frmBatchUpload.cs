@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Dapper;
+using PUP_RMS.Core;
+using PUP_RMS.Helper;
+using PUP_RMS.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using PUP_RMS.Core;
-using PUP_RMS.Model;
-using PUP_RMS.Helper;
 
 
 namespace PUP_RMS.Forms
@@ -79,10 +81,10 @@ namespace PUP_RMS.Forms
         // =========================
         private void LoadCourses()
         {
-            courseCmbox.DataSource = DbControl.GetCourses();
-            courseCmbox.DisplayMember = "CourseCode";
-            courseCmbox.ValueMember = "CourseID";
-            courseCmbox.SelectedIndex = -1;
+            //courseCmbox.DataSource = DbControl.GetCourses();
+            //courseCmbox.DisplayMember = "CourseCode";
+            //courseCmbox.ValueMember = "CourseID";
+            //courseCmbox.SelectedIndex = -1;
         }
 
         private void LoadProfessors()
@@ -177,18 +179,15 @@ namespace PUP_RMS.Forms
             sectionCmbox.SelectedIndex = -1;
         }
 
-        private void LoadCurriculum()
+        private DataTable GetAllCurriculum()
         {
-            curriculumCmbox.DataSource = new List<ComboItem> {
-                new ComboItem { Text = "2020-2021", Value = 1 },
-                new ComboItem { Text = "2025-2026", Value = 2 },
-                new ComboItem { Text = "2015-2016", Value = 3 }
-            };
-            curriculumCmbox.DisplayMember = "Text";
-            curriculumCmbox.ValueMember = "Value";
-            curriculumCmbox.SelectedIndex = -1;
+            DataTable dt = new DataTable();
+            dt = DbControl.ExecuteQuery("SELECT DISTINCT CurriculumYear FROM Curriculum");
+            return dt;
         }
 
+        // filter program based on selected curriculum year
+        
 
         // =========================
         // NAMING CONVENTION LOGIC
@@ -388,10 +387,11 @@ namespace PUP_RMS.Forms
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            //if (toUpload.Items.Count == 0)
-            //{
-            //    return;
-            //}
+            string curriculumYear = curriculumCmbox.Text;
+            int progID = programCmbox.SelectedValue != null ? Convert.ToInt32(programCmbox.SelectedValue) : 0;
+            int yearLevel = yearLevelCmbox.SelectedValue != null ? Convert.ToInt32(yearLevelCmbox.SelectedValue) : 0;
+            int sem = semesterCmbox.SelectedValue != null ? Convert.ToInt32(semesterCmbox.SelectedValue) : 0;
+
             if (yearCmbox.SelectedItem == null ||
                 pageCmbox.SelectedValue == null ||
                 semesterCmbox.SelectedItem == null ||
@@ -416,7 +416,7 @@ namespace PUP_RMS.Forms
 
             try
             {
-                string sourcePath = toUpload.Items[0].Tag.ToString();
+                                string sourcePath = toUpload.Items[0].Tag.ToString();
                 string extension = Path.GetExtension(sourcePath);
                 string folderPath = BuildImageFolderPath();
                 Directory.CreateDirectory(folderPath);
@@ -428,7 +428,7 @@ namespace PUP_RMS.Forms
 
                 int gradeSheetId = DbControl.InsertGradeSheet(
                     savedFileName, folderPath, yearCmbox.Text,
-                    Convert.ToInt32(curriculumCmbox.SelectedValue),
+                    getCurriculumID(curriculumYear, progID, yearLevel, sem),
                     Convert.ToInt32(sectionCmbox.SelectedValue),
                     Convert.ToInt32(courseCmbox.SelectedValue),
                     Convert.ToInt32(professorCmbox.SelectedValue),
@@ -480,6 +480,27 @@ namespace PUP_RMS.Forms
                 filenameTxtbox.Text = "";
 
             }
+        }
+
+        private int getCurriculumID(string curriculumYear, int progID, int yearLevel, int sem)
+        {
+            int currID = 0;
+            string query = "select CurriculumID from Curriculum \r\nwhere\r\n    CurriculumYear = @CurriculumYear and ProgramID = @ProgramID and YearLevel = @YearLevel and Semester = @Semester;";
+
+            DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            DbControl.AddParameter("@ProgramID", progID, SqlDbType.Int);
+            DbControl.AddParameter("@YearLevel", yearLevel, SqlDbType.Int);
+            DbControl.AddParameter("@Semester", sem, SqlDbType.Int);
+
+            DataTable dt = DbControl.ExecuteQuery(query);
+            if(dt != null)
+            {
+                
+                currID = Convert.ToInt32(dt.Rows[0]["CurriculumID"]);
+                
+            }
+
+            return currID;
         }
 
         private void undoBtn_Click(object sender, EventArgs e)
@@ -589,6 +610,46 @@ namespace PUP_RMS.Forms
         private void saveBtn_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void courseCmbox_Click(object sender, EventArgs e)
+        {
+            string query = "SELECT \r\n\tCO.CourseID,\r\n    CO.CourseCode AS [Description]\r\nFROM Curriculum C\r\nJOIN CurriculumCourse CC ON C.CurriculumID = CC.CurriculumID\r\nJOIN Course CO ON CC.CourseID = CO.CourseID\r\nWHERE\r\n\tc.CurriculumYear = @CurriculumYear AND c.ProgramID = @ProgramID and c.YearLevel = @YearLevel and c.Semester = @Semester\r\nORDER BY CO.CourseCode;";
+
+            string curriculumYear = curriculumCmbox.Text;
+            int programID = programCmbox.SelectedValue != null ? Convert.ToInt32(programCmbox.SelectedValue) : 0;
+            int yearLevel = yearLevelCmbox.SelectedValue != null ? Convert.ToInt32(yearLevelCmbox.SelectedValue) : 0;
+            int semester = semesterCmbox.SelectedValue != null ? Convert.ToInt32(semesterCmbox.SelectedValue) : 0;
+
+            DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            DbControl.AddParameter("@ProgramID", programID, SqlDbType.Int);
+            DbControl.AddParameter("@YearLevel", yearLevel, SqlDbType.Int);
+            DbControl.AddParameter("@Semester", semester, SqlDbType.Int);
+
+            DataTable dt = DbControl.ExecuteQuery(query);
+            courseCmbox.DisplayMember = "Description";
+            courseCmbox.ValueMember = "CourseID";
+            courseCmbox.DataSource = dt;
+
+
+        }
+        
+        private void LoadCurriculum()
+        {
+            if (programCmbox.SelectedValue == null)
+                return;
+
+            int programId = Convert.ToInt32(programCmbox.SelectedValue);
+
+            curriculumCmbox.DataSource = DbControl.GetCurriculumsByProgram(programId);
+            curriculumCmbox.DisplayMember = "CurriculumYear";
+            curriculumCmbox.ValueMember = "CurriculumID";
+            curriculumCmbox.SelectedIndex = -1;
+        }
+        private void curriculumCmbox_Click(object sender, EventArgs e)
+        {
+            LoadCurriculum();
+            //LoadCourses();
         }
     }
 
