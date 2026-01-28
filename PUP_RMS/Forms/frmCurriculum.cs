@@ -65,6 +65,8 @@ namespace PUP_RMS.Forms
             lblHeader.Text = "";
             lblYearAndSem.Text = "";
             btnSaveCurriculum.Text = "SEARCH";
+            btnSaveCurriculumCourse.Visible = false;
+
         }
 
 
@@ -89,6 +91,7 @@ namespace PUP_RMS.Forms
             lblHeader.Text = "";
             lblYearAndSem.Text = "";
             btnSaveCurriculum.Text = "SAVE";
+            btnSaveCurriculumCourse.Visible = true;
         }
 
         private void btnSaveCurriculum_Click(object sender, EventArgs e)
