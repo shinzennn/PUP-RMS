@@ -26,12 +26,20 @@ namespace PUP_RMS.Forms
 
         // UI Tracking
         private iconButton currentActiveButton = null;
+        private iconButton currentAdminSubButton = null;
 
         // Visuals
         private Timer tmrFadeIn;
         private readonly Color ButtonMaroon = Color.FromArgb(128, 0, 0);
         private readonly Color ButtonGold = Color.Goldenrod;
+
+        //ADMIN SUB BUTTONS COLOR WHEN CLICKED OR UNCLICKED
+        private readonly Color ButtonRed = ColorTranslator.FromHtml("#8C1007");
+        private readonly Color ButtonBrightRed = ColorTranslator.FromHtml("#FF0000");
+
+
         private readonly Color ChildFormBackgroundColor = Color.FromArgb(240, 240, 240);
+
 
         // ==========================================
         // CONSTRUCTOR
@@ -64,6 +72,7 @@ namespace PUP_RMS.Forms
         // ==========================================
         private void MainDashboard_Load(object sender, EventArgs e)
         {
+            SetupAdminSubButtons();
             // 1. Layout Calculation
             ArrangeSidebar();
 
@@ -116,6 +125,12 @@ namespace PUP_RMS.Forms
         private void btnAdminTool_Click(object sender, EventArgs e)
         {
             isAdminExpanded = !isAdminExpanded;
+            if (!isAdminExpanded && currentAdminSubButton != null)
+            {
+                currentAdminSubButton.IsActive = false;
+                currentAdminSubButton.BackColor = ButtonRed;
+                currentAdminSubButton = null;
+            }
             ArrangeSidebar();
             ActivateButton(sender);
         }
@@ -128,6 +143,7 @@ namespace PUP_RMS.Forms
                 PrepareChildForm(_programForm);
             }
             ShowForm(_programForm);
+            ActivateAdminSubButton(sender);
         }
 
         private void btnCourse_Click_1(object sender, EventArgs e)
@@ -138,6 +154,7 @@ namespace PUP_RMS.Forms
                 PrepareChildForm(_courseForm);
             }
             ShowForm(_courseForm);
+            ActivateAdminSubButton(sender);
         }
 
         private void btnFaculty_Click_1(object sender, EventArgs e)
@@ -148,12 +165,14 @@ namespace PUP_RMS.Forms
                 PrepareChildForm(_facultyForm);
             }
             ShowForm(_facultyForm);
+            ActivateAdminSubButton(sender);
         }
 
         private void btnCurriculum_Click_1(object sender, EventArgs e)
         {
             frmCurriculum curriculumForm = new frmCurriculum();
             ShowForm(curriculumForm);
+            ActivateAdminSubButton(sender);
         }
 
         // --- STANDARD BUTTONS ---
@@ -328,6 +347,41 @@ namespace PUP_RMS.Forms
             if (SystemInformation.TerminalServerSession) return;
             var prop = typeof(Control).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             if (prop != null) prop.SetValue(c, true, null);
+        }
+
+        //ADMIN TOOLS SUB BUTTON HELPER
+        private void ActivateAdminSubButton(object sender)
+        {
+            var clickedBtn = sender as iconButton;
+            if (clickedBtn == null) return;
+
+            if (currentAdminSubButton != null && currentAdminSubButton != clickedBtn)
+            {
+                currentAdminSubButton.IsActive = false;
+                currentAdminSubButton.BackColor = ButtonRed; // Reverts to dark red when inactive
+            }
+
+            currentAdminSubButton = clickedBtn;
+
+            // FIX: Update the ActiveColor property, not BackColor
+            clickedBtn.ActiveColor = ButtonBrightRed;
+            clickedBtn.IsActive = true;
+        }
+        private void SetupAdminSubButtons()
+        {
+
+            iconButton[] adminButtons = { btnProgram, btnCourse, btnFaculty, btnCurriculum };
+
+            foreach (var btn in adminButtons)
+            {
+                btn.BackColor = ButtonRed;
+                btn.HoverColor = ButtonBrightRed;
+                btn.ActiveColor = ButtonBrightRed;
+            }
+        }
+        private void pnlContent_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

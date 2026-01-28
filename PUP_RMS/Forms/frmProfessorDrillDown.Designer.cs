@@ -37,7 +37,6 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "frmProfessorDrillDown";
             this.Text = "Form Professor Drill Down";
-            this.Load += new System.EventHandler(this.frmProfessorDrillDown_Load);
             this.ResumeLayout(false);
 
         }

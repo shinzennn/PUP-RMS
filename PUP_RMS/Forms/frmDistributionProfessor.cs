@@ -26,10 +26,12 @@ namespace PUP_RMS.Forms
         // Filter Controls
         private Label lblFilterYear;
         private ComboBox cmbSchoolYear;
-
-        // NEW: Curriculum Controls
         private Label lblFilterCurriculum;
         private ComboBox cmbCurriculum;
+
+        // NEW: Search Controls
+        private TextBox txtSearch;
+        private Button btnSearch;
 
         private const int CS_DROPSHADOW = 0x00020000;
 
@@ -80,13 +82,13 @@ namespace PUP_RMS.Forms
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterParent;
-            this.Size = new Size(950, 560); // Slightly wider to fit two filters
+            this.Size = new Size(950, 560);
             this.BackColor = ClrStandoutBack;
 
             listContainer = new FlowLayoutPanel
             {
-                Location = new Point(0, 50),
-                Size = new Size(this.Width, this.Height - 50),
+                Location = new Point(0, 100),
+                Size = new Size(this.Width, this.Height - 100),
                 AutoScroll = true,
                 Padding = new Padding(30, 20, 30, 20),
                 FlowDirection = FlowDirection.TopDown,
@@ -94,7 +96,6 @@ namespace PUP_RMS.Forms
                 BackColor = Color.Transparent
             };
 
-            // Double Buffer Fix
             typeof(FlowLayoutPanel).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
                 null, listContainer, new object[] { true });
@@ -103,7 +104,7 @@ namespace PUP_RMS.Forms
 
             this.Resize += (s, e) =>
             {
-                listContainer.Size = new Size(this.Width, this.Height - 50);
+                listContainer.Size = new Size(this.Width, this.Height - 100);
                 foreach (Control ctrl in listContainer.Controls)
                 {
                     if (ctrl is Panel row)
@@ -119,16 +120,16 @@ namespace PUP_RMS.Forms
         }
 
         // =========================================================
-        // SETUP FILTER CONTROLS
+        // SETUP FILTER & SEARCH CONTROLS
         // =========================================================
         private void SetupFilterControls()
         {
-            // --- 1. School Year Filter ---
+            // 1. School Year
             lblFilterYear = new Label
             {
                 Text = "School Year:",
-                ForeColor = ClrGold,
-                BackColor = ClrMaroon,
+                ForeColor = Color.FromArgb(64, 64, 64),
+                BackColor = Color.Transparent,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 AutoSize = true
             };
@@ -142,7 +143,6 @@ namespace PUP_RMS.Forms
                 FlatStyle = FlatStyle.Flat
             };
 
-            // Load School Years
             cmbSchoolYear.Items.Add("All");
             try
             {
@@ -155,15 +155,16 @@ namespace PUP_RMS.Forms
             }
             catch { }
             if (cmbSchoolYear.Items.Count > 0) cmbSchoolYear.SelectedIndex = 0;
-            cmbSchoolYear.SelectedIndexChanged += (s, e) => LoadFacultyData();
+            // Clear search when filter changes so we show all new results
+            cmbSchoolYear.SelectedIndexChanged += (s, e) => { txtSearch.Clear(); LoadFacultyData(); };
 
 
-            // --- 2. Curriculum Filter (NEW) ---
+            // 2. Curriculum
             lblFilterCurriculum = new Label
             {
                 Text = "Curriculum:",
-                ForeColor = ClrGold,
-                BackColor = ClrMaroon,
+                ForeColor = Color.FromArgb(64, 64, 64),
+                BackColor = Color.Transparent,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 AutoSize = true
             };
@@ -177,11 +178,9 @@ namespace PUP_RMS.Forms
                 FlatStyle = FlatStyle.Flat
             };
 
-            // Load Curriculum Years
             cmbCurriculum.Items.Add("All");
             try
             {
-                // Ensure you have DashboardHelper.GetCurriculumYears() implemented
                 DataTable dtCurr = DashboardHelper.GetCurriculums();
                 if (dtCurr != null)
                 {
@@ -191,85 +190,154 @@ namespace PUP_RMS.Forms
             }
             catch { }
             if (cmbCurriculum.Items.Count > 0) cmbCurriculum.SelectedIndex = 0;
-            cmbCurriculum.SelectedIndexChanged += (s, e) => LoadFacultyData();
+            // Clear search when filter changes
+            cmbCurriculum.SelectedIndexChanged += (s, e) => { txtSearch.Clear(); LoadFacultyData(); };
+
+            // 3. NEW SEARCH CONTROLS
+            txtSearch = new TextBox
+            {
+                Font = new Font("Segoe UI", 10, FontStyle.Regular),
+                Width = 200,
+                BorderStyle = BorderStyle.FixedSingle,
+                // Setup Autocomplete
+                AutoCompleteMode = AutoCompleteMode.Suggest, // Shows suggestions
+                AutoCompleteSource = AutoCompleteSource.CustomSource
+            };
+
+            // Trigger load on Enter key
+            txtSearch.KeyDown += (s, e) => {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    LoadFacultyData(true); // true = use search filter
+                    e.SuppressKeyPress = true; // prevent ding sound
+                }
+            };
+
+            // Optional: Live search as you type (uncomment if desired)
+            // txtSearch.TextChanged += (s, e) => LoadFacultyData(true);
+
+            btnSearch = new Button
+            {
+                Text = "Search",
+                Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                BackColor = ClrMaroon,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Size = new Size(80, 27),
+                Cursor = Cursors.Hand
+            };
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.Click += (s, e) => LoadFacultyData(true);
 
             // Add to form
             this.Controls.Add(cmbSchoolYear);
             this.Controls.Add(lblFilterYear);
             this.Controls.Add(cmbCurriculum);
             this.Controls.Add(lblFilterCurriculum);
+            this.Controls.Add(txtSearch);
+            this.Controls.Add(btnSearch);
 
             RepositionFilterControls();
         }
 
         private void RepositionFilterControls()
         {
-            if (lblFilterYear == null || cmbSchoolYear == null || lblFilterCurriculum == null || cmbCurriculum == null) return;
+            if (lblFilterYear == null) return;
 
             int headerHeight = 50;
-            int gap = 10;
-            int sectionGap = 20; // Space between the two filters
+            int yPos = headerHeight + 12;
+            int padding = 5;
+            int groupSpacing = 20;
 
-            // Right margin to avoid window buttons (Close/Max)
-            int startX = this.Width - 90;
-            int comboY = (headerHeight - cmbSchoolYear.Height) / 2;
-            int labelY = (headerHeight - lblFilterYear.Height) / 2;
+            // Calculate Widths
+            int group1W = lblFilterCurriculum.Width + padding + cmbCurriculum.Width;
+            int group2W = lblFilterYear.Width + padding + cmbSchoolYear.Width;
+            int group3W = txtSearch.Width + padding + btnSearch.Width;
 
-            // 1. Position School Year (Rightmost)
-            cmbSchoolYear.Location = new Point(startX - cmbSchoolYear.Width, comboY);
-            lblFilterYear.Location = new Point(cmbSchoolYear.Left - lblFilterYear.Width - gap, labelY);
+            int totalWidth = group1W + groupSpacing + group2W + groupSpacing + group3W;
 
-            // 2. Position Curriculum (To the left of School Year)
-            cmbCurriculum.Location = new Point(lblFilterYear.Left - cmbCurriculum.Width - sectionGap, comboY);
-            lblFilterCurriculum.Location = new Point(cmbCurriculum.Left - lblFilterCurriculum.Width - gap, labelY);
+            // Center X
+            int startX = (this.Width - totalWidth) / 2;
 
-            cmbSchoolYear.BringToFront();
-            lblFilterYear.BringToFront();
-            cmbCurriculum.BringToFront();
-            lblFilterCurriculum.BringToFront();
+            // Position Curriculum
+            lblFilterCurriculum.Location = new Point(startX, yPos + 3);
+            cmbCurriculum.Location = new Point(lblFilterCurriculum.Right + padding, yPos);
+
+            // Position Year
+            int startX2 = cmbCurriculum.Right + groupSpacing;
+            lblFilterYear.Location = new Point(startX2, yPos + 3);
+            cmbSchoolYear.Location = new Point(lblFilterYear.Right + padding, yPos);
+
+            // Position Search
+            int startX3 = cmbSchoolYear.Right + groupSpacing;
+            txtSearch.Location = new Point(startX3, yPos);
+            btnSearch.Location = new Point(txtSearch.Right + padding, yPos - 1); // -1 for visual alignment with textbox border
+
+            // Bring to front
+            foreach (Control c in new Control[] { cmbSchoolYear, lblFilterYear, cmbCurriculum, lblFilterCurriculum, txtSearch, btnSearch })
+                c.BringToFront();
         }
 
         // =========================================================
-        // DATA LOADING
+        // DATA LOADING & SEARCH LOGIC
         // =========================================================
-        private void LoadFacultyData()
+        /// <param name="applySearchFilter">If true, filters results based on textbox. If false, reloads all data.</param>
+        private void LoadFacultyData(bool applySearchFilter = false)
         {
             listContainer.Controls.Clear();
 
             string selectedSchoolYear = null;
             string selectedCurriculum = null;
 
-            // Get School Year Value
-            if (cmbSchoolYear != null && cmbSchoolYear.SelectedItem != null)
-                selectedSchoolYear = cmbSchoolYear.SelectedItem.ToString();
+            if (cmbSchoolYear.SelectedItem != null) selectedSchoolYear = cmbSchoolYear.SelectedItem.ToString();
+            if (cmbCurriculum.SelectedItem != null) selectedCurriculum = cmbCurriculum.SelectedItem.ToString();
 
-            // Get Curriculum Value
-            if (cmbCurriculum != null && cmbCurriculum.SelectedItem != null)
-                selectedCurriculum = cmbCurriculum.SelectedItem.ToString();
-
-            // Call Helper with BOTH filters
-            // Make sure your Helper method accepts two arguments now: GetFacultyDistribution(schoolYear, curriculumYear)
+            // 1. Get ALL data for the selected filters (Year/Curriculum)
             DataTable dt = DashboardHelper.GetFacultyDistribution(selectedSchoolYear, selectedCurriculum);
 
             if (dt == null || dt.Rows.Count == 0)
             {
-                // Optional: Show "No Records" label
-                Label lblNoData = new Label
-                {
-                    Text = "No records found for this filter.",
-                    AutoSize = true,
-                    ForeColor = Color.DimGray,
-                    Font = new Font("Segoe UI", 12),
-                    Padding = new Padding(20)
-                };
-                listContainer.Controls.Add(lblNoData);
+                ShowNoDataLabel("No records found for this filter.");
                 return;
             }
 
-            int maxRecords = Convert.ToInt32(dt.Rows[0]["RecordCount"]);
-            if (maxRecords == 0) maxRecords = 1;
-
+            // 2. UPDATE AUTOCOMPLETE SUGGESTIONS
+            // This ensures the suggestions are "based on the filtered combobox"
+            AutoCompleteStringCollection suggestions = new AutoCompleteStringCollection();
             foreach (DataRow row in dt.Rows)
+            {
+                suggestions.Add(row["Name"].ToString());
+            }
+            txtSearch.AutoCompleteCustomSource = suggestions;
+
+            // 3. APPLY SEARCH FILTER (In-Memory)
+            DataView dv = dt.DefaultView;
+            if (applySearchFilter && !string.IsNullOrWhiteSpace(txtSearch.Text))
+            {
+                // Escape special characters for RowFilter if necessary, simple approach here:
+                // This filters the DataTable result to only show the typed name
+                string safeSearch = txtSearch.Text.Trim().Replace("'", "''");
+                dv.RowFilter = $"Name LIKE '%{safeSearch}%'";
+            }
+
+            if (dv.Count == 0)
+            {
+                ShowNoDataLabel($"No results for '{txtSearch.Text}' in this School Year.");
+                return;
+            }
+
+            // 4. RENDER UI
+            // Calculate max for progress bar based on the filtered view (or original dt if you prefer relative to total)
+            int maxRecords = 1;
+            // Usually we want the progress bar relative to the highest visible or highest total. 
+            // Let's use the highest in the current view.
+            foreach (DataRowView row in dv)
+            {
+                int val = Convert.ToInt32(row["RecordCount"]);
+                if (val > maxRecords) maxRecords = val;
+            }
+
+            foreach (DataRowView row in dv)
             {
                 string name = row["Name"].ToString();
                 int records = Convert.ToInt32(row["RecordCount"]);
@@ -277,6 +345,19 @@ namespace PUP_RMS.Forms
 
                 listContainer.Controls.Add(CreateFacultyRow(name, progress, records));
             }
+        }
+
+        private void ShowNoDataLabel(string message)
+        {
+            Label lblNoData = new Label
+            {
+                Text = message,
+                AutoSize = true,
+                ForeColor = Color.DimGray,
+                Font = new Font("Segoe UI", 12),
+                Padding = new Padding(20)
+            };
+            listContainer.Controls.Add(lblNoData);
         }
 
         private Panel CreateFacultyRow(string name, int progress, int records)
@@ -287,7 +368,7 @@ namespace PUP_RMS.Forms
                 Height = 100,
                 Margin = new Padding(0, 0, 0, 15),
                 BackColor = ClrCardWhite,
-                Cursor = Cursors.Hand // Change cursor to indicate clickability
+                Cursor = Cursors.Hand
             };
 
             PictureBox picAvatar = new PictureBox { Size = new Size(65, 65), Location = new Point(20, 17), BackColor = Color.Transparent };
@@ -335,28 +416,20 @@ namespace PUP_RMS.Forms
             row.Controls.Add(progressBar);
             row.Controls.Add(lblRecords);
 
-            // --- CLICK EVENT HANDLER (Drill Down) ---
+            // Click Event
             EventHandler openDetails = (s, e) =>
             {
-                // 1. Get current filter values
                 string selectedSY = (cmbSchoolYear.SelectedItem != null) ? cmbSchoolYear.SelectedItem.ToString() : null;
                 string selectedCurr = (cmbCurriculum.SelectedItem != null) ? cmbCurriculum.SelectedItem.ToString() : null;
-
-                // 2. Open the Drill Down Form
                 frmProfessorDrillDown detailsForm = new frmProfessorDrillDown(name, selectedSY, selectedCurr);
-
-                // 3. Show with Dimmer (Reuse your existing dimmer method logic)
                 ShowWithDimmer(this, detailsForm);
             };
 
-            // Attach event to ALL controls in the row so clicking anywhere works
             row.Click += openDetails;
             lblName.Click += openDetails;
             picAvatar.Click += openDetails;
             lblRecords.Click += openDetails;
             progressBar.Click += openDetails;
-
-            // --- End Click Event Handler ---
 
             row.Resize += (s, e) =>
             {
@@ -475,7 +548,5 @@ namespace PUP_RMS.Forms
         }
 
         private void Form_MouseUp(object sender, MouseEventArgs e) => dragging = false;
-
-        private void frmDistributionProfessor_Load(object sender, EventArgs e) { }
     }
 }

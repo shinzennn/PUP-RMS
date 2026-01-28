@@ -376,57 +376,72 @@ namespace PUP_RMS.Forms
 
             float scale = GetScaleFactor();
 
+            // 1. Draw Header Background
             int headerHeight = (int)(50 * scale);
             if (headerHeight < 50) headerHeight = 50;
             Rectangle headerRect = new Rectangle(0, 0, Width, headerHeight);
-            int filterAreaHeight = (int)(50 * scale);
 
             using (SolidBrush brush = new SolidBrush(ClrMaroon))
                 g.FillRectangle(brush, headerRect);
 
+            // 2. Draw Window Buttons
             DrawWindowButtons(g, scale);
 
-          if (_isDrilledDown)
-{
-    string programCode = _drilledProgramName; 
-    string labelText = " – Grade Sheets Distribution by Program Year Level";
+            // 3. Draw Title (Conditional Alignment)
+            if (_isDrilledDown)
+            {
+                // --- CENTERED ALIGNMENT FOR DRILL-DOWN ---
+                string programCode = _drilledProgramName;
+                string labelText = " – Grade Sheets Distribution by Program Year Level";
 
-    float xPos = 60 * scale; 
-    float yPos = (headerRect.Height - 24 * scale) / 2f; 
+                using (Font codeFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+                using (Font labelFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+                {
+                    // Measure widths to calculate center
+                    SizeF codeSize = g.MeasureString(programCode, codeFont);
+                    SizeF labelSize = g.MeasureString(labelText, labelFont);
 
-    using (Font codeFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
-    using (Font labelFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
-    using (Brush codeBrush = new SolidBrush(ClrGold))
-    using (Brush labelBrush = new SolidBrush(Color.Goldenrod))
-    {
-        g.DrawString(programCode, codeFont, codeBrush, xPos, yPos);
+                    float totalWidth = codeSize.Width + labelSize.Width;
+                    float xPos = (Width - totalWidth) / 2f;
+                    float yPos = (headerRect.Height - codeSize.Height) / 2f;
 
-        float codeWidth = g.MeasureString(programCode, codeFont).Width;
+                    // Draw Program Code (Gold)
+                    using (Brush codeBrush = new SolidBrush(ClrGold))
+                        g.DrawString(programCode, codeFont, codeBrush, xPos, yPos);
 
-        g.DrawString(labelText, labelFont, labelBrush, xPos + codeWidth, yPos);
-    }
-}
-else
-{
-    string title = "Grade Sheets Distribution by Program";
-    float xPos = 20 * scale;
-    float yPos = (headerRect.Height - 24 * scale) / 2f;
+                    // Draw Label (Goldenrod)
+                    using (Brush labelBrush = new SolidBrush(Color.Goldenrod))
+                        g.DrawString(labelText, labelFont, labelBrush, xPos + codeSize.Width - (4 * scale), yPos);
+                }
+            }
+            else
+            {
+                // --- LEFT ALIGNMENT FOR MAIN TITLE ---
+                string title = "Grade Sheets Distribution by Program";
 
-    using (Font font = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
-    using (Brush brush = new SolidBrush(Color.Goldenrod))
-    {
-        g.DrawString(title, font, brush, xPos, yPos);
-    }
-}
+                // Fixed left position
+                float xPos = 20 * scale;
 
+                using (Font font = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+                {
+                    // Vertically centered only
+                    float yPos = (headerRect.Height - g.MeasureString(title, font).Height) / 2f;
 
+                    using (Brush brush = new SolidBrush(Color.Goldenrod))
+                    {
+                        g.DrawString(title, font, brush, xPos, yPos);
+                    }
+                }
+            }
 
+            // 4. Draw Chart Content
+            int filterAreaHeight = (int)(50 * scale);
             int totalTopOffset = headerHeight + filterAreaHeight;
             Rectangle contentRect = new Rectangle(0, totalTopOffset, Width, Height - totalTopOffset);
 
             if (contentRect.Width < 50 || contentRect.Height < 50) return;
-            long total = _currentSegments.Sum(s => (long)s.Value);
 
+            long total = _currentSegments.Sum(s => (long)s.Value);
             if (total == 0 && !_isDrilledDown) return;
             if (total == 0) total = 1;
 
@@ -438,7 +453,6 @@ else
 
             _lastChartBounds = new RectangleF(chartX, chartY, chartSize, chartSize);
 
-
             DrawShadow(g, _lastChartBounds, scale);
             DrawDoughnutWithSpokes(g, _lastChartBounds, total, thickness, scale);
 
@@ -446,6 +460,7 @@ else
             float legendY = chartY + (30 * scale);
             DrawLegendColumns(g, legendX, legendY, total, scale);
 
+            // 5. Draw Border
             using (Pen borderPen = new Pen(Color.FromArgb(150, 150, 150), 1))
                 g.DrawRectangle(borderPen, 0, 0, Width - 1, Height - 1);
         }
@@ -629,24 +644,20 @@ else
             if (btnSize > 40) btnSize = 40; if (btnSize < 24) btnSize = 24;
             int margin = (int)(13 * scale); if (margin < 10) margin = 10;
 
+            // Define Close and Maximize Rectangles (Right Side)
             _closeBtnRect = new Rectangle(Width - margin - btnSize, margin, btnSize, btnSize);
             _maxBtnRect = new Rectangle(_closeBtnRect.X - margin - btnSize, margin, btnSize, btnSize);
 
-            if (_isDrilledDown)
-                _backBtnRect = new Rectangle(margin, margin, btnSize, btnSize);
-            else
-                _backBtnRect = Rectangle.Empty;
-
+            // --- DRAW HOVER EFFECT FOR CLOSE & MAX ---
             using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(60, 255, 255, 255)))
             {
                 if (_isHoveringClose) g.FillEllipse(hoverBrush, _closeBtnRect);
                 if (_isHoveringMax) g.FillEllipse(hoverBrush, _maxBtnRect);
-                if (_isHoveringBack && _isDrilledDown) g.FillEllipse(hoverBrush, _backBtnRect);
             }
 
             using (Pen p = new Pen(ClrGold, 2.0f * scale))
             {
-                // Close
+                // --- DRAW CLOSE BUTTON ---
                 g.DrawEllipse(p, _closeBtnRect);
                 float cx = _closeBtnRect.X + _closeBtnRect.Width / 2f;
                 float cy = _closeBtnRect.Y + _closeBtnRect.Height / 2f;
@@ -654,43 +665,72 @@ else
                 g.DrawLine(p, cx - off, cy - off, cx + off, cy + off);
                 g.DrawLine(p, cx + off, cy - off, cx - off, cy + off);
 
-                // Max
+                // --- DRAW MAXIMIZE BUTTON ---
                 g.DrawEllipse(p, _maxBtnRect);
                 float mx = _maxBtnRect.X + _maxBtnRect.Width / 2f;
                 float my = _maxBtnRect.Y + _maxBtnRect.Height / 2f;
                 float box = 9 * (btnSize / 24f);
                 g.DrawRectangle(p, mx - box / 2, my - box / 2, box, box);
 
-                // Back Button (Arrow)
-                // Back Button (Circle + Arrow)
+                // --- DRAW BACK BUTTON (Icon + Text) ---
                 if (_isDrilledDown)
                 {
-                    // Draw circle (like other buttons)
-                    using (Pen backPen = new Pen(ClrGold, 2.0f * scale))
-                    {
-                        g.DrawEllipse(backPen, _backBtnRect);
-                    }
+                    string backText = "Back";
 
-                    // Draw arrow inside
-                    float bx = _backBtnRect.X + _backBtnRect.Width / 2f;
-                    float by = _backBtnRect.Y + _backBtnRect.Height / 2f;
-                    float arrowSize = 5 * (btnSize / 24f);
-
-                    using (Pen arrowPen = new Pen(ClrGold, 2.0f * scale))
+                    using (Font font = new Font("Segoe UI", 10 * scale, FontStyle.Bold))
                     {
+                        // 1. Measure the text
+                        SizeF textSize = g.MeasureString(backText, font);
+                        int gap = (int)(5 * scale); // Space between icon and text
+
+                        // 2. Define the Icon Rectangle (Square)
+                        Rectangle iconRect = new Rectangle(margin, margin, btnSize, btnSize);
+
+                        // 3. Define the Full Clickable Area (Icon + Gap + Text)
+                        int totalWidth = btnSize + gap + (int)textSize.Width;
+                        _backBtnRect = new Rectangle(margin, margin, totalWidth, btnSize);
+
+                        // 4. Draw Hover Effect for Back Button (Rectangle covering icon and text)
+                        if (_isHoveringBack)
+                        {
+                            using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(60, 255, 255, 255)))
+                            {
+                                // Draw a rounded rectangle background or simple rect
+                                g.FillRectangle(hoverBrush, _backBtnRect);
+                            }
+                        }
+
+                        // 5. Draw the Circle Icon
+                        g.DrawEllipse(p, iconRect);
+
+                        // 6. Draw the Arrow inside the Circle
+                        float bx = iconRect.X + iconRect.Width / 2f;
+                        float by = iconRect.Y + iconRect.Height / 2f;
+                        float arrowSize = 5 * (btnSize / 24f);
+
                         PointF pTip = new PointF(bx - arrowSize, by);
                         PointF pTop = new PointF(bx + arrowSize, by - arrowSize);
                         PointF pBot = new PointF(bx + arrowSize, by + arrowSize);
 
-                        g.DrawLine(arrowPen, pTip, pTop);
-                        g.DrawLine(arrowPen, pTip, pBot);
+                        g.DrawLine(p, pTip, pTop);
+                        g.DrawLine(p, pTip, pBot);
+
+                        // 7. Draw the "Back" Label (Vertically Centered)
+                        using (Brush textBrush = new SolidBrush(ClrGold))
+                        {
+                            float textX = iconRect.Right + gap;
+                            float textY = margin + (btnSize - textSize.Height) / 2; // Middle of the header/button height
+                            g.DrawString(backText, font, textBrush, textX, textY);
+                        }
                     }
                 }
-
+                else
+                {
+                    _backBtnRect = Rectangle.Empty;
+                }
             }
         }
 
-      
         private void Form_MouseDown(object sender, MouseEventArgs e)
         {
             // Close Logic

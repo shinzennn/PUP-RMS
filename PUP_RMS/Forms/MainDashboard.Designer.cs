@@ -34,18 +34,18 @@ namespace PUP_RMS.Forms
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pnlAdminSubMenu = new System.Windows.Forms.Panel();
+            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
             this.btnDashboard = new PUP_RMS.Controls.iconButton();
             this.btnSearch = new PUP_RMS.Controls.iconButton();
             this.btnBatchUpload = new PUP_RMS.Controls.iconButton();
             this.btnAdminTool = new PUP_RMS.Controls.iconButton();
-            this.pnlAdminSubMenu = new System.Windows.Forms.Panel();
             this.btnFaculty = new PUP_RMS.Controls.iconButton();
             this.btnCourse = new PUP_RMS.Controls.iconButton();
             this.btnProgram = new PUP_RMS.Controls.iconButton();
             this.btnCurriculum = new PUP_RMS.Controls.iconButton();
             this.btnAccounts = new PUP_RMS.Controls.iconButton();
             this.btnLogout = new PUP_RMS.Controls.iconButton();
-            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
             this.pnlContent.SuspendLayout();
             this.flowLayoutPanelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -62,6 +62,7 @@ namespace PUP_RMS.Forms
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Size = new System.Drawing.Size(1900, 1061);
             this.pnlContent.TabIndex = 5;
+            this.pnlContent.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlContent_Paint);
             // 
             // flowLayoutPanelMain
             // 
@@ -100,6 +101,19 @@ namespace PUP_RMS.Forms
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 11;
             this.pictureBox2.TabStop = false;
+            // 
+            // pnlAdminSubMenu
+            // 
+            this.pnlAdminSubMenu.Controls.Add(this.btnFaculty);
+            this.pnlAdminSubMenu.Controls.Add(this.btnCourse);
+            this.pnlAdminSubMenu.Controls.Add(this.btnProgram);
+            this.pnlAdminSubMenu.Controls.Add(this.btnCurriculum);
+            this.pnlAdminSubMenu.Location = new System.Drawing.Point(0, 445);
+            this.pnlAdminSubMenu.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.pnlAdminSubMenu.Name = "pnlAdminSubMenu";
+            this.pnlAdminSubMenu.Size = new System.Drawing.Size(250, 240);
+            this.pnlAdminSubMenu.TabIndex = 17;
+            this.pnlAdminSubMenu.Visible = false;
             // 
             // btnDashboard
             // 
@@ -212,19 +226,6 @@ namespace PUP_RMS.Forms
             this.btnAdminTool.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAdminTool.UseVisualStyleBackColor = false;
             this.btnAdminTool.Click += new System.EventHandler(this.btnAdminTool_Click);
-            // 
-            // pnlAdminSubMenu
-            // 
-            this.pnlAdminSubMenu.Controls.Add(this.btnFaculty);
-            this.pnlAdminSubMenu.Controls.Add(this.btnCourse);
-            this.pnlAdminSubMenu.Controls.Add(this.btnProgram);
-            this.pnlAdminSubMenu.Controls.Add(this.btnCurriculum);
-            this.pnlAdminSubMenu.Location = new System.Drawing.Point(0, 445);
-            this.pnlAdminSubMenu.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.pnlAdminSubMenu.Name = "pnlAdminSubMenu";
-            this.pnlAdminSubMenu.Size = new System.Drawing.Size(250, 240);
-            this.pnlAdminSubMenu.TabIndex = 17;
-            this.pnlAdminSubMenu.Visible = false;
             // 
             // btnFaculty
             // 
@@ -400,7 +401,7 @@ namespace PUP_RMS.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1900, 1080);
+            this.ClientSize = new System.Drawing.Size(1900, 1061);
             this.Controls.Add(this.pnlContent);
             this.Name = "MainDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
