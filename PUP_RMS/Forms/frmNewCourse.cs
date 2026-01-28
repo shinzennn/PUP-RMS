@@ -37,7 +37,7 @@ namespace PUP_RMS.Forms
         private void CreateCourse()
         {
             // VALIDATION
-            if (string.IsNullOrEmpty(txtCrsCode.Text) || string.IsNullOrEmpty(txtCuryear.Text) || string.IsNullOrEmpty(txtSubDesc.Text))
+            if (string.IsNullOrEmpty(txtCrsCode.Text) || string.IsNullOrEmpty(txtSubDesc.Text))
             {
                 MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -47,7 +47,6 @@ namespace PUP_RMS.Forms
             Course Course = new Course
             {
                 CourseCode = txtCrsCode.Text.Trim(),
-                CurriculumYear = txtCuryear.Text.Trim(),
                 CourseDescription = txtSubDesc.Text.Trim()
             };
 

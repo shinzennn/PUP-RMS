@@ -45,7 +45,7 @@ namespace PUP_RMS.Helper
                 // Add parameters
                 DbControl.AddParameter("@CourseCode", course.CourseCode, SqlDbType.VarChar);
                 DbControl.AddParameter("@CourseDescription", course.CourseDescription, SqlDbType.VarChar);
-                DbControl.AddParameter("@CurriculumYear", course.CurriculumYear, SqlDbType.VarChar);
+                
 
 
                 // Success message
@@ -99,7 +99,7 @@ namespace PUP_RMS.Helper
                 DbControl.AddParameter("@CourseID", course.CourseID, SqlDbType.Int);
                 DbControl.AddParameter("@CourseCode", course.CourseCode, SqlDbType.VarChar);
                 DbControl.AddParameter("@CourseDescription", course.CourseDescription, SqlDbType.VarChar);
-                DbControl.AddParameter("@CurriculumYear", course.CurriculumYear, SqlDbType.VarChar);
+                
 
                 // Execute stored procedure
                 int rowsAffected = DbControl.ExecuteNonQuery(procedureName);

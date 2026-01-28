@@ -83,8 +83,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 37);
+            this.label1.Size = new System.Drawing.Size(0, 46);
             this.label1.TabIndex = 0;
             // 
             // panelHeader
@@ -95,8 +96,9 @@
             this.panelHeader.Controls.Add(this.label10);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1120, 90);
+            this.panelHeader.Size = new System.Drawing.Size(1493, 110);
             this.panelHeader.TabIndex = 21;
             // 
             // gradientLabel1
@@ -104,9 +106,10 @@
             this.gradientLabel1.AutoSize = true;
             this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
             this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Location = new System.Drawing.Point(32, 17);
+            this.gradientLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(264, 37);
+            this.gradientLabel1.Size = new System.Drawing.Size(324, 46);
             this.gradientLabel1.TabIndex = 9;
             this.gradientLabel1.Text = "Upload Gradesheet";
             // 
@@ -116,9 +119,10 @@
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(27, 51);
+            this.label10.Location = new System.Drawing.Point(36, 63);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(265, 21);
+            this.label10.Size = new System.Drawing.Size(331, 28);
             this.label10.TabIndex = 8;
             this.label10.Text = "Upload gradesheet in the database";
             // 
@@ -133,12 +137,12 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel3.Controls.Add(this.pnlGradesheetForm, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.panelFacultyList, 1, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(33, 165);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(50);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(44, 203);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(67, 62, 67, 62);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1002, 547);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1336, 673);
             this.tableLayoutPanel3.TabIndex = 25;
             this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
             // 
@@ -157,7 +161,7 @@
             this.pnlGradesheetForm.Controls.Add(this.tableLayoutPanel1);
             this.pnlGradesheetForm.Controls.Add(this.filenameTxtbox);
             this.pnlGradesheetForm.Location = new System.Drawing.Point(0, 0);
-            this.pnlGradesheetForm.Margin = new System.Windows.Forms.Padding(0, 0, 25, 0);
+            this.pnlGradesheetForm.Margin = new System.Windows.Forms.Padding(0, 0, 33, 0);
             this.pnlGradesheetForm.Name = "pnlGradesheetForm";
             this.pnlGradesheetForm.PanelColor = System.Drawing.Color.White;
             this.pnlGradesheetForm.PanelImage = null;
@@ -165,7 +169,7 @@
             this.pnlGradesheetForm.ShadowDepth = 10;
             this.pnlGradesheetForm.ShadowEnabled = true;
             this.pnlGradesheetForm.ShadowShift = 5;
-            this.pnlGradesheetForm.Size = new System.Drawing.Size(676, 547);
+            this.pnlGradesheetForm.Size = new System.Drawing.Size(902, 673);
             this.pnlGradesheetForm.TabIndex = 24;
             // 
             // label2
@@ -173,9 +177,10 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(18, 25);
+            this.label2.Location = new System.Drawing.Point(24, 31);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(248, 25);
+            this.label2.Size = new System.Drawing.Size(306, 31);
             this.label2.TabIndex = 25;
             this.label2.Text = "Enter Required Fields:";
             // 
@@ -190,12 +195,13 @@
             this.tableLayoutPanel2.Controls.Add(this.saveBtn, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.undoBtn, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.viewBtn, 2, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(23, 480);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(31, 591);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(631, 51);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 63F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(842, 63);
             this.tableLayoutPanel2.TabIndex = 24;
             // 
             // saveBtn
@@ -203,9 +209,10 @@
             this.saveBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.saveBtn.BackColor = System.Drawing.Color.Maroon;
             this.saveBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveBtn.Location = new System.Drawing.Point(263, 9);
+            this.saveBtn.Location = new System.Drawing.Point(351, 11);
+            this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
             this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(103, 39);
+            this.saveBtn.Size = new System.Drawing.Size(137, 48);
             this.saveBtn.TabIndex = 8;
             this.saveBtn.Text = "Save";
             this.saveBtn.UseVisualStyleBackColor = false;
@@ -216,9 +223,10 @@
             this.undoBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.undoBtn.BackColor = System.Drawing.Color.Maroon;
             this.undoBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.undoBtn.Location = new System.Drawing.Point(53, 9);
+            this.undoBtn.Location = new System.Drawing.Point(71, 11);
+            this.undoBtn.Margin = new System.Windows.Forms.Padding(4);
             this.undoBtn.Name = "undoBtn";
-            this.undoBtn.Size = new System.Drawing.Size(103, 39);
+            this.undoBtn.Size = new System.Drawing.Size(137, 48);
             this.undoBtn.TabIndex = 7;
             this.undoBtn.Text = "Undo";
             this.undoBtn.UseVisualStyleBackColor = false;
@@ -228,9 +236,10 @@
             this.viewBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.viewBtn.BackColor = System.Drawing.Color.Maroon;
             this.viewBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.viewBtn.Location = new System.Drawing.Point(474, 9);
+            this.viewBtn.Location = new System.Drawing.Point(632, 11);
+            this.viewBtn.Margin = new System.Windows.Forms.Padding(4);
             this.viewBtn.Name = "viewBtn";
-            this.viewBtn.Size = new System.Drawing.Size(103, 39);
+            this.viewBtn.Size = new System.Drawing.Size(137, 48);
             this.viewBtn.TabIndex = 9;
             this.viewBtn.Text = "View";
             this.viewBtn.UseVisualStyleBackColor = false;
@@ -242,10 +251,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.currentImage.BackColor = System.Drawing.Color.MistyRose;
-            this.currentImage.Location = new System.Drawing.Point(20, 208);
-            this.currentImage.Margin = new System.Windows.Forms.Padding(20);
+            this.currentImage.Location = new System.Drawing.Point(27, 256);
+            this.currentImage.Margin = new System.Windows.Forms.Padding(27, 25, 27, 25);
             this.currentImage.Name = "currentImage";
-            this.currentImage.Size = new System.Drawing.Size(636, 261);
+            this.currentImage.Size = new System.Drawing.Size(849, 321);
             this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.currentImage.TabIndex = 8;
             this.currentImage.TabStop = false;
@@ -262,7 +271,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.57143F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.857143F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 134F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 189F));
             this.tableLayoutPanel1.Controls.Add(this.label9, 6, 0);
             this.tableLayoutPanel1.Controls.Add(this.label8, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.label7, 4, 0);
@@ -281,14 +290,14 @@
             this.tableLayoutPanel1.Controls.Add(this.yearLevelCmbox, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnCourse, 4, 2);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 58);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(20);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(31, 71);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(27, 25, 27, 25);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(636, 110);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(849, 135);
             this.tableLayoutPanel1.TabIndex = 23;
             // 
             // label9
@@ -297,9 +306,10 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label9.Location = new System.Drawing.Point(462, 0);
+            this.label9.Location = new System.Drawing.Point(610, 0);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(33, 33);
+            this.label9.Size = new System.Drawing.Size(43, 41);
             this.label9.TabIndex = 35;
             this.label9.Text = "Page";
             // 
@@ -309,9 +319,10 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(369, 6);
+            this.label8.Location = new System.Drawing.Point(488, 8);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(87, 20);
+            this.label8.Size = new System.Drawing.Size(114, 25);
             this.label8.TabIndex = 34;
             this.label8.Text = "Professor";
             // 
@@ -321,9 +332,10 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(298, 6);
+            this.label7.Location = new System.Drawing.Point(394, 8);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 20);
+            this.label7.Size = new System.Drawing.Size(86, 25);
             this.label7.TabIndex = 33;
             this.label7.Text = "Course";
             // 
@@ -333,9 +345,10 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(216, 6);
+            this.label6.Location = new System.Drawing.Point(286, 8);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(76, 20);
+            this.label6.Size = new System.Drawing.Size(100, 25);
             this.label6.TabIndex = 32;
             this.label6.Text = "Program";
             // 
@@ -345,9 +358,10 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label5.Location = new System.Drawing.Point(145, 0);
+            this.label5.Location = new System.Drawing.Point(192, 0);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 33);
+            this.label5.Size = new System.Drawing.Size(86, 41);
             this.label5.TabIndex = 31;
             this.label5.Text = "Year Level";
             // 
@@ -357,9 +371,10 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Location = new System.Drawing.Point(74, 0);
+            this.label4.Location = new System.Drawing.Point(98, 0);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 33);
+            this.label4.Size = new System.Drawing.Size(86, 41);
             this.label4.TabIndex = 30;
             this.label4.Text = "Semester";
             // 
@@ -368,9 +383,10 @@
             this.btnProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnProgram.BackColor = System.Drawing.Color.Maroon;
             this.btnProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProgram.Location = new System.Drawing.Point(216, 72);
+            this.btnProgram.Location = new System.Drawing.Point(286, 89);
+            this.btnProgram.Margin = new System.Windows.Forms.Padding(4);
             this.btnProgram.Name = "btnProgram";
-            this.btnProgram.Size = new System.Drawing.Size(76, 30);
+            this.btnProgram.Size = new System.Drawing.Size(100, 37);
             this.btnProgram.TabIndex = 28;
             this.btnProgram.Text = "Add Program";
             this.btnProgram.UseVisualStyleBackColor = false;
@@ -524,9 +540,10 @@
             "2037-2038",
             "2038-2039",
             "2039-2040"});
-            this.yearCmbox.Location = new System.Drawing.Point(3, 36);
+            this.yearCmbox.Location = new System.Drawing.Point(4, 45);
+            this.yearCmbox.Margin = new System.Windows.Forms.Padding(4);
             this.yearCmbox.Name = "yearCmbox";
-            this.yearCmbox.Size = new System.Drawing.Size(65, 28);
+            this.yearCmbox.Size = new System.Drawing.Size(86, 33);
             this.yearCmbox.TabIndex = 4;
             this.yearCmbox.Text = "Year";
             // 
@@ -535,9 +552,10 @@
             this.btnProf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnProf.BackColor = System.Drawing.Color.Maroon;
             this.btnProf.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProf.Location = new System.Drawing.Point(369, 74);
+            this.btnProf.Location = new System.Drawing.Point(488, 91);
+            this.btnProf.Margin = new System.Windows.Forms.Padding(4);
             this.btnProf.Name = "btnProf";
-            this.btnProf.Size = new System.Drawing.Size(87, 27);
+            this.btnProf.Size = new System.Drawing.Size(114, 33);
             this.btnProf.TabIndex = 27;
             this.btnProf.Text = "Add Professor";
             this.btnProf.UseVisualStyleBackColor = false;
@@ -549,9 +567,10 @@
             this.semesterCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.semesterCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.semesterCmbox.FormattingEnabled = true;
-            this.semesterCmbox.Location = new System.Drawing.Point(74, 36);
+            this.semesterCmbox.Location = new System.Drawing.Point(98, 45);
+            this.semesterCmbox.Margin = new System.Windows.Forms.Padding(4);
             this.semesterCmbox.Name = "semesterCmbox";
-            this.semesterCmbox.Size = new System.Drawing.Size(65, 28);
+            this.semesterCmbox.Size = new System.Drawing.Size(86, 33);
             this.semesterCmbox.TabIndex = 3;
             // 
             // pageCmbox
@@ -559,10 +578,10 @@
             this.pageCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.pageCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pageCmbox.FormattingEnabled = true;
-            this.pageCmbox.Location = new System.Drawing.Point(461, 35);
-            this.pageCmbox.Margin = new System.Windows.Forms.Padding(2);
+            this.pageCmbox.Location = new System.Drawing.Point(609, 44);
+            this.pageCmbox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pageCmbox.Name = "pageCmbox";
-            this.pageCmbox.Size = new System.Drawing.Size(35, 28);
+            this.pageCmbox.Size = new System.Drawing.Size(45, 33);
             this.pageCmbox.TabIndex = 12;
             this.pageCmbox.Text = "Page";
             // 
@@ -573,9 +592,10 @@
             this.courseCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.courseCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.courseCmbox.FormattingEnabled = true;
-            this.courseCmbox.Location = new System.Drawing.Point(298, 36);
+            this.courseCmbox.Location = new System.Drawing.Point(394, 45);
+            this.courseCmbox.Margin = new System.Windows.Forms.Padding(4);
             this.courseCmbox.Name = "courseCmbox";
-            this.courseCmbox.Size = new System.Drawing.Size(65, 28);
+            this.courseCmbox.Size = new System.Drawing.Size(86, 33);
             this.courseCmbox.TabIndex = 2;
             this.courseCmbox.Text = "Course";
             // 
@@ -586,9 +606,10 @@
             this.professorCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.professorCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.professorCmbox.FormattingEnabled = true;
-            this.professorCmbox.Location = new System.Drawing.Point(369, 36);
+            this.professorCmbox.Location = new System.Drawing.Point(488, 45);
+            this.professorCmbox.Margin = new System.Windows.Forms.Padding(4);
             this.professorCmbox.Name = "professorCmbox";
-            this.professorCmbox.Size = new System.Drawing.Size(87, 28);
+            this.professorCmbox.Size = new System.Drawing.Size(114, 33);
             this.professorCmbox.TabIndex = 1;
             this.professorCmbox.Text = "Professor";
             // 
@@ -598,9 +619,10 @@
             this.KeepCheckbox.AutoSize = true;
             this.KeepCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeepCheckbox.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.KeepCheckbox.Location = new System.Drawing.Point(501, 37);
+            this.KeepCheckbox.Location = new System.Drawing.Point(661, 46);
+            this.KeepCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.KeepCheckbox.Name = "KeepCheckbox";
-            this.KeepCheckbox.Size = new System.Drawing.Size(132, 24);
+            this.KeepCheckbox.Size = new System.Drawing.Size(184, 29);
             this.KeepCheckbox.TabIndex = 13;
             this.KeepCheckbox.Text = "Keep";
             this.KeepCheckbox.UseVisualStyleBackColor = true;
@@ -612,10 +634,10 @@
             this.programCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.programCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.programCmbox.FormattingEnabled = true;
-            this.programCmbox.Location = new System.Drawing.Point(215, 35);
-            this.programCmbox.Margin = new System.Windows.Forms.Padding(2);
+            this.programCmbox.Location = new System.Drawing.Point(285, 44);
+            this.programCmbox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.programCmbox.Name = "programCmbox";
-            this.programCmbox.Size = new System.Drawing.Size(78, 28);
+            this.programCmbox.Size = new System.Drawing.Size(102, 33);
             this.programCmbox.TabIndex = 11;
             this.programCmbox.Text = "Program ";
             // 
@@ -625,10 +647,10 @@
             this.yearLevelCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.yearLevelCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.yearLevelCmbox.FormattingEnabled = true;
-            this.yearLevelCmbox.Location = new System.Drawing.Point(144, 35);
-            this.yearLevelCmbox.Margin = new System.Windows.Forms.Padding(2);
+            this.yearLevelCmbox.Location = new System.Drawing.Point(191, 44);
+            this.yearLevelCmbox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.yearLevelCmbox.Name = "yearLevelCmbox";
-            this.yearLevelCmbox.Size = new System.Drawing.Size(67, 28);
+            this.yearLevelCmbox.Size = new System.Drawing.Size(88, 33);
             this.yearLevelCmbox.TabIndex = 10;
             // 
             // btnCourse
@@ -636,9 +658,10 @@
             this.btnCourse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCourse.BackColor = System.Drawing.Color.Maroon;
             this.btnCourse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCourse.Location = new System.Drawing.Point(298, 74);
+            this.btnCourse.Location = new System.Drawing.Point(394, 91);
+            this.btnCourse.Margin = new System.Windows.Forms.Padding(4);
             this.btnCourse.Name = "btnCourse";
-            this.btnCourse.Size = new System.Drawing.Size(65, 27);
+            this.btnCourse.Size = new System.Drawing.Size(86, 33);
             this.btnCourse.TabIndex = 26;
             this.btnCourse.Text = "Add Course";
             this.btnCourse.UseVisualStyleBackColor = false;
@@ -650,9 +673,10 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Location = new System.Drawing.Point(4, 0);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 33);
+            this.label3.Size = new System.Drawing.Size(86, 41);
             this.label3.TabIndex = 29;
             this.label3.Text = "School Year";
             // 
@@ -663,11 +687,11 @@
             this.filenameTxtbox.BackColor = System.Drawing.Color.White;
             this.filenameTxtbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.filenameTxtbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.filenameTxtbox.Location = new System.Drawing.Point(23, 173);
-            this.filenameTxtbox.Margin = new System.Windows.Forms.Padding(5);
+            this.filenameTxtbox.Location = new System.Drawing.Point(31, 213);
+            this.filenameTxtbox.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.filenameTxtbox.Name = "filenameTxtbox";
             this.filenameTxtbox.ReadOnly = true;
-            this.filenameTxtbox.Size = new System.Drawing.Size(636, 28);
+            this.filenameTxtbox.Size = new System.Drawing.Size(849, 34);
             this.filenameTxtbox.TabIndex = 5;
             this.filenameTxtbox.Text = "File Name";
             // 
@@ -684,14 +708,14 @@
             this.panelFacultyList.Controls.Add(this.toUpload);
             this.panelFacultyList.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.panelFacultyList.HoverBorderColor = System.Drawing.Color.Maroon;
-            this.panelFacultyList.Location = new System.Drawing.Point(726, 0);
-            this.panelFacultyList.Margin = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.panelFacultyList.Location = new System.Drawing.Point(968, 0);
+            this.panelFacultyList.Margin = new System.Windows.Forms.Padding(33, 0, 0, 0);
             this.panelFacultyList.Name = "panelFacultyList";
             this.panelFacultyList.ShadowBlur = 15;
             this.panelFacultyList.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.panelFacultyList.ShadowEnabled = true;
             this.panelFacultyList.ShadowOffset = 5;
-            this.panelFacultyList.Size = new System.Drawing.Size(276, 547);
+            this.panelFacultyList.Size = new System.Drawing.Size(368, 673);
             this.panelFacultyList.TabIndex = 22;
             // 
             // uploadBtn
@@ -699,9 +723,10 @@
             this.uploadBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.uploadBtn.BackColor = System.Drawing.Color.Maroon;
             this.uploadBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uploadBtn.Location = new System.Drawing.Point(87, 480);
+            this.uploadBtn.Location = new System.Drawing.Point(116, 591);
+            this.uploadBtn.Margin = new System.Windows.Forms.Padding(4);
             this.uploadBtn.Name = "uploadBtn";
-            this.uploadBtn.Size = new System.Drawing.Size(103, 51);
+            this.uploadBtn.Size = new System.Drawing.Size(137, 63);
             this.uploadBtn.TabIndex = 7;
             this.uploadBtn.Text = "Upload";
             this.uploadBtn.UseVisualStyleBackColor = false;
@@ -712,10 +737,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.toUpload.HideSelection = false;
-            this.toUpload.Location = new System.Drawing.Point(25, 25);
-            this.toUpload.Margin = new System.Windows.Forms.Padding(25);
+            this.toUpload.Location = new System.Drawing.Point(33, 31);
+            this.toUpload.Margin = new System.Windows.Forms.Padding(33, 31, 33, 31);
             this.toUpload.Name = "toUpload";
-            this.toUpload.Size = new System.Drawing.Size(226, 444);
+            this.toUpload.Size = new System.Drawing.Size(300, 546);
             this.toUpload.TabIndex = 6;
             this.toUpload.UseCompatibleStateImageBehavior = false;
             // 
@@ -750,17 +775,18 @@
             // 
             // frmBatchUpload
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Bisque;
             this.BackgroundImage = global::PUP_RMS.Properties.Resources._619384472_920609864259422_4656079368386240362_n;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1120, 749);
+            this.ClientSize = new System.Drawing.Size(1493, 922);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tableLayoutPanel3);
             this.ForeColor = System.Drawing.SystemColors.Control;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmBatchUpload";
             this.Text = "Batch GradeSheet Upload";
             this.Load += new System.EventHandler(this.frmBatchUpload_Load);

@@ -28,7 +28,7 @@ namespace PUP_RMS.Core
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
                 return conn.Query<Course>(
-                    "SELECT CourseID, CourseCode, CourseDescription FROM Course"
+                    "SELECT * FROM Course"
                 ).ToList();
             }
         }

@@ -213,7 +213,6 @@ namespace PUP_RMS.Forms
             // CREATE COURSE OBJECT
             Course Course = new Course 
             { CourseCode = txtCrsCode.Text.Trim(), 
-              CurriculumYear = txtCuryear.Text.Trim(), 
               CourseDescription = txtSubDesc.Text.Trim() 
             };
 

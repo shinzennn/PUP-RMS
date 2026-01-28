@@ -11,6 +11,6 @@ namespace PUP_RMS.Model
         public int CourseID { get; set; }
         public string CourseCode { get; set; }
         public string CourseDescription { get; set; }
-        public string CurriculumYear { get; set; }
+        
     }
 }
