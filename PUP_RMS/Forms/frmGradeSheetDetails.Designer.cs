@@ -159,7 +159,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.55173F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
             this.tableLayoutPanel5.Controls.Add(this.roundedButton1, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnUpload, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnSave, 3, 0);
@@ -185,7 +185,7 @@
             this.roundedButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.roundedButton1.ForeColor = System.Drawing.Color.White;
             this.roundedButton1.HoverColor = System.Drawing.Color.DarkRed;
-            this.roundedButton1.Location = new System.Drawing.Point(21, 3);
+            this.roundedButton1.Location = new System.Drawing.Point(17, 3);
             this.roundedButton1.Name = "roundedButton1";
             this.roundedButton1.Size = new System.Drawing.Size(98, 43);
             this.roundedButton1.TabIndex = 38;
@@ -207,7 +207,7 @@
             this.btnUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpload.ForeColor = System.Drawing.Color.White;
             this.btnUpload.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnUpload.Location = new System.Drawing.Point(125, 3);
+            this.btnUpload.Location = new System.Drawing.Point(121, 3);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(91, 43);
             this.btnUpload.TabIndex = 35;
@@ -229,7 +229,7 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSave.Location = new System.Drawing.Point(670, 3);
+            this.btnSave.Location = new System.Drawing.Point(654, 3);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(74, 43);
             this.btnSave.TabIndex = 36;
@@ -405,7 +405,7 @@
             this.roundedShadowPanel10.BorderRadius = 20;
             this.roundedShadowPanel10.BorderSize = 0;
             this.roundedShadowPanel10.Controls.Add(this.cmbYearLevel);
-            this.roundedShadowPanel10.Location = new System.Drawing.Point(230, 324);
+            this.roundedShadowPanel10.Location = new System.Drawing.Point(204, 324);
             this.roundedShadowPanel10.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.roundedShadowPanel10.Name = "roundedShadowPanel10";
             this.roundedShadowPanel10.PanelColor = System.Drawing.Color.LightGray;
@@ -414,7 +414,7 @@
             this.roundedShadowPanel10.ShadowDepth = 10;
             this.roundedShadowPanel10.ShadowEnabled = true;
             this.roundedShadowPanel10.ShadowShift = 5;
-            this.roundedShadowPanel10.Size = new System.Drawing.Size(120, 54);
+            this.roundedShadowPanel10.Size = new System.Drawing.Size(146, 54);
             this.roundedShadowPanel10.TabIndex = 37;
             // 
             // cmbYearLevel
@@ -428,7 +428,7 @@
             this.cmbYearLevel.FormattingEnabled = true;
             this.cmbYearLevel.Location = new System.Drawing.Point(22, 12);
             this.cmbYearLevel.Name = "cmbYearLevel";
-            this.cmbYearLevel.Size = new System.Drawing.Size(73, 28);
+            this.cmbYearLevel.Size = new System.Drawing.Size(99, 28);
             this.cmbYearLevel.TabIndex = 8;
             this.cmbYearLevel.SelectedIndexChanged += new System.EventHandler(this.cmbYearLevel_SelectedIndexChanged);
             // 
@@ -489,7 +489,7 @@
             this.roundedShadowPanel8.ShadowDepth = 10;
             this.roundedShadowPanel8.ShadowEnabled = true;
             this.roundedShadowPanel8.ShadowShift = 5;
-            this.roundedShadowPanel8.Size = new System.Drawing.Size(206, 54);
+            this.roundedShadowPanel8.Size = new System.Drawing.Size(180, 54);
             this.roundedShadowPanel8.TabIndex = 35;
             // 
             // cmbProgram
@@ -503,7 +503,7 @@
             this.cmbProgram.FormattingEnabled = true;
             this.cmbProgram.Location = new System.Drawing.Point(18, 12);
             this.cmbProgram.Name = "cmbProgram";
-            this.cmbProgram.Size = new System.Drawing.Size(168, 28);
+            this.cmbProgram.Size = new System.Drawing.Size(142, 28);
             this.cmbProgram.TabIndex = 6;
             this.cmbProgram.SelectedIndexChanged += new System.EventHandler(this.cmbProgram_SelectedIndexChanged);
             // 

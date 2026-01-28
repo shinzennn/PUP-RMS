@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvGradeSheets = new System.Windows.Forms.DataGridView();
             this.rMSDBDataSet = new PUP_RMS.RMSDBDataSet();
             this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -84,8 +84,8 @@
             this.dgvGradeSheets.AllowUserToDeleteRows = false;
             this.dgvGradeSheets.AllowUserToResizeColumns = false;
             this.dgvGradeSheets.AllowUserToResizeRows = false;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
-            this.dgvGradeSheets.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvGradeSheets.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.dgvGradeSheets.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -95,25 +95,25 @@
             this.dgvGradeSheets.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvGradeSheets.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvGradeSheets.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle17.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGradeSheets.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle22.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGradeSheets.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             this.dgvGradeSheets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle18.Padding = new System.Windows.Forms.Padding(5);
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGradeSheets.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle23.Padding = new System.Windows.Forms.Padding(5);
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvGradeSheets.DefaultCellStyle = dataGridViewCellStyle23;
             this.dgvGradeSheets.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dgvGradeSheets.EnableHeadersVisualStyles = false;
             this.dgvGradeSheets.GridColor = System.Drawing.Color.White;
@@ -121,23 +121,23 @@
             this.dgvGradeSheets.Name = "dgvGradeSheets";
             this.dgvGradeSheets.ReadOnly = true;
             this.dgvGradeSheets.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle19.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.Goldenrod;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGradeSheets.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle24.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle24.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.Goldenrod;
+            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGradeSheets.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
             this.dgvGradeSheets.RowHeadersVisible = false;
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle20.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.Goldenrod;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.Maroon;
-            this.dgvGradeSheets.RowsDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle25.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle25.ForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle25.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
+            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.Color.Goldenrod;
+            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.Color.Maroon;
+            this.dgvGradeSheets.RowsDefaultCellStyle = dataGridViewCellStyle25;
             this.dgvGradeSheets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGradeSheets.Size = new System.Drawing.Size(987, 385);
             this.dgvGradeSheets.TabIndex = 10;
@@ -541,7 +541,6 @@
             this.cmbProfessor.Name = "cmbProfessor";
             this.cmbProfessor.Size = new System.Drawing.Size(129, 28);
             this.cmbProfessor.TabIndex = 5;
-            this.cmbProfessor.Text = "Professor";
             this.cmbProfessor.SelectedIndexChanged += new System.EventHandler(this.cmbProfessor_SelectedIndexChanged);
             // 
             // cmbCourse
@@ -554,7 +553,6 @@
             this.cmbCourse.Name = "cmbCourse";
             this.cmbCourse.Size = new System.Drawing.Size(117, 28);
             this.cmbCourse.TabIndex = 4;
-            this.cmbCourse.Text = "Course";
             this.cmbCourse.SelectedIndexChanged += new System.EventHandler(this.cmbCourse_SelectedIndexChanged);
             // 
             // cmbYearLevel
@@ -586,7 +584,6 @@
             this.cmbProgram.Name = "cmbProgram";
             this.cmbProgram.Size = new System.Drawing.Size(102, 28);
             this.cmbProgram.TabIndex = 2;
-            this.cmbProgram.Text = "Program";
             this.cmbProgram.SelectedIndexChanged += new System.EventHandler(this.cmbProgram_SelectedIndexChanged);
             // 
             // cmbSemester

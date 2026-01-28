@@ -122,7 +122,7 @@ namespace PUP_RMS.Forms
             var dt = DbControl.GetData("SELECT ProgramID, ProgramCode FROM Program ORDER BY ProgramCode");
             DataRow placeholder = dt.NewRow();
             placeholder["ProgramID"] = 0;
-            placeholder["ProgramCode"] = "Select Program";
+            placeholder["ProgramCode"] = "";
             dt.Rows.InsertAt(placeholder, 0);
 
             cmbProgram.DataSource = dt;
@@ -180,7 +180,7 @@ namespace PUP_RMS.Forms
             var dt = DbControl.GetData("SELECT DISTINCT SchoolYear FROM GradeSheet ORDER BY SchoolYear DESC");
 
             DataRow placeholder = dt.NewRow();
-            placeholder["SchoolYear"] = "Select School Year";
+            placeholder["SchoolYear"] = "";
             dt.Rows.InsertAt(placeholder, 0);
 
             cmbSchoolYear.DataSource = dt;
@@ -195,7 +195,7 @@ namespace PUP_RMS.Forms
             dt.Columns.Add("ID", typeof(int));
             dt.Columns.Add("Name", typeof(string));
 
-            dt.Rows.Add(0, "Select Year Level");
+            dt.Rows.Add(0, "");
             dt.Rows.Add(1, "1st Year");
             dt.Rows.Add(2, "2nd Year");
             dt.Rows.Add(3, "3rd Year");
@@ -214,7 +214,7 @@ namespace PUP_RMS.Forms
             dt.Columns.Add("ID", typeof(int));
             dt.Columns.Add("Name", typeof(string));
 
-            dt.Rows.Add(0, "Select Semester");
+            dt.Rows.Add(0, "");
             dt.Rows.Add(1, "1st Semester");
             dt.Rows.Add(2, "2nd Semester");
             dt.Rows.Add(3, "Summer");
@@ -231,7 +231,7 @@ namespace PUP_RMS.Forms
             dt.Columns.Add("ID", typeof(int));
             dt.Columns.Add("Name", typeof(string));
 
-            dt.Rows.Add(0, "Select Section");
+            dt.Rows.Add(0, "");
             dt.Rows.Add(1, "1");
             dt.Rows.Add(2, "2");
             dt.Rows.Add(3, "3");
@@ -275,7 +275,7 @@ namespace PUP_RMS.Forms
 
                     DataRow placeholder = dt.NewRow();
                     placeholder["CourseID"] = 0;
-                    placeholder["CourseCode"] = "Select Course";
+                    placeholder["CourseCode"] = "";
                     dt.Rows.InsertAt(placeholder, 0);
 
                     cmbCourse.DataSource = dt;
@@ -701,6 +701,9 @@ namespace PUP_RMS.Forms
             if (dgvGradeSheets.Columns.Count == 0) return;
 
             // Hide any internal/unneeded columns
+            if (dgvGradeSheets.Columns["GradeSheetID"] != null)
+                dgvGradeSheets.Columns["GradeSheetID"].Visible = false;
+
             // (In this SP we no longer have GradeSheetID/Filepath, so no need to hide them)
 
             // Set widths for better readability
