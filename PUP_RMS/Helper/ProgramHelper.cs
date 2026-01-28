@@ -90,7 +90,9 @@ namespace PUP_RMS.Helper
 
             // ADD PARAMETERS
             DbControl.AddParameter("@SearchTerm", searchTerm, SqlDbType.VarChar);
-            DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            DbControl.AddParameter("@CurriculumYear",
+            string.IsNullOrWhiteSpace(curriculumYear) ? (object)DBNull.Value : curriculumYear,
+            SqlDbType.VarChar);
 
 
             // EXECUTE QUERY AND CLEAR PARAMETERS
