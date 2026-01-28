@@ -40,11 +40,12 @@ namespace PUP_RMS.Core
                 return conn.Query<Faculty>(@"
             SELECT 
                 FacultyID, 
-                Initials, -- Add this here
+                Initials, 
                 UPPER(LastName) + ', ' + UPPER(FirstName) + ' ' + 
                 ISNULL(UPPER(MiddleName), '') AS DisplayName
             FROM Faculty
             ORDER BY LastName, FirstName"
+
                 ).ToList();
             }
         }
@@ -55,21 +56,73 @@ namespace PUP_RMS.Core
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
                 return conn.Query<Programs>(
-                    "SELECT ProgramID, ProgramCode FROM Program"
+                    "SELECT ProgramID, ProgramCode FROM Program "
                 ).ToList();
             }
         }
+        public static List<Curriculum> GetCurriculumsByProgram(int programId)
+        {
+            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+               
+                string sql = @"
+
+                SELECT Distinct CurriculumYear
+                  FROM Curriculum
+                 WHERE ProgramID = @ProgramID
+                ORDER BY CurriculumYear DESC; ";
+
+                return conn.Query<Curriculum>(sql, new
+                {
+
+                    ProgramID = programId
+                }).ToList();
+            }
+        }
+
+        public static List<Curriculum> GetCurriculum(string curriculumYear, int semester, int yearLevel)
+        {
+            string query = @"SELECT DISTINCT CurriculumID, CurriculumYear 
+                     FROM Curriculum
+                     WHERE CurriculumYear = @CurriculumYear
+                       AND Semester = @Semester
+                       AND YearLevel = @YearLevel";
+
+            using (SqlConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@CurriculumYear", curriculumYear);
+                    cmd.Parameters.AddWithValue("@Semester", semester);
+                    cmd.Parameters.AddWithValue("@YearLevel", yearLevel);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<Curriculum> list = new List<Curriculum>();
+                    while (reader.Read())
+                    {
+                        list.Add(new Curriculum
+                        {
+                            CurriculumID = reader.GetInt32(0),
+                            CurriculumYear = reader.GetString(1)
+                        });
+                    }
+                    return list;
+                }
+            }
+        }
+
 
 
         public static int InsertGradeSheet(
             string filename,
             string filepath,
             string schoolYear,
-            int semester,
-            int programId,
-            int yearLevel,
+            int curriculumId,
+            int section,
             int courseId,
-            int facultyId,
+            int facultyId, 
             int pageNumber,
             int accountId
 )
@@ -82,9 +135,8 @@ namespace PUP_RMS.Core
                     parameters.Add("@Filename", filename);
                     parameters.Add("@Filepath", filepath);
                     parameters.Add("@SchoolYear", schoolYear);
-                    parameters.Add("@Semester", semester);
-                    parameters.Add("@ProgramID", programId);
-                    parameters.Add("@YearLevel", yearLevel);
+                    parameters.Add("@CurriculumID", curriculumId);
+                    parameters.Add("@Section", section);
                     parameters.Add("@CourseID", courseId);
                     parameters.Add("@FacultyID", facultyId);
                     parameters.Add("@PageNumber", pageNumber);
@@ -92,7 +144,7 @@ namespace PUP_RMS.Core
 
                     // QuerySingle<int> expects the stored procedure to return the ID
                     return conn.QuerySingle<int>(
-                        "sp_InsertGradeSheet",
+                        "sp_AddGradeSheet",
                         parameters,
                         commandType: CommandType.StoredProcedure
                     );
@@ -249,7 +301,7 @@ namespace PUP_RMS.Core
             {
                 using (SqlCommand cmd = new SqlCommand(procedureName, conn))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    //cmd.CommandType = CommandType.StoredProcedure;
                     if (sqlParameters != null)
                     {
                         cmd.Parameters.AddRange(sqlParameters.ToArray());

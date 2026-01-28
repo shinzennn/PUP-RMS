@@ -28,51 +28,58 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlGradesheetForm = new PUP_RMS.RoundedShadowPanel();
+            this.imagePanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.currentImage = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.saveBtn = new System.Windows.Forms.Button();
             this.undoBtn = new System.Windows.Forms.Button();
             this.viewBtn = new System.Windows.Forms.Button();
-            this.currentImage = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnProgram = new System.Windows.Forms.Button();
             this.yearCmbox = new System.Windows.Forms.ComboBox();
-            this.btnProf = new System.Windows.Forms.Button();
-            this.semesterCmbox = new System.Windows.Forms.ComboBox();
-            this.pageCmbox = new System.Windows.Forms.ComboBox();
-            this.courseCmbox = new System.Windows.Forms.ComboBox();
-            this.professorCmbox = new System.Windows.Forms.ComboBox();
-            this.KeepCheckbox = new System.Windows.Forms.CheckBox();
-            this.programCmbox = new System.Windows.Forms.ComboBox();
-            this.yearLevelCmbox = new System.Windows.Forms.ComboBox();
-            this.btnCourse = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.programCmbox = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.yearLevelCmbox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.sectionCmbox = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.courseCmbox = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.professorCmbox = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.pageCmbox = new System.Windows.Forms.ComboBox();
+            this.KeepCheckbox = new System.Windows.Forms.CheckBox();
+            this.curriculumCmbox = new System.Windows.Forms.ComboBox();
+            this.semesterCmbox = new System.Windows.Forms.ComboBox();
             this.filenameTxtbox = new System.Windows.Forms.TextBox();
             this.panelFacultyList = new PUP_RMS.RoundedPanel();
             this.uploadBtn = new System.Windows.Forms.Button();
             this.toUpload = new System.Windows.Forms.ListView();
+            this.toUploadMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeItemMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOpenCouse = new System.Windows.Forms.Button();
             this.createNewFaculty = new System.Windows.Forms.Button();
             this.cbxKeep = new System.Windows.Forms.CheckBox();
             this.panelHeader.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.pnlGradesheetForm.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.imagePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFacultyList.SuspendLayout();
+            this.toUploadMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -151,9 +158,9 @@
             this.pnlGradesheetForm.BorderColor = System.Drawing.Color.Transparent;
             this.pnlGradesheetForm.BorderRadius = 20;
             this.pnlGradesheetForm.BorderSize = 0;
+            this.pnlGradesheetForm.Controls.Add(this.imagePanel);
             this.pnlGradesheetForm.Controls.Add(this.label2);
             this.pnlGradesheetForm.Controls.Add(this.tableLayoutPanel2);
-            this.pnlGradesheetForm.Controls.Add(this.currentImage);
             this.pnlGradesheetForm.Controls.Add(this.tableLayoutPanel1);
             this.pnlGradesheetForm.Controls.Add(this.filenameTxtbox);
             this.pnlGradesheetForm.Location = new System.Drawing.Point(0, 0);
@@ -167,6 +174,32 @@
             this.pnlGradesheetForm.ShadowShift = 5;
             this.pnlGradesheetForm.Size = new System.Drawing.Size(676, 547);
             this.pnlGradesheetForm.TabIndex = 24;
+            // 
+            // imagePanel
+            // 
+            this.imagePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.imagePanel.AutoScroll = true;
+            this.imagePanel.Controls.Add(this.currentImage);
+            this.imagePanel.Location = new System.Drawing.Point(23, 231);
+            this.imagePanel.Name = "imagePanel";
+            this.imagePanel.Size = new System.Drawing.Size(631, 243);
+            this.imagePanel.TabIndex = 26;
+            // 
+            // currentImage
+            // 
+            this.currentImage.BackColor = System.Drawing.Color.White;
+            this.currentImage.Location = new System.Drawing.Point(20, 20);
+            this.currentImage.Margin = new System.Windows.Forms.Padding(20);
+            this.currentImage.MaximumSize = new System.Drawing.Size(1000, 1000);
+            this.currentImage.MinimumSize = new System.Drawing.Size(1000, 1000);
+            this.currentImage.Name = "currentImage";
+            this.currentImage.Size = new System.Drawing.Size(1000, 1000);
+            this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.currentImage.TabIndex = 8;
+            this.currentImage.TabStop = false;
+            this.currentImage.Click += new System.EventHandler(this.currentImage_Click);
             // 
             // label2
             // 
@@ -236,374 +269,73 @@
             this.viewBtn.UseVisualStyleBackColor = false;
             this.viewBtn.Click += new System.EventHandler(this.viewBtn_Click);
             // 
-            // currentImage
-            // 
-            this.currentImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.currentImage.BackColor = System.Drawing.Color.MistyRose;
-            this.currentImage.Location = new System.Drawing.Point(20, 208);
-            this.currentImage.Margin = new System.Windows.Forms.Padding(20);
-            this.currentImage.Name = "currentImage";
-            this.currentImage.Size = new System.Drawing.Size(636, 261);
-            this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.currentImage.TabIndex = 8;
-            this.currentImage.TabStop = false;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.ColumnCount = 8;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.42857F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.57143F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.857143F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 134F));
-            this.tableLayoutPanel1.Controls.Add(this.label9, 6, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 5, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnProgram, 3, 2);
+            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.60553F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.60553F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.60553F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.52728F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.65614F));
             this.tableLayoutPanel1.Controls.Add(this.yearCmbox, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnProf, 5, 2);
-            this.tableLayoutPanel1.Controls.Add(this.semesterCmbox, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.pageCmbox, 6, 1);
-            this.tableLayoutPanel1.Controls.Add(this.courseCmbox, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.professorCmbox, 5, 1);
-            this.tableLayoutPanel1.Controls.Add(this.KeepCheckbox, 7, 1);
-            this.tableLayoutPanel1.Controls.Add(this.programCmbox, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.yearLevelCmbox, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnCourse, 4, 2);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.programCmbox, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label11, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.yearLevelCmbox, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label12, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.sectionCmbox, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.courseCmbox, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.professorCmbox, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label9, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.pageCmbox, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.KeepCheckbox, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.curriculumCmbox, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.semesterCmbox, 3, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 58);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(20);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(636, 110);
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.47826F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 56.52174F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(636, 128);
             this.tableLayoutPanel1.TabIndex = 23;
-            // 
-            // label9
-            // 
-            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label9.Location = new System.Drawing.Point(462, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(33, 33);
-            this.label9.TabIndex = 35;
-            this.label9.Text = "Page";
-            // 
-            // label8
-            // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(369, 6);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(87, 20);
-            this.label8.TabIndex = 34;
-            this.label8.Text = "Professor";
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(298, 6);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 20);
-            this.label7.TabIndex = 33;
-            this.label7.Text = "Course";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(216, 6);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(76, 20);
-            this.label6.TabIndex = 32;
-            this.label6.Text = "Program";
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label5.Location = new System.Drawing.Point(145, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 33);
-            this.label5.TabIndex = 31;
-            this.label5.Text = "Year Level";
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Location = new System.Drawing.Point(74, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 33);
-            this.label4.TabIndex = 30;
-            this.label4.Text = "Semester";
-            // 
-            // btnProgram
-            // 
-            this.btnProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProgram.BackColor = System.Drawing.Color.Maroon;
-            this.btnProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProgram.Location = new System.Drawing.Point(216, 72);
-            this.btnProgram.Name = "btnProgram";
-            this.btnProgram.Size = new System.Drawing.Size(76, 30);
-            this.btnProgram.TabIndex = 28;
-            this.btnProgram.Text = "Add Program";
-            this.btnProgram.UseVisualStyleBackColor = false;
-            this.btnProgram.Click += new System.EventHandler(this.btnProgram_Click);
             // 
             // yearCmbox
             // 
             this.yearCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.yearCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.yearCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.yearCmbox.DropDownHeight = 100;
             this.yearCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.yearCmbox.FormattingEnabled = true;
-            this.yearCmbox.Items.AddRange(new object[] {
-            "1970-1971",
-            "1971-1972",
-            "1972-1973",
-            "1973-1974",
-            "1974-1975",
-            "1975-1976",
-            "1976-1977",
-            "1977-1978",
-            "1978-1979",
-            "1979-1980",
-            "1980-1981",
-            "1981-1982",
-            "1982-1983",
-            "1983-1984",
-            "1984-1985",
-            "1985-1986",
-            "1986-1987",
-            "1987-1988",
-            "1988-1989",
-            "1989-1990",
-            "1990-1991",
-            "1991-1992",
-            "1992-1993",
-            "1993-1994",
-            "1994-1995",
-            "1995-1996",
-            "1996-1997",
-            "1997-1998",
-            "1998-1999",
-            "1999-2000",
-            "2000-2001",
-            "2001-2002",
-            "2002-2003",
-            "2003-2004",
-            "2004-2005",
-            "2005-2006",
-            "2006-2007",
-            "2007-2008",
-            "2008-2009",
-            "2009-2010",
-            "2010-2011",
-            "2011-2012",
-            "2012-2013",
-            "2013-2014",
-            "2014-2015",
-            "2015-2016",
-            "2016-2017",
-            "2017-2018",
-            "2018-2019",
-            "2019-2020",
-            "2020-2021",
-            "2021-2022",
-            "2022-2023",
-            "2023-2024",
-            "2024-2025",
-            "2025-2026",
-            "2026-2027",
-            "2027-2028",
-            "2028-2029",
-            "2029-2030",
-            "2030-2031",
-            "2031-2032",
-            "2032-2033",
-            "2033-2034",
-            "2034-2035",
-            "2035-2036",
-            "2036-2037",
-            "2037-2038",
-            "2038-2039",
-            "2039-2040",
-            "1970-1971",
-            "1971-1972",
-            "1972-1973",
-            "1973-1974",
-            "1974-1975",
-            "1975-1976",
-            "1976-1977",
-            "1977-1978",
-            "1978-1979",
-            "1979-1980",
-            "1980-1981",
-            "1981-1982",
-            "1982-1983",
-            "1983-1984",
-            "1984-1985",
-            "1985-1986",
-            "1986-1987",
-            "1987-1988",
-            "1988-1989",
-            "1989-1990",
-            "1990-1991",
-            "1991-1992",
-            "1992-1993",
-            "1993-1994",
-            "1994-1995",
-            "1995-1996",
-            "1996-1997",
-            "1997-1998",
-            "1998-1999",
-            "1999-2000",
-            "2000-2001",
-            "2001-2002",
-            "2002-2003",
-            "2003-2004",
-            "2004-2005",
-            "2005-2006",
-            "2006-2007",
-            "2007-2008",
-            "2008-2009",
-            "2009-2010",
-            "2010-2011",
-            "2011-2012",
-            "2012-2013",
-            "2013-2014",
-            "2014-2015",
-            "2015-2016",
-            "2016-2017",
-            "2017-2018",
-            "2018-2019",
-            "2019-2020",
-            "2020-2021",
-            "2021-2022",
-            "2022-2023",
-            "2023-2024",
-            "2024-2025",
-            "2025-2026",
-            "2026-2027",
-            "2027-2028",
-            "2028-2029",
-            "2029-2030",
-            "2030-2031",
-            "2031-2032",
-            "2032-2033",
-            "2033-2034",
-            "2034-2035",
-            "2035-2036",
-            "2036-2037",
-            "2037-2038",
-            "2038-2039",
-            "2039-2040"});
-            this.yearCmbox.Location = new System.Drawing.Point(3, 36);
+            this.yearCmbox.IntegralHeight = false;
+            this.yearCmbox.Location = new System.Drawing.Point(3, 33);
+            this.yearCmbox.MaxDropDownItems = 10;
             this.yearCmbox.Name = "yearCmbox";
-            this.yearCmbox.Size = new System.Drawing.Size(65, 28);
+            this.yearCmbox.Size = new System.Drawing.Size(125, 28);
             this.yearCmbox.TabIndex = 4;
             this.yearCmbox.Text = "Year";
             // 
-            // btnProf
+            // label3
             // 
-            this.btnProf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProf.BackColor = System.Drawing.Color.Maroon;
-            this.btnProf.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProf.Location = new System.Drawing.Point(369, 74);
-            this.btnProf.Name = "btnProf";
-            this.btnProf.Size = new System.Drawing.Size(87, 27);
-            this.btnProf.TabIndex = 27;
-            this.btnProf.Text = "Add Professor";
-            this.btnProf.UseVisualStyleBackColor = false;
-            this.btnProf.Click += new System.EventHandler(this.btnProf_Click);
-            // 
-            // semesterCmbox
-            // 
-            this.semesterCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.semesterCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.semesterCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.semesterCmbox.FormattingEnabled = true;
-            this.semesterCmbox.Location = new System.Drawing.Point(74, 36);
-            this.semesterCmbox.Name = "semesterCmbox";
-            this.semesterCmbox.Size = new System.Drawing.Size(65, 28);
-            this.semesterCmbox.TabIndex = 3;
-            // 
-            // pageCmbox
-            // 
-            this.pageCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.pageCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pageCmbox.FormattingEnabled = true;
-            this.pageCmbox.Location = new System.Drawing.Point(461, 35);
-            this.pageCmbox.Margin = new System.Windows.Forms.Padding(2);
-            this.pageCmbox.Name = "pageCmbox";
-            this.pageCmbox.Size = new System.Drawing.Size(35, 28);
-            this.pageCmbox.TabIndex = 12;
-            this.pageCmbox.Text = "Page";
-            // 
-            // courseCmbox
-            // 
-            this.courseCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.courseCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.courseCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.courseCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.courseCmbox.FormattingEnabled = true;
-            this.courseCmbox.Location = new System.Drawing.Point(298, 36);
-            this.courseCmbox.Name = "courseCmbox";
-            this.courseCmbox.Size = new System.Drawing.Size(65, 28);
-            this.courseCmbox.TabIndex = 2;
-            this.courseCmbox.Text = "Course";
-            // 
-            // professorCmbox
-            // 
-            this.professorCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.professorCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.professorCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.professorCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.professorCmbox.FormattingEnabled = true;
-            this.professorCmbox.Location = new System.Drawing.Point(369, 36);
-            this.professorCmbox.Name = "professorCmbox";
-            this.professorCmbox.Size = new System.Drawing.Size(87, 28);
-            this.professorCmbox.TabIndex = 1;
-            this.professorCmbox.Text = "Professor";
-            // 
-            // KeepCheckbox
-            // 
-            this.KeepCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.KeepCheckbox.AutoSize = true;
-            this.KeepCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.KeepCheckbox.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.KeepCheckbox.Location = new System.Drawing.Point(501, 37);
-            this.KeepCheckbox.Name = "KeepCheckbox";
-            this.KeepCheckbox.Size = new System.Drawing.Size(132, 24);
-            this.KeepCheckbox.TabIndex = 13;
-            this.KeepCheckbox.Text = "Keep";
-            this.KeepCheckbox.UseVisualStyleBackColor = true;
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label3.Location = new System.Drawing.Point(3, 4);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(125, 20);
+            this.label3.TabIndex = 29;
+            this.label3.Text = "School Year";
             // 
             // programCmbox
             // 
@@ -612,12 +344,36 @@
             this.programCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.programCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.programCmbox.FormattingEnabled = true;
-            this.programCmbox.Location = new System.Drawing.Point(215, 35);
+            this.programCmbox.Location = new System.Drawing.Point(133, 33);
             this.programCmbox.Margin = new System.Windows.Forms.Padding(2);
             this.programCmbox.Name = "programCmbox";
-            this.programCmbox.Size = new System.Drawing.Size(78, 28);
+            this.programCmbox.Size = new System.Drawing.Size(127, 28);
             this.programCmbox.TabIndex = 11;
             this.programCmbox.Text = "Program ";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label5.Location = new System.Drawing.Point(532, 4);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(101, 20);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "Year Level";
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label11.Location = new System.Drawing.Point(265, 4);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(125, 20);
+            this.label11.TabIndex = 36;
+            this.label11.Text = "Curriculum Year";
             // 
             // yearLevelCmbox
             // 
@@ -625,36 +381,175 @@
             this.yearLevelCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.yearLevelCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.yearLevelCmbox.FormattingEnabled = true;
-            this.yearLevelCmbox.Location = new System.Drawing.Point(144, 35);
+            this.yearLevelCmbox.Location = new System.Drawing.Point(531, 33);
             this.yearLevelCmbox.Margin = new System.Windows.Forms.Padding(2);
             this.yearLevelCmbox.Name = "yearLevelCmbox";
-            this.yearLevelCmbox.Size = new System.Drawing.Size(67, 28);
+            this.yearLevelCmbox.Size = new System.Drawing.Size(103, 28);
             this.yearLevelCmbox.TabIndex = 10;
             // 
-            // btnCourse
+            // label4
             // 
-            this.btnCourse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCourse.BackColor = System.Drawing.Color.Maroon;
-            this.btnCourse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCourse.Location = new System.Drawing.Point(298, 74);
-            this.btnCourse.Name = "btnCourse";
-            this.btnCourse.Size = new System.Drawing.Size(65, 27);
-            this.btnCourse.TabIndex = 26;
-            this.btnCourse.Text = "Add Course";
-            this.btnCourse.UseVisualStyleBackColor = false;
-            this.btnCourse.Click += new System.EventHandler(this.btnCourse_Click);
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label4.Location = new System.Drawing.Point(396, 4);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(130, 20);
+            this.label4.TabIndex = 30;
+            this.label4.Text = "Semester";
             // 
-            // label3
+            // label6
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 33);
-            this.label3.TabIndex = 29;
-            this.label3.Text = "School Year";
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label6.Location = new System.Drawing.Point(134, 4);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(125, 20);
+            this.label6.TabIndex = 32;
+            this.label6.Text = "Program";
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label12.Location = new System.Drawing.Point(3, 67);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(125, 20);
+            this.label12.TabIndex = 38;
+            this.label12.Text = "Section";
+            // 
+            // sectionCmbox
+            // 
+            this.sectionCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.sectionCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.sectionCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.sectionCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sectionCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sectionCmbox.FormattingEnabled = true;
+            this.sectionCmbox.Location = new System.Drawing.Point(2, 94);
+            this.sectionCmbox.Margin = new System.Windows.Forms.Padding(2);
+            this.sectionCmbox.Name = "sectionCmbox";
+            this.sectionCmbox.Size = new System.Drawing.Size(127, 28);
+            this.sectionCmbox.TabIndex = 39;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label7.Location = new System.Drawing.Point(134, 67);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(125, 20);
+            this.label7.TabIndex = 33;
+            this.label7.Text = "Course";
+            // 
+            // courseCmbox
+            // 
+            this.courseCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.courseCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.courseCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.courseCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.courseCmbox.FormattingEnabled = true;
+            this.courseCmbox.Location = new System.Drawing.Point(134, 94);
+            this.courseCmbox.Name = "courseCmbox";
+            this.courseCmbox.Size = new System.Drawing.Size(125, 28);
+            this.courseCmbox.TabIndex = 2;
+            this.courseCmbox.SelectedIndexChanged += new System.EventHandler(this.courseCmbox_SelectedIndexChanged);
+            this.courseCmbox.Click += new System.EventHandler(this.courseCmbox_Click);
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label8.Location = new System.Drawing.Point(265, 67);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(125, 20);
+            this.label8.TabIndex = 34;
+            this.label8.Text = "Professor";
+            // 
+            // professorCmbox
+            // 
+            this.professorCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.professorCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.professorCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.professorCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+            this.professorCmbox.Enabled = false;
+            this.professorCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.professorCmbox.FormattingEnabled = true;
+            this.professorCmbox.Location = new System.Drawing.Point(265, 94);
+            this.professorCmbox.Name = "professorCmbox";
+            this.professorCmbox.Size = new System.Drawing.Size(125, 28);
+            this.professorCmbox.TabIndex = 1;
+            this.professorCmbox.Text = "Professor";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label9.Location = new System.Drawing.Point(396, 67);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(130, 20);
+            this.label9.TabIndex = 35;
+            this.label9.Text = "Page";
+            // 
+            // pageCmbox
+            // 
+            this.pageCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.pageCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.pageCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pageCmbox.FormattingEnabled = true;
+            this.pageCmbox.Location = new System.Drawing.Point(395, 94);
+            this.pageCmbox.Margin = new System.Windows.Forms.Padding(2);
+            this.pageCmbox.Name = "pageCmbox";
+            this.pageCmbox.Size = new System.Drawing.Size(132, 28);
+            this.pageCmbox.TabIndex = 12;
+            // 
+            // KeepCheckbox
+            // 
+            this.KeepCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.KeepCheckbox.AutoSize = true;
+            this.KeepCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.KeepCheckbox.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.KeepCheckbox.Location = new System.Drawing.Point(532, 96);
+            this.KeepCheckbox.Name = "KeepCheckbox";
+            this.KeepCheckbox.Size = new System.Drawing.Size(101, 24);
+            this.KeepCheckbox.TabIndex = 13;
+            this.KeepCheckbox.Text = "Keep";
+            this.KeepCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // curriculumCmbox
+            // 
+            this.curriculumCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.curriculumCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.curriculumCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.curriculumCmbox.FormattingEnabled = true;
+            this.curriculumCmbox.Location = new System.Drawing.Point(264, 33);
+            this.curriculumCmbox.Margin = new System.Windows.Forms.Padding(2);
+            this.curriculumCmbox.Name = "curriculumCmbox";
+            this.curriculumCmbox.Size = new System.Drawing.Size(127, 28);
+            this.curriculumCmbox.TabIndex = 37;
+            this.curriculumCmbox.Click += new System.EventHandler(this.curriculumCmbox_Click);
+            // 
+            // semesterCmbox
+            // 
+            this.semesterCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.semesterCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.semesterCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.semesterCmbox.FormattingEnabled = true;
+            this.semesterCmbox.Location = new System.Drawing.Point(396, 33);
+            this.semesterCmbox.Name = "semesterCmbox";
+            this.semesterCmbox.Size = new System.Drawing.Size(130, 28);
+            this.semesterCmbox.TabIndex = 3;
             // 
             // filenameTxtbox
             // 
@@ -663,7 +558,7 @@
             this.filenameTxtbox.BackColor = System.Drawing.Color.White;
             this.filenameTxtbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.filenameTxtbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.filenameTxtbox.Location = new System.Drawing.Point(23, 173);
+            this.filenameTxtbox.Location = new System.Drawing.Point(18, 195);
             this.filenameTxtbox.Margin = new System.Windows.Forms.Padding(5);
             this.filenameTxtbox.Name = "filenameTxtbox";
             this.filenameTxtbox.ReadOnly = true;
@@ -676,6 +571,7 @@
             this.panelFacultyList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelFacultyList.AutoScroll = true;
             this.panelFacultyList.BackColor = System.Drawing.Color.White;
             this.panelFacultyList.BorderColor = System.Drawing.Color.Black;
             this.panelFacultyList.BorderRadius = 20;
@@ -711,6 +607,7 @@
             this.toUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.toUpload.ContextMenuStrip = this.toUploadMenu;
             this.toUpload.HideSelection = false;
             this.toUpload.Location = new System.Drawing.Point(25, 25);
             this.toUpload.Margin = new System.Windows.Forms.Padding(25);
@@ -718,6 +615,19 @@
             this.toUpload.Size = new System.Drawing.Size(226, 444);
             this.toUpload.TabIndex = 6;
             this.toUpload.UseCompatibleStateImageBehavior = false;
+            // 
+            // toUploadMenu
+            // 
+            this.toUploadMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeItemMenu});
+            this.toUploadMenu.Name = "contextMenuStrip1";
+            this.toUploadMenu.Size = new System.Drawing.Size(118, 26);
+            // 
+            // removeItemMenu
+            // 
+            this.removeItemMenu.Name = "removeItemMenu";
+            this.removeItemMenu.Size = new System.Drawing.Size(117, 22);
+            this.removeItemMenu.Text = "Remove";
             // 
             // btnOpenCouse
             // 
@@ -762,18 +672,20 @@
             this.ForeColor = System.Drawing.SystemColors.Control;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmBatchUpload";
-            this.Text = "Batch GradeSheet Upload";
+            this.Text = "s";
             this.Load += new System.EventHandler(this.frmBatchUpload_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.pnlGradesheetForm.ResumeLayout(false);
             this.pnlGradesheetForm.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
+            this.imagePanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panelFacultyList.ResumeLayout(false);
+            this.toUploadMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -789,7 +701,6 @@
         private System.Windows.Forms.TextBox filenameTxtbox;
         private System.Windows.Forms.ListView toUpload;
         private System.Windows.Forms.Button uploadBtn;
-        private System.Windows.Forms.PictureBox currentImage;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Button undoBtn;
         private System.Windows.Forms.Button viewBtn;
@@ -809,9 +720,6 @@
         private System.Windows.Forms.Button createNewFaculty;
         private System.Windows.Forms.CheckBox cbxKeep;
         private System.Windows.Forms.CheckBox KeepCheckbox;
-        private System.Windows.Forms.Button btnCourse;
-        private System.Windows.Forms.Button btnProf;
-        private System.Windows.Forms.Button btnProgram;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
@@ -819,5 +727,13 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox curriculumCmbox;
+        private System.Windows.Forms.ComboBox sectionCmbox;
+        private System.Windows.Forms.ContextMenuStrip toUploadMenu;
+        private System.Windows.Forms.ToolStripMenuItem removeItemMenu;
+        private System.Windows.Forms.FlowLayoutPanel imagePanel;
+        private System.Windows.Forms.PictureBox currentImage;
     }
 }
