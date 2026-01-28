@@ -76,14 +76,37 @@ namespace PUP_RMS.Forms
 
         private void dgvGradeSheets_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0) return;
+
+            int selectedGradeSheetID = Convert.ToInt32(dgvGradeSheets.Rows[e.RowIndex].Cells["GradeSheetID"].Value);
+
+            var frm = new frmGradeSheetDetails
+            {
+                GradeSheetID = selectedGradeSheetID
+            };
+            frm.ShowDialog();
         }
+
 
         private void dgvGradeSheets_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
+            if (!isFormShown) return;
+
+            if (e.RowIndex >= 0)
+            {
+                dgvGradeSheets.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+            }
         }
 
         private void dgvGradeSheets_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
+            // Ignore events fired during initialization before the form is shown
+            if (!isFormShown) return;
+
+            if (e.RowIndex >= 0)
+            {
+                dgvGradeSheets.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
+            }
         }
 
         private void dgvGradeSheets_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -501,6 +524,55 @@ namespace PUP_RMS.Forms
 
         private void btnClear_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Prevent change handlers from firing while we reset controls
+                isLoading = true;
+
+                // Reset selected state fields
+                selectedSchoolYear = null;
+                selectedCurriculumYear = null;
+                selectedProgramID = 0;
+                selectedYearLevel = 0;
+                selectedSemester = 0;
+                selectedSection = 0;
+                selectedCourseID = 0;
+                selectedFacultyID = 0;
+                selectedCurriculumID = 0;
+
+                // Safely reset combobox selections (ignore if not populated)
+                try { if (cmbProgram.Items.Count > 0) cmbProgram.SelectedIndex = 0; } catch { }
+                try { if (cmbSchoolYear.Items.Count > 0) cmbSchoolYear.SelectedIndex = 0; } catch { }
+                try { if (cmbYearLevel.Items.Count > 0) cmbYearLevel.SelectedIndex = 0; } catch { }
+                try { if (cmbSemester.Items.Count > 0) cmbSemester.SelectedIndex = 0; } catch { }
+                try { if (cmbSection.Items.Count > 0) cmbSection.SelectedIndex = 0; } catch { }
+
+                // Clear dependent combo data to match initial load state
+                cmbCurriculum.DataSource = null;
+                cmbCourse.DataSource = null;
+                cmbProfessor.DataSource = null;
+
+                // Ensure any displayed selection text is cleared
+                DeselectComboText(cmbProgram);
+                DeselectComboText(cmbSchoolYear);
+                DeselectComboText(cmbCurriculum);
+                DeselectComboText(cmbYearLevel);
+                DeselectComboText(cmbSemester);
+                DeselectComboText(cmbSection);
+                DeselectComboText(cmbCourse);
+                DeselectComboText(cmbProfessor);
+
+                // Reload full dataset into the grid (same behavior as initial load)
+                LoadAllGradeSheets();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error clearing filters: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                isLoading = false;
+            }
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -555,6 +627,75 @@ namespace PUP_RMS.Forms
         // =========================
         // UI / HELPERS
         // =========================
+
+        private void OpenGradeSheetDetailsFromGrid(int rowIndex)
+        {
+            try
+            {
+                // Resolve the GradeSheetID column name robustly
+                string idCol = FindColumnName("GradeSheetID");
+                if (string.IsNullOrEmpty(idCol))
+                {
+                    MessageBox.Show("GradeSheetID column not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var cell = dgvGradeSheets.Rows[rowIndex].Cells[idCol].Value;
+                if (cell == null || !int.TryParse(cell.ToString(), out int gradeSheetID))
+                {
+                    MessageBox.Show("Invalid GradeSheet selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                using (frmGradeSheetDetails frm = new frmGradeSheetDetails())
+                {
+                    frm.GradeSheetID = gradeSheetID;
+                    frm.ShowDialog(this); // show modal with the current form as owner
+                }
+
+                // Refresh grid according to current filters (use existing search path)
+                RefreshGridUsingCurrentFilters();
+
+                // Re-select the same grade sheet row after refresh
+                for (int i = 0; i < dgvGradeSheets.Rows.Count; i++)
+                {
+                    var val = dgvGradeSheets.Rows[i].Cells[idCol].Value;
+                    if (val != null && int.TryParse(val.ToString(), out int id) && id == gradeSheetID)
+                    {
+                        dgvGradeSheets.ClearSelection();
+                        dgvGradeSheets.Rows[i].Selected = true;
+
+                        string filenameCol = FindColumnName("Filename");
+                        if (!string.IsNullOrEmpty(filenameCol))
+                        {
+                            dgvGradeSheets.CurrentCell = dgvGradeSheets.Rows[i].Cells[filenameCol];
+                            dgvGradeSheets.FirstDisplayedScrollingRowIndex = Math.Max(0, i - 2);
+                        }
+
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to open GradeSheet details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RefreshGridUsingCurrentFilters()
+        {
+            // Re-run the current search to refresh the grid while preserving filters.
+            // Using PerformClick ensures the same code path that binds the grid is executed.
+            try
+            {
+                btnSearch.PerformClick();
+            }
+            catch
+            {
+                // swallow - refresh is best-effort
+            }
+        }
+
         private void DataGridDesign()
         {
             if (dgvGradeSheets.Columns.Count == 0) return;
@@ -707,3 +848,82 @@ namespace PUP_RMS.Forms
         }
     }
 }
+//private void dgvGradeSheets_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+//{
+//    if (e.RowIndex < 0) return;
+//    OpenGradeSheetDetailsFromGrid(e.RowIndex);
+//}
+
+//private void btnView_Click(object sender, EventArgs e)
+//{
+//    if (dgvGradeSheets.CurrentRow == null) return;
+//    OpenGradeSheetDetailsFromGrid(dgvGradeSheets.CurrentRow.Index);
+//}
+
+//private void OpenGradeSheetDetailsFromGrid(int rowIndex)
+//{
+//    try
+//    {
+//        // Resolve the GradeSheetID column name robustly
+//        string idCol = FindColumnName("GradeSheetID");
+//        if (string.IsNullOrEmpty(idCol))
+//        {
+//            MessageBox.Show("GradeSheetID column not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//            return;
+//        }
+
+//        var cell = dgvGradeSheets.Rows[rowIndex].Cells[idCol].Value;
+//        if (cell == null || !int.TryParse(cell.ToString(), out int gradeSheetID))
+//        {
+//            MessageBox.Show("Invalid GradeSheet selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//            return;
+//        }
+
+//        using (frmGradeSheetDetails frm = new frmGradeSheetDetails())
+//        {
+//            frm.GradeSheetID = gradeSheetID;
+//            frm.ShowDialog(this); // show modal with the current form as owner
+//        }
+
+//        // Refresh grid according to current filters (use existing search path)
+//        RefreshGridUsingCurrentFilters();
+
+//        // Re-select the same grade sheet row after refresh
+//        for (int i = 0; i < dgvGradeSheets.Rows.Count; i++)
+//        {
+//            var val = dgvGradeSheets.Rows[i].Cells[idCol].Value;
+//            if (val != null && int.TryParse(val.ToString(), out int id) && id == gradeSheetID)
+//            {
+//                dgvGradeSheets.ClearSelection();
+//                dgvGradeSheets.Rows[i].Selected = true;
+
+//                string filenameCol = FindColumnName("Filename");
+//                if (!string.IsNullOrEmpty(filenameCol))
+//                {
+//                    dgvGradeSheets.CurrentCell = dgvGradeSheets.Rows[i].Cells[filenameCol];
+//                    dgvGradeSheets.FirstDisplayedScrollingRowIndex = Math.Max(0, i - 2);
+//                }
+
+//                break;
+//            }
+//        }
+//    }
+//    catch (Exception ex)
+//    {
+//        MessageBox.Show("Failed to open GradeSheet details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//    }
+//}
+
+//private void RefreshGridUsingCurrentFilters()
+//{
+//    // Re-run the current search to refresh the grid while preserving filters.
+//    // Using PerformClick ensures the same code path that binds the grid is executed.
+//    try
+//    {
+//        btnSearch.PerformClick();
+//    }
+//    catch
+//    {
+//        // swallow - refresh is best-effort
+//    }
+//}
