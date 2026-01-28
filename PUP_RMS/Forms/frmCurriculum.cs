@@ -740,7 +740,10 @@ namespace PUP_RMS.Forms
             }
         }
 
-        
+        private void dgvCurriculum_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 
 }
