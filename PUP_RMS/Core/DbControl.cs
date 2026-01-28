@@ -188,25 +188,35 @@ namespace PUP_RMS.Core
         // Method to GET data (for Login and Search)
         public static DataTable GetData(string query)
         {
-            using (SqlConnection con = new SqlConnection(ConnString("RMSDB")))
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    DataTable dt = new DataTable();
+                    if (sqlParameters != null)
+                    {
+                        cmd.Parameters.AddRange(sqlParameters.ToArray());
+                    }
+
                     try
                     {
-                        con.Open();
-                        SqlDataAdapter da = new SqlDataAdapter(cmd);
-                        da.Fill(dt);
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show("Query Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     catch (Exception ex)
                     {
-                        // If connection fails, this will tell you why
-                        System.Windows.Forms.MessageBox.Show("DB Error: " + ex.Message);
+                        MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    return dt;
                 }
             }
+            sqlParameters.Clear();
+            return dt;
         }
 
         // Method to SAVE/MODIFY data (INSERT, UPDATE, DELETE)
@@ -301,7 +311,7 @@ namespace PUP_RMS.Core
             {
                 using (SqlCommand cmd = new SqlCommand(procedureName, conn))
                 {
-                    //cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     if (sqlParameters != null)
                     {
                         cmd.Parameters.AddRange(sqlParameters.ToArray());

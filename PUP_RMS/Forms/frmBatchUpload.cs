@@ -537,7 +537,7 @@ namespace PUP_RMS.Forms
 
             DbControl.AddParameter("@Filename", baseFileName, SqlDbType.VarChar);
 
-            DataTable dt = DbControl.ExecuteQuery(query);
+            DataTable dt = DbControl.GetData(query);
             if (Convert.ToInt32(dt.Rows[0]["Existing"]) > 0) {
                 return true;
             }else { return false; }
@@ -554,7 +554,7 @@ namespace PUP_RMS.Forms
             DbControl.AddParameter("@YearLevel", yearLevel, SqlDbType.Int);
             DbControl.AddParameter("@Semester", sem, SqlDbType.Int);
 
-            DataTable dt = DbControl.ExecuteQuery(query);
+            DataTable dt = DbControl.GetData(query);
             if(dt != null)
             {
                 
@@ -661,7 +661,7 @@ namespace PUP_RMS.Forms
             DbControl.AddParameter("@YearLevel", yearLevel, SqlDbType.Int);
             DbControl.AddParameter("@Semester", semester, SqlDbType.Int);
 
-            DataTable dt = DbControl.ExecuteQuery(query);
+            DataTable dt = DbControl.GetData(query);
             courseCmbox.DisplayMember = "Description";
             courseCmbox.ValueMember = "CourseID";
             courseCmbox.DataSource = dt;
@@ -690,7 +690,7 @@ namespace PUP_RMS.Forms
 
             DbControl.AddParameter("@CurriculumID", curriculumID, SqlDbType.Int);
             DbControl.AddParameter("@CourseID", courseID, SqlDbType.Int);
-            DataTable dt = DbControl.ExecuteQuery(query);
+            DataTable dt = DbControl.GetData(query);
             //string fullname = Convert.ToString(dt.Rows[0]["FullName"]);
             //professorCmbox.Text = fullname;
             professorCmbox.DisplayMember = "Fullname";
