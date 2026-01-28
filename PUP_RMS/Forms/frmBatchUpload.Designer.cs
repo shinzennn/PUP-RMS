@@ -35,12 +35,13 @@
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlGradesheetForm = new PUP_RMS.RoundedShadowPanel();
+            this.imagePanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.currentImage = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.saveBtn = new System.Windows.Forms.Button();
             this.undoBtn = new System.Windows.Forms.Button();
             this.viewBtn = new System.Windows.Forms.Button();
-            this.currentImage = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.yearCmbox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -70,12 +71,12 @@
             this.btnOpenCouse = new System.Windows.Forms.Button();
             this.createNewFaculty = new System.Windows.Forms.Button();
             this.cbxKeep = new System.Windows.Forms.CheckBox();
-            this.lblFacultyID = new System.Windows.Forms.Label();
             this.panelHeader.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.pnlGradesheetForm.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.imagePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFacultyList.SuspendLayout();
             this.toUploadMenu.SuspendLayout();
@@ -157,9 +158,9 @@
             this.pnlGradesheetForm.BorderColor = System.Drawing.Color.Transparent;
             this.pnlGradesheetForm.BorderRadius = 20;
             this.pnlGradesheetForm.BorderSize = 0;
+            this.pnlGradesheetForm.Controls.Add(this.imagePanel);
             this.pnlGradesheetForm.Controls.Add(this.label2);
             this.pnlGradesheetForm.Controls.Add(this.tableLayoutPanel2);
-            this.pnlGradesheetForm.Controls.Add(this.currentImage);
             this.pnlGradesheetForm.Controls.Add(this.tableLayoutPanel1);
             this.pnlGradesheetForm.Controls.Add(this.filenameTxtbox);
             this.pnlGradesheetForm.Location = new System.Drawing.Point(0, 0);
@@ -173,6 +174,30 @@
             this.pnlGradesheetForm.ShadowShift = 5;
             this.pnlGradesheetForm.Size = new System.Drawing.Size(676, 547);
             this.pnlGradesheetForm.TabIndex = 24;
+            // 
+            // imagePanel
+            // 
+            this.imagePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.imagePanel.AutoScroll = true;
+            this.imagePanel.Controls.Add(this.currentImage);
+            this.imagePanel.Location = new System.Drawing.Point(23, 231);
+            this.imagePanel.Name = "imagePanel";
+            this.imagePanel.Size = new System.Drawing.Size(631, 243);
+            this.imagePanel.TabIndex = 26;
+            // 
+            // currentImage
+            // 
+            this.currentImage.BackColor = System.Drawing.Color.MistyRose;
+            this.currentImage.Location = new System.Drawing.Point(20, 20);
+            this.currentImage.Margin = new System.Windows.Forms.Padding(20);
+            this.currentImage.Name = "currentImage";
+            this.currentImage.Size = new System.Drawing.Size(628, 235);
+            this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.currentImage.TabIndex = 8;
+            this.currentImage.TabStop = false;
+            this.currentImage.Click += new System.EventHandler(this.currentImage_Click);
             // 
             // label2
             // 
@@ -242,20 +267,6 @@
             this.viewBtn.UseVisualStyleBackColor = false;
             this.viewBtn.Click += new System.EventHandler(this.viewBtn_Click);
             // 
-            // currentImage
-            // 
-            this.currentImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.currentImage.BackColor = System.Drawing.Color.MistyRose;
-            this.currentImage.Location = new System.Drawing.Point(20, 226);
-            this.currentImage.Margin = new System.Windows.Forms.Padding(20);
-            this.currentImage.Name = "currentImage";
-            this.currentImage.Size = new System.Drawing.Size(636, 243);
-            this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.currentImage.TabIndex = 8;
-            this.currentImage.TabStop = false;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -301,9 +312,12 @@
             this.yearCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.yearCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.yearCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.yearCmbox.DropDownHeight = 100;
             this.yearCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.yearCmbox.FormattingEnabled = true;
+            this.yearCmbox.IntegralHeight = false;
             this.yearCmbox.Location = new System.Drawing.Point(3, 33);
+            this.yearCmbox.MaxDropDownItems = 10;
             this.yearCmbox.Name = "yearCmbox";
             this.yearCmbox.Size = new System.Drawing.Size(125, 28);
             this.yearCmbox.TabIndex = 4;
@@ -412,6 +426,7 @@
             this.sectionCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.sectionCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sectionCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.sectionCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sectionCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sectionCmbox.FormattingEnabled = true;
             this.sectionCmbox.Location = new System.Drawing.Point(2, 94);
@@ -419,7 +434,6 @@
             this.sectionCmbox.Name = "sectionCmbox";
             this.sectionCmbox.Size = new System.Drawing.Size(127, 28);
             this.sectionCmbox.TabIndex = 39;
-            this.sectionCmbox.Text = "Section";
             // 
             // label7
             // 
@@ -464,6 +478,8 @@
             this.professorCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.professorCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.professorCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.professorCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+            this.professorCmbox.Enabled = false;
             this.professorCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.professorCmbox.FormattingEnabled = true;
             this.professorCmbox.Location = new System.Drawing.Point(265, 94);
@@ -487,6 +503,7 @@
             // pageCmbox
             // 
             this.pageCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.pageCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.pageCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pageCmbox.FormattingEnabled = true;
             this.pageCmbox.Location = new System.Drawing.Point(395, 94);
@@ -494,7 +511,6 @@
             this.pageCmbox.Name = "pageCmbox";
             this.pageCmbox.Size = new System.Drawing.Size(132, 28);
             this.pageCmbox.TabIndex = 12;
-            this.pageCmbox.Text = "Page";
             // 
             // KeepCheckbox
             // 
@@ -553,6 +569,7 @@
             this.panelFacultyList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelFacultyList.AutoScroll = true;
             this.panelFacultyList.BackColor = System.Drawing.Color.White;
             this.panelFacultyList.BorderColor = System.Drawing.Color.Black;
             this.panelFacultyList.BorderRadius = 20;
@@ -639,16 +656,6 @@
             this.cbxKeep.Text = "Keep";
             this.cbxKeep.UseVisualStyleBackColor = true;
             // 
-            // lblFacultyID
-            // 
-            this.lblFacultyID.AutoSize = true;
-            this.lblFacultyID.BackColor = System.Drawing.Color.Blue;
-            this.lblFacultyID.Location = new System.Drawing.Point(347, 137);
-            this.lblFacultyID.Name = "lblFacultyID";
-            this.lblFacultyID.Size = new System.Drawing.Size(41, 13);
-            this.lblFacultyID.TabIndex = 26;
-            this.lblFacultyID.Text = "label13";
-            // 
             // frmBatchUpload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -657,22 +664,23 @@
             this.BackgroundImage = global::PUP_RMS.Properties.Resources._619384472_920609864259422_4656079368386240362_n;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1120, 749);
-            this.Controls.Add(this.lblFacultyID);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tableLayoutPanel3);
             this.ForeColor = System.Drawing.SystemColors.Control;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmBatchUpload";
-            this.Text = "Batch GradeSheet Upload";
+            this.Text = "s";
             this.Load += new System.EventHandler(this.frmBatchUpload_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.pnlGradesheetForm.ResumeLayout(false);
             this.pnlGradesheetForm.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
+            this.imagePanel.ResumeLayout(false);
+            this.imagePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panelFacultyList.ResumeLayout(false);
@@ -692,7 +700,6 @@
         private System.Windows.Forms.TextBox filenameTxtbox;
         private System.Windows.Forms.ListView toUpload;
         private System.Windows.Forms.Button uploadBtn;
-        private System.Windows.Forms.PictureBox currentImage;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Button undoBtn;
         private System.Windows.Forms.Button viewBtn;
@@ -725,6 +732,7 @@
         private System.Windows.Forms.ComboBox sectionCmbox;
         private System.Windows.Forms.ContextMenuStrip toUploadMenu;
         private System.Windows.Forms.ToolStripMenuItem removeItemMenu;
-        private System.Windows.Forms.Label lblFacultyID;
+        private System.Windows.Forms.FlowLayoutPanel imagePanel;
+        private System.Windows.Forms.PictureBox currentImage;
     }
 }

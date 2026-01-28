@@ -49,6 +49,14 @@ namespace PUP_RMS.Forms
             uploadBtn.Click += uploadBtn_Click;
             saveBtn.Click += saveBtn_Click;
             undoBtn.Click += undoBtn_Click;
+            
+
+            if (currentImage.Image == null)
+            {
+                currentImage.Visible = false;
+            }
+
+
         }
 
         private void frmBatchUpload_Load(object sender, EventArgs e)
@@ -109,7 +117,8 @@ namespace PUP_RMS.Forms
                 new ComboItem { Text = "1st Year", Value = 1 },
                 new ComboItem { Text = "2nd Year", Value = 2 },
                 new ComboItem { Text = "3rd Year", Value = 3 },
-                new ComboItem { Text = "4th Year", Value = 4 }
+                new ComboItem { Text = "4th Year", Value = 4 },
+                new ComboItem { Text = "5th Year", Value = 5 }
             };
             yearLevelCmbox.DisplayMember = "Text";
             yearLevelCmbox.ValueMember = "Value";
@@ -167,15 +176,15 @@ namespace PUP_RMS.Forms
             int startYear = 1970;
             int currentAYStart = GetCurrentAcademicYearStart();
 
-            for (int year = startYear; year <= currentAYStart; year++)
+            for (int year = currentAYStart; year >= startYear; year--)
             {
                 string academicYear = $"{year}-{year + 1}";
                 yearCmbox.Items.Add(academicYear);
             }
 
-
             yearCmbox.SelectedItem = $"{currentAYStart}-{currentAYStart + 1}";
         }
+
 
         private int GetCurrentAcademicYearStart()
         {
@@ -185,6 +194,8 @@ namespace PUP_RMS.Forms
                 ? now.Year
                 : now.Year - 1;
         }
+
+
 
 
 
@@ -280,6 +291,8 @@ namespace PUP_RMS.Forms
             DisplayCurrentImage();
 
 
+
+
         }
         private void DisplayCurrentImage()
         {
@@ -293,6 +306,17 @@ namespace PUP_RMS.Forms
             string path = toUpload.Items[0].Tag.ToString();
             currentImage.Image?.Dispose();
             using (Bitmap bmp = new Bitmap(path)) { currentImage.Image = new Bitmap(bmp); }
+
+            if (currentImage.Image != null)
+            {
+                imagePanel.Visible = true;
+                currentImage.Visible = true;
+            }
+            else
+            {
+                imagePanel.Visible = false;
+                currentImage.Visible = false;
+            }
         }
 
         // =========================
@@ -358,6 +382,8 @@ namespace PUP_RMS.Forms
 
             // Remove item
             toUpload.Items.Remove(item);
+
+
 
             DisplayCurrentImage();
         }
@@ -640,7 +666,7 @@ namespace PUP_RMS.Forms
             professorCmbox.DisplayMember = "Fullname";
             professorCmbox.ValueMember = "FacultyID";
             professorCmbox.DataSource = dt;
-            lblFacultyID.Text = professorCmbox.SelectedValue.ToString();
+            
 
 
 
@@ -654,6 +680,11 @@ namespace PUP_RMS.Forms
             DataTable dt = DbControl.ExecuteQuery(query);
 
             return Convert.ToString(dt.Rows[0]["Initials"]);
+        }
+
+        private void currentImage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
