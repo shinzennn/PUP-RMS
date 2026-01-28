@@ -17,6 +17,7 @@ namespace PUP_RMS.Forms
         private readonly Color ClrMaroon = Color.FromArgb(108, 42, 51);
         private readonly Color ClrGold = Color.FromArgb(229, 178, 66);
         private readonly Color ClrStandoutBack = Color.FromArgb(224, 227, 231);
+        private readonly Color ClrTextGray = Color.FromArgb(64, 64, 64);
 
         private bool dragging = false;
         private Point dragCursorPoint;
@@ -30,8 +31,18 @@ namespace PUP_RMS.Forms
         private List<(string Name, int Count)> subjectData;
         private Panel treemapContainer;
 
-        // FILTERS
-        private ComboBox cbFilterYear;
+        // ==============================
+        // FILTER CONTROLS
+        // ==============================
+        private Label lblCurriculum;
+        private ComboBox cmbCurriculum;
+
+        private Label lblSchoolYear;
+        private ComboBox cmbSchoolYear;
+
+        private Label lblSemester;
+        private ComboBox cmbSemester;
+
         private bool isLoading = true;
 
         private const int CS_DROPSHADOW = 0x00020000;
@@ -49,12 +60,11 @@ namespace PUP_RMS.Forms
 
             // 1. Setup UI
             SetupFormDesign();
-            SetupFilters();
+            SetupFilterControls(); // New Filter Setup
 
-            // 2. Load Data Immediately
-            LoadSchoolYears();
-            isLoading = false;
-            LoadData();
+            // 2. Load Data
+            // We start the chain: LoadCurriculum -> LoadSchoolYear -> LoadSemester -> LoadData
+            LoadCurriculumCombo();
         }
 
         // Ensures the Treemap draws correctly after the form animation finishes
@@ -99,13 +109,15 @@ namespace PUP_RMS.Forms
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterParent;
             this.ShowInTaskbar = false;
-            this.Size = new Size(880, 540);
+            this.Size = new Size(950, 600); // Slightly larger to fit 3 filters comfortably
             this.BackColor = ClrStandoutBack;
 
+            // TREEMAP CONTAINER
+            // Pushed down to Y=100 to allow space for filters below the 50px header
             treemapContainer = new Panel
             {
-                Location = new Point(0, 50),
-                Size = new Size(this.Width, this.Height - 50),
+                Location = new Point(0, 100),
+                Size = new Size(this.Width, this.Height - 100),
                 Padding = new Padding(15),
                 BackColor = Color.Transparent
             };
@@ -118,102 +130,161 @@ namespace PUP_RMS.Forms
 
             this.Resize += (s, e) =>
             {
-                treemapContainer.Size = new Size(this.Width, this.Height - 50);
+                treemapContainer.Size = new Size(this.Width, this.Height - 100);
+                RepositionFilterControls(); // Keep filters centered on resize
                 RenderTreemap();
                 this.Invalidate();
             };
         }
 
-        private void SetupFilters()
+        // =========================================================
+        // 1. SETUP FILTER CONTROLS (Curriculum, Year, Semester)
+        // =========================================================
+        private void SetupFilterControls()
         {
-            // Settings for layout
-            int comboWidth = 140;
-            int headerHeight = 50;
-            int comboHeight = 25;
-            int topMargin = (headerHeight - comboHeight) / 2; // Center Vertically (approx 12px)
-            int rightMargin = 80; // Space reserved for Close/Max buttons
-            int gap = 5; // Space between Label and Combo
+            Font lblFont = new Font("Segoe UI", 10, FontStyle.Bold);
+            Font cmbFont = new Font("Segoe UI", 9, FontStyle.Regular);
 
-            // 1. Setup School Year ComboBox
-            cbFilterYear = new ComboBox();
-            cbFilterYear.Size = new Size(comboWidth, comboHeight);
-            // Position: Width - ButtonSpace - ComboWidth
-            cbFilterYear.Location = new Point(this.Width - rightMargin - comboWidth, topMargin);
-            cbFilterYear.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            cbFilterYear.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbFilterYear.FlatStyle = FlatStyle.Flat;
-            cbFilterYear.BackColor = Color.White;
-            cbFilterYear.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+            // --- 1. Curriculum ---
+            lblCurriculum = new Label { Text = "Curriculum:", ForeColor = ClrTextGray, BackColor = Color.Transparent, Font = lblFont, AutoSize = true };
+            cmbCurriculum = new ComboBox { Font = cmbFont, DropDownStyle = ComboBoxStyle.DropDownList, Width = 130, BackColor = Color.White, FlatStyle = FlatStyle.Flat };
+            cmbCurriculum.SelectedIndexChanged += (s, e) => { LoadSchoolYearCombo(); };
 
-            // 2. Setup Label "Filter by School Year:"
-            Label lblFilter = new Label();
-            lblFilter.Text = "Filter by School Year:";
-            lblFilter.AutoSize = true;
-            lblFilter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblFilter.ForeColor = ClrGold; // Match Title Color
-            lblFilter.BackColor = ClrMaroon; // Match Header Background
+            // --- 2. School Year ---
+            lblSchoolYear = new Label { Text = "School Year:", ForeColor = ClrTextGray, BackColor = Color.Transparent, Font = lblFont, AutoSize = true };
+            cmbSchoolYear = new ComboBox { Font = cmbFont, DropDownStyle = ComboBoxStyle.DropDownList, Width = 130, BackColor = Color.White, FlatStyle = FlatStyle.Flat };
+            cmbSchoolYear.SelectedIndexChanged += (s, e) => { LoadSemesterCombo(); };
 
-            // Position: To the left of the ComboBox
-            // We calculate X after creating it so we know its width, but AutoSize happens slightly later.
-            // A quick measure or doing it in Paint is common, but setting location here works if AutoSize triggers.
-            // For safety, we estimate or set location after adding logic.
+            // --- 3. Semester ---
+            lblSemester = new Label { Text = "Semester:", ForeColor = ClrTextGray, BackColor = Color.Transparent, Font = lblFont, AutoSize = true };
+            cmbSemester = new ComboBox { Font = cmbFont, DropDownStyle = ComboBoxStyle.DropDownList, Width = 130, BackColor = Color.White, FlatStyle = FlatStyle.Flat };
+            cmbSemester.SelectedIndexChanged += (s, e) => { LoadData(); };
 
-            // Add Controls
-            this.Controls.Add(cbFilterYear);
-            this.Controls.Add(lblFilter);
+            // Add to Controls
+            this.Controls.Add(lblCurriculum);
+            this.Controls.Add(cmbCurriculum);
+            this.Controls.Add(lblSchoolYear);
+            this.Controls.Add(cmbSchoolYear);
+            this.Controls.Add(lblSemester);
+            this.Controls.Add(cmbSemester);
 
-            // Adjust Label Location now that it's added (to calculate width)
-            lblFilter.Location = new Point(cbFilterYear.Left - lblFilter.PreferredWidth - gap, topMargin + 2); // +2 for visual vertical alignment
-            lblFilter.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-
-            // Wire Events
-            cbFilterYear.SelectedIndexChanged += Filter_Changed;
+            RepositionFilterControls();
         }
 
-        private void LoadSchoolYears()
+        // =========================================================
+        // CENTER ALIGNMENT LOGIC
+        // =========================================================
+        private void RepositionFilterControls()
         {
+            if (lblCurriculum == null || cmbCurriculum == null) return;
+
+            int headerHeight = 50;
+            int filterAreaHeight = 50; // The area between header and treemap
+            int yPos = headerHeight + 12; // Vertically centered in the filter area
+            int padding = 5; // Space between Label and Combo
+            int groupSpacing = 25; // Space between groups
+
+            // Calculate Widths
+            int group1W = lblCurriculum.Width + padding + cmbCurriculum.Width;
+            int group2W = lblSchoolYear.Width + padding + cmbSchoolYear.Width;
+            int group3W = lblSemester.Width + padding + cmbSemester.Width;
+
+            int totalWidth = group1W + groupSpacing + group2W + groupSpacing + group3W;
+            int startX = (this.Width - totalWidth) / 2;
+
+            // Apply Positions
+            // Group 1: Curriculum
+            lblCurriculum.Location = new Point(startX, yPos + 3);
+            cmbCurriculum.Location = new Point(lblCurriculum.Right + padding, yPos);
+
+            // Group 2: School Year
+            int startX2 = cmbCurriculum.Right + groupSpacing;
+            lblSchoolYear.Location = new Point(startX2, yPos + 3);
+            cmbSchoolYear.Location = new Point(lblSchoolYear.Right + padding, yPos);
+
+            // Group 3: Semester
+            int startX3 = cmbSchoolYear.Right + groupSpacing;
+            lblSemester.Location = new Point(startX3, yPos + 3);
+            cmbSemester.Location = new Point(lblSemester.Right + padding, yPos);
+        }
+
+        // =========================================================
+        // DATA LOADING CHAIN
+        // =========================================================
+        private void LoadCurriculumCombo()
+        {
+            isLoading = true;
+            cmbCurriculum.Items.Clear();
+            cmbCurriculum.Items.Add("All");
+
             try
             {
-                DataTable dt = DashboardHelper.GetSchoolYears();
-                cbFilterYear.Items.Clear();
-                cbFilterYear.Items.Add("All Years");
-
-                if (dt != null && dt.Rows.Count > 0)
+                DataTable dt = DashboardHelper.GetCurriculums();
+                if (dt != null)
                 {
                     foreach (DataRow row in dt.Rows)
-                    {
-                        cbFilterYear.Items.Add(row["SchoolYear"].ToString());
-                    }
+                        cmbCurriculum.Items.Add(row["CurriculumYear"].ToString());
                 }
-                cbFilterYear.SelectedIndex = 0;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading Years: " + ex.Message);
-            }
+            catch { }
+            cmbCurriculum.SelectedIndex = 0; // Triggers LoadSchoolYearCombo
         }
 
-        private void Filter_Changed(object sender, EventArgs e)
+        private void LoadSchoolYearCombo()
         {
-            if (isLoading) return;
-            LoadData();
+            string selectedCurr = cmbCurriculum.SelectedItem?.ToString();
+            cmbSchoolYear.Items.Clear();
+            cmbSchoolYear.Items.Add("All");
+
+            try
+            {
+                // Assuming helper takes curriculum as optional filter
+                DataTable dt = DashboardHelper.GetSchoolYears(selectedCurr);
+                if (dt != null)
+                {
+                    foreach (DataRow row in dt.Rows)
+                        cmbSchoolYear.Items.Add(row["SchoolYear"].ToString());
+                }
+            }
+            catch { }
+            cmbSchoolYear.SelectedIndex = 0; // Triggers LoadSemesterCombo
+        }
+
+        private void LoadSemesterCombo()
+        {
+            // If you have a helper for semesters, use it. Otherwise, hardcode standard ones.
+            cmbSemester.Items.Clear();
+            cmbSemester.Items.Add("All");
+            cmbSemester.Items.Add("1st Semester");
+            cmbSemester.Items.Add("2nd Semester");
+            cmbSemester.Items.Add("Summer");
+
+            cmbSemester.SelectedIndex = 0; // Triggers LoadData
+            isLoading = false;
+            LoadData(); // Final Trigger
         }
 
         private void LoadData()
         {
+            if (isLoading) return;
+
             subjectData.Clear();
 
-            // 1. Get Values from Filter
-            string selectedYear = cbFilterYear.SelectedItem?.ToString();
-            if (selectedYear == "All Years") selectedYear = null;
+            // 1. Get Values
+            string selCurriculum = cmbCurriculum.SelectedItem?.ToString();
+            string selYear = cmbSchoolYear.SelectedItem?.ToString();
+            string selSem = cmbSemester.SelectedItem?.ToString();
+
+            // Clean "All" values to null
+            if (selCurriculum == "All") selCurriculum = null;
+            if (selYear == "All") selYear = null;
+            if (selSem == "All") selSem = null;
 
             try
             {
-                // 2. Call Helper (Using the Year-Only Logic)
-                // Note: Ensure DashboardHelper.GetSubjectDistribution handles a single string argument
-                DataTable dt = DashboardHelper.GetSubjectDistribution(selectedYear);
+                // Correct Order: Curriculum, Year, Semester
+                DataTable dt = DashboardHelper.GetSubjectDistribution(selCurriculum, selYear, selSem);
 
-                // 3. Process Data
                 int limit = 18;
                 int othersCount = 0;
 
@@ -241,18 +312,18 @@ namespace PUP_RMS.Forms
                     subjectData.Add(("Others", othersCount));
                 }
 
-                if (subjectData.Count == 0)
-                    subjectData.Add(("No Data Found", 1));
+                // --- REMOVED THE "No Data Found" ADDITION HERE ---
+                // We leave subjectData empty if no rows found.
             }
             catch (Exception ex)
             {
-                subjectData.Add(("Error", 1));
+                Console.WriteLine(ex.Message);
+                // Leave subjectData empty on error too
             }
 
             // 4. Render
             RenderTreemap();
-        }
-
+        }   
         // ==========================================
         // PAINTING & WINDOW CONTROLS
         // ==========================================
@@ -354,14 +425,19 @@ namespace PUP_RMS.Forms
             treemapContainer.SuspendLayout();
             treemapContainer.Controls.Clear();
 
-            var sorted = subjectData.OrderByDescending(x => x.Count).ToList();
-            double totalWeight = sorted.Sum(x => x.Count);
-
-            if (totalWeight == 0)
+            // --- CHECK FOR NO DATA ---
+            if (subjectData.Count == 0)
             {
+                ShowNoDataMessage();
                 treemapContainer.ResumeLayout();
                 return;
             }
+
+            // Reset background to Transparent if we have data
+            treemapContainer.BackColor = Color.Transparent;
+
+            var sorted = subjectData.OrderByDescending(x => x.Count).ToList();
+            double totalWeight = sorted.Sum(x => x.Count);
 
             RectangleF drawingArea = new RectangleF(
                 treemapContainer.Padding.Left,
@@ -372,6 +448,29 @@ namespace PUP_RMS.Forms
 
             GenerateTreemapTiles(sorted, totalWeight, drawingArea);
             treemapContainer.ResumeLayout();
+        }
+
+        // --- NEW HELPER METHOD ---
+        private void ShowNoDataMessage()
+        {
+            // Set container background to white
+            treemapContainer.BackColor = Color.White;
+
+            Label lblNoData = new Label();
+            lblNoData.Text = "No Data Found";
+            lblNoData.Font = new Font("Segoe UI", 16, FontStyle.Regular); // Clean font
+            lblNoData.ForeColor = Color.Gray;
+            lblNoData.AutoSize = true;
+
+            // Calculate center position
+            // We use a temporary size measurement to center it perfectly before adding it
+            Size textSize = TextRenderer.MeasureText(lblNoData.Text, lblNoData.Font);
+            int x = (treemapContainer.Width - textSize.Width) / 2;
+            int y = (treemapContainer.Height - textSize.Height) / 2;
+
+            lblNoData.Location = new Point(x, y);
+
+            treemapContainer.Controls.Add(lblNoData);
         }
 
         private void GenerateTreemapTiles(List<(string Name, int Count)> data, double total, RectangleF area)

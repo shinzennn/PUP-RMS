@@ -239,6 +239,12 @@
     <Compile Include="Forms\frmnewProgram.Designer.cs">
       <DependentUpon>frmnewProgram.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmProfessorDrillDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmProfessorDrillDown.Designer.cs">
+      <DependentUpon>frmProfessorDrillDown.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmProgram.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -387,6 +393,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmnewProgram.resx">
       <DependentUpon>frmnewProgram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmProfessorDrillDown.resx">
+      <DependentUpon>frmProfessorDrillDown.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmProgram.resx">
       <DependentUpon>frmProgram.cs</DependentUpon>

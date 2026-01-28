@@ -250,6 +250,7 @@
             this.lblStorageUsageDetails.TabIndex = 11;
             this.lblStorageUsageDetails.Text = "storage";
             this.lblStorageUsageDetails.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblStorageUsageDetails.Click += new System.EventHandler(this.lblStorageUsageDetails_Click_1);
             // 
             // cpDriveUsage
             // 

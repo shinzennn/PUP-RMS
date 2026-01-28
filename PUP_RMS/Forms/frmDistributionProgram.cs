@@ -54,8 +54,11 @@ namespace PUP_RMS.Forms
         private const float BASE_HEIGHT = 600f;
 
         // Filter Controls
-        private Label lblFilter;
+        private Label lblFilter;      // School Year Label
         private ComboBox cmbSchoolYear;
+
+        private Label lblCurriculum;  // Curriculum Label
+        private ComboBox cmbCurriculum;
 
         public frmDistributionProgram()
         {
@@ -90,10 +93,47 @@ namespace PUP_RMS.Forms
         // =========================================================
         private void SetupFilterControls()
         {
+            // --- 1. Curriculum Controls (Left) ---
+            lblCurriculum = new Label();
+            lblCurriculum.Text = "Curriculum:";
+            lblCurriculum.ForeColor = ClrTextGray; // CHANGED: Gray text for light background
+            lblCurriculum.BackColor = Color.Transparent; // CHANGED: Transparent background
+            lblCurriculum.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            lblCurriculum.AutoSize = true;
+
+            cmbCurriculum = new ComboBox();
+            cmbCurriculum.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+            cmbCurriculum.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCurriculum.Width = 140;
+            cmbCurriculum.BackColor = Color.White;
+            cmbCurriculum.FlatStyle = FlatStyle.Flat;
+
+            // Load Curriculums
+            cmbCurriculum.Items.Add("All");
+            try
+            {
+                DataTable dt = DashboardHelper.GetCurriculums();
+                if (dt != null)
+                {
+                    foreach (DataRow row in dt.Rows)
+                        cmbCurriculum.Items.Add(row["CurriculumYear"].ToString());
+                }
+            }
+            catch { }
+            cmbCurriculum.SelectedIndex = 0;
+
+            // EVENT
+            cmbCurriculum.SelectedIndexChanged += (s, e) =>
+            {
+                LoadSchoolYearCombo();
+                LoadMainData();
+            };
+
+            // --- 2. School Year Controls (Right) ---
             lblFilter = new Label();
-            lblFilter.Text = "Filter by School Year:";
-            lblFilter.ForeColor = ClrGold;
-            lblFilter.BackColor = ClrMaroon;
+            lblFilter.Text = "School Year:";
+            lblFilter.ForeColor = ClrTextGray; // CHANGED: Gray text
+            lblFilter.BackColor = Color.Transparent; // CHANGED: Transparent
             lblFilter.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             lblFilter.AutoSize = true;
 
@@ -104,10 +144,34 @@ namespace PUP_RMS.Forms
             cmbSchoolYear.BackColor = Color.White;
             cmbSchoolYear.FlatStyle = FlatStyle.Flat;
 
+            // Load Initial School Years
+            LoadSchoolYearCombo();
+
+            // EVENT
+            cmbSchoolYear.SelectedIndexChanged += (s, e) => { LoadMainData(); };
+
+            // Add Controls
+            this.Controls.Add(cmbSchoolYear);
+            this.Controls.Add(lblFilter);
+            this.Controls.Add(cmbCurriculum);
+            this.Controls.Add(lblCurriculum);
+
+            RepositionFilterControls();
+        }
+
+        private void LoadSchoolYearCombo()
+        {
+            string selectedCurr = cmbCurriculum.SelectedItem?.ToString();
+            string currentSelection = cmbSchoolYear.SelectedItem?.ToString();
+            string filterProgram = _isDrilledDown ? _drilledProgramName : null;
+
+            cmbSchoolYear.Items.Clear();
             cmbSchoolYear.Items.Add("All");
+
             try
             {
-                DataTable dt = DashboardHelper.GetSchoolYears();
+                DataTable dt = DashboardHelper.GetSchoolYears(selectedCurr, filterProgram);
+
                 if (dt != null)
                 {
                     foreach (DataRow row in dt.Rows)
@@ -117,18 +181,10 @@ namespace PUP_RMS.Forms
                 }
             }
             catch { }
-
-            if (cmbSchoolYear.Items.Count > 0) cmbSchoolYear.SelectedIndex = 0;
-
-            cmbSchoolYear.SelectedIndexChanged += (s, e) =>
-            {
-                LoadMainData();
-            };
-
-            this.Controls.Add(cmbSchoolYear);
-            this.Controls.Add(lblFilter);
-
-            RepositionFilterControls();
+            if (currentSelection != null && cmbSchoolYear.Items.Contains(currentSelection))
+                cmbSchoolYear.SelectedItem = currentSelection;
+            else
+                cmbSchoolYear.SelectedIndex = 0;
         }
 
         protected override void OnResize(EventArgs e)
@@ -137,25 +193,37 @@ namespace PUP_RMS.Forms
             RepositionFilterControls();
         }
 
+        // =========================================================
+        // REPOSITIONING LOGIC (UPDATED FOR CENTER ALIGNMENT)
+        // =========================================================
         private void RepositionFilterControls()
         {
-            if (lblFilter == null || cmbSchoolYear == null) return;
+            if (lblFilter == null || cmbSchoolYear == null || lblCurriculum == null || cmbCurriculum == null) return;
 
             float scale = GetScaleFactor();
             int headerHeight = (int)(50 * scale);
             if (headerHeight < 50) headerHeight = 50;
+            int padding = 10;
+            int groupSpacing = (int)(40 * scale); 
+            int yPos = headerHeight + (int)(15 * scale);
 
-            int comboX = this.Width - cmbSchoolYear.Width - (int)(80 * scale);
-            int comboY = (headerHeight - cmbSchoolYear.Height) / 2;
+            int currGroupWidth = lblCurriculum.Width + padding + cmbCurriculum.Width;
+            int yearGroupWidth = lblFilter.Width + padding + cmbSchoolYear.Width;
+            int totalWidth = currGroupWidth + groupSpacing + yearGroupWidth;
 
-            int labelX = comboX - lblFilter.Width - 10;
-            int labelY = (headerHeight - lblFilter.Height) / 2;
+            int startX = (this.Width - totalWidth) / 2;
 
-            cmbSchoolYear.Location = new Point(comboX, comboY);
-            lblFilter.Location = new Point(labelX, labelY);
+            lblCurriculum.Location = new Point(startX, yPos + 3); 
+            cmbCurriculum.Location = new Point(lblCurriculum.Right + padding, yPos);
+
+            int yearStartX = cmbCurriculum.Right + groupSpacing;
+            lblFilter.Location = new Point(yearStartX, yPos + 3);
+            cmbSchoolYear.Location = new Point(lblFilter.Right + padding, yPos);
 
             cmbSchoolYear.BringToFront();
             lblFilter.BringToFront();
+            cmbCurriculum.BringToFront();
+            lblCurriculum.BringToFront();
         }
 
         // =========================================================
@@ -164,7 +232,6 @@ namespace PUP_RMS.Forms
         private void LoadMainData()
         {
             _isDrilledDown = false;
-
             _mainSegments = new List<ChartSegment>();
 
             string selectedYear = null;
@@ -173,7 +240,14 @@ namespace PUP_RMS.Forms
                 selectedYear = cmbSchoolYear.SelectedItem.ToString();
             }
 
-            DataTable dt = DashboardHelper.GetProgramDistribution(selectedYear);
+            string selectedCurriculum = null;
+            if (cmbCurriculum != null && cmbCurriculum.SelectedItem != null)
+            {
+                selectedCurriculum = cmbCurriculum.SelectedItem.ToString();
+            }
+
+            // Standard backend call
+            DataTable dt = DashboardHelper.GetProgramDistribution(selectedYear, selectedCurriculum);
 
             Color[] colors = {
                 ClrMaroon, ClrGold, Color.FromArgb(180, 130, 40), Color.CadetBlue,
@@ -222,30 +296,70 @@ namespace PUP_RMS.Forms
             Invalidate();
         }
 
+
         private void LoadYearLevelData(ChartSegment parentProgram)
         {
+        
+            lblCurriculum.Visible = false;
+            cmbCurriculum.Visible = false;
+            lblFilter.Visible = false;
+            cmbSchoolYear.Visible = false;
+
+            
             _isDrilledDown = true;
             _drilledProgramName = parentProgram.Label;
 
-            int total = parentProgram.Value;
+            LoadSchoolYearCombo();
+            _isDrilledDown = true;
 
-            // Simulating Year Level Distribution
-            int y1 = (int)(total * 0.35);
-            int y2 = (int)(total * 0.25);
-            int y3 = (int)(total * 0.22);
-            int y4 = total - y1 - y2 - y3;
+           
+            string selectedYear = cmbSchoolYear.SelectedItem?.ToString();
+            string selectedCurriculum = cmbCurriculum.SelectedItem?.ToString();
 
-            Color c = parentProgram.Color;
+            DataTable dt = DashboardHelper.GetYearLevelDistribution(parentProgram.Label, selectedYear, selectedCurriculum);
 
-            _currentSegments = new List<ChartSegment>
+            Dictionary<int, int> dbCounts = new Dictionary<int, int>();
+            if (dt != null)
             {
-                new ChartSegment { Label = "1st Year", Value = y1, Color = c },
-                new ChartSegment { Label = "2nd Year", Value = y2, Color = ControlPaint.Light(c, 0.4f) },
-                new ChartSegment { Label = "3rd Year", Value = y3, Color = ControlPaint.Light(c, 0.8f) },
-                new ChartSegment { Label = "4th Year", Value = y4, Color = ControlPaint.Light(c, 1.2f) }
-            };
+                foreach (DataRow row in dt.Rows)
+                {
+                    int lvl = Convert.ToInt32(row["YearLevel"]);
+                    int cnt = Convert.ToInt32(row["Total"]);
+                    if (!dbCounts.ContainsKey(lvl)) dbCounts.Add(lvl, cnt);
+                }
+            }
+
+            _currentSegments = new List<ChartSegment>();
+            Color baseColor = parentProgram.Color;
+            int maxYear = 4;
+            if (dbCounts.Keys.Count > 0 && dbCounts.Keys.Max() > maxYear) maxYear = dbCounts.Keys.Max();
+
+            for (int i = 1; i <= maxYear; i++)
+            {
+                int count = dbCounts.ContainsKey(i) ? dbCounts[i] : 0;
+                string label = GetYearLabel(i);
+                float lightFactor = (i - 1) * 0.3f;
+                if (lightFactor > 1.5f) lightFactor = 1.5f;
+                Color yearColor = ControlPaint.Light(baseColor, lightFactor);
+
+                _currentSegments.Add(new ChartSegment { Label = label, Value = count, Color = yearColor });
+            }
 
             Invalidate();
+        }
+
+
+        private string GetYearLabel(int level)
+        {
+            switch (level)
+            {
+                case 1: return "1st Year";
+                case 2: return "2nd Year";
+                case 3: return "3rd Year";
+                case 4: return "4th Year";
+                case 5: return "5th Year";
+                default: return level + "th Year"; 
+            }
         }
 
         // =========================================================
@@ -262,59 +376,93 @@ namespace PUP_RMS.Forms
 
             float scale = GetScaleFactor();
 
-            // Header
+            // 1. Draw Header Background
             int headerHeight = (int)(50 * scale);
             if (headerHeight < 50) headerHeight = 50;
             Rectangle headerRect = new Rectangle(0, 0, Width, headerHeight);
 
             using (SolidBrush brush = new SolidBrush(ClrMaroon))
-            {
                 g.FillRectangle(brush, headerRect);
-            }
 
-            // Title Logic
-            string title;
-            if (_isDrilledDown)
-                title = $"Program > {_drilledProgramName}";
-            else
-                title = "Grade Sheets Distribution by Program";
-
-            using (Font titleFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
-            using (Brush textBrush = new SolidBrush(ClrGold))
-            {
-                float textX = _isDrilledDown ? (50 * scale) : (20 * scale);
-                g.DrawString(title, titleFont, textBrush, textX, headerRect.Height / 2 - titleFont.Height / 2);
-            }
-
+            // 2. Draw Window Buttons
             DrawWindowButtons(g, scale);
 
-            // Chart Bounds
-            Rectangle contentRect = new Rectangle(0, headerHeight, Width, Height - headerHeight);
+            // 3. Draw Title (Conditional Alignment)
+            if (_isDrilledDown)
+            {
+                // --- CENTERED ALIGNMENT FOR DRILL-DOWN ---
+                string programCode = _drilledProgramName;
+                string labelText = " – Grade Sheets Distribution by Program Year Level";
+
+                using (Font codeFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+                using (Font labelFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+                {
+                    // Measure widths to calculate center
+                    SizeF codeSize = g.MeasureString(programCode, codeFont);
+                    SizeF labelSize = g.MeasureString(labelText, labelFont);
+
+                    float totalWidth = codeSize.Width + labelSize.Width;
+                    float xPos = (Width - totalWidth) / 2f;
+                    float yPos = (headerRect.Height - codeSize.Height) / 2f;
+
+                    // Draw Program Code (Gold)
+                    using (Brush codeBrush = new SolidBrush(ClrGold))
+                        g.DrawString(programCode, codeFont, codeBrush, xPos, yPos);
+
+                    // Draw Label (Goldenrod)
+                    using (Brush labelBrush = new SolidBrush(Color.Goldenrod))
+                        g.DrawString(labelText, labelFont, labelBrush, xPos + codeSize.Width - (4 * scale), yPos);
+                }
+            }
+            else
+            {
+                // --- LEFT ALIGNMENT FOR MAIN TITLE ---
+                string title = "Grade Sheets Distribution by Program";
+
+                // Fixed left position
+                float xPos = 20 * scale;
+
+                using (Font font = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+                {
+                    // Vertically centered only
+                    float yPos = (headerRect.Height - g.MeasureString(title, font).Height) / 2f;
+
+                    using (Brush brush = new SolidBrush(Color.Goldenrod))
+                    {
+                        g.DrawString(title, font, brush, xPos, yPos);
+                    }
+                }
+            }
+
+            // 4. Draw Chart Content
+            int filterAreaHeight = (int)(50 * scale);
+            int totalTopOffset = headerHeight + filterAreaHeight;
+            Rectangle contentRect = new Rectangle(0, totalTopOffset, Width, Height - totalTopOffset);
+
             if (contentRect.Width < 50 || contentRect.Height < 50) return;
 
             long total = _currentSegments.Sum(s => (long)s.Value);
-            if (total == 0) return;
+            if (total == 0 && !_isDrilledDown) return;
+            if (total == 0) total = 1;
 
             float chartSize = 380 * scale;
             float thickness = 70 * scale;
-            float chartX = 60 * scale;
-            float chartY = headerHeight + (contentRect.Height - chartSize) / 2;
+
+            float chartX = _isDrilledDown ? (Width - chartSize) / 2f : 150 * scale;
+            float chartY = totalTopOffset + (contentRect.Height - chartSize) / 2;
 
             _lastChartBounds = new RectangleF(chartX, chartY, chartSize, chartSize);
 
-            // Draw Chart
             DrawShadow(g, _lastChartBounds, scale);
             DrawDoughnutWithSpokes(g, _lastChartBounds, total, thickness, scale);
 
-            // Draw Legend
-            float legendX = _lastChartBounds.Right + (80 * scale);
-            float legendY = headerHeight + (30 * scale);
+            float legendX = _lastChartBounds.Right + (60 * scale);
+            float legendY = chartY + (30 * scale);
             DrawLegendColumns(g, legendX, legendY, total, scale);
 
+            // 5. Draw Border
             using (Pen borderPen = new Pen(Color.FromArgb(150, 150, 150), 1))
-            {
                 g.DrawRectangle(borderPen, 0, 0, Width - 1, Height - 1);
-            }
         }
 
         private void DrawDoughnutWithSpokes(Graphics g, RectangleF bounds, long total, float thickness, float scale)
@@ -369,13 +517,11 @@ namespace PUP_RMS.Forms
 
             if (_isDrilledDown)
             {
-                // DRILL DOWN: Show Program Name + Total Count
                 label = _drilledProgramName;
                 value = total.ToString();
             }
             else
             {
-                // MAIN: Show Largest Slice + Percentage
                 ChartSegment largest = _currentSegments.OrderByDescending(s => s.Value).FirstOrDefault();
                 if (largest != null)
                 {
@@ -402,14 +548,17 @@ namespace PUP_RMS.Forms
             float cy = bounds.Y + bounds.Height / 2f;
             float radius = bounds.Width / 2f;
 
+            // Vary extension length to prevent text overlapping
             float extension = (index % 2 == 0) ? 15 * scale : 45 * scale;
 
+            // Calculate line points
             float x1 = cx + (radius - 5 * scale) * (float)Math.Cos(rad);
             float y1 = cy + (radius - 5 * scale) * (float)Math.Sin(rad);
             float x2 = cx + (radius + extension) * (float)Math.Cos(rad);
             float y2 = cy + (radius + extension) * (float)Math.Sin(rad);
 
-            using (Pen p = new Pen(Color.Gray, 1 * scale)) g.DrawLine(p, x1, y1, x2, y2);
+            using (Pen p = new Pen(Color.Gray, 1 * scale))
+                g.DrawLine(p, x1, y1, x2, y2);
 
             string pctText = $"{(double)seg.Value / total:P0}";
 
@@ -418,18 +567,29 @@ namespace PUP_RMS.Forms
             float textOffset = 2 * scale;
 
             StringFormat sf = new StringFormat();
+            sf.LineAlignment = StringAlignment.Center;
 
+            // Right side of circle
             if (midAngle >= -90 && midAngle < 90)
             {
                 sf.Alignment = StringAlignment.Near;
                 tx += textOffset;
             }
+            // Left side of circle
             else
             {
                 sf.Alignment = StringAlignment.Far;
                 tx -= textOffset;
             }
-            sf.LineAlignment = StringAlignment.Center;
+
+            // >>> FIX: Ensure text doesn't go off-screen (Left Edge Safety) <<<
+            float minX = 10 * scale;
+            if (tx < minX && sf.Alignment == StringAlignment.Far)
+            {
+                // If the point is too far left, push it right and align Near
+                tx = minX;
+                sf.Alignment = StringAlignment.Near;
+            }
 
             using (Font f = new Font("Segoe UI", 7 * scale, FontStyle.Regular))
                 g.DrawString(pctText, f, Brushes.Black, tx, ty, sf);
@@ -484,22 +644,20 @@ namespace PUP_RMS.Forms
             if (btnSize > 40) btnSize = 40; if (btnSize < 24) btnSize = 24;
             int margin = (int)(13 * scale); if (margin < 10) margin = 10;
 
+            // Define Close and Maximize Rectangles (Right Side)
             _closeBtnRect = new Rectangle(Width - margin - btnSize, margin, btnSize, btnSize);
             _maxBtnRect = new Rectangle(_closeBtnRect.X - margin - btnSize, margin, btnSize, btnSize);
 
-            if (_isDrilledDown) _backBtnRect = new Rectangle(margin, margin, btnSize, btnSize);
-            else _backBtnRect = Rectangle.Empty;
-
+            // --- DRAW HOVER EFFECT FOR CLOSE & MAX ---
             using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(60, 255, 255, 255)))
             {
                 if (_isHoveringClose) g.FillEllipse(hoverBrush, _closeBtnRect);
                 if (_isHoveringMax) g.FillEllipse(hoverBrush, _maxBtnRect);
-                if (_isHoveringBack && _isDrilledDown) g.FillEllipse(hoverBrush, _backBtnRect);
             }
 
-            using (Pen p = new Pen(ClrGold, 1.5f * scale))
+            using (Pen p = new Pen(ClrGold, 2.0f * scale))
             {
-                // Close
+                // --- DRAW CLOSE BUTTON ---
                 g.DrawEllipse(p, _closeBtnRect);
                 float cx = _closeBtnRect.X + _closeBtnRect.Width / 2f;
                 float cy = _closeBtnRect.Y + _closeBtnRect.Height / 2f;
@@ -507,57 +665,105 @@ namespace PUP_RMS.Forms
                 g.DrawLine(p, cx - off, cy - off, cx + off, cy + off);
                 g.DrawLine(p, cx + off, cy - off, cx - off, cy + off);
 
-                // Max
+                // --- DRAW MAXIMIZE BUTTON ---
                 g.DrawEllipse(p, _maxBtnRect);
                 float mx = _maxBtnRect.X + _maxBtnRect.Width / 2f;
                 float my = _maxBtnRect.Y + _maxBtnRect.Height / 2f;
-                float box = 10 * (btnSize / 24f);
+                float box = 9 * (btnSize / 24f);
                 g.DrawRectangle(p, mx - box / 2, my - box / 2, box, box);
 
-                // Back
+                // --- DRAW BACK BUTTON (Icon + Text) ---
                 if (_isDrilledDown)
                 {
-                    g.DrawEllipse(p, _backBtnRect);
-                    float bx = _backBtnRect.X + _backBtnRect.Width / 2f;
-                    float by = _backBtnRect.Y + _backBtnRect.Height / 2f;
-                    float arrOff = 4 * (btnSize / 24f);
-                    g.DrawLine(p, bx + arrOff, by, bx - arrOff, by);
-                    g.DrawLine(p, bx - arrOff, by, bx, by - arrOff);
-                    g.DrawLine(p, bx - arrOff, by, bx, by + arrOff);
+                    string backText = "Back";
+
+                    using (Font font = new Font("Segoe UI", 10 * scale, FontStyle.Bold))
+                    {
+                        // 1. Measure the text
+                        SizeF textSize = g.MeasureString(backText, font);
+                        int gap = (int)(5 * scale); // Space between icon and text
+
+                        // 2. Define the Icon Rectangle (Square)
+                        Rectangle iconRect = new Rectangle(margin, margin, btnSize, btnSize);
+
+                        // 3. Define the Full Clickable Area (Icon + Gap + Text)
+                        int totalWidth = btnSize + gap + (int)textSize.Width;
+                        _backBtnRect = new Rectangle(margin, margin, totalWidth, btnSize);
+
+                        // 4. Draw Hover Effect for Back Button (Rectangle covering icon and text)
+                        if (_isHoveringBack)
+                        {
+                            using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(60, 255, 255, 255)))
+                            {
+                                // Draw a rounded rectangle background or simple rect
+                                g.FillRectangle(hoverBrush, _backBtnRect);
+                            }
+                        }
+
+                        // 5. Draw the Circle Icon
+                        g.DrawEllipse(p, iconRect);
+
+                        // 6. Draw the Arrow inside the Circle
+                        float bx = iconRect.X + iconRect.Width / 2f;
+                        float by = iconRect.Y + iconRect.Height / 2f;
+                        float arrowSize = 5 * (btnSize / 24f);
+
+                        PointF pTip = new PointF(bx - arrowSize, by);
+                        PointF pTop = new PointF(bx + arrowSize, by - arrowSize);
+                        PointF pBot = new PointF(bx + arrowSize, by + arrowSize);
+
+                        g.DrawLine(p, pTip, pTop);
+                        g.DrawLine(p, pTip, pBot);
+
+                        // 7. Draw the "Back" Label (Vertically Centered)
+                        using (Brush textBrush = new SolidBrush(ClrGold))
+                        {
+                            float textX = iconRect.Right + gap;
+                            float textY = margin + (btnSize - textSize.Height) / 2; // Middle of the header/button height
+                            g.DrawString(backText, font, textBrush, textX, textY);
+                        }
+                    }
+                }
+                else
+                {
+                    _backBtnRect = Rectangle.Empty;
                 }
             }
         }
 
-        // ==============================
-        // MOUSE / INTERACTION
-        // ==============================
         private void Form_MouseDown(object sender, MouseEventArgs e)
         {
+            // Close Logic
             if (_closeBtnRect.Contains(e.Location)) { Close(); return; }
 
+            // Maximize Logic
             if (_maxBtnRect.Contains(e.Location))
             {
                 if (this.WindowState == FormWindowState.Normal)
-                {
-                    this.MaximizedBounds = Screen.FromHandle(this.Handle).Bounds;
                     this.WindowState = FormWindowState.Maximized;
-                }
                 else
-                {
                     this.WindowState = FormWindowState.Normal;
-                }
                 this.Invalidate();
                 return;
             }
 
-            // Back Button Logic
             if (_backBtnRect.Contains(e.Location) && _isDrilledDown)
             {
                 _isDrilledDown = false;
+                _drilledProgramName = "";
+
+                // Show the filters again
+                lblCurriculum.Visible = true;
+                cmbCurriculum.Visible = true;
+                lblFilter.Visible = true;
+                cmbSchoolYear.Visible = true;
+
+                LoadSchoolYearCombo();
                 LoadMainData();
                 return;
             }
 
+            // Drag Window Logic
             int headerH = (int)(50 * GetScaleFactor());
             if (headerH < 50) headerH = 50;
             if (e.Button == MouseButtons.Left && e.Y < headerH)
@@ -568,6 +774,7 @@ namespace PUP_RMS.Forms
                 return;
             }
 
+            // Chart Click Logic
             if (e.Button == MouseButtons.Left && !_isDrilledDown)
             {
                 CheckChartClick(e.Location);
@@ -577,43 +784,47 @@ namespace PUP_RMS.Forms
 
         private void CheckLegendClick(Point p)
         {
+            // Loop through all legend zones to see if the mouse clicked one
             foreach (var zone in _legendZones)
             {
                 if (zone.Bounds.Contains(p))
                 {
+                    // If clicked, drill down into that program
                     LoadYearLevelData(zone.Segment);
                     return;
                 }
             }
         }
 
+        // You might also be missing this one, so add it just in case:
         private void CheckChartClick(Point p)
         {
             if (!_lastChartBounds.Contains(p)) return;
 
+            // Calculate distance from center to check if click is inside the doughnut ring
             float cx = _lastChartBounds.X + _lastChartBounds.Width / 2f;
             float cy = _lastChartBounds.Y + _lastChartBounds.Height / 2f;
-
             float dx = p.X - cx;
             float dy = p.Y - cy;
             double dist = Math.Sqrt(dx * dx + dy * dy);
             float radius = _lastChartBounds.Width / 2f;
-
             float holeRadius = radius - (70 * GetScaleFactor());
 
+            // If outside the outer circle OR inside the empty hole, ignore
             if (dist > radius || dist < holeRadius) return;
 
+            // Calculate Angle
             double angle = Math.Atan2(dy, dx) * 180 / Math.PI;
-            if (angle < -90) angle += 360;
+            if (angle < -90) angle += 360; // Normalize angle
 
             double clickAngle = angle + 90;
             if (clickAngle < 0) clickAngle += 360;
 
+            // Check which slice matches the angle
             foreach (var zone in _sliceZones)
             {
                 double zStart = zone.StartAngle + 90;
                 if (zStart < 0) zStart += 360;
-
                 double zEnd = zStart + zone.SweepAngle;
 
                 bool hit = false;
@@ -684,12 +895,10 @@ namespace PUP_RMS.Forms
             return Math.Min(scaleX, scaleY);
         }
 
-        // ADDED TO FIX ERROR
         private void frmDistributionProgram_Load(object sender, EventArgs e)
         {
         }
 
-        // ADDED TO FIX ERROR
         public static void ShowWithDimmer(Form parent, frmDistributionProgram child)
         {
             using (Form dimmer = new Form())

@@ -34,18 +34,18 @@ namespace PUP_RMS.Forms
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
-            this.btnBatchUpload = new PUP_RMS.Controls.iconButton();
-            this.btnSearch = new PUP_RMS.Controls.iconButton();
             this.pnlAdminSubMenu = new System.Windows.Forms.Panel();
-            this.btnCurriculum = new PUP_RMS.Controls.iconButton();
-            this.btnProgram = new PUP_RMS.Controls.iconButton();
-            this.btnCourse = new PUP_RMS.Controls.iconButton();
-            this.btnFaculty = new PUP_RMS.Controls.iconButton();
+            this.tmrUploadTransition = new System.Windows.Forms.Timer(this.components);
+            this.btnDashboard = new PUP_RMS.Controls.iconButton();
+            this.btnSearch = new PUP_RMS.Controls.iconButton();
+            this.btnBatchUpload = new PUP_RMS.Controls.iconButton();
             this.btnAdminTool = new PUP_RMS.Controls.iconButton();
+            this.btnFaculty = new PUP_RMS.Controls.iconButton();
+            this.btnCourse = new PUP_RMS.Controls.iconButton();
+            this.btnProgram = new PUP_RMS.Controls.iconButton();
+            this.btnCurriculum = new PUP_RMS.Controls.iconButton();
             this.btnAccounts = new PUP_RMS.Controls.iconButton();
             this.btnLogout = new PUP_RMS.Controls.iconButton();
-            this.btnDashboard = new PUP_RMS.Controls.iconButton();
             this.pnlContent.SuspendLayout();
             this.flowLayoutPanelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -60,8 +60,9 @@ namespace PUP_RMS.Forms
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContent.Location = new System.Drawing.Point(0, 0);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(1900, 1080);
+            this.pnlContent.Size = new System.Drawing.Size(1900, 1061);
             this.pnlContent.TabIndex = 5;
+            this.pnlContent.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlContent_Paint);
             // 
             // flowLayoutPanelMain
             // 
@@ -78,7 +79,7 @@ namespace PUP_RMS.Forms
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(250, 1080);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(250, 1061);
             this.flowLayoutPanelMain.TabIndex = 10;
             // 
             // pictureBox1
@@ -101,33 +102,46 @@ namespace PUP_RMS.Forms
             this.pictureBox2.TabIndex = 11;
             this.pictureBox2.TabStop = false;
             // 
-            // btnBatchUpload
+            // pnlAdminSubMenu
             // 
-            this.btnBatchUpload.ActiveColor = System.Drawing.Color.Goldenrod;
-            this.btnBatchUpload.BackColor = System.Drawing.Color.Maroon;
-            this.btnBatchUpload.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnBatchUpload.BorderRadius = 10;
-            this.btnBatchUpload.BorderSize = 0;
-            this.btnBatchUpload.FlatAppearance.BorderSize = 0;
-            this.btnBatchUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBatchUpload.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnBatchUpload.ForeColor = System.Drawing.Color.White;
-            this.btnBatchUpload.HoverColor = System.Drawing.Color.Goldenrod;
-            this.btnBatchUpload.IconSize = 30;
-            this.btnBatchUpload.Image = ((System.Drawing.Image)(resources.GetObject("btnBatchUpload.Image")));
-            this.btnBatchUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBatchUpload.IndentLevel = 0;
-            this.btnBatchUpload.IsActive = false;
-            this.btnBatchUpload.Location = new System.Drawing.Point(0, 321);
-            this.btnBatchUpload.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.btnBatchUpload.Name = "btnBatchUpload";
-            this.btnBatchUpload.Size = new System.Drawing.Size(250, 60);
-            this.btnBatchUpload.TabIndex = 7;
-            this.btnBatchUpload.Text = "Batch Upload";
-            this.btnBatchUpload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBatchUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnBatchUpload.UseVisualStyleBackColor = false;
-            this.btnBatchUpload.Click += new System.EventHandler(this.btnUpload_Click);
+            this.pnlAdminSubMenu.Controls.Add(this.btnFaculty);
+            this.pnlAdminSubMenu.Controls.Add(this.btnCourse);
+            this.pnlAdminSubMenu.Controls.Add(this.btnProgram);
+            this.pnlAdminSubMenu.Controls.Add(this.btnCurriculum);
+            this.pnlAdminSubMenu.Location = new System.Drawing.Point(0, 445);
+            this.pnlAdminSubMenu.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.pnlAdminSubMenu.Name = "pnlAdminSubMenu";
+            this.pnlAdminSubMenu.Size = new System.Drawing.Size(250, 240);
+            this.pnlAdminSubMenu.TabIndex = 17;
+            this.pnlAdminSubMenu.Visible = false;
+            // 
+            // btnDashboard
+            // 
+            this.btnDashboard.ActiveColor = System.Drawing.Color.Goldenrod;
+            this.btnDashboard.BackColor = System.Drawing.Color.Maroon;
+            this.btnDashboard.BorderColor = System.Drawing.Color.Transparent;
+            this.btnDashboard.BorderRadius = 10;
+            this.btnDashboard.BorderSize = 0;
+            this.btnDashboard.FlatAppearance.BorderSize = 0;
+            this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDashboard.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnDashboard.ForeColor = System.Drawing.Color.White;
+            this.btnDashboard.HoverColor = System.Drawing.Color.Goldenrod;
+            this.btnDashboard.IconSize = 30;
+            this.btnDashboard.Image = ((System.Drawing.Image)(resources.GetObject("btnDashboard.Image")));
+            this.btnDashboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDashboard.IndentLevel = 0;
+            this.btnDashboard.IsActive = false;
+            this.btnDashboard.Location = new System.Drawing.Point(0, 197);
+            this.btnDashboard.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.Size = new System.Drawing.Size(250, 60);
+            this.btnDashboard.TabIndex = 5;
+            this.btnDashboard.Text = "Dashboard";
+            this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnDashboard.UseVisualStyleBackColor = false;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // btnSearch
             // 
@@ -157,102 +171,61 @@ namespace PUP_RMS.Forms
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // pnlAdminSubMenu
+            // btnBatchUpload
             // 
-            this.pnlAdminSubMenu.Controls.Add(this.btnFaculty);
-            this.pnlAdminSubMenu.Controls.Add(this.btnCourse);
-            this.pnlAdminSubMenu.Controls.Add(this.btnProgram);
-            this.pnlAdminSubMenu.Controls.Add(this.btnCurriculum);
-            this.pnlAdminSubMenu.Location = new System.Drawing.Point(0, 445);
-            this.pnlAdminSubMenu.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.pnlAdminSubMenu.Name = "pnlAdminSubMenu";
-            this.pnlAdminSubMenu.Size = new System.Drawing.Size(250, 240);
-            this.pnlAdminSubMenu.TabIndex = 17;
-            this.pnlAdminSubMenu.Visible = false;
+            this.btnBatchUpload.ActiveColor = System.Drawing.Color.Goldenrod;
+            this.btnBatchUpload.BackColor = System.Drawing.Color.Maroon;
+            this.btnBatchUpload.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnBatchUpload.BorderRadius = 10;
+            this.btnBatchUpload.BorderSize = 0;
+            this.btnBatchUpload.FlatAppearance.BorderSize = 0;
+            this.btnBatchUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBatchUpload.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnBatchUpload.ForeColor = System.Drawing.Color.White;
+            this.btnBatchUpload.HoverColor = System.Drawing.Color.Goldenrod;
+            this.btnBatchUpload.IconSize = 30;
+            this.btnBatchUpload.Image = ((System.Drawing.Image)(resources.GetObject("btnBatchUpload.Image")));
+            this.btnBatchUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBatchUpload.IndentLevel = 0;
+            this.btnBatchUpload.IsActive = false;
+            this.btnBatchUpload.Location = new System.Drawing.Point(0, 321);
+            this.btnBatchUpload.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.btnBatchUpload.Name = "btnBatchUpload";
+            this.btnBatchUpload.Size = new System.Drawing.Size(250, 60);
+            this.btnBatchUpload.TabIndex = 7;
+            this.btnBatchUpload.Text = "Batch Upload";
+            this.btnBatchUpload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBatchUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnBatchUpload.UseVisualStyleBackColor = false;
+            this.btnBatchUpload.Click += new System.EventHandler(this.btnUpload_Click);
             // 
-            // btnCurriculum
+            // btnAdminTool
             // 
-            this.btnCurriculum.ActiveColor = System.Drawing.Color.Goldenrod;
-            this.btnCurriculum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(16)))), ((int)(((byte)(7)))));
-            this.btnCurriculum.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCurriculum.BorderRadius = 10;
-            this.btnCurriculum.BorderSize = 0;
-            this.btnCurriculum.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnCurriculum.FlatAppearance.BorderSize = 0;
-            this.btnCurriculum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCurriculum.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnCurriculum.ForeColor = System.Drawing.Color.White;
-            this.btnCurriculum.HoverColor = System.Drawing.Color.Goldenrod;
-            this.btnCurriculum.IconSize = 30;
-            this.btnCurriculum.Image = ((System.Drawing.Image)(resources.GetObject("btnCurriculum.Image")));
-            this.btnCurriculum.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCurriculum.IndentLevel = 2;
-            this.btnCurriculum.IsActive = false;
-            this.btnCurriculum.Location = new System.Drawing.Point(0, 0);
-            this.btnCurriculum.Name = "btnCurriculum";
-            this.btnCurriculum.Size = new System.Drawing.Size(250, 60);
-            this.btnCurriculum.TabIndex = 15;
-            this.btnCurriculum.Text = "Curriculum";
-            this.btnCurriculum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCurriculum.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCurriculum.UseVisualStyleBackColor = false;
-            this.btnCurriculum.Click += new System.EventHandler(this.btnCurriculum_Click_1);
-            // 
-            // btnProgram
-            // 
-            this.btnProgram.ActiveColor = System.Drawing.Color.Goldenrod;
-            this.btnProgram.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(16)))), ((int)(((byte)(7)))));
-            this.btnProgram.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnProgram.BorderRadius = 10;
-            this.btnProgram.BorderSize = 0;
-            this.btnProgram.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnProgram.FlatAppearance.BorderSize = 0;
-            this.btnProgram.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnProgram.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnProgram.ForeColor = System.Drawing.Color.White;
-            this.btnProgram.HoverColor = System.Drawing.Color.Goldenrod;
-            this.btnProgram.IconSize = 30;
-            this.btnProgram.Image = ((System.Drawing.Image)(resources.GetObject("btnProgram.Image")));
-            this.btnProgram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProgram.IndentLevel = 2;
-            this.btnProgram.IsActive = false;
-            this.btnProgram.Location = new System.Drawing.Point(0, 60);
-            this.btnProgram.Name = "btnProgram";
-            this.btnProgram.Size = new System.Drawing.Size(250, 60);
-            this.btnProgram.TabIndex = 16;
-            this.btnProgram.Text = "Program";
-            this.btnProgram.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProgram.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnProgram.UseVisualStyleBackColor = false;
-            this.btnProgram.Click += new System.EventHandler(this.btnProgram_Click_1);
-            // 
-            // btnCourse
-            // 
-            this.btnCourse.ActiveColor = System.Drawing.Color.Goldenrod;
-            this.btnCourse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(16)))), ((int)(((byte)(7)))));
-            this.btnCourse.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCourse.BorderRadius = 10;
-            this.btnCourse.BorderSize = 0;
-            this.btnCourse.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnCourse.FlatAppearance.BorderSize = 0;
-            this.btnCourse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCourse.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnCourse.ForeColor = System.Drawing.Color.White;
-            this.btnCourse.HoverColor = System.Drawing.Color.Goldenrod;
-            this.btnCourse.IconSize = 30;
-            this.btnCourse.Image = ((System.Drawing.Image)(resources.GetObject("btnCourse.Image")));
-            this.btnCourse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCourse.IndentLevel = 2;
-            this.btnCourse.IsActive = false;
-            this.btnCourse.Location = new System.Drawing.Point(0, 120);
-            this.btnCourse.Name = "btnCourse";
-            this.btnCourse.Size = new System.Drawing.Size(250, 60);
-            this.btnCourse.TabIndex = 17;
-            this.btnCourse.Text = "Course";
-            this.btnCourse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCourse.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCourse.UseVisualStyleBackColor = false;
-            this.btnCourse.Click += new System.EventHandler(this.btnCourse_Click_1);
+            this.btnAdminTool.ActiveColor = System.Drawing.Color.Goldenrod;
+            this.btnAdminTool.BackColor = System.Drawing.Color.Maroon;
+            this.btnAdminTool.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnAdminTool.BorderRadius = 10;
+            this.btnAdminTool.BorderSize = 0;
+            this.btnAdminTool.FlatAppearance.BorderSize = 0;
+            this.btnAdminTool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdminTool.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnAdminTool.ForeColor = System.Drawing.Color.White;
+            this.btnAdminTool.HoverColor = System.Drawing.Color.Goldenrod;
+            this.btnAdminTool.IconSize = 30;
+            this.btnAdminTool.Image = ((System.Drawing.Image)(resources.GetObject("btnAdminTool.Image")));
+            this.btnAdminTool.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAdminTool.IndentLevel = 0;
+            this.btnAdminTool.IsActive = false;
+            this.btnAdminTool.Location = new System.Drawing.Point(0, 383);
+            this.btnAdminTool.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.btnAdminTool.Name = "btnAdminTool";
+            this.btnAdminTool.Size = new System.Drawing.Size(250, 60);
+            this.btnAdminTool.TabIndex = 15;
+            this.btnAdminTool.Text = "Admin Tool";
+            this.btnAdminTool.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAdminTool.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAdminTool.UseVisualStyleBackColor = false;
+            this.btnAdminTool.Click += new System.EventHandler(this.btnAdminTool_Click);
             // 
             // btnFaculty
             // 
@@ -283,33 +256,89 @@ namespace PUP_RMS.Forms
             this.btnFaculty.UseVisualStyleBackColor = false;
             this.btnFaculty.Click += new System.EventHandler(this.btnFaculty_Click_1);
             // 
-            // btnAdminTool
+            // btnCourse
             // 
-            this.btnAdminTool.ActiveColor = System.Drawing.Color.Goldenrod;
-            this.btnAdminTool.BackColor = System.Drawing.Color.Maroon;
-            this.btnAdminTool.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnAdminTool.BorderRadius = 10;
-            this.btnAdminTool.BorderSize = 0;
-            this.btnAdminTool.FlatAppearance.BorderSize = 0;
-            this.btnAdminTool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdminTool.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnAdminTool.ForeColor = System.Drawing.Color.White;
-            this.btnAdminTool.HoverColor = System.Drawing.Color.Goldenrod;
-            this.btnAdminTool.IconSize = 30;
-            this.btnAdminTool.Image = ((System.Drawing.Image)(resources.GetObject("btnAdminTool.Image")));
-            this.btnAdminTool.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAdminTool.IndentLevel = 0;
-            this.btnAdminTool.IsActive = false;
-            this.btnAdminTool.Location = new System.Drawing.Point(0, 383);
-            this.btnAdminTool.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.btnAdminTool.Name = "btnAdminTool";
-            this.btnAdminTool.Size = new System.Drawing.Size(250, 60);
-            this.btnAdminTool.TabIndex = 15;
-            this.btnAdminTool.Text = "Admin Tool";
-            this.btnAdminTool.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAdminTool.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAdminTool.UseVisualStyleBackColor = false;
-            this.btnAdminTool.Click += new System.EventHandler(this.btnAdminTool_Click);
+            this.btnCourse.ActiveColor = System.Drawing.Color.Goldenrod;
+            this.btnCourse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(16)))), ((int)(((byte)(7)))));
+            this.btnCourse.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCourse.BorderRadius = 10;
+            this.btnCourse.BorderSize = 0;
+            this.btnCourse.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCourse.FlatAppearance.BorderSize = 0;
+            this.btnCourse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCourse.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnCourse.ForeColor = System.Drawing.Color.White;
+            this.btnCourse.HoverColor = System.Drawing.Color.Goldenrod;
+            this.btnCourse.IconSize = 30;
+            this.btnCourse.Image = ((System.Drawing.Image)(resources.GetObject("btnCourse.Image")));
+            this.btnCourse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCourse.IndentLevel = 2;
+            this.btnCourse.IsActive = false;
+            this.btnCourse.Location = new System.Drawing.Point(0, 120);
+            this.btnCourse.Name = "btnCourse";
+            this.btnCourse.Size = new System.Drawing.Size(250, 60);
+            this.btnCourse.TabIndex = 17;
+            this.btnCourse.Text = "Course";
+            this.btnCourse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCourse.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCourse.UseVisualStyleBackColor = false;
+            this.btnCourse.Click += new System.EventHandler(this.btnCourse_Click_1);
+            // 
+            // btnProgram
+            // 
+            this.btnProgram.ActiveColor = System.Drawing.Color.Goldenrod;
+            this.btnProgram.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(16)))), ((int)(((byte)(7)))));
+            this.btnProgram.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnProgram.BorderRadius = 10;
+            this.btnProgram.BorderSize = 0;
+            this.btnProgram.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnProgram.FlatAppearance.BorderSize = 0;
+            this.btnProgram.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProgram.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnProgram.ForeColor = System.Drawing.Color.White;
+            this.btnProgram.HoverColor = System.Drawing.Color.Goldenrod;
+            this.btnProgram.IconSize = 30;
+            this.btnProgram.Image = ((System.Drawing.Image)(resources.GetObject("btnProgram.Image")));
+            this.btnProgram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProgram.IndentLevel = 2;
+            this.btnProgram.IsActive = false;
+            this.btnProgram.Location = new System.Drawing.Point(0, 60);
+            this.btnProgram.Name = "btnProgram";
+            this.btnProgram.Size = new System.Drawing.Size(250, 60);
+            this.btnProgram.TabIndex = 16;
+            this.btnProgram.Text = "Program";
+            this.btnProgram.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProgram.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnProgram.UseVisualStyleBackColor = false;
+            this.btnProgram.Click += new System.EventHandler(this.btnProgram_Click_1);
+            // 
+            // btnCurriculum
+            // 
+            this.btnCurriculum.ActiveColor = System.Drawing.Color.Goldenrod;
+            this.btnCurriculum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(16)))), ((int)(((byte)(7)))));
+            this.btnCurriculum.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCurriculum.BorderRadius = 10;
+            this.btnCurriculum.BorderSize = 0;
+            this.btnCurriculum.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCurriculum.FlatAppearance.BorderSize = 0;
+            this.btnCurriculum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCurriculum.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnCurriculum.ForeColor = System.Drawing.Color.White;
+            this.btnCurriculum.HoverColor = System.Drawing.Color.Goldenrod;
+            this.btnCurriculum.IconSize = 30;
+            this.btnCurriculum.Image = ((System.Drawing.Image)(resources.GetObject("btnCurriculum.Image")));
+            this.btnCurriculum.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCurriculum.IndentLevel = 2;
+            this.btnCurriculum.IsActive = false;
+            this.btnCurriculum.Location = new System.Drawing.Point(0, 0);
+            this.btnCurriculum.Name = "btnCurriculum";
+            this.btnCurriculum.Size = new System.Drawing.Size(250, 60);
+            this.btnCurriculum.TabIndex = 15;
+            this.btnCurriculum.Text = "Curriculum";
+            this.btnCurriculum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCurriculum.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCurriculum.UseVisualStyleBackColor = false;
+            this.btnCurriculum.Click += new System.EventHandler(this.btnCurriculum_Click_1);
             // 
             // btnAccounts
             // 
@@ -367,42 +396,13 @@ namespace PUP_RMS.Forms
             this.btnLogout.UseVisualStyleBackColor = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
-            // btnDashboard
-            // 
-            this.btnDashboard.ActiveColor = System.Drawing.Color.Goldenrod;
-            this.btnDashboard.BackColor = System.Drawing.Color.Maroon;
-            this.btnDashboard.BorderColor = System.Drawing.Color.Transparent;
-            this.btnDashboard.BorderRadius = 10;
-            this.btnDashboard.BorderSize = 0;
-            this.btnDashboard.FlatAppearance.BorderSize = 0;
-            this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDashboard.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnDashboard.ForeColor = System.Drawing.Color.White;
-            this.btnDashboard.HoverColor = System.Drawing.Color.Goldenrod;
-            this.btnDashboard.IconSize = 30;
-            this.btnDashboard.Image = ((System.Drawing.Image)(resources.GetObject("btnDashboard.Image")));
-            this.btnDashboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDashboard.IndentLevel = 0;
-            this.btnDashboard.IsActive = false;
-            this.btnDashboard.Location = new System.Drawing.Point(0, 197);
-            this.btnDashboard.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.Size = new System.Drawing.Size(250, 60);
-            this.btnDashboard.TabIndex = 5;
-            this.btnDashboard.Text = "Dashboard";
-            this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnDashboard.UseVisualStyleBackColor = false;
-            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
-            // 
             // MainDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1900, 1080);
+            this.ClientSize = new System.Drawing.Size(1900, 1061);
             this.Controls.Add(this.pnlContent);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
