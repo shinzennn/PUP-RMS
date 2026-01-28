@@ -22,12 +22,7 @@ namespace PUP_RMS.Forms
         private void btnSave_Click(object sender, EventArgs e)
         {
 
-            dgvProgram.DataSource = ProgramHelper.GetAllProgram();
-            dgvProgram.ClearSelection();
-            dgvProgram.CurrentCell = null;
-            dgvProgram.Columns["ProgramID"].Visible = false;
-            dgvProgram.Columns["ProgramCode"].Width = 180;
-            // VALIDATION
+            
             if (string.IsNullOrEmpty(txtProgamCode.Text) || string.IsNullOrEmpty(txtProgramDesc.Text))
             {
                 MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);

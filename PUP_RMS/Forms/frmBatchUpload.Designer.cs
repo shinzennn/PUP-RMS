@@ -269,6 +269,20 @@
             this.viewBtn.UseVisualStyleBackColor = false;
             this.viewBtn.Click += new System.EventHandler(this.viewBtn_Click);
             // 
+            // currentImage
+            // 
+            this.currentImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.currentImage.BackColor = System.Drawing.Color.MistyRose;
+            this.currentImage.Location = new System.Drawing.Point(20, 208);
+            this.currentImage.Margin = new System.Windows.Forms.Padding(20);
+            this.currentImage.Name = "currentImage";
+            this.currentImage.Size = new System.Drawing.Size(636, 261);
+            this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.currentImage.TabIndex = 8;
+            this.currentImage.TabStop = false;
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -350,6 +364,18 @@
             this.programCmbox.Size = new System.Drawing.Size(127, 28);
             this.programCmbox.TabIndex = 11;
             this.programCmbox.Text = "Program ";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label6.Location = new System.Drawing.Point(216, 6);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(76, 20);
+            this.label6.TabIndex = 32;
+            this.label6.Text = "Program";
             // 
             // label5
             // 
