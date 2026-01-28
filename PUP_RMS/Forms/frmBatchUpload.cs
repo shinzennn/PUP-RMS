@@ -456,6 +456,22 @@ namespace PUP_RMS.Forms
                 string savedFileName = filenameTxtbox.Text + extension;
                 string savedFilePath = Path.Combine(folderPath, savedFileName);
 
+
+                if (checkGradeSheetDuplicate(filenameTxtbox.Text))
+                {
+                    MessageBox.Show(
+                    "Duplicated Filename Detected. Please change the filename.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+
+
+                    filenameTxtbox.Focus();
+                    filenameTxtbox.SelectAll();
+                    return;
+                }
+
                 File.Copy(sourcePath, savedFilePath, true);
 
                 int gradeSheetId = DbControl.InsertGradeSheet(
@@ -466,6 +482,8 @@ namespace PUP_RMS.Forms
                     Convert.ToInt32(professorCmbox.SelectedValue),
                     Convert.ToInt32(pageCmbox.SelectedValue), loggedInAdminId
                 );
+
+
 
                 if (gradeSheetId == -1)
                 {
@@ -480,8 +498,7 @@ namespace PUP_RMS.Forms
                     filenameTxtbox.Focus();
                     filenameTxtbox.SelectAll();
                     return;
-                }
-                ;
+                };
 
                 undoHistory.Push(new UndoItem
                 {
@@ -512,6 +529,19 @@ namespace PUP_RMS.Forms
                 filenameTxtbox.Text = "";
 
             }
+        }
+
+        private bool checkGradeSheetDuplicate (string baseFileName)
+        {
+            string query = "SELECT COUNT(*) AS Existing \r\nFROM GradeSheet\r\nWHERE Filename LIKE @Filename + '.%' OR Filename = @Filename;";
+
+            DbControl.AddParameter("@Filename", baseFileName, SqlDbType.VarChar);
+
+            DataTable dt = DbControl.ExecuteQuery(query);
+            if (Convert.ToInt32(dt.Rows[0]["Existing"]) > 0) {
+                return true;
+            }else { return false; }
+            
         }
 
         private int getCurriculumID(string curriculumYear, int progID, int yearLevel, int sem)

@@ -189,12 +189,14 @@
             // 
             // currentImage
             // 
-            this.currentImage.BackColor = System.Drawing.Color.MistyRose;
+            this.currentImage.BackColor = System.Drawing.Color.White;
             this.currentImage.Location = new System.Drawing.Point(20, 20);
             this.currentImage.Margin = new System.Windows.Forms.Padding(20);
+            this.currentImage.MaximumSize = new System.Drawing.Size(1000, 1000);
+            this.currentImage.MinimumSize = new System.Drawing.Size(1000, 1000);
             this.currentImage.Name = "currentImage";
-            this.currentImage.Size = new System.Drawing.Size(628, 235);
-            this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.currentImage.Size = new System.Drawing.Size(1000, 1000);
+            this.currentImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.currentImage.TabIndex = 8;
             this.currentImage.TabStop = false;
             this.currentImage.Click += new System.EventHandler(this.currentImage_Click);
@@ -678,7 +680,6 @@
             this.pnlGradesheetForm.ResumeLayout(false);
             this.pnlGradesheetForm.PerformLayout();
             this.imagePanel.ResumeLayout(false);
-            this.imagePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
