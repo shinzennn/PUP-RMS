@@ -333,6 +333,9 @@
     <EmbeddedResource Include="Forms\frmAdminTool.resx">
       <DependentUpon>frmAdminTool.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmCourseDescription.resx">
+      <DependentUpon>frmCourseDescription.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmCurriculum.resx">
       <DependentUpon>frmCurriculum.cs</DependentUpon>
     </EmbeddedResource>

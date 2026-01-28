@@ -36,33 +36,20 @@ namespace PUP_RMS.Forms
             dgvFaculty.CurrentCell = null;
             dgvFacultyColumnDesign();
 
-
-            cbxProgram.DisplayMember = "ProgramCode";
-            cbxProgram.ValueMember = "ProgramID";
-            cbxProgram.DataSource = FacultyHelper.GetAllProgram();
-            cbxProgram.SelectedIndex = -1;
-
         }
         private void btnRefresh_Click_1(object sender, EventArgs e)
         {
             RefreshGrid();
             txtSearch.Text = "";
-            cbxProgram.SelectedIndex = -1;
         }
         private void btnSearch_Click_1(object sender, EventArgs e)
         {
-            int selectedID = Convert.ToInt32(cbxProgram.SelectedValue);
             string searchTerm = txtSearch.Text.Trim();
 
-            // VALIDATION
-            if (!string.IsNullOrEmpty(searchTerm) && cbxProgram.Text == "")
-            {
-                dgvFaculty.DataSource = FacultyHelper.SearchFaculty(searchTerm);
-                return;
-            }
+            dgvFaculty.DataSource = FacultyHelper.SearchFaculty(searchTerm);
 
             // EXECUTE QUERY
-            dgvFaculty.DataSource = FacultyHelper.SearchFaculty(searchTerm, selectedID);
+            dgvFaculty.DataSource = FacultyHelper.SearchFaculty(searchTerm);
 
         }
         private void btnCreate_Click(object sender, EventArgs e)

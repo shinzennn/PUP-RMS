@@ -20,6 +20,15 @@ namespace PUP_RMS.Helper
             return dt;
         }
 
+        public static DataTable GetProgramByCurriculum(string curriculumYear = null)
+        {
+            DataTable dt = new DataTable();
+            DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            dt = DbControl.ExecuteQuery("sp_GetProgramsByCurriculumYear");
+
+            return dt;
+        }
+
         // CREATE Program
         public static void CreatProgram(Programs program)
         {
@@ -71,7 +80,7 @@ namespace PUP_RMS.Helper
 
         }
 
-        public static DataTable SearchProgram(string searchTerm)
+        public static DataTable SearchProgram(string searchTerm, string curriculumYear)
         {
             // CREATE DATATABLE TO HOLD RESULTS
             DataTable dt = new DataTable();
@@ -81,6 +90,9 @@ namespace PUP_RMS.Helper
 
             // ADD PARAMETERS
             DbControl.AddParameter("@SearchTerm", searchTerm, SqlDbType.VarChar);
+            DbControl.AddParameter("@CurriculumYear",
+            string.IsNullOrWhiteSpace(curriculumYear) ? (object)DBNull.Value : curriculumYear,
+            SqlDbType.VarChar);
 
 
             // EXECUTE QUERY AND CLEAR PARAMETERS

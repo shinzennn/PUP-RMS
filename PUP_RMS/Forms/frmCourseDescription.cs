@@ -53,7 +53,6 @@ namespace PUP_RMS.Forms
         {
             // GET VALUES FROM SELECTED ROW
             string courseCode = selectedRow.Cells["CourseCode"].Value?.ToString();
-            string curriculumYear = selectedRow.Cells["CurriculumYear"].Value?.ToString();
             string courseDesc = txtCrsDesc.Text;
             int courseID = Convert.ToInt32(selectedRow.Cells["CourseID"].Value);
 
@@ -65,7 +64,7 @@ namespace PUP_RMS.Forms
             if (crsForm != null)
             {
                 // PASS VALUES TO OPEN FORM
-                crsForm.LoadFromCourseDescription(courseCode, curriculumYear, courseDesc, courseID);
+                crsForm.LoadFromCourseDescription(courseCode, null, courseDesc, courseID);
                 crsForm.BringToFront();
                 crsForm.Focus();
             }
