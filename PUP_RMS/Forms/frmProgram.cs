@@ -27,12 +27,14 @@ namespace PUP_RMS.Forms
        
         public void Reset()
         {
+            
+
             txtProgamCode.Clear();
             txtProgramDesc.Clear();
             txtSearch.Clear();
             panelProginfo.Enabled = false;
             dgvProgram.Enabled = true;
-            btnEdit.Visible = true;
+            btnEdit.Visible = false;
             btnSave.Visible = false;
             btnCancel.Visible = false;
             btnClickState = 0;
@@ -61,6 +63,11 @@ namespace PUP_RMS.Forms
         // CONTROL METHODS
         private void RefreshGrid()
         {
+            cbxCurriculum.DisplayMember = "CurriculumYear";
+            cbxCurriculum.ValueMember = "CurriculumID";
+            cbxCurriculum.DataSource = CourseHelper.GetAllCurriculum();
+            cbxCurriculum.SelectedIndex = -1;
+
             dgvProgram.DataSource = ProgramHelper.GetAllProgram();
             dgvProgram.ClearSelection();
             dgvProgram.CurrentCell = null;
@@ -138,7 +145,6 @@ namespace PUP_RMS.Forms
             txtProgamCode.Focus();
             btnClickState = 2; // EDIT
             panelProginfo.Enabled = true;
-            btnCreate.Visible = false;
             btnSave.Visible = true;
             btnCancel.Visible = true;
 
@@ -165,9 +171,9 @@ namespace PUP_RMS.Forms
             }
 
             string searchTerm = txtSearch.Text.Trim();
-
+            
             // EXECUTE QUERY
-            dgvProgram.DataSource = ProgramHelper.SearchProgram(searchTerm);
+            dgvProgram.DataSource = ProgramHelper.SearchProgram(searchTerm, cbxCurriculum.Text);
 
             dgvProgram.Columns["ProgramCode"].Width = 180;
         }
@@ -175,6 +181,21 @@ namespace PUP_RMS.Forms
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             Reset();
+        }
+
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbxCurriculum_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dgvProgram.DataSource = ProgramHelper.GetProgramByCurriculum(cbxCurriculum.Text);
+            dgvProgram.ClearSelection();
+            dgvProgram.CurrentCell = null;
+            dgvProgram.Columns["ProgramID"].Visible = false;
+            dgvProgram.Columns["ProgramCode"].Width = 180;
         }
     }
 }

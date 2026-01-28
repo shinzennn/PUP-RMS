@@ -32,6 +32,46 @@ namespace PUP_RMS.Helper
             return dt;
         }
 
+        //Curriculum on cbx
+        public static DataTable GetCourseByCurriculumYear(string curriculumYear = null)
+        {
+            DataTable dt = new DataTable();
+            DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            dt = DbControl.ExecuteQuery("sp_GetCoursesByCurriculumYear");
+
+            return dt;
+        }
+
+        //Update datagrid when selected curriculum
+        public static DataTable GetAllCurriculum()
+        {
+            DataTable dt = new DataTable();
+
+            dt = DbControl.ExecuteQuery("sp_GetAllCurriculum");
+
+            return dt;
+        }
+
+        //Program on cbx by curriculum
+        public static DataTable GetProgramByCurriculum(string curriculumYear = null)
+        {
+            DataTable dt = new DataTable();
+            DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            dt = DbControl.ExecuteQuery("sp_GetProgramsByCurriculumYear");
+
+            return dt;
+        }
+
+        //Get all course by program
+        public static DataTable GetAllCourseByProgram(int programID)
+        {
+            DataTable dt = new DataTable();
+            DbControl.AddParameter("@ProgramID", programID, SqlDbType.Int);
+            dt = DbControl.ExecuteQuery("sp_GetCoursesByProgram");
+
+            return dt;
+        }
+
         // CREATE COURSE
         public static void CreateCourse(Course course)
         {
@@ -45,7 +85,7 @@ namespace PUP_RMS.Helper
                 // Add parameters
                 DbControl.AddParameter("@CourseCode", course.CourseCode, SqlDbType.VarChar);
                 DbControl.AddParameter("@CourseDescription", course.CourseDescription, SqlDbType.VarChar);
-                DbControl.AddParameter("@CurriculumYear", course.CurriculumYear, SqlDbType.VarChar);
+       
 
 
                 // Success message
@@ -99,7 +139,7 @@ namespace PUP_RMS.Helper
                 DbControl.AddParameter("@CourseID", course.CourseID, SqlDbType.Int);
                 DbControl.AddParameter("@CourseCode", course.CourseCode, SqlDbType.VarChar);
                 DbControl.AddParameter("@CourseDescription", course.CourseDescription, SqlDbType.VarChar);
-                DbControl.AddParameter("@CurriculumYear", course.CurriculumYear, SqlDbType.VarChar);
+            
 
                 // Execute stored procedure
                 int rowsAffected = DbControl.ExecuteNonQuery(procedureName);
@@ -148,21 +188,25 @@ namespace PUP_RMS.Helper
         }
 
         // SEARCH COURSE
-        public static DataTable SearchCourse(string searchTerm)
+        public static DataTable SearchCourse(string searchTerm, string curriculumYear, int? progID)
         {
-            // CREATE DATATABLE TO HOLD RESULTS
             DataTable dt = new DataTable();
-
-            //STORED PROCEDURE NAME
             string procedureName = "sp_SearchCourse";
 
-            // ADD PARAMETERS
-            DbControl.AddParameter("@SearchTerm", searchTerm, SqlDbType.VarChar);
+            // Pass DBNull.Value when a parameter should be NULL
+            DbControl.AddParameter("@CurriculumYear",
+                string.IsNullOrWhiteSpace(curriculumYear) ? (object)DBNull.Value : curriculumYear,
+                SqlDbType.VarChar);
 
+            DbControl.AddParameter("@ProgramID",
+                progID.HasValue ? (object)progID.Value : DBNull.Value,
+                SqlDbType.Int);
 
-            // EXECUTE QUERY AND CLEAR PARAMETERS
+            DbControl.AddParameter("@SearchTerm",
+                string.IsNullOrWhiteSpace(searchTerm) ? (object)DBNull.Value : searchTerm,
+                SqlDbType.VarChar);
+
             dt = DbControl.ExecuteQuery(procedureName);
-
             return dt;
         }
     }

@@ -17,7 +17,7 @@ namespace PUP_RMS.Forms
     public partial class frmCourse : Form
     {
         int courseIDFrmDesc = 0;
-        public frmCourse(string courseCode = null, string curriculumYear = null, string courseDesc = null, int courseID = 0)
+        public frmCourse(string courseCode = null, string courseDesc = null, int courseID = 0)
         {
             InitializeComponent();
          
@@ -34,13 +34,11 @@ namespace PUP_RMS.Forms
             courseIDFrmDesc = courseID;
 
             txtCrsCode.Text = courseCode;
-            txtCuryear.Text = curriculumYear;
             txtSubDesc.Text = courseDesc;
 
             panelSubInfo.Enabled = true;
             btnSave.Visible = true;
             btnCancel.Visible = true;
-            btnCreate.Visible = false;
         }
 
         DataGridViewRow selectedRow = null;
@@ -73,24 +71,35 @@ namespace PUP_RMS.Forms
         // CONTROL METHODS
         private void RefreshGrid()
         {
+
+            cbxCurriculum.DisplayMember = "CurriculumYear";
+            cbxCurriculum.ValueMember = "CurriculumID";
+            cbxCurriculum.DataSource = CourseHelper.GetAllCurriculum();
+            cbxCurriculum.SelectedIndex = -1;
+
+
+            cbxProgram.DisplayMember = "ProgramCode";
+            cbxProgram.ValueMember = "ProgramID";
+            cbxProgram.DataSource = CourseHelper.GetProgramByCurriculum();
+            cbxProgram.SelectedIndex = -1;
+
+
+
             dgvCourse.DataSource = CourseHelper.GetAllCourse();
             dgvCourse.ClearSelection();
             dgvCourse.CurrentCell = null;
             dgvCourse.Columns["CourseID"].Visible = false;
             dgvCourse.Columns["CourseCode"].Visible = false;
-            dgvCourse.Columns["CurriculumYear"].Visible = false;
         }
 
         private void Reset()
         {
             txtCrsCode.Text = "";
-            txtCuryear.Text = "";
             txtSubDesc.Text = "";
             panelSubInfo.Enabled = false;
             btnCancel.Visible = false;
             btnSave.Visible = false;
             btnEdit.Visible = false;
-            btnCreate.Visible = true;
             RefreshGrid();
         }
 
@@ -101,7 +110,6 @@ namespace PUP_RMS.Forms
             panelSubInfo.Enabled = true;
             txtCrsCode.Focus();
             btnClickState = 1; // CREATE
-            btnCreate.Visible = false;
             btnSave.Visible = true;
             btnCancel.Visible = true;
             btnEdit.Visible = false;
@@ -110,15 +118,33 @@ namespace PUP_RMS.Forms
         private void btnSearch_Click(object sender, EventArgs e)
         {
             // VALIDATION
-            if (string.IsNullOrEmpty(txtSearch.Text))
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
                 return;
             }
 
             string searchTerm = txtSearch.Text.Trim();
+            string curriculum = string.IsNullOrWhiteSpace(cbxCurriculum.Text) ? null : cbxCurriculum.Text;
+
+            // Safely obtain programID
+            int? programID = null;
+            var sel = cbxProgram.SelectedValue;
+            if (sel != null && sel != DBNull.Value)
+            {
+                if (sel is DataRowView)
+                {
+                    var drv = cbxProgram.SelectedItem as DataRowView;
+                    programID = drv?.Row.Field<int?>("ProgramID");
+                }
+                else
+                {
+                    // Covers boxed numeric types (int, long, short, etc.)
+                    programID = Convert.ToInt32(sel);
+                }
+            }
 
             // EXECUTE QUERY
-            dgvCourse.DataSource = CourseHelper.SearchCourse(searchTerm);
+            dgvCourse.DataSource = CourseHelper.SearchCourse(searchTerm, curriculum, programID);
             btnClickState = 4; // SEARCH
         }
 
@@ -158,15 +184,14 @@ namespace PUP_RMS.Forms
 
         private void dgvCourse_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(btnClickState != 4)
-            {
+          
                 selectedRow = dgvCourse.Rows[e.RowIndex];
 
                 if (selectedRow != null)
                 {
                     btnEdit.Visible = true;
                 }
-            }
+            
           
         }
 
@@ -179,12 +204,10 @@ namespace PUP_RMS.Forms
             panelSubInfo.Enabled = true;
             txtCrsCode.Focus();
             btnClickState = 2; // EDIT
-            btnCreate.Visible = false;
             btnSave.Visible = true;
             btnCancel.Visible = true;
 
             txtCrsCode.Text = selectedRow.Cells["CourseCode"].Value.ToString();
-            txtCuryear.Text = selectedRow.Cells["CurriculumYear"].Value.ToString();
             txtSubDesc.Text = selectedRow.Cells["CourseDescription"].Value.ToString();
 
            
@@ -198,7 +221,7 @@ namespace PUP_RMS.Forms
         private void btnSave_Click(object sender, EventArgs e)
         {
             // VALIDATION
-            if (string.IsNullOrEmpty(txtCrsCode.Text) || string.IsNullOrEmpty(txtCuryear.Text) || string.IsNullOrEmpty(txtSubDesc.Text))
+            if (string.IsNullOrEmpty(txtCrsCode.Text) || string.IsNullOrEmpty(txtSubDesc.Text))
             {
                 MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -213,7 +236,6 @@ namespace PUP_RMS.Forms
             // CREATE COURSE OBJECT
             Course Course = new Course 
             { CourseCode = txtCrsCode.Text.Trim(), 
-              CurriculumYear = txtCuryear.Text.Trim(), 
               CourseDescription = txtSubDesc.Text.Trim() 
             };
 
@@ -247,8 +269,49 @@ namespace PUP_RMS.Forms
             }
         }
 
-        private void dgvCourse_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+   
+
+     
+
+        private void cbxCurriculum_SelectedIndexChanged_1(object sender, EventArgs e)
         {
+            dgvCourse.DataSource = CourseHelper.GetCourseByCurriculumYear(cbxCurriculum.Text);
+            dgvCourse.Columns["CourseID"].Visible = false;
+            dgvCourse.Columns["CourseCode"].Visible = false;
+            dgvCourse.Columns["CurriculumID"].Visible = false;
+            dgvCourse.Columns["CurriculumYear"].Visible = false;
+            dgvCourse.Columns["ProgramID"].Visible = false;
+            dgvCourse.Columns["YearLevel"].Visible = false;
+            dgvCourse.Columns["Semester"].Visible = false;
+
+
+            cbxProgram.DataSource = CourseHelper.GetProgramByCurriculum(cbxCurriculum.Text);
+            cbxProgram.DisplayMember = "ProgramCode";
+            cbxProgram.ValueMember = "ProgramID";
+            cbxProgram.SelectedIndex = -1;
+        }
+
+        private void cbxProgram_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var drv = cbxProgram.SelectedItem as DataRowView;
+            if (drv == null) return;
+
+            // safe and handles DBNull if you use nullable:
+            int? programID = drv.Row.Field<int?>("ProgramID");
+            if (!programID.HasValue) return;
+
+            dgvCourse.DataSource = CourseHelper.GetAllCourseByProgram(programID.Value);
+            dgvCourse.Columns["CourseID"].Visible = false;
+            dgvCourse.Columns["CourseCode"].Visible = false;
+            dgvCourse.Columns["CurriculumID"].Visible = false;
+            dgvCourse.Columns["CurriculumYear"].Visible = false;
+            dgvCourse.Columns["YearLevel"].Visible = false;
+            dgvCourse.Columns["Semester"].Visible = false;
+        }
+
+        private void cbxProgram_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+           
           
         }
     }

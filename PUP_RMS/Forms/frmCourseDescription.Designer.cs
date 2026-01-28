@@ -28,19 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.roundedShadowPanel1 = new PUP_RMS.RoundedShadowPanel();
-            this.btnEdit = new PUP_RMS.RoundedButton();
             this.roundedShadowPanel4 = new PUP_RMS.RoundedShadowPanel();
             this.txtCrsDesc = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.roundedShadowPanel2 = new PUP_RMS.RoundedShadowPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvCourseYear = new System.Windows.Forms.DataGridView();
+            this.btnEdit = new PUP_RMS.RoundedButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.roundedShadowPanel1.SuspendLayout();
             this.roundedShadowPanel4.SuspendLayout();
@@ -60,7 +62,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.87725F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 431F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(582, 593);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(582, 610);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // roundedShadowPanel1
@@ -80,30 +82,8 @@
             this.roundedShadowPanel1.ShadowDepth = 10;
             this.roundedShadowPanel1.ShadowEnabled = true;
             this.roundedShadowPanel1.ShadowShift = 5;
-            this.roundedShadowPanel1.Size = new System.Drawing.Size(576, 142);
+            this.roundedShadowPanel1.Size = new System.Drawing.Size(576, 159);
             this.roundedShadowPanel1.TabIndex = 0;
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEdit.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnEdit.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnEdit.BorderRadius = 20;
-            this.btnEdit.BorderSize = 0;
-            this.btnEdit.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnEdit.FlatAppearance.BorderSize = 0;
-            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.ForeColor = System.Drawing.Color.White;
-            this.btnEdit.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnEdit.Location = new System.Drawing.Point(463, 611);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(130, 38);
-            this.btnEdit.TabIndex = 29;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.TextColor = System.Drawing.Color.White;
-            this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // roundedShadowPanel4
             // 
@@ -161,10 +141,12 @@
             this.roundedShadowPanel2.BorderColor = System.Drawing.Color.Black;
             this.roundedShadowPanel2.BorderRadius = 20;
             this.roundedShadowPanel2.BorderSize = 1;
+            this.roundedShadowPanel2.Controls.Add(this.label4);
+            this.roundedShadowPanel2.Controls.Add(this.label3);
             this.roundedShadowPanel2.Controls.Add(this.label1);
             this.roundedShadowPanel2.Controls.Add(this.dgvCourseYear);
             this.roundedShadowPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedShadowPanel2.Location = new System.Drawing.Point(3, 165);
+            this.roundedShadowPanel2.Location = new System.Drawing.Point(3, 182);
             this.roundedShadowPanel2.Name = "roundedShadowPanel2";
             this.roundedShadowPanel2.PanelColor = System.Drawing.Color.LightGray;
             this.roundedShadowPanel2.PanelImage = null;
@@ -174,6 +156,38 @@
             this.roundedShadowPanel2.ShadowShift = 5;
             this.roundedShadowPanel2.Size = new System.Drawing.Size(576, 425);
             this.roundedShadowPanel2.TabIndex = 24;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(300, 63);
+            this.label4.Margin = new System.Windows.Forms.Padding(20);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(129, 29);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Curriculum";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(35, 63);
+            this.label3.Margin = new System.Windows.Forms.Padding(20);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(156, 29);
+            this.label3.TabIndex = 25;
+            this.label3.Text = "Course Code";
             // 
             // label1
             // 
@@ -193,8 +207,8 @@
             // 
             this.dgvCourseYear.AllowUserToAddRows = false;
             this.dgvCourseYear.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            this.dgvCourseYear.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvCourseYear.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCourseYear.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -202,44 +216,67 @@
             this.dgvCourseYear.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvCourseYear.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvCourseYear.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCourseYear.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCourseYear.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCourseYear.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCourseYear.ColumnHeadersVisible = false;
             this.dgvCourseYear.GridColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dgvCourseYear.Location = new System.Drawing.Point(31, 53);
+            this.dgvCourseYear.Location = new System.Drawing.Point(31, 103);
             this.dgvCourseYear.Name = "dgvCourseYear";
             this.dgvCourseYear.ReadOnly = true;
             this.dgvCourseYear.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCourseYear.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCourseYear.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCourseYear.RowHeadersVisible = false;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.Goldenrod;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCourseYear.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Goldenrod;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCourseYear.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvCourseYear.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCourseYear.Size = new System.Drawing.Size(509, 345);
+            this.dgvCourseYear.Size = new System.Drawing.Size(509, 295);
             this.dgvCourseYear.TabIndex = 2;
             this.dgvCourseYear.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourseYear_CellClick);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEdit.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnEdit.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnEdit.BorderRadius = 20;
+            this.btnEdit.BorderSize = 0;
+            this.btnEdit.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnEdit.FlatAppearance.BorderSize = 0;
+            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEdit.ForeColor = System.Drawing.Color.White;
+            this.btnEdit.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnEdit.Location = new System.Drawing.Point(479, 625);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(130, 38);
+            this.btnEdit.TabIndex = 29;
+            this.btnEdit.Text = "Edit";
+            this.btnEdit.TextColor = System.Drawing.Color.White;
+            this.btnEdit.UseVisualStyleBackColor = false;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // frmCourseDescription
             // 
@@ -277,5 +314,7 @@
         private RoundedShadowPanel roundedShadowPanel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvCourseYear;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
