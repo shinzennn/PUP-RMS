@@ -183,8 +183,6 @@ namespace PUP_RMS.Forms
             AttachHoverEffects(dcTotalSubjects);
             AttachHoverEffects(dcTotalProfessors);
             AttachHoverEffects(dcTotalProgram);
-            AttachHoverEffects(dcTotalProgram);
-
         }
 
         private void AttachHoverEffects(Control control)

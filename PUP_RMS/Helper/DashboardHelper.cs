@@ -80,6 +80,27 @@ namespace PUP_RMS.Helper
             return DbControl.ExecuteQuery("sp_GetSchoolYearsByCurriculum");
         }
 
+        // OVERLOAD: Get School Years filtered by Curriculum AND Program
+        // (Used specifically for the Program Distribution Drill-down view)
+        public static DataTable GetSchoolYears(string curriculumYear, string programCode)
+        {
+            DbControl.sqlParameters.Clear();
+
+            // 1. Curriculum Parameter
+            if (!string.IsNullOrEmpty(curriculumYear) && curriculumYear != "All")
+                DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@CurriculumYear", DBNull.Value, SqlDbType.VarChar);
+
+            // 2. Program Parameter
+            if (!string.IsNullOrEmpty(programCode) && programCode != "All")
+                DbControl.AddParameter("@ProgramCode", programCode, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@ProgramCode", DBNull.Value, SqlDbType.VarChar);
+
+            return DbControl.ExecuteQuery("sp_GetSchoolYearsByCurriculumAndProgram");
+        }
+
         // Load Semesters (Filtered by Curriculum and School Year)
         public static DataTable GetSemesters(string curriculumYear = null, string schoolYear = null)
         {
@@ -103,6 +124,23 @@ namespace PUP_RMS.Helper
             DbControl.AddParameter("@CurriculumYear", (string.IsNullOrEmpty(curriculumYear) || curriculumYear == "All") ? DBNull.Value : (object)curriculumYear, SqlDbType.VarChar);
 
             return DbControl.ExecuteQuery("sp_GetDistributionByProgram_Filtered");
+        }
+
+        public static DataTable GetYearLevelDistribution(string programCode, string schoolYear = null, string curriculumYear = null)
+        {
+            DbControl.sqlParameters.Clear();
+            DbControl.AddParameter("@ProgramCode", programCode, SqlDbType.VarChar);
+
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
+                DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
+
+            if (!string.IsNullOrEmpty(curriculumYear) && curriculumYear != "All")
+                DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@CurriculumYear", DBNull.Value, SqlDbType.VarChar);
+            return DbControl.ExecuteQuery("sp_GetYearLevelDistributionByProgram");
         }
 
         // ============================================================

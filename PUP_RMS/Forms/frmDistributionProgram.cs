@@ -162,14 +162,16 @@ namespace PUP_RMS.Forms
         private void LoadSchoolYearCombo()
         {
             string selectedCurr = cmbCurriculum.SelectedItem?.ToString();
-            string currentYear = cmbSchoolYear.SelectedItem?.ToString();
+            string currentSelection = cmbSchoolYear.SelectedItem?.ToString();
+            string filterProgram = _isDrilledDown ? _drilledProgramName : null;
 
             cmbSchoolYear.Items.Clear();
             cmbSchoolYear.Items.Add("All");
 
             try
             {
-                DataTable dt = DashboardHelper.GetSchoolYears(selectedCurr);
+                DataTable dt = DashboardHelper.GetSchoolYears(selectedCurr, filterProgram);
+
                 if (dt != null)
                 {
                     foreach (DataRow row in dt.Rows)
@@ -179,8 +181,10 @@ namespace PUP_RMS.Forms
                 }
             }
             catch { }
-
-            cmbSchoolYear.SelectedIndex = 0;
+            if (currentSelection != null && cmbSchoolYear.Items.Contains(currentSelection))
+                cmbSchoolYear.SelectedItem = currentSelection;
+            else
+                cmbSchoolYear.SelectedIndex = 0;
         }
 
         protected override void OnResize(EventArgs e)
@@ -197,34 +201,25 @@ namespace PUP_RMS.Forms
             if (lblFilter == null || cmbSchoolYear == null || lblCurriculum == null || cmbCurriculum == null) return;
 
             float scale = GetScaleFactor();
-
-            // 1. Calculate Header Height (Controls sit BELOW this)
             int headerHeight = (int)(50 * scale);
             if (headerHeight < 50) headerHeight = 50;
-
-            // 2. Define spacing and Y position
             int padding = 10;
-            int groupSpacing = (int)(40 * scale); // Space between Curriculum group and Year group
-            int yPos = headerHeight + (int)(15 * scale); // 15px below the maroon header
+            int groupSpacing = (int)(40 * scale); 
+            int yPos = headerHeight + (int)(15 * scale);
 
-            // 3. Calculate Total Width of the entire filter strip to center it
             int currGroupWidth = lblCurriculum.Width + padding + cmbCurriculum.Width;
             int yearGroupWidth = lblFilter.Width + padding + cmbSchoolYear.Width;
             int totalWidth = currGroupWidth + groupSpacing + yearGroupWidth;
 
-            // 4. Calculate Starting X
             int startX = (this.Width - totalWidth) / 2;
 
-            // 5. Position Curriculum (Left)
-            lblCurriculum.Location = new Point(startX, yPos + 3); // +3 to align text vertically with combo
+            lblCurriculum.Location = new Point(startX, yPos + 3); 
             cmbCurriculum.Location = new Point(lblCurriculum.Right + padding, yPos);
 
-            // 6. Position School Year (Right)
             int yearStartX = cmbCurriculum.Right + groupSpacing;
             lblFilter.Location = new Point(yearStartX, yPos + 3);
             cmbSchoolYear.Location = new Point(lblFilter.Right + padding, yPos);
 
-            // Ensure they are on top
             cmbSchoolYear.BringToFront();
             lblFilter.BringToFront();
             cmbCurriculum.BringToFront();
@@ -301,28 +296,70 @@ namespace PUP_RMS.Forms
             Invalidate();
         }
 
+
         private void LoadYearLevelData(ChartSegment parentProgram)
         {
+        
+            lblCurriculum.Visible = false;
+            cmbCurriculum.Visible = false;
+            lblFilter.Visible = false;
+            cmbSchoolYear.Visible = false;
+
+            
             _isDrilledDown = true;
             _drilledProgramName = parentProgram.Label;
 
-            int total = parentProgram.Value;
-            int y1 = (int)(total * 0.35);
-            int y2 = (int)(total * 0.25);
-            int y3 = (int)(total * 0.22);
-            int y4 = total - y1 - y2 - y3;
+            LoadSchoolYearCombo();
+            _isDrilledDown = true;
 
-            Color c = parentProgram.Color;
+           
+            string selectedYear = cmbSchoolYear.SelectedItem?.ToString();
+            string selectedCurriculum = cmbCurriculum.SelectedItem?.ToString();
 
-            _currentSegments = new List<ChartSegment>
+            DataTable dt = DashboardHelper.GetYearLevelDistribution(parentProgram.Label, selectedYear, selectedCurriculum);
+
+            Dictionary<int, int> dbCounts = new Dictionary<int, int>();
+            if (dt != null)
             {
-                new ChartSegment { Label = "1st Year", Value = y1, Color = c },
-                new ChartSegment { Label = "2nd Year", Value = y2, Color = ControlPaint.Light(c, 0.4f) },
-                new ChartSegment { Label = "3rd Year", Value = y3, Color = ControlPaint.Light(c, 0.8f) },
-                new ChartSegment { Label = "4th Year", Value = y4, Color = ControlPaint.Light(c, 1.2f) }
-            };
+                foreach (DataRow row in dt.Rows)
+                {
+                    int lvl = Convert.ToInt32(row["YearLevel"]);
+                    int cnt = Convert.ToInt32(row["Total"]);
+                    if (!dbCounts.ContainsKey(lvl)) dbCounts.Add(lvl, cnt);
+                }
+            }
+
+            _currentSegments = new List<ChartSegment>();
+            Color baseColor = parentProgram.Color;
+            int maxYear = 4;
+            if (dbCounts.Keys.Count > 0 && dbCounts.Keys.Max() > maxYear) maxYear = dbCounts.Keys.Max();
+
+            for (int i = 1; i <= maxYear; i++)
+            {
+                int count = dbCounts.ContainsKey(i) ? dbCounts[i] : 0;
+                string label = GetYearLabel(i);
+                float lightFactor = (i - 1) * 0.3f;
+                if (lightFactor > 1.5f) lightFactor = 1.5f;
+                Color yearColor = ControlPaint.Light(baseColor, lightFactor);
+
+                _currentSegments.Add(new ChartSegment { Label = label, Value = count, Color = yearColor });
+            }
 
             Invalidate();
+        }
+
+
+        private string GetYearLabel(int level)
+        {
+            switch (level)
+            {
+                case 1: return "1st Year";
+                case 2: return "2nd Year";
+                case 3: return "3rd Year";
+                case 4: return "4th Year";
+                case 5: return "5th Year";
+                default: return level + "th Year"; 
+            }
         }
 
         // =========================================================
@@ -339,68 +376,78 @@ namespace PUP_RMS.Forms
 
             float scale = GetScaleFactor();
 
-            // Header Height
             int headerHeight = (int)(50 * scale);
             if (headerHeight < 50) headerHeight = 50;
             Rectangle headerRect = new Rectangle(0, 0, Width, headerHeight);
-
-            // Filter Area Height (To push the chart down)
             int filterAreaHeight = (int)(50 * scale);
 
-            // 1. Draw Header
             using (SolidBrush brush = new SolidBrush(ClrMaroon))
-            {
                 g.FillRectangle(brush, headerRect);
-            }
-
-            // 2. Draw Title
-            string title;
-            if (_isDrilledDown)
-                title = $"Program > {_drilledProgramName}";
-            else
-                title = "Grade Sheets Distribution by Program";
-
-            using (Font titleFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
-            using (Brush textBrush = new SolidBrush(ClrGold))
-            {
-                float textX = _isDrilledDown ? (50 * scale) : (20 * scale);
-                g.DrawString(title, titleFont, textBrush, textX, headerRect.Height / 2 - titleFont.Height / 2);
-            }
 
             DrawWindowButtons(g, scale);
 
-            // 3. Calculate Content Rect (Pushing it down by filterAreaHeight)
+          if (_isDrilledDown)
+{
+    string programCode = _drilledProgramName; 
+    string labelText = " – Grade Sheets Distribution by Program Year Level";
+
+    float xPos = 60 * scale; 
+    float yPos = (headerRect.Height - 24 * scale) / 2f; 
+
+    using (Font codeFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+    using (Font labelFont = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+    using (Brush codeBrush = new SolidBrush(ClrGold))
+    using (Brush labelBrush = new SolidBrush(Color.Goldenrod))
+    {
+        g.DrawString(programCode, codeFont, codeBrush, xPos, yPos);
+
+        float codeWidth = g.MeasureString(programCode, codeFont).Width;
+
+        g.DrawString(labelText, labelFont, labelBrush, xPos + codeWidth, yPos);
+    }
+}
+else
+{
+    string title = "Grade Sheets Distribution by Program";
+    float xPos = 20 * scale;
+    float yPos = (headerRect.Height - 24 * scale) / 2f;
+
+    using (Font font = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+    using (Brush brush = new SolidBrush(Color.Goldenrod))
+    {
+        g.DrawString(title, font, brush, xPos, yPos);
+    }
+}
+
+
+
             int totalTopOffset = headerHeight + filterAreaHeight;
             Rectangle contentRect = new Rectangle(0, totalTopOffset, Width, Height - totalTopOffset);
 
             if (contentRect.Width < 50 || contentRect.Height < 50) return;
-
             long total = _currentSegments.Sum(s => (long)s.Value);
-            if (total == 0) return;
+
+            if (total == 0 && !_isDrilledDown) return;
+            if (total == 0) total = 1;
 
             float chartSize = 380 * scale;
             float thickness = 70 * scale;
-            float chartX = 60 * scale;
 
-            // Center the chart vertically in the remaining space
+            float chartX = _isDrilledDown ? (Width - chartSize) / 2f : 150 * scale;
             float chartY = totalTopOffset + (contentRect.Height - chartSize) / 2;
 
             _lastChartBounds = new RectangleF(chartX, chartY, chartSize, chartSize);
 
-            // Draw Chart
+
             DrawShadow(g, _lastChartBounds, scale);
             DrawDoughnutWithSpokes(g, _lastChartBounds, total, thickness, scale);
 
-            // Draw Legend
-            float legendX = _lastChartBounds.Right + (80 * scale);
-            // Adjust legend Y so it lines up with the new chart position
+            float legendX = _lastChartBounds.Right + (60 * scale);
             float legendY = chartY + (30 * scale);
             DrawLegendColumns(g, legendX, legendY, total, scale);
 
             using (Pen borderPen = new Pen(Color.FromArgb(150, 150, 150), 1))
-            {
                 g.DrawRectangle(borderPen, 0, 0, Width - 1, Height - 1);
-            }
         }
 
         private void DrawDoughnutWithSpokes(Graphics g, RectangleF bounds, long total, float thickness, float scale)
@@ -486,14 +533,17 @@ namespace PUP_RMS.Forms
             float cy = bounds.Y + bounds.Height / 2f;
             float radius = bounds.Width / 2f;
 
+            // Vary extension length to prevent text overlapping
             float extension = (index % 2 == 0) ? 15 * scale : 45 * scale;
 
+            // Calculate line points
             float x1 = cx + (radius - 5 * scale) * (float)Math.Cos(rad);
             float y1 = cy + (radius - 5 * scale) * (float)Math.Sin(rad);
             float x2 = cx + (radius + extension) * (float)Math.Cos(rad);
             float y2 = cy + (radius + extension) * (float)Math.Sin(rad);
 
-            using (Pen p = new Pen(Color.Gray, 1 * scale)) g.DrawLine(p, x1, y1, x2, y2);
+            using (Pen p = new Pen(Color.Gray, 1 * scale))
+                g.DrawLine(p, x1, y1, x2, y2);
 
             string pctText = $"{(double)seg.Value / total:P0}";
 
@@ -502,18 +552,29 @@ namespace PUP_RMS.Forms
             float textOffset = 2 * scale;
 
             StringFormat sf = new StringFormat();
+            sf.LineAlignment = StringAlignment.Center;
 
+            // Right side of circle
             if (midAngle >= -90 && midAngle < 90)
             {
                 sf.Alignment = StringAlignment.Near;
                 tx += textOffset;
             }
+            // Left side of circle
             else
             {
                 sf.Alignment = StringAlignment.Far;
                 tx -= textOffset;
             }
-            sf.LineAlignment = StringAlignment.Center;
+
+            // >>> FIX: Ensure text doesn't go off-screen (Left Edge Safety) <<<
+            float minX = 10 * scale;
+            if (tx < minX && sf.Alignment == StringAlignment.Far)
+            {
+                // If the point is too far left, push it right and align Near
+                tx = minX;
+                sf.Alignment = StringAlignment.Near;
+            }
 
             using (Font f = new Font("Segoe UI", 7 * scale, FontStyle.Regular))
                 g.DrawString(pctText, f, Brushes.Black, tx, ty, sf);
@@ -571,8 +632,10 @@ namespace PUP_RMS.Forms
             _closeBtnRect = new Rectangle(Width - margin - btnSize, margin, btnSize, btnSize);
             _maxBtnRect = new Rectangle(_closeBtnRect.X - margin - btnSize, margin, btnSize, btnSize);
 
-            if (_isDrilledDown) _backBtnRect = new Rectangle(margin, margin, btnSize, btnSize);
-            else _backBtnRect = Rectangle.Empty;
+            if (_isDrilledDown)
+                _backBtnRect = new Rectangle(margin, margin, btnSize, btnSize);
+            else
+                _backBtnRect = Rectangle.Empty;
 
             using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(60, 255, 255, 255)))
             {
@@ -581,7 +644,7 @@ namespace PUP_RMS.Forms
                 if (_isHoveringBack && _isDrilledDown) g.FillEllipse(hoverBrush, _backBtnRect);
             }
 
-            using (Pen p = new Pen(ClrGold, 1.5f * scale))
+            using (Pen p = new Pen(ClrGold, 2.0f * scale))
             {
                 // Close
                 g.DrawEllipse(p, _closeBtnRect);
@@ -595,53 +658,72 @@ namespace PUP_RMS.Forms
                 g.DrawEllipse(p, _maxBtnRect);
                 float mx = _maxBtnRect.X + _maxBtnRect.Width / 2f;
                 float my = _maxBtnRect.Y + _maxBtnRect.Height / 2f;
-                float box = 10 * (btnSize / 24f);
+                float box = 9 * (btnSize / 24f);
                 g.DrawRectangle(p, mx - box / 2, my - box / 2, box, box);
 
-                // Back
+                // Back Button (Arrow)
+                // Back Button (Circle + Arrow)
                 if (_isDrilledDown)
                 {
-                    g.DrawEllipse(p, _backBtnRect);
+                    // Draw circle (like other buttons)
+                    using (Pen backPen = new Pen(ClrGold, 2.0f * scale))
+                    {
+                        g.DrawEllipse(backPen, _backBtnRect);
+                    }
+
+                    // Draw arrow inside
                     float bx = _backBtnRect.X + _backBtnRect.Width / 2f;
                     float by = _backBtnRect.Y + _backBtnRect.Height / 2f;
-                    float arrOff = 4 * (btnSize / 24f);
-                    g.DrawLine(p, bx + arrOff, by, bx - arrOff, by);
-                    g.DrawLine(p, bx - arrOff, by, bx, by - arrOff);
-                    g.DrawLine(p, bx - arrOff, by, bx, by + arrOff);
+                    float arrowSize = 5 * (btnSize / 24f);
+
+                    using (Pen arrowPen = new Pen(ClrGold, 2.0f * scale))
+                    {
+                        PointF pTip = new PointF(bx - arrowSize, by);
+                        PointF pTop = new PointF(bx + arrowSize, by - arrowSize);
+                        PointF pBot = new PointF(bx + arrowSize, by + arrowSize);
+
+                        g.DrawLine(arrowPen, pTip, pTop);
+                        g.DrawLine(arrowPen, pTip, pBot);
+                    }
                 }
+
             }
         }
 
-        // ==============================
-        // MOUSE / INTERACTION
-        // ==============================
+      
         private void Form_MouseDown(object sender, MouseEventArgs e)
         {
+            // Close Logic
             if (_closeBtnRect.Contains(e.Location)) { Close(); return; }
 
+            // Maximize Logic
             if (_maxBtnRect.Contains(e.Location))
             {
                 if (this.WindowState == FormWindowState.Normal)
-                {
-                    this.MaximizedBounds = Screen.FromHandle(this.Handle).Bounds;
                     this.WindowState = FormWindowState.Maximized;
-                }
                 else
-                {
                     this.WindowState = FormWindowState.Normal;
-                }
                 this.Invalidate();
                 return;
             }
 
-            // Back Button Logic
             if (_backBtnRect.Contains(e.Location) && _isDrilledDown)
             {
                 _isDrilledDown = false;
+                _drilledProgramName = "";
+
+                // Show the filters again
+                lblCurriculum.Visible = true;
+                cmbCurriculum.Visible = true;
+                lblFilter.Visible = true;
+                cmbSchoolYear.Visible = true;
+
+                LoadSchoolYearCombo();
                 LoadMainData();
                 return;
             }
 
+            // Drag Window Logic
             int headerH = (int)(50 * GetScaleFactor());
             if (headerH < 50) headerH = 50;
             if (e.Button == MouseButtons.Left && e.Y < headerH)
@@ -652,6 +734,7 @@ namespace PUP_RMS.Forms
                 return;
             }
 
+            // Chart Click Logic
             if (e.Button == MouseButtons.Left && !_isDrilledDown)
             {
                 CheckChartClick(e.Location);
@@ -661,43 +744,47 @@ namespace PUP_RMS.Forms
 
         private void CheckLegendClick(Point p)
         {
+            // Loop through all legend zones to see if the mouse clicked one
             foreach (var zone in _legendZones)
             {
                 if (zone.Bounds.Contains(p))
                 {
+                    // If clicked, drill down into that program
                     LoadYearLevelData(zone.Segment);
                     return;
                 }
             }
         }
 
+        // You might also be missing this one, so add it just in case:
         private void CheckChartClick(Point p)
         {
             if (!_lastChartBounds.Contains(p)) return;
 
+            // Calculate distance from center to check if click is inside the doughnut ring
             float cx = _lastChartBounds.X + _lastChartBounds.Width / 2f;
             float cy = _lastChartBounds.Y + _lastChartBounds.Height / 2f;
-
             float dx = p.X - cx;
             float dy = p.Y - cy;
             double dist = Math.Sqrt(dx * dx + dy * dy);
             float radius = _lastChartBounds.Width / 2f;
-
             float holeRadius = radius - (70 * GetScaleFactor());
 
+            // If outside the outer circle OR inside the empty hole, ignore
             if (dist > radius || dist < holeRadius) return;
 
+            // Calculate Angle
             double angle = Math.Atan2(dy, dx) * 180 / Math.PI;
-            if (angle < -90) angle += 360;
+            if (angle < -90) angle += 360; // Normalize angle
 
             double clickAngle = angle + 90;
             if (clickAngle < 0) clickAngle += 360;
 
+            // Check which slice matches the angle
             foreach (var zone in _sliceZones)
             {
                 double zStart = zone.StartAngle + 90;
                 if (zStart < 0) zStart += 360;
-
                 double zEnd = zStart + zone.SweepAngle;
 
                 bool hit = false;
