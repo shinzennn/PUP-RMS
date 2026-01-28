@@ -22,34 +22,8 @@ namespace PUP_RMS.Helper
             return dt;
         }
 
-        // PRACTICE LANG TO WHAHAHAHA PERO DAPAT NASA PROGRAMHELPER TO
-        public static DataTable GetAllProgram()
-        {
-            DataTable dt = new DataTable();
-
-            dt = DbControl.ExecuteQuery("sp_GetAllProgram");
-
-            return dt;
-        }
-
         // SEARCH FACULTY
-        public static DataTable SearchFaculty(string searchTerm, int programID)
-        {
-            // CREATE DATATABLE TO HOLD RESULTS
-            DataTable dt = new DataTable();
 
-            //STORED PROCEDURE NAME
-            string procedureName = "sp_SearchFaculty";
-
-            // ADD PARAMETERS
-            DbControl.AddParameter("@SearchTerm", searchTerm, SqlDbType.VarChar);
-            DbControl.AddParameter("@ProgramID", programID, SqlDbType.Int);
-
-            // EXECUTE QUERY AND CLEAR PARAMETERS
-            dt = DbControl.ExecuteQuery(procedureName);
-
-            return dt;
-        }
         public static DataTable SearchFaculty(string searchTerm)
         {
             // CREATE DATATABLE TO HOLD RESULTS
