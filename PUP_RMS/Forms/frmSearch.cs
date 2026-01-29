@@ -78,13 +78,17 @@ namespace PUP_RMS.Forms
         {
             if (e.RowIndex < 0) return;
 
-            int selectedGradeSheetID = Convert.ToInt32(dgvGradeSheets.Rows[e.RowIndex].Cells["GradeSheetID"].Value);
+            // Get the GradeSheetID directly from the row
+            object val = dgvGradeSheets.Rows[e.RowIndex].Cells["GradeSheetID"].Value;
+            if (val == null || val == DBNull.Value) return;
 
-            var frm = new frmGradeSheetDetails
+            int selectedGradeSheetID = Convert.ToInt32(val);
+
+            using (var frm = new frmGradeSheetDetails())
             {
-                GradeSheetID = selectedGradeSheetID
-            };
-            frm.ShowDialog();
+                frm.GradeSheetID = selectedGradeSheetID;
+                frm.ShowDialog(this);
+            }
         }
 
 
@@ -577,6 +581,18 @@ namespace PUP_RMS.Forms
 
         private void btnView_Click(object sender, EventArgs e)
         {
+            if (dgvGradeSheets.CurrentRow == null) return;
+
+            object val = dgvGradeSheets.CurrentRow.Cells["GradeSheetID"].Value;
+            if (val == null || val == DBNull.Value) return;
+
+            int selectedGradeSheetID = Convert.ToInt32(val);
+
+            using (var frm = new frmGradeSheetDetails())
+            {
+                frm.GradeSheetID = selectedGradeSheetID;
+                frm.ShowDialog(this);
+            }
         }
 
 
@@ -627,6 +643,32 @@ namespace PUP_RMS.Forms
         // =========================
         // UI / HELPERS
         // =========================
+
+        private void OpenSelectedGradeSheet()
+        {
+            if (dgvGradeSheets.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a grade sheet first.",
+                    "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            object val = dgvGradeSheets.CurrentRow.Cells["GradeSheetID"].Value;
+            if (val == null || val == DBNull.Value)
+            {
+                MessageBox.Show("Invalid grade sheet selection.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int selectedGradeSheetID = Convert.ToInt32(val);
+
+            using (var frm = new frmGradeSheetDetails())
+            {
+                frm.GradeSheetID = selectedGradeSheetID;
+                frm.ShowDialog(this);
+            }
+        }
 
         private void OpenGradeSheetDetailsFromGrid(int rowIndex)
         {
@@ -716,7 +758,7 @@ namespace PUP_RMS.Forms
             SafeSetColumnWidth("YearLevel", 50);
             SafeSetColumnWidth("Course", 100);
             SafeSetColumnWidth("Professor", 150);
-            SafeSetColumnWidth("PageNumber", 50);
+            SafeSetColumnWidth("PageNumber", 60);
 
             // Set user-friendly headers
             SafeSetHeaderText("Filename", "File Name");
@@ -732,7 +774,7 @@ namespace PUP_RMS.Forms
 
             // Optional: full row select and alternating row color for better readability
             dgvGradeSheets.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvGradeSheets.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
+            dgvGradeSheets.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
         }
 
         private string FindColumnName(params string[] candidates)

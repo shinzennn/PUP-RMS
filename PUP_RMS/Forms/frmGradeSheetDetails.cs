@@ -170,6 +170,30 @@ namespace PUP_RMS.Forms
             }
         }
 
+        //private void LoadThumbnail(string filePath)
+        //{
+        //    try
+        //    {
+        //        if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+        //        {
+        //            pbPreview.Image?.Dispose();
+        //            pbPreview.Image = null;
+        //            return;
+        //        }
+
+        //        // Dispose previous image then load a fresh stream copy
+        //        pbPreview.Image?.Dispose();
+        //        using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+        //        {
+        //            pbPreview.Image = Image.FromStream(fs);
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        pbPreview.Image = null;
+        //    }
+        //}
+
         private void LoadThumbnail(string filePath)
         {
             try
@@ -185,7 +209,9 @@ namespace PUP_RMS.Forms
                 pbPreview.Image?.Dispose();
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
-                    pbPreview.Image = Image.FromStream(fs);
+                    var img = Image.FromStream(fs);
+                    pbPreview.Image = img;
+                    pbPreview.Size = img.Size; // Important: keep full image size
                 }
             }
             catch
@@ -193,6 +219,7 @@ namespace PUP_RMS.Forms
                 pbPreview.Image = null;
             }
         }
+
 
         // ========================= IMAGE UPLOAD / SAVE =========================
 
@@ -455,13 +482,17 @@ namespace PUP_RMS.Forms
 
         private string GenerateFileName()
         {
-            // Safe getters to avoid null refs
-            string acadYear = SanitizeForFilename(GetComboSelectedValueString(cmbSchoolYear) ?? cmbSchoolYear.Text ?? "UNKNOWN");
-            int semVal = GetComboSelectedValueInt(cmbSemester);
-            string sem = semVal == 1 ? "A" : (semVal == 2 ? "B" : "X");
+            string rawSchoolYear = GetComboSelectedValueString(cmbSchoolYear) ?? cmbSchoolYear.Text;
+            string acadYear = FormatAcademicYear(rawSchoolYear);
 
-            string program = GetComboSelectedText(cmbProgram) ?? "PRG";
-            string course = GetComboSelectedText(cmbCourse) ?? "COURSE";
+            int semVal = GetComboSelectedValueInt(cmbSemester);
+            string sem = semVal == 1 ? "A" : (semVal == 2 ? "B" : "C");
+
+            string program = SanitizeForFilename(GetComboSelectedText(cmbProgram) ?? "PRG");
+
+            string rawCourse = GetComboSelectedText(cmbCourse);
+            string course = FormatCourseCode(rawCourse);
+
             string faculty = GetFacultyInitials();
             string yearLevel = GetComboSelectedValueString(cmbYearLevel) ?? "0";
             string page = string.IsNullOrWhiteSpace(txtPageNumber.Text) ? "0" : txtPageNumber.Text.Trim();
@@ -469,29 +500,79 @@ namespace PUP_RMS.Forms
             return $"PUPLQ_GRSH_{acadYear}_{sem}_{program}_{yearLevel}_{course}_{faculty}_P{page}.jpg";
         }
 
+
+        private string FormatAcademicYear(string schoolYear)
+        {
+            if (string.IsNullOrWhiteSpace(schoolYear))
+                return "XXXX";
+
+            // Expected format: YYYY-YYYY
+            string[] parts = schoolYear.Split('-');
+
+            if (parts.Length != 2)
+                return SanitizeForFilename(schoolYear);
+
+            string start = parts[0].Trim();
+            string end = parts[1].Trim();
+
+            if (start.Length < 4 || end.Length < 4)
+                return SanitizeForFilename(schoolYear);
+
+            return start.Substring(start.Length - 2) + end.Substring(end.Length - 2);
+        }
+
+        private string FormatCourseCode(string course)
+        {
+            if (string.IsNullOrWhiteSpace(course))
+                return "COURSE";
+
+            // Remove spaces only
+            return course.Replace(" ", "");
+        }
+
+
         private string GetFacultyInitials()
         {
             try
             {
-                var sel = cmbProfessor.SelectedItem as DataRowView;
-                string fullName = sel != null ? sel["FullName"]?.ToString() : cmbProfessor.Text;
-                if (string.IsNullOrWhiteSpace(fullName)) return "NA";
+                string fullName = cmbProfessor.Text;
+                if (string.IsNullOrWhiteSpace(fullName))
+                    return "NA";
 
-                // Expect "Firstname Lastname" or "Lastname, Firstname". Use split by space and comma
-                var parts = fullName.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries).Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
-                string part1 = parts.Length > 0 ? parts[0] : "NA";
-                string part2 = parts.Length > 1 ? parts[1] : (parts.Length == 1 ? (part1.Length >= 3 ? part1.Substring(0, 3) : part1) : "NA");
+                // Expected format: LastName, FirstName M.
+                string[] nameParts = fullName.Split(',');
 
-                string initial1 = part1.Length >= 4 ? part1.Substring(0, 4) : part1;
-                string initial2 = part2.Length >= 3 ? part2.Substring(0, 3) : part2;
+                if (nameParts.Length < 2)
+                    return fullName.Replace(" ", "").ToUpper();
 
-                return (initial1 + initial2).ToUpper();
+                // ----- SURNAME -----
+                string surname = nameParts[0]
+                    .Replace(" ", "")
+                    .ToUpper();
+
+                // ----- GIVEN NAMES -----
+                string givenNames = nameParts[1]
+                    .Replace(".", "")
+                    .Trim();
+
+                string[] givenParts = givenNames
+                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                string initials = "";
+                foreach (string part in givenParts)
+                {
+                    initials += part[0];
+                }
+
+                return surname + initials.ToUpper();
             }
             catch
             {
                 return "NA";
             }
         }
+
+
 
         private string BuildImageFolderPath()
         {
@@ -583,7 +664,12 @@ namespace PUP_RMS.Forms
             LoadComboBox(
                 @"SELECT 
                       FacultyID,
-                      LastName + ', ' + FirstName AS FullName
+                      LastName + ', ' + FirstName +
+                      CASE 
+                          WHEN MiddleName IS NULL OR LTRIM(RTRIM(MiddleName)) = '' 
+                          THEN '' 
+                          ELSE ' ' + LEFT(MiddleName, 1) + '.'
+                      END AS FullName
                   FROM Faculty
                   ORDER BY LastName, FirstName",
                 cmbProfessor,
