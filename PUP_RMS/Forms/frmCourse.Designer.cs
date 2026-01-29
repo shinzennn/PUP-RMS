@@ -34,8 +34,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label10 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.gradientLabel1 = new GradientLabel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.roundedShadowPanel3 = new PUP_RMS.RoundedShadowPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.cbxCurriculum = new System.Windows.Forms.ComboBox();
@@ -46,8 +47,7 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new PUP_RMS.RoundedButton();
             this.btnRefresh = new PUP_RMS.RoundedButton();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.gradientLabel1 = new GradientLabel();
             this.panelSubInfo = new PUP_RMS.RoundedShadowPanel();
             this.roundedShadowPanel4 = new PUP_RMS.RoundedShadowPanel();
             this.txtCrsCode = new System.Windows.Forms.TextBox();
@@ -64,11 +64,11 @@
             this.dgvCourse = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.roundedShadowPanel3.SuspendLayout();
             this.roundedShadowPanel1.SuspendLayout();
             this.panelSearch.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.panelSubInfo.SuspendLayout();
             this.roundedShadowPanel4.SuspendLayout();
             this.roundedShadowPanel5.SuspendLayout();
@@ -90,26 +90,15 @@
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.gradientLabel1);
             this.panel1.Controls.Add(this.label10);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1120, 90);
             this.panel1.TabIndex = 20;
-            // 
-            // gradientLabel1
-            // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(290, 37);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "Course Management ";
             // 
             // tableLayoutPanel2
             // 
@@ -121,7 +110,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.89311F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.05766F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 221F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 256F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 259F));
             this.tableLayoutPanel2.Controls.Add(this.roundedShadowPanel3, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.roundedShadowPanel1, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.panelSearch, 2, 0);
@@ -135,6 +124,45 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1002, 64);
             this.tableLayoutPanel2.TabIndex = 19;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnEdit, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.roundedShadowPanel2, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(59, 191);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(50);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1002, 514);
+            this.tableLayoutPanel1.TabIndex = 25;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.panelSubInfo, 0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.98488F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.01512F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(495, 456);
+            this.tableLayoutPanel3.TabIndex = 26;
             // 
             // roundedShadowPanel3
             // 
@@ -154,7 +182,7 @@
             this.roundedShadowPanel3.ShadowDepth = 10;
             this.roundedShadowPanel3.ShadowEnabled = true;
             this.roundedShadowPanel3.ShadowShift = 5;
-            this.roundedShadowPanel3.Size = new System.Drawing.Size(247, 64);
+            this.roundedShadowPanel3.Size = new System.Drawing.Size(251, 64);
             this.roundedShadowPanel3.TabIndex = 19;
             // 
             // label4
@@ -182,7 +210,7 @@
             this.cbxCurriculum.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.cbxCurriculum.Name = "cbxCurriculum";
             this.cbxCurriculum.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbxCurriculum.Size = new System.Drawing.Size(116, 28);
+            this.cbxCurriculum.Size = new System.Drawing.Size(120, 28);
             this.cbxCurriculum.TabIndex = 16;
             this.cbxCurriculum.SelectedIndexChanged += new System.EventHandler(this.cbxCurriculum_SelectedIndexChanged_1);
             // 
@@ -195,7 +223,7 @@
             this.roundedShadowPanel1.Controls.Add(this.label6);
             this.roundedShadowPanel1.Controls.Add(this.cbxProgram);
             this.roundedShadowPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedShadowPanel1.Location = new System.Drawing.Point(262, 0);
+            this.roundedShadowPanel1.Location = new System.Drawing.Point(266, 0);
             this.roundedShadowPanel1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.roundedShadowPanel1.Name = "roundedShadowPanel1";
             this.roundedShadowPanel1.PanelColor = System.Drawing.Color.LightGray;
@@ -247,7 +275,7 @@
             this.panelSearch.BorderRadius = 20;
             this.panelSearch.BorderSize = 0;
             this.panelSearch.Controls.Add(this.txtSearch);
-            this.panelSearch.Location = new System.Drawing.Point(488, 0);
+            this.panelSearch.Location = new System.Drawing.Point(492, 0);
             this.panelSearch.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.panelSearch.Name = "panelSearch";
             this.panelSearch.PanelColor = System.Drawing.Color.LightGray;
@@ -256,7 +284,7 @@
             this.panelSearch.ShadowDepth = 10;
             this.panelSearch.ShadowEnabled = true;
             this.panelSearch.ShadowShift = 5;
-            this.panelSearch.Size = new System.Drawing.Size(342, 64);
+            this.panelSearch.Size = new System.Drawing.Size(340, 64);
             this.panelSearch.TabIndex = 17;
             // 
             // txtSearch
@@ -267,7 +295,7 @@
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.Location = new System.Drawing.Point(22, 24);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(295, 19);
+            this.txtSearch.Size = new System.Drawing.Size(293, 19);
             this.txtSearch.TabIndex = 4;
             this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -284,9 +312,9 @@
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.White;
             this.btnSearch.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSearch.Location = new System.Drawing.Point(843, 3);
+            this.btnSearch.Location = new System.Drawing.Point(845, 3);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(77, 58);
+            this.btnSearch.Size = new System.Drawing.Size(76, 58);
             this.btnSearch.TabIndex = 1;
             this.btnSearch.Text = "Search";
             this.btnSearch.TextColor = System.Drawing.Color.White;
@@ -306,53 +334,25 @@
             this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.ForeColor = System.Drawing.Color.White;
             this.btnRefresh.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnRefresh.Location = new System.Drawing.Point(926, 3);
+            this.btnRefresh.Location = new System.Drawing.Point(927, 3);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(73, 58);
+            this.btnRefresh.Size = new System.Drawing.Size(72, 58);
             this.btnRefresh.TabIndex = 5;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.TextColor = System.Drawing.Color.White;
             this.btnRefresh.UseVisualStyleBackColor = false;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // tableLayoutPanel1
+            // gradientLabel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnEdit, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.roundedShadowPanel2, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(59, 191);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(50);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1002, 514);
-            this.tableLayoutPanel1.TabIndex = 25;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.panelSubInfo, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.98488F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.01512F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(495, 456);
-            this.tableLayoutPanel3.TabIndex = 26;
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(290, 37);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "Course Management ";
             // 
             // panelSubInfo
             // 
@@ -671,14 +671,14 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.roundedShadowPanel3.ResumeLayout(false);
             this.roundedShadowPanel3.PerformLayout();
             this.roundedShadowPanel1.ResumeLayout(false);
             this.roundedShadowPanel1.PerformLayout();
             this.panelSearch.ResumeLayout(false);
             this.panelSearch.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.panelSubInfo.ResumeLayout(false);
             this.panelSubInfo.PerformLayout();
             this.roundedShadowPanel4.ResumeLayout(false);

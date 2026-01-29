@@ -930,11 +930,11 @@
             // 
             // panelHeader
             // 
+            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.panelHeader.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelHeader.Controls.Add(this.gradientLabel1);
             this.panelHeader.Controls.Add(this.label10);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1159, 90);

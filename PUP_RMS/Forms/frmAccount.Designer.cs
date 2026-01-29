@@ -76,7 +76,6 @@
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.panelHeader.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelHeader.Controls.Add(this.gradientLabel1);
             this.panelHeader.Controls.Add(this.label10);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -583,10 +582,10 @@
             this.btnCreateAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreateAccount.ForeColor = System.Drawing.Color.White;
             this.btnCreateAccount.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCreateAccount.Location = new System.Drawing.Point(7, 7);
+            this.btnCreateAccount.Location = new System.Drawing.Point(497, 7);
             this.btnCreateAccount.Margin = new System.Windows.Forms.Padding(7);
             this.btnCreateAccount.Name = "btnCreateAccount";
-            this.btnCreateAccount.Size = new System.Drawing.Size(86, 36);
+            this.btnCreateAccount.Size = new System.Drawing.Size(56, 36);
             this.btnCreateAccount.TabIndex = 0;
             this.btnCreateAccount.Text = "Create Account";
             this.btnCreateAccount.TextColor = System.Drawing.Color.White;
@@ -609,10 +608,10 @@
             this.btnAccountList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAccountList.ForeColor = System.Drawing.Color.White;
             this.btnAccountList.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnAccountList.Location = new System.Drawing.Point(107, 7);
+            this.btnAccountList.Location = new System.Drawing.Point(567, 7);
             this.btnAccountList.Margin = new System.Windows.Forms.Padding(7);
             this.btnAccountList.Name = "btnAccountList";
-            this.btnAccountList.Size = new System.Drawing.Size(86, 36);
+            this.btnAccountList.Size = new System.Drawing.Size(56, 36);
             this.btnAccountList.TabIndex = 1;
             this.btnAccountList.Text = "View Account List";
             this.btnAccountList.TextColor = System.Drawing.Color.White;
@@ -635,10 +634,10 @@
             this.btnActivityLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnActivityLog.ForeColor = System.Drawing.Color.White;
             this.btnActivityLog.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnActivityLog.Location = new System.Drawing.Point(207, 7);
+            this.btnActivityLog.Location = new System.Drawing.Point(637, 7);
             this.btnActivityLog.Margin = new System.Windows.Forms.Padding(7);
             this.btnActivityLog.Name = "btnActivityLog";
-            this.btnActivityLog.Size = new System.Drawing.Size(86, 36);
+            this.btnActivityLog.Size = new System.Drawing.Size(56, 36);
             this.btnActivityLog.TabIndex = 2;
             this.btnActivityLog.Text = "View Activity Logs";
             this.btnActivityLog.TextColor = System.Drawing.Color.White;

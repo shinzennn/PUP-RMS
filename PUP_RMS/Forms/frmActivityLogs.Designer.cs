@@ -43,6 +43,7 @@
             this.dgvActivityLog.AllowUserToResizeColumns = false;
             this.dgvActivityLog.AllowUserToResizeRows = false;
             this.dgvActivityLog.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvActivityLog.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvActivityLog.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvActivityLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvActivityLog.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
@@ -70,7 +71,6 @@
             this.dgvActivityLog.Name = "dgvActivityLog";
             this.dgvActivityLog.ReadOnly = true;
             this.dgvActivityLog.RowHeadersVisible = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Empty;
             dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvActivityLog.RowsDefaultCellStyle = dataGridViewCellStyle3;

@@ -80,21 +80,80 @@ namespace PUP_RMS.Forms
             // 1. Layout Calculation
             ArrangeSidebar();
 
-            // 2. Initialize Dashboard Instance if null
+            // PRE-LOAD ALL FORMS
+            InitializeAllForms();
+
+            // 3. Load Default View
             if (_dashboardInstance == null || _dashboardInstance.IsDisposed)
             {
                 _dashboardInstance = new frmDashboard();
                 PrepareChildForm(_dashboardInstance);
             }
-
-            // 3. Load Default View
             ActivateButton(btnDashboard);
             ShowForm(_dashboardInstance);
 
             // 4. Start Animation
             tmrFadeIn.Start();
         }
+        private void InitializeAllForms()
+        {
+            // Initialize Dashboard
+            if (_dashboardInstance == null)
+            {
+                _dashboardInstance = new frmDashboard();
+                PrepareAndLoadChildForm(_dashboardInstance);
+            }
 
+            // Initialize Curriculum
+            if (_curriculumForm == null)
+            {
+                _curriculumForm = new frmCurriculum();
+                PrepareAndLoadChildForm(_curriculumForm);
+            }
+
+            // Initialize Program
+            if (_programForm == null)
+            {
+                _programForm = new frmProgram();
+                PrepareAndLoadChildForm(_programForm);
+            }
+
+            // Initialize Course
+            if (_courseForm == null)
+            {
+                _courseForm = new frmCourse();
+                PrepareAndLoadChildForm(_courseForm);
+            }
+
+            // Initialize Faculty
+            if (_facultyForm == null)
+            {
+                _facultyForm = new frmFaculty();
+                PrepareAndLoadChildForm(_facultyForm);
+            }
+            
+            // Initialize Search
+            if (_searchForm == null)
+            {
+                _searchForm = new frmSearch();
+                PrepareAndLoadChildForm(_searchForm);
+            }
+            
+            // Initialize Batch Upload
+            if (_batchUploadForm == null)
+            {
+                _batchUploadForm = new frmBatchUpload();
+                PrepareAndLoadChildForm(_batchUploadForm);
+            }
+
+            // Initialize Account
+            if (_accountForm == null)
+            { 
+                _accountForm = new frmAccount();
+                PrepareAndLoadChildForm(_accountForm);
+            }
+
+        }
         // ======================================================
         // SECTION: LAYOUT LOGIC
         // ======================================================
@@ -189,18 +248,14 @@ namespace PUP_RMS.Forms
         private void btnDashboard_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            if (CanChangeWindow())
+            if (true) // VALIDATION FOR CanChangeWindow() CAN BE ADDED HERE
             {
-                ActivateButton(sender);
-
-                // FIXED: Use the cached instance instead of 'new frmDashboard()'
-                // This ensures you don't lose state and it matches the Load event logic
                 if (_dashboardInstance == null || _dashboardInstance.IsDisposed)
                 {
                     _dashboardInstance = new frmDashboard();
                     PrepareChildForm(_dashboardInstance);
                 }
-
+                ActivateButton(sender);
                 ShowForm(_dashboardInstance);
             }
         }
@@ -208,7 +263,7 @@ namespace PUP_RMS.Forms
         private void btnSearch_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            if (CanChangeWindow())
+            if (true) // VALIDATION FOR CanChangeWindow() CAN BE ADDED HERE
             {
                 if(_searchForm == null || _searchForm.IsDisposed)
                 {
@@ -223,7 +278,7 @@ namespace PUP_RMS.Forms
         private void btnUpload_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            if (CanChangeWindow())
+            if (true) // VALIDATION FOR CanChangeWindow() CAN BE ADDED HERE
             {
                 if(_batchUploadForm == null || _batchUploadForm.IsDisposed)
                 {
@@ -238,7 +293,7 @@ namespace PUP_RMS.Forms
         private void btnAccounts_Click(object sender, EventArgs e)
         {
             if (currentActiveButton == sender) return;
-            if (CanChangeWindow())
+            if (true) // VALIDATION FOR CanChangeWindow() CAN BE ADDED HERE
             {
                 if(_accountForm == null || _accountForm.IsDisposed)
                 {
@@ -252,7 +307,7 @@ namespace PUP_RMS.Forms
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            if (!CanChangeWindow()) return;
+            //if (!CanChangeWindow()) return; // VALIDATION FOR CanChangeWindow() CAN BE ADDED HERE
             if (MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 this.Hide();
@@ -297,11 +352,53 @@ namespace PUP_RMS.Forms
             pnlContent.ResumeLayout(false); // false = don't layout yet
 
             // Use BeginInvoke to delay visibility until ALL painting is done
-            this.BeginInvoke(new Action(() =>
-            {
-                childForm.Visible = true;
-                childForm.BringToFront();
-            }));
+            // Show immediately (no need for BeginInvoke since it's already loaded)
+            childForm.Visible = true;
+            childForm.BringToFront();
+        }
+        private void PrepareAndLoadChildForm(Form childForm)
+        {
+            // 1ST METHOD ==================
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+
+            SetDoubleBuffered(childForm);
+            pnlContent.Controls.Add(childForm);
+
+            // Force load by showing then immediately hiding
+            childForm.Show();        // This creates handle and triggers Load
+            Application.DoEvents();  // Process all messages
+            childForm.Hide();        // Hide it again
+
+            // DEBUG: Verify Load event fired
+            Console.WriteLine($"{childForm.Name} - Handle Created: {childForm.IsHandleCreated}");
+            Console.WriteLine($"{childForm.Name} - Controls Count: {childForm.Controls.Count}");
+
+            // 2ND METHOD ==================
+            //childForm.TopLevel = false;
+            //childForm.FormBorderStyle = FormBorderStyle.None;
+            //childForm.Dock = DockStyle.Fill;
+
+            //SetDoubleBuffered(childForm);
+            //pnlContent.Controls.Add(childForm);
+
+            //// Force handle creation (this ALWAYS works)
+            //IntPtr handle = childForm.Handle; // Accessing Handle property forces creation
+
+            //// Ensure Load event is fired
+            //if (!childForm.Visible)
+            //{
+            //    childForm.Visible = true;
+            //    Application.DoEvents();
+            //    childForm.Visible = false;
+            //}
+
+            //childForm.PerformLayout();
+
+            //// DEBUG
+            //Console.WriteLine($"{childForm.Name} - Handle: {childForm.Handle}");
+            //Console.WriteLine($"{childForm.Name} - IsHandleCreated: {childForm.IsHandleCreated}");
         }
 
         private void PrepareChildForm(Form childForm)
@@ -309,20 +406,16 @@ namespace PUP_RMS.Forms
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
-
-            // CRITICAL: Hide the form before adding it
             childForm.Visible = false;
 
             SetDoubleBuffered(childForm);
             pnlContent.Controls.Add(childForm);
 
-            // TRIGGER LOAD EVENT NOW (while hidden) to populate ComboBoxes
             if (!childForm.IsHandleCreated)
             {
-                childForm.CreateControl(); // This triggers the Load event
+                childForm.CreateControl();
             }
 
-            // Force complete layout AFTER loading
             childForm.PerformLayout();
         }
 
