@@ -32,6 +32,11 @@ namespace PUP_RMS.Forms
         private List<ChartSegment> _mainSegments = new List<ChartSegment>();
         private List<ChartSegment> _currentSegments = new List<ChartSegment>();
 
+        int _drillSubmittedCount = 0;
+        int _drillTotalCount = 0;
+        int _mainSubmittedCount = 0;
+        int _mainTotalCount = 0;
+
         // Drill-Down State
         private bool _isDrilledDown = false;
         private string _drilledProgramName = "";
@@ -234,64 +239,82 @@ namespace PUP_RMS.Forms
             _isDrilledDown = false;
             _mainSegments = new List<ChartSegment>();
 
-            string selectedYear = null;
-            if (cmbSchoolYear != null && cmbSchoolYear.SelectedItem != null)
+            string selectedYear = cmbSchoolYear?.SelectedItem?.ToString();
+            string selectedCurriculum = cmbCurriculum?.SelectedItem?.ToString();
+
+            // =========================================================
+            // 1. FETCH CHART DATA (THE SLICES) - THIS WAS MISSING
+            // =========================================================
+            try
             {
-                selectedYear = cmbSchoolYear.SelectedItem.ToString();
-            }
+                DataTable dt = DashboardHelper.GetProgramDistribution(selectedYear, selectedCurriculum);
 
-            string selectedCurriculum = null;
-            if (cmbCurriculum != null && cmbCurriculum.SelectedItem != null)
-            {
-                selectedCurriculum = cmbCurriculum.SelectedItem.ToString();
-            }
-
-            // Standard backend call
-            DataTable dt = DashboardHelper.GetProgramDistribution(selectedYear, selectedCurriculum);
-
-            Color[] colors = {
-                ClrMaroon, ClrGold, Color.FromArgb(180, 130, 40), Color.CadetBlue,
-                Color.SteelBlue, Color.DarkSlateBlue, Color.MediumPurple, Color.IndianRed,
-                Color.SeaGreen, Color.Teal, Color.DimGray, Color.Sienna
+                if (dt != null)
+                {
+                    // defined colors for the slices
+                    Color[] palette = {
+                ClrMaroon,
+                ClrGold,
+                Color.FromArgb(80, 80, 80),   // Dark Gray
+                Color.FromArgb(160, 160, 160), // Light Gray
+                Color.FromArgb(140, 60, 70),   // Lighter Maroon
+                Color.FromArgb(200, 170, 80),  // Muted Gold
+                Color.CadetBlue,
+                Color.DarkOliveGreen
             };
 
-            int limit = 10;
-            int othersCount = 0;
-
-            if (dt != null)
-            {
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    DataRow row = dt.Rows[i];
-                    string label = row["Label"].ToString();
-                    int val = Convert.ToInt32(row["Value"]);
-
-                    if (i < limit)
+                    int colorIndex = 0;
+                    foreach (DataRow row in dt.Rows)
                     {
-                        _mainSegments.Add(new ChartSegment
+                        // Ensure your SQL Stored Procedure returns 'Label' and 'Value'
+                        string label = row["Label"].ToString();
+                        int val = Convert.ToInt32(row["Value"]);
+
+                        if (val > 0)
                         {
-                            Label = label,
-                            Value = val,
-                            Color = colors[i % colors.Length]
-                        });
-                    }
-                    else
-                    {
-                        othersCount += val;
+                            _mainSegments.Add(new ChartSegment
+                            {
+                                Label = label,
+                                Value = val,
+                                Color = palette[colorIndex % palette.Length]
+                            });
+                            colorIndex++;
+                        }
                     }
                 }
             }
-
-            if (othersCount > 0)
+            catch (Exception ex)
             {
-                _mainSegments.Add(new ChartSegment { Label = "Others", Value = othersCount, Color = Color.Gray });
+                Console.WriteLine("Error loading chart segments: " + ex.Message);
             }
 
-            if (_mainSegments.Count == 0)
+            // =========================================================
+            // 2. FETCH TOTALS (FOR THE CENTER TEXT)
+            // =========================================================
+            // Reset counts
+            _mainSubmittedCount = 0;
+            _mainTotalCount = 0;
+
+            try
             {
-                _mainSegments.Add(new ChartSegment { Label = "No Data", Value = 1, Color = Color.LightGray });
+                DataTable dtCount = DashboardHelper.GetTotalCurriculumCourses(selectedYear, selectedCurriculum);
+
+                if (dtCount != null && dtCount.Rows.Count > 0)
+                {
+                    _mainSubmittedCount = Convert.ToInt32(dtCount.Rows[0]["SubmittedCount"]);
+                    _mainTotalCount = Convert.ToInt32(dtCount.Rows[0]["TotalCount"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error loading totals: " + ex.Message);
+                // Fallback: Calculate from segments if DB call fails
+                if (_mainSegments.Count > 0)
+                    _mainSubmittedCount = _mainSegments.Sum(s => s.Value);
+                _mainTotalCount = _mainSubmittedCount;
             }
 
+            // Update current segments and redraw
             _currentSegments = new List<ChartSegment>(_mainSegments);
             Invalidate();
         }
@@ -299,24 +322,49 @@ namespace PUP_RMS.Forms
 
         private void LoadYearLevelData(ChartSegment parentProgram)
         {
-        
+            // 1. Hide Filters (as per your existing code)
             lblCurriculum.Visible = false;
             cmbCurriculum.Visible = false;
             lblFilter.Visible = false;
             cmbSchoolYear.Visible = false;
 
-            
-            _isDrilledDown = true;
+            // 2. Set State
             _drilledProgramName = parentProgram.Label;
 
-            LoadSchoolYearCombo();
+            // 3. Load Filters for context
+            LoadSchoolYearCombo(); // This refreshes the combo based on drill down
+
+            // 4. Force DrillDown State (LoadSchoolYearCombo might reset it in some events, so set it true here)
             _isDrilledDown = true;
 
-           
             string selectedYear = cmbSchoolYear.SelectedItem?.ToString();
             string selectedCurriculum = cmbCurriculum.SelectedItem?.ToString();
 
-            DataTable dt = DashboardHelper.GetYearLevelDistribution(parentProgram.Label, selectedYear, selectedCurriculum);
+            // =========================================================
+            // FIX: FETCH THE COUNTS (7 / 16)
+            // =========================================================
+            try
+            {
+                // Reset counts first
+                _drillSubmittedCount = 0;
+                _drillTotalCount = 0;
+
+                DataTable dtCounts = DashboardHelper.GetProgramGradeSheetCounts(_drilledProgramName, selectedYear, selectedCurriculum);
+
+                if (dtCounts != null && dtCounts.Rows.Count > 0)
+                {
+                    _drillSubmittedCount = Convert.ToInt32(dtCounts.Rows[0]["SubmittedCount"]);
+                    _drillTotalCount = Convert.ToInt32(dtCounts.Rows[0]["TotalCurriculumCourses"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error fetching counts: " + ex.Message);
+            }
+            // =========================================================
+
+            // 5. Get Chart Data (Year Level Distribution)
+            DataTable dt = DashboardHelper.GetYearLevelDistribution(_drilledProgramName, selectedYear, selectedCurriculum);
 
             Dictionary<int, int> dbCounts = new Dictionary<int, int>();
             if (dt != null)
@@ -329,6 +377,7 @@ namespace PUP_RMS.Forms
                 }
             }
 
+            // 6. Rebuild Segments (Your existing color logic)
             _currentSegments = new List<ChartSegment>();
             Color baseColor = parentProgram.Color;
             int maxYear = 4;
@@ -338,6 +387,7 @@ namespace PUP_RMS.Forms
             {
                 int count = dbCounts.ContainsKey(i) ? dbCounts[i] : 0;
                 string label = GetYearLabel(i);
+
                 float lightFactor = (i - 1) * 0.3f;
                 if (lightFactor > 1.5f) lightFactor = 1.5f;
                 Color yearColor = ControlPaint.Light(baseColor, lightFactor);
@@ -345,6 +395,7 @@ namespace PUP_RMS.Forms
                 _currentSegments.Add(new ChartSegment { Label = label, Value = count, Color = yearColor });
             }
 
+            // 7. Redraw
             Invalidate();
         }
 
@@ -512,34 +563,91 @@ namespace PUP_RMS.Forms
             float cx = bounds.X + bounds.Width / 2f;
             float cy = bounds.Y + bounds.Height / 2f;
 
-            string label = "";
-            string value = "";
-
-            if (_isDrilledDown)
-            {
-                label = _drilledProgramName;
-                value = total.ToString();
-            }
-            else
-            {
-                ChartSegment largest = _currentSegments.OrderByDescending(s => s.Value).FirstOrDefault();
-                if (largest != null)
-                {
-                    label = largest.Label;
-                    value = $"{(double)largest.Value / total * 100:0}%";
-                }
-            }
-
             using (StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
             {
-                using (Font f = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
-                    g.DrawString(label, f, Brushes.Black, cx, cy - (15 * scale), sf);
+                if (_isDrilledDown)
+                {
+                    // =========================================================
+                    // DRILL DOWN VIEW: Show 3 Lines (Label, Ratio, Percent)
+                    // =========================================================
 
-                using (Font f = new Font("Segoe UI", 24 * scale, FontStyle.Bold))
-                    g.DrawString(value, f, new SolidBrush(Color.FromArgb(40, 40, 40)), cx, cy + (18 * scale), sf);
+                    // 1. Prepare Data
+                    string label = _drilledProgramName;
+                    string ratioText = "";
+                    string percentText = "";
+
+                    if (_drillTotalCount > 0)
+                    {
+                        ratioText = $"{_drillSubmittedCount} / {_drillTotalCount}";
+
+                        // Calculate Percentage
+                        double p = ((double)_drillSubmittedCount / _drillTotalCount) * 100;
+                        percentText = $"{p:0}%";
+                    }
+                    else
+                    {
+                        ratioText = total.ToString(); // Fallback
+                    }
+
+                    // 2. Draw Label (Moved Up)
+                    using (Font f = new Font("Segoe UI", 11 * scale, FontStyle.Bold))
+                    {
+                        // cy - 35 pushes it up to make room for 3 lines
+                        g.DrawString(label, f, Brushes.Gray, cx, cy - (35 * scale), sf);
+                    }
+
+                    // 3. Draw Ratio (Center)
+                    // Adjust font size based on length
+                    float ratioFontSize = ratioText.Length > 7 ? 20 * scale : 24 * scale;
+                    using (Font f = new Font("Segoe UI", ratioFontSize, FontStyle.Bold))
+                    {
+                        g.DrawString(ratioText, f, new SolidBrush(Color.FromArgb(40, 40, 40)), cx, cy, sf);
+                    }
+
+                    // 4. Draw Percentage (Bottom)
+                    if (!string.IsNullOrEmpty(percentText))
+                    {
+                        using (Font f = new Font("Segoe UI", 14 * scale, FontStyle.Bold))
+                        {
+                            // Using Goldenrod to make the percentage stand out, or use Gray/Green
+                            g.DrawString(percentText, f, new SolidBrush(Color.Goldenrod), cx, cy + (30 * scale), sf);
+                        }
+                    }
+                }
+                else
+                {
+                    // =========================================================
+                    // MAIN VIEW: Standard 2 Lines (Highest Program & %)
+                    // =========================================================
+                    string label = "Total";
+                    string valueText = "0%";
+
+                    ChartSegment largest = _currentSegments.OrderByDescending(s => s.Value).FirstOrDefault();
+
+                    if (largest != null && total > 0)
+                    {
+                        label = largest.Label;
+                        double percentage = ((double)largest.Value / total) * 100;
+                        valueText = $"{percentage:0}%";
+                    }
+
+                    // Draw Label
+                    using (Font f = new Font("Segoe UI", 12 * scale, FontStyle.Bold))
+                    {
+                        g.DrawString(label, f, Brushes.Gray, cx, cy - (20 * scale), sf);
+                    }
+
+                    // Draw Percentage
+                    using (Font f = new Font("Segoe UI", 24 * scale, FontStyle.Bold))
+                    {
+                        g.DrawString(valueText, f, new SolidBrush(Color.FromArgb(40, 40, 40)), cx, cy + (15 * scale), sf);
+                    }
+                }
             }
         }
-
+        //asjdasdfkas
+        //asdjkfadkf
+        //dfajsdfd
         private void DrawSpokeLabel(Graphics g, RectangleF bounds, float startAngle, float sweepAngle, ChartSegment seg, long total, float scale, int index)
         {
             float midAngle = startAngle + sweepAngle / 2f;

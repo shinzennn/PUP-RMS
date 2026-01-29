@@ -143,6 +143,50 @@ namespace PUP_RMS.Helper
             return DbControl.ExecuteQuery("sp_GetYearLevelDistributionByProgram");
         }
 
+
+        // Add this inside DashboardHelper.cs
+        public static DataTable GetProgramGradeSheetCounts(string programCode, string schoolYear = null, string curriculumYear = null)
+        {
+            DbControl.sqlParameters.Clear();
+
+            // 1. Program Code (Required)
+            DbControl.AddParameter("@ProgramCode", programCode, SqlDbType.VarChar);
+
+            // 2. School Year (Optional)
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
+                DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
+
+            // 3. Curriculum Year (Optional)
+            if (!string.IsNullOrEmpty(curriculumYear) && curriculumYear != "All")
+                DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@CurriculumYear", DBNull.Value, SqlDbType.VarChar);
+
+            return DbControl.ExecuteQuery("sp_GetProgramGradeSheetCounts");
+        }
+
+        // Place this inside the DashboardHelper class
+        public static DataTable GetTotalCurriculumCourses(string schoolYear = null, string curriculumYear = null)
+        {
+            DbControl.sqlParameters.Clear();
+
+            // 1. School Year Parameter
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
+                DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
+
+            // 2. Curriculum Year Parameter
+            if (!string.IsNullOrEmpty(curriculumYear) && curriculumYear != "All")
+                DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@CurriculumYear", DBNull.Value, SqlDbType.VarChar);
+
+            return DbControl.ExecuteQuery("sp_GetTotalCurriculumCourses");
+        }
+
         // ============================================================
         // SECTION 4: FACULTY/PROFESSOR DISTRIBUTION
         // ============================================================
@@ -189,6 +233,26 @@ namespace PUP_RMS.Helper
                 DbControl.AddParameter("@CurriculumYear", DBNull.Value, SqlDbType.VarChar);
 
             return DbControl.ExecuteQuery("sp_GetGradeSheetsByFacultyDetails");
+        }
+
+        // Place inside DashboardHelper class
+        public static DataTable GetFacultyDistributionWithCounts(string schoolYear = null, string curriculumYear = null)
+        {
+            DbControl.sqlParameters.Clear();
+
+            // 1. School Year Parameter
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
+                DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
+
+            // 2. Curriculum Year Parameter
+            if (!string.IsNullOrEmpty(curriculumYear) && curriculumYear != "All")
+                DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@CurriculumYear", DBNull.Value, SqlDbType.VarChar);
+
+            return DbControl.ExecuteQuery("sp_GetFacultyDistribution_WithCounts");
         }
 
         // ============================================================

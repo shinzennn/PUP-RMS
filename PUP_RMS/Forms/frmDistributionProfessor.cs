@@ -282,6 +282,9 @@ namespace PUP_RMS.Forms
         // DATA LOADING & SEARCH LOGIC
         // =========================================================
         /// <param name="applySearchFilter">If true, filters results based on textbox. If false, reloads all data.</param>
+        // =========================================================
+        // DATA LOADING & SEARCH LOGIC
+        // =========================================================
         private void LoadFacultyData(bool applySearchFilter = false)
         {
             listContainer.Controls.Clear();
@@ -292,8 +295,8 @@ namespace PUP_RMS.Forms
             if (cmbSchoolYear.SelectedItem != null) selectedSchoolYear = cmbSchoolYear.SelectedItem.ToString();
             if (cmbCurriculum.SelectedItem != null) selectedCurriculum = cmbCurriculum.SelectedItem.ToString();
 
-            // 1. Get ALL data for the selected filters (Year/Curriculum)
-            DataTable dt = DashboardHelper.GetFacultyDistribution(selectedSchoolYear, selectedCurriculum);
+            // 1. Get DATA using the NEW Helper Method
+            DataTable dt = DashboardHelper.GetFacultyDistributionWithCounts(selectedSchoolYear, selectedCurriculum);
 
             if (dt == null || dt.Rows.Count == 0)
             {
@@ -302,7 +305,6 @@ namespace PUP_RMS.Forms
             }
 
             // 2. UPDATE AUTOCOMPLETE SUGGESTIONS
-            // This ensures the suggestions are "based on the filtered combobox"
             AutoCompleteStringCollection suggestions = new AutoCompleteStringCollection();
             foreach (DataRow row in dt.Rows)
             {
@@ -314,37 +316,137 @@ namespace PUP_RMS.Forms
             DataView dv = dt.DefaultView;
             if (applySearchFilter && !string.IsNullOrWhiteSpace(txtSearch.Text))
             {
-                // Escape special characters for RowFilter if necessary, simple approach here:
-                // This filters the DataTable result to only show the typed name
                 string safeSearch = txtSearch.Text.Trim().Replace("'", "''");
                 dv.RowFilter = $"Name LIKE '%{safeSearch}%'";
             }
 
             if (dv.Count == 0)
             {
-                ShowNoDataLabel($"No results for '{txtSearch.Text}' in this School Year.");
+                ShowNoDataLabel($"No results for '{txtSearch.Text}'.");
                 return;
             }
 
             // 4. RENDER UI
-            // Calculate max for progress bar based on the filtered view (or original dt if you prefer relative to total)
-            int maxRecords = 1;
-            // Usually we want the progress bar relative to the highest visible or highest total. 
-            // Let's use the highest in the current view.
-            foreach (DataRowView row in dv)
-            {
-                int val = Convert.ToInt32(row["RecordCount"]);
-                if (val > maxRecords) maxRecords = val;
-            }
-
             foreach (DataRowView row in dv)
             {
                 string name = row["Name"].ToString();
-                int records = Convert.ToInt32(row["RecordCount"]);
-                int progress = (int)((double)records / maxRecords * 100);
+                int submitted = Convert.ToInt32(row["SubmittedCount"]);
+                int total = Convert.ToInt32(row["TotalAssigned"]);
 
-                listContainer.Controls.Add(CreateFacultyRow(name, progress, records));
+                // Calculate Percentage Completion (Submitted / Total)
+                int progressPercentage = 0;
+                if (total > 0)
+                {
+                    progressPercentage = (int)((double)submitted / total * 100);
+                    if (progressPercentage > 100) progressPercentage = 100; // Cap at 100 if extra files uploaded
+                }
+                else if (submitted > 0)
+                {
+                    progressPercentage = 100; // If submitted but no total defined (edge case), show full
+                }
+
+                listContainer.Controls.Add(CreateFacultyRow(name, progressPercentage, submitted, total));
             }
+        }
+
+        // =========================================================
+        // UI ROW CREATION (UPDATED)
+        // =========================================================
+        private Panel CreateFacultyRow(string name, int progressPercent, int submitted, int total)
+        {
+            Panel row = new Panel
+            {
+                Width = listContainer.ClientSize.Width - (listContainer.Padding.Left + listContainer.Padding.Right),
+                Height = 100,
+                Margin = new Padding(0, 0, 0, 15),
+                BackColor = ClrCardWhite,
+                Cursor = Cursors.Hand
+            };
+
+            PictureBox picAvatar = new PictureBox { Size = new Size(65, 65), Location = new Point(20, 17), BackColor = Color.Transparent };
+            picAvatar.Paint += (s, e) => DrawProfileWithStar(e.Graphics, picAvatar.ClientRectangle);
+
+            Label lblName = new Label
+            {
+                Text = name,
+                Location = new Point(100, 22),
+                AutoSize = true,
+                Font = new Font("Segoe UI Semibold", 12f),
+                ForeColor = Color.FromArgb(45, 45, 45)
+            };
+
+            // Progress Bar Background
+            Panel progressBar = new Panel
+            {
+                Location = new Point(100, 58),
+                Height = 10,
+                BackColor = Color.FromArgb(230, 230, 230),
+                Anchor = AnchorStyles.Left | AnchorStyles.Right
+            };
+            progressBar.Width = row.Width - 300; // Adjusted width to fit longer text
+
+            // Paint Progress
+            progressBar.Paint += (s, e) => {
+                float fillWidth = (progressPercent / 100f) * progressBar.Width;
+                if (fillWidth > 0)
+                {
+                    // Color logic: Green if 100%, Gold/Maroon if pending
+                    Color startColor = (progressPercent >= 100) ? Color.SeaGreen : ClrMaroon;
+                    Color endColor = (progressPercent >= 100) ? Color.LimeGreen : ClrGold;
+
+                    using (LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, (int)fillWidth, 10), startColor, endColor, 0f))
+                        e.Graphics.FillRectangle(brush, 0, 0, fillWidth, 10);
+                }
+            };
+
+            // Label: "8 / 10 Grade Sheets"
+            Label lblRecords = new Label
+            {
+                Text = $"{submitted} / {total} Grade Sheets",
+                AutoSize = true,
+                Font = new Font("Segoe UI", 10f, FontStyle.Bold), // Bold for emphasis
+                ForeColor = (submitted >= total && total > 0) ? Color.SeaGreen : Color.Gray,
+                Anchor = AnchorStyles.Right
+            };
+            lblRecords.Location = new Point(progressBar.Right + 15, 54);
+
+            row.Controls.Add(picAvatar);
+            row.Controls.Add(lblName);
+            row.Controls.Add(progressBar);
+            row.Controls.Add(lblRecords);
+
+            // Click Events
+            EventHandler openDetails = (s, e) =>
+            {
+                string selectedSY = (cmbSchoolYear.SelectedItem != null) ? cmbSchoolYear.SelectedItem.ToString() : null;
+                string selectedCurr = (cmbCurriculum.SelectedItem != null) ? cmbCurriculum.SelectedItem.ToString() : null;
+
+                // Ensure you have this form created or updated
+                frmProfessorDrillDown detailsForm = new frmProfessorDrillDown(name, selectedSY, selectedCurr);
+                ShowWithDimmer(this, detailsForm);
+            };
+
+            row.Click += openDetails;
+            lblName.Click += openDetails;
+            picAvatar.Click += openDetails;
+            lblRecords.Click += openDetails;
+            progressBar.Click += openDetails;
+
+            // Resize handling
+            row.Resize += (s, e) =>
+            {
+                progressBar.Width = row.Width - 300;
+                lblRecords.Location = new Point(progressBar.Right + 15, 54);
+                progressBar.Invalidate();
+            };
+
+            // Border
+            row.Paint += (s, e) => {
+                using (Pen p = new Pen(Color.FromArgb(210, 210, 210), 1))
+                    e.Graphics.DrawRectangle(p, 0, 0, row.Width - 1, row.Height - 1);
+            };
+
+            return row;
         }
 
         private void ShowNoDataLabel(string message)
