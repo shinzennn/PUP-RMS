@@ -1,8 +1,16 @@
-﻿using System;
+﻿//using System;
+//using System.Data;
+//using System.Data.SqlClient;
+//using System.IO;
+//using System.Windows.Forms;
+
+//csharp PUP_RMS\Forms\frmGradeSheetDetails.cs
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PUP_RMS.Forms
@@ -18,73 +26,153 @@ namespace PUP_RMS.Forms
 
         private string currentFilePath = "";
         private bool imageChanged = false;
-        private bool isEditMode = false;
         private string stagedImagePath = null;   // temp selection
         private string originalImagePath = null; // original saved image
+        private bool isEditMode = false;
+
+        private bool isLoading = false;
+
+        private int selectedProgramID = 0;
+        private string selectedCurriculumYear = null;
+        private int selectedCurriculumID = 0;
+        private int selectedYearLevel = 0;
+        private int selectedSemester = 0;
+        private int selectedCourseID = 0;
+
 
 
         public frmGradeSheetDetails()
         {
             InitializeComponent();
+
+
+
+
         }
 
         private void frmGradeSheetDetails_Load(object sender, EventArgs e)
         {
-            LoadPrograms();
-            LoadCourses();
-            LoadProfessors();
-            LoadYearLevels();
-            LoadSemesters();
-            LoadSchoolYears();
-            //LoadAccounts();
+            try
+            {
+                LoadPrograms();
+                LoadCourses();
+                LoadProfessors();
+                LoadYearLevels();
+                LoadSemesters();
+                LoadSchoolYears();
+                LoadSections();
+                LoadCurriculum();
 
-            LoadGradeSheetData();
-            DisableEditMode();
+                LoadGradeSheetData();
+                DisableEditMode();
+
+                if (MainDashboard.CurrentAccount?.AccountType != "Admin")
+                {
+                    btnEdit.Visible = false;   // hide the Edit button
+                    btnUpload.Visible = false; // optionally hide upload button too
+                }
+                else
+                {
+                    btnEdit.Visible = true;
+                    btnUpload.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to initialize: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        // ========================= LOAD DATA =========================
+        // ========================= LOAD / BIND =========================
 
         private void LoadGradeSheetData()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(
-                @"SELECT 
-            gs.ProgramID,
-            gs.CourseID,
-            gs.FacultyID,
-            gs.YearLevel,
-            gs.Semester,
-            gs.SchoolYear,
-            gs.PageNumber,
-            gs.Filename,
-            gs.Filepath,
-            a.LastName + ', ' + a.FirstName AS UploadedBy
-          FROM GradeSheet gs
-          INNER JOIN Account a ON gs.AccountID = a.AccountID
-          WHERE gs.GradeSheetID = @GradeSheetID", con))
+            //using (var con = new SqlConnection(connectionString))
+            //using (var cmd = new SqlCommand(@"
+            //    SELECT 
+            //      gs.GradeSheetID,
+            //      gs.ProgramID,
+            //      gs.CourseID,
+            //      gs.FacultyID,
+            //      gs.YearLevel,
+            //      gs.Semester,
+            //      gs.SchoolYear,
+            //      gs.PageNumber,
+            //      gs.Filename,
+            //      gs.Filepath,
+            //      a.LastName + ', ' + a.FirstName AS UploadedBy
+            //    FROM GradeSheet gs
+            //    LEFT JOIN Account a ON gs.AccountID = a.AccountID
+            //    WHERE gs.GradeSheetID = @GradeSheetID", con))
+            //{
+            //    cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
+            //    con.Open();
+            //    using (var dr = cmd.ExecuteReader())
+            //    {
+            //        if (!dr.Read()) return;
+
+            //        SafeSetComboSelectedValue(cmbProgram, dr["ProgramID"]);
+            //        SafeSetComboSelectedValue(cmbCourse, dr["CourseID"]);
+            //        SafeSetComboSelectedValue(cmbProfessor, dr["FacultyID"]);
+            //        SafeSetComboSelectedValue(cmbYearLevel, dr["YearLevel"]);
+            //        SafeSetComboSelectedValue(cmbSemester, dr["Semester"]);
+            //        SafeSetComboSelectedValue(cmbSchoolYear, dr["SchoolYear"]);
+
+            //        txtPageNumber.Text = dr["PageNumber"]?.ToString() ?? "";
+            //        txtFilename.Text = dr["Filename"]?.ToString() ?? "";
+            //        txtUploader.Text = dr["UploadedBy"]?.ToString() ?? "";
+
+            //        originalImagePath = Path.Combine(
+            //            dr["Filepath"]?.ToString() ?? baseImagePath,
+            //            dr["Filename"]?.ToString() ?? ""
+            //        );
+
+            //        currentFilePath = originalImagePath;
+            //        LoadThumbnail(originalImagePath);
+            //    }
+            //}
+
+            using (var con = new SqlConnection(connectionString))
+            using (var cmd = new SqlCommand(@"
+                SELECT 
+                    gs.GradeSheetID,
+                    c.ProgramID,
+                    gs.CourseID,
+                    gs.FacultyID,
+                    c.YearLevel,
+                    c.Semester,
+                    gs.SchoolYear,
+                    gs.PageNumber,
+                    gs.Filename,
+                    gs.Filepath,
+                    a.LastName + ', ' + a.FirstName AS UploadedBy
+                FROM GradeSheet gs
+                INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
+                LEFT JOIN Account a ON gs.AccountID = a.AccountID
+                WHERE gs.GradeSheetID = @GradeSheetID
+            ", con))
             {
                 cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
                 con.Open();
 
-                using (SqlDataReader dr = cmd.ExecuteReader())
+                using (var dr = cmd.ExecuteReader())
                 {
                     if (!dr.Read()) return;
 
-                    cmbProgram.SelectedValue = dr["ProgramID"];
-                    cmbCourse.SelectedValue = dr["CourseID"];
-                    cmbProfessor.SelectedValue = dr["FacultyID"];
-                    cmbYearLevel.SelectedValue = dr["YearLevel"];
-                    cmbSemester.SelectedValue = dr["Semester"];
-                    cmbSchoolYear.SelectedValue = dr["SchoolYear"];
-                    txtPageNumber.Text = dr["PageNumber"].ToString();
-                    txtFilename.Text = dr["Filename"].ToString();
+                    SafeSetComboSelectedValue(cmbProgram, dr["ProgramID"]);
+                    SafeSetComboSelectedValue(cmbCourse, dr["CourseID"]);
+                    SafeSetComboSelectedValue(cmbProfessor, dr["FacultyID"]);
+                    SafeSetComboSelectedValue(cmbYearLevel, dr["YearLevel"]);
+                    SafeSetComboSelectedValue(cmbSemester, dr["Semester"]);
+                    SafeSetComboSelectedValue(cmbSchoolYear, dr["SchoolYear"]);
 
-                    // ✅ uploader (TEXTBOX)
-                    txtUploader.Text = dr["UploadedBy"].ToString();
+                    txtPageNumber.Text = dr["PageNumber"]?.ToString();
+                    txtFilename.Text = dr["Filename"]?.ToString();
+                    txtUploader.Text = dr["UploadedBy"]?.ToString();
 
                     originalImagePath = Path.Combine(
-                        dr["Filepath"].ToString(),
-                        dr["Filename"].ToString()
+                        dr["Filepath"]?.ToString() ?? baseImagePath,
+                        dr["Filename"]?.ToString() ?? ""
                     );
 
                     currentFilePath = originalImagePath;
@@ -93,41 +181,129 @@ namespace PUP_RMS.Forms
             }
         }
 
+        //private void LoadThumbnail(string filePath)
+        //{
+        //    try
+        //    {
+        //        if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+        //        {
+        //            pbPreview.Image?.Dispose();
+        //            pbPreview.Image = null;
+        //            return;
+        //        }
+
+        //        // Dispose previous image then load a fresh stream copy
+        //        pbPreview.Image?.Dispose();
+        //        using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+        //        {
+        //            pbPreview.Image = Image.FromStream(fs);
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        pbPreview.Image = null;
+        //    }
+        //}
+
         private void LoadThumbnail(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+            try
+            {
+                if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+                {
+                    pbPreview.Image?.Dispose();
+                    pbPreview.Image = null;
+                    return;
+                }
+
+                // Dispose previous image then load a fresh stream copy
+                pbPreview.Image?.Dispose();
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    var img = Image.FromStream(fs);
+                    pbPreview.Image = img;
+                    pbPreview.Size = img.Size; // Important: keep full image size
+                }
+            }
+            catch
             {
                 pbPreview.Image = null;
+            }
+        }
+
+
+        // ========================= IMAGE UPLOAD / SAVE =========================
+
+        private void btnUpload_Click_1(object sender, EventArgs e)
+        {
+            // Allow selecting a replacement image (preview only)
+            btnEdit.Enabled = false;
+            using (OpenFileDialog ofd = new OpenFileDialog { Filter = "Image files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png" })
+            {
+                if (ofd.ShowDialog() != DialogResult.OK) return;
+
+                stagedImagePath = ofd.FileName;
+                LoadThumbnail(stagedImagePath);
+                imageChanged = true;
+
+                btnSave.Visible = true;
+                btnCancel.Visible = true;
+            }
+        }
+
+        private void btnSave_Click_1(object sender, EventArgs e)
+        {
+            // Commit staged image to disk and update DB Filename/Filepath
+            if (!imageChanged || string.IsNullOrEmpty(stagedImagePath))
+            {
+                MessageBox.Show("No image selected.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            pbPreview.Image?.Dispose();
-
-            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            try
             {
-                pbPreview.Image = Image.FromStream(fs);
+                string fileName = GenerateFileName();
+                string targetFolder = BuildImageFolderPath();
+                Directory.CreateDirectory(targetFolder);
+                string finalPath = Path.Combine(targetFolder, fileName);
+
+                // Copy staged file to final destination (overwrite allowed)
+                File.Copy(stagedImagePath, finalPath, true);
+
+                using (var con = new SqlConnection(connectionString))
+                using (var cmd = new SqlCommand(@"UPDATE GradeSheet SET Filename=@Filename, Filepath=@Filepath WHERE GradeSheetID=@GradeSheetID", con))
+                {
+                    cmd.Parameters.AddWithValue("@Filename", fileName);
+                    cmd.Parameters.AddWithValue("@Filepath", targetFolder);
+                    cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Update local state
+                originalImagePath = finalPath;
+                currentFilePath = finalPath;
+                stagedImagePath = null;
+                imageChanged = false;
+
+                btnSave.Visible = false;
+                btnCancel.Visible = false;
+                btnEdit.Enabled = true;
+
+                MessageBox.Show("Image saved successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to save image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoadThumbnail(originalImagePath);
             }
         }
 
-        // ========================= IMAGE UPLOAD =========================
-
-        private void btnUpload_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void btnCancelImageChange_Click(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
             stagedImagePath = null;
             imageChanged = false;
-
             LoadThumbnail(originalImagePath);
-
             btnSave.Visible = false;
             btnCancel.Visible = false;
             btnEdit.Enabled = true;
@@ -135,29 +311,149 @@ namespace PUP_RMS.Forms
 
         // ========================= EDIT MODE =========================
 
+        private void roundedButton1_Click(object sender, EventArgs e) => EnableEditMode();
+
+        private void btnSaves_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // ===================== VALIDATION =====================
+                if (cmbProgram.SelectedValue == null ||
+                    cmbYearLevel.SelectedValue == null ||
+                    cmbSemester.SelectedValue == null)
+                {
+                    MessageBox.Show("Program, Year Level, and Semester are required.",
+                        "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int pageNum = 0;
+                int.TryParse(txtPageNumber.Text, out pageNum);
+
+                string newFileName = GenerateFileName();
+                string newTargetFolder = BuildImageFolderPath();
+                Directory.CreateDirectory(newTargetFolder); // ensure folder exists
+                string newFullFilePath = Path.Combine(newTargetFolder, newFileName);
+
+                // ===================== FILE MOVE / RENAME =====================
+                string origFullPath = Path.GetFullPath(originalImagePath ?? "");
+                string newFullPath = Path.GetFullPath(newFullFilePath);
+
+                if (!string.Equals(origFullPath, newFullPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (!string.IsNullOrEmpty(originalImagePath) && File.Exists(originalImagePath))
+                    {
+                        // Release image lock
+                        pbPreview.Image?.Dispose();
+                        pbPreview.Image = null;
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+
+                        // If new file already exists, delete it
+                        if (File.Exists(newFullPath))
+                            File.Delete(newFullPath);
+
+                        // Move original file to new location
+                        File.Move(origFullPath, newFullPath);
+
+                        // Update paths
+                        originalImagePath = newFullPath;
+                        currentFilePath = newFullPath;
+                    }
+                    else
+                    {
+                        // Original file does not exist; fallback to using staged image if available
+                        if (!string.IsNullOrEmpty(stagedImagePath) && File.Exists(stagedImagePath))
+                        {
+                            File.Copy(stagedImagePath, newFullPath, true);
+                            originalImagePath = newFullPath;
+                            currentFilePath = newFullPath;
+                            stagedImagePath = null;
+                            imageChanged = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Original file not found: {origFullPath}", "Warning",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+
+                // ===================== DATABASE UPDATE =====================
+                using (var con = new SqlConnection(connectionString))
+                using (var cmd = new SqlCommand("sp_UpdateGradeSheets", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@GradeSheetID", SqlDbType.Int).Value = GradeSheetID;
+                    cmd.Parameters.Add("@Filename", SqlDbType.VarChar, 255).Value = newFileName;
+                    cmd.Parameters.Add("@Filepath", SqlDbType.VarChar, 500).Value = newTargetFolder;
+                    cmd.Parameters.Add("@SchoolYear", SqlDbType.VarChar, 20)
+                        .Value = GetComboSelectedValueString(cmbSchoolYear);
+                    cmd.Parameters.Add("@Semester", SqlDbType.Int)
+                        .Value = GetComboSelectedValueInt(cmbSemester);
+                    cmd.Parameters.Add("@ProgramID", SqlDbType.Int)
+                        .Value = GetComboSelectedValueInt(cmbProgram);
+                    cmd.Parameters.Add("@YearLevel", SqlDbType.Int)
+                        .Value = GetComboSelectedValueInt(cmbYearLevel);
+                    cmd.Parameters.Add("@CourseID", SqlDbType.Int)
+                        .Value = GetComboSelectedValueInt(cmbCourse);
+                    cmd.Parameters.Add("@FacultyID", SqlDbType.Int)
+                        .Value = GetComboSelectedValueInt(cmbProfessor);
+                    cmd.Parameters.Add("@PageNumber", SqlDbType.Int).Value = pageNum;
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                // ===================== UI UPDATE =====================
+                txtFilename.Text = newFileName;
+                LoadThumbnail(originalImagePath);
+                DisableEditMode();
+
+                MessageBox.Show("Grade sheet updated successfully.",
+                    "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show("Database error: " + sqlEx.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoadGradeSheetData();
+            }
+            catch (IOException ioEx)
+            {
+                MessageBox.Show("File access error: " + ioEx.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoadThumbnail(originalImagePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to save details: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoadGradeSheetData();
+            }
+        }
+
+
+
+        private void btnCancels_Click(object sender, EventArgs e)
+        {
+            LoadGradeSheetData();
+            DisableEditMode();
+        }
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
             EnableEditMode();
         }
 
-        private void btnSaveGradeSheetDetails_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void btnCancelEdit_Click(object sender, EventArgs e)
-        {
-           
-        }
-
         private void EnableEditMode()
         {
+            if (MainDashboard.CurrentAccount?.AccountType != "Admin")
+                return; // block non-admins
+
             isEditMode = true;
 
-            //txtPageNumber.ReadOnly = false;
-            //btnEdit.Visible = false;
-            //btnSaveGradeSheetDetails.Visible = true;
-            //btnCancelEdit.Visible = true;
             txtPageNumber.ReadOnly = false;
             cmbSchoolYear.Enabled = true;
             cmbSemester.Enabled = true;
@@ -165,22 +461,20 @@ namespace PUP_RMS.Forms
             cmbYearLevel.Enabled = true;
             cmbCourse.Enabled = true;
             cmbProfessor.Enabled = true;
+            cmbCurriculum.Enabled = true;
+            cmbSection.Enabled = true;
+
             btnSaves.Visible = true;
             btnCancels.Visible = true;
             btnEdit.Enabled = false;
             btnEdit.Visible = false;
             btnUpload.Enabled = false;
-
         }
 
         private void DisableEditMode()
         {
             isEditMode = false;
 
-            //txtPageNumber.ReadOnly = true;
-            //btnEdit.Visible = true;
-            //btnSaveGradeSheetDetails.Visible = false;
-            //btnCancelEdit.Visible = false;
             txtPageNumber.ReadOnly = true;
             cmbSchoolYear.Enabled = false;
             cmbSemester.Enabled = false;
@@ -188,65 +482,256 @@ namespace PUP_RMS.Forms
             cmbYearLevel.Enabled = false;
             cmbCourse.Enabled = false;
             cmbProfessor.Enabled = false;
+            cmbCurriculum.Enabled = false;
+            cmbSection.Enabled = true;
+
             btnSaves.Visible = false;
             btnCancels.Visible = false;
             btnEdit.Enabled = true;
             btnEdit.Visible = true;
             btnUpload.Enabled = true;
-
         }
 
-        // ========================= FILENAME GENERATION =========================
+        // ========================= HELPERS =========================
 
         private string GenerateFileName()
         {
-            string acadYear = cmbSchoolYear.Text.Replace("-", "");
-            string sem = cmbSemester.SelectedValue.ToString() == "1" ? "A" : "B";
+            string rawSchoolYear = GetComboSelectedValueString(cmbSchoolYear) ?? cmbSchoolYear.Text;
+            string acadYear = FormatAcademicYear(rawSchoolYear);
 
-            string program = ((DataRowView)cmbProgram.SelectedItem)["ProgramCode"].ToString();
-            string course = ((DataRowView)cmbCourse.SelectedItem)["CourseCode"].ToString();
+            int semVal = GetComboSelectedValueInt(cmbSemester);
+            string sem = semVal == 1 ? "A" : (semVal == 2 ? "B" : "C");
+
+            string program = SanitizeForFilename(GetComboSelectedText(cmbProgram) ?? "PRG");
+
+            string yearLevel = GetComboSelectedValueString(cmbYearLevel) ?? "0";
+
+            // ===== Add section here =====
+            string section = GetComboSelectedValueString(cmbSection) ?? cmbSection.Text ?? "0";
+
+            string rawCourse = GetComboSelectedText(cmbCourse);
+            string course = FormatCourseCode(rawCourse);
 
             string faculty = GetFacultyInitials();
-            string yearLevel = cmbYearLevel.SelectedValue.ToString();
-            string page = txtPageNumber.Text;
 
-            return $"PUPLQ_GRSH_{acadYear}_{sem}_{program}_{yearLevel}_{course}_{faculty}_P{page}.jpg";
+            string page = string.IsNullOrWhiteSpace(txtPageNumber.Text) ? "0" : txtPageNumber.Text.Trim();
+
+            // Insert section after yearLevel
+            return $"PUPLQ_GRSH_{acadYear}_{sem}_{program}_{yearLevel}_{section}_{course}_{faculty}_P{page}.jpg";
         }
+
+        private string FormatAcademicYear(string schoolYear)
+        {
+            if (string.IsNullOrWhiteSpace(schoolYear))
+                return "XXXX";
+
+            // Expected format: YYYY-YYYY
+            string[] parts = schoolYear.Split('-');
+
+            if (parts.Length != 2)
+                return SanitizeForFilename(schoolYear);
+
+            string start = parts[0].Trim();
+            string end = parts[1].Trim();
+
+            if (start.Length < 4 || end.Length < 4)
+                return SanitizeForFilename(schoolYear);
+
+            return start.Substring(start.Length - 2) + end.Substring(end.Length - 2);
+        }
+
+        private string FormatCourseCode(string course)
+        {
+            if (string.IsNullOrWhiteSpace(course))
+                return "COURSE";
+
+            // Remove spaces only
+            return course.Replace(" ", "");
+        }
+
 
         private string GetFacultyInitials()
         {
-            string fullName = ((DataRowView)cmbProfessor.SelectedItem)["FullName"].ToString();
-            string[] parts = fullName.Split(' ');
+            try
+            {
+                string fullName = cmbProfessor.Text;
+                if (string.IsNullOrWhiteSpace(fullName))
+                    return "NA";
 
-            // Added basic validation to prevent crash if parts are missing
-            string initial1 = parts.Length > 0 && parts[0].Length >= 4 ? parts[0].Substring(0, 4) : parts[0];
-            string initial2 = parts.Length > 1 && parts[1].Length >= 3 ? parts[1].Substring(0, 3) : (parts.Length > 1 ? parts[1] : "NA");
+                // Expected format: LastName, FirstName M.
+                string[] nameParts = fullName.Split(',');
 
-            return (initial1 + initial2).ToUpper();
+                if (nameParts.Length < 2)
+                    return fullName.Replace(" ", "").ToUpper();
+
+                // ----- SURNAME -----
+                string surname = nameParts[0]
+                    .Replace(" ", "")
+                    .ToUpper();
+
+                // ----- GIVEN NAMES -----
+                string givenNames = nameParts[1]
+                    .Replace(".", "")
+                    .Trim();
+
+                string[] givenParts = givenNames
+                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                string initials = "";
+                foreach (string part in givenParts)
+                {
+                    initials += part[0];
+                }
+
+                return surname + initials.ToUpper();
+            }
+            catch
+            {
+                return "NA";
+            }
+        }
+
+
+
+        private string BuildImageFolderPath()
+        {
+            // Start with base folder
+            string baseFolder = baseImagePath;
+
+            // Use the existing original path as base if available
+            if (!string.IsNullOrEmpty(originalImagePath))
+            {
+                baseFolder = Path.GetDirectoryName(originalImagePath) ?? baseImagePath;
+            }
+
+            // Only rebuild subfolders if in edit mode
+            if (isEditMode)
+            {
+                // Use displayed text from combo boxes to preserve the readable names
+                string schoolYear = SanitizePath(cmbSchoolYear.Text ?? "UnknownSchoolYear");
+                string semester = SanitizePath(cmbSemester.Text ?? "UnknownSemester");
+                string program = SanitizePath(cmbProgram.Text ?? "UnknownProgram");
+                string yearLevel = SanitizePath(cmbYearLevel.Text ?? "UnknownYearLevel");
+                string section = SanitizePath(cmbSection.Text ?? "UnknownSection");
+                string course = SanitizePath(cmbCourse.Text ?? "UnknownCourse");
+                string professor = SanitizePath(cmbProfessor.Text ?? "UnknownProfessor"); // full name with middle initial
+
+                baseFolder = Path.Combine(baseImagePath, schoolYear, semester, program, yearLevel, section, course, professor);
+            }
+
+            return baseFolder;
+        }
+
+
+
+
+
+        private string SanitizePath(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return "Unknown";
+            foreach (char c in Path.GetInvalidFileNameChars())
+                input = input.Replace(c.ToString(), "");
+            return input.Trim();
+        }
+
+        private string SanitizeForFilename(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return "X";
+            var invalid = Path.GetInvalidFileNameChars();
+            foreach (var c in invalid) input = input.Replace(c.ToString(), "");
+            return input.Replace(" ", "_");
         }
 
         // ========================= COMBO LOADERS =========================
 
         private void LoadPrograms() =>
-            LoadComboBox("SELECT ProgramID, ProgramCode FROM Program", cmbProgram, "ProgramCode", "ProgramID");
+            LoadComboBox("SELECT ProgramID, ProgramCode FROM Program ORDER BY ProgramCode", cmbProgram, "ProgramCode", "ProgramID");
 
         private void LoadCourses() =>
-            LoadComboBox("SELECT CourseID, CourseCode FROM Course", cmbCourse, "CourseCode", "CourseID");
+            LoadComboBox("SELECT CourseID, CourseCode FROM Course ORDER BY CourseCode", cmbCourse, "CourseCode", "CourseID");
 
-        private void LoadProfessors() =>
-            LoadComboBox("SELECT FacultyID, FirstName + ' ' + LastName AS FullName FROM Faculty",
-                cmbProfessor, "FullName", "FacultyID");
+        private void LoadCourses(int curriculumID, int yearLevel, int semester)
+        {
+            if (curriculumID == 0 || yearLevel == 0 || semester == 0)
+            {
+                cmbCourse.DataSource = null;
+                return;
+            }
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(@"
+                SELECT DISTINCT co.CourseID, co.CourseCode
+                FROM CurriculumCourse cc
+                JOIN Course co ON cc.CourseID = co.CourseID
+                WHERE cc.CurriculumID = @CurriculumID
+                ORDER BY co.CourseCode", con))
+            {
+                cmd.Parameters.AddWithValue("@CurriculumID", curriculumID);
+
+                DataTable dt = new DataTable();
+                con.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                DataRow placeholder = dt.NewRow();
+                placeholder["CourseID"] = 0;
+                placeholder["CourseCode"] = "Select Course";
+                dt.Rows.InsertAt(placeholder, 0);
+
+                cmbCourse.DataSource = dt;
+                cmbCourse.DisplayMember = "CourseCode";
+                cmbCourse.ValueMember = "CourseID";
+                cmbCourse.SelectedIndex = 0;
+            }
+        }
+
+        private void LoadProfessors()
+        {
+            LoadComboBox(
+                @"SELECT 
+                      FacultyID,
+                      LastName + ', ' + FirstName +
+                      CASE 
+                          WHEN MiddleName IS NULL OR LTRIM(RTRIM(MiddleName)) = '' 
+                          THEN '' 
+                          ELSE ' ' + LEFT(MiddleName, 1) + '.'
+                      END AS FullName
+                  FROM Faculty
+                  ORDER BY LastName, FirstName",
+                cmbProfessor,
+                "FullName",
+                "FacultyID"
+            );
+        }
 
         private void LoadYearLevels()
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("ID", typeof(int));
             dt.Columns.Add("Name", typeof(string));
-            for (int i = 1; i <= 5; i++) dt.Rows.Add(i, $"{i} Year");
+            dt.Rows.Add(1, "1st Year");
+            dt.Rows.Add(2, "2nd Year");
+            dt.Rows.Add(3, "3rd Year");
+            dt.Rows.Add(4, "4th Year");
+            dt.Rows.Add(5, "5th Year");
             cmbYearLevel.DataSource = dt;
             cmbYearLevel.DisplayMember = "Name";
             cmbYearLevel.ValueMember = "ID";
         }
+        private void LoadSections()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Name", typeof(string));
+
+            dt.Rows.Add(1, "1");
+            dt.Rows.Add(2, "2");
+            dt.Rows.Add(3, "3");
+
+            cmbSection.DataSource = dt;      // ✅ correct combo
+            cmbSection.DisplayMember = "Name";
+            cmbSection.ValueMember = "ID";
+        }
+
 
         private void LoadSemesters()
         {
@@ -255,263 +740,240 @@ namespace PUP_RMS.Forms
             dt.Columns.Add("Name", typeof(string));
             dt.Rows.Add(1, "1st Semester");
             dt.Rows.Add(2, "2nd Semester");
+            dt.Rows.Add(3, "Summer");
             cmbSemester.DataSource = dt;
             cmbSemester.DisplayMember = "Name";
             cmbSemester.ValueMember = "ID";
         }
 
-        private void LoadSchoolYears() =>
-            LoadComboBox("SELECT DISTINCT SchoolYear FROM GradeSheet ORDER BY SchoolYear DESC",
-                cmbSchoolYear, "SchoolYear", "SchoolYear");
-
-        private void LoadComboBox(string query, ComboBox cmb, string display, string value)
+        private void LoadSchoolYears()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            LoadComboBox(
+                        @"SELECT SchoolYear
+                  FROM GradeSheet
+                  GROUP BY SchoolYear
+                  ORDER BY SchoolYear DESC",
+                cmbSchoolYear,
+                "SchoolYear",
+                "SchoolYear"
+            );
+        }
+        private void LoadCurriculum()
+        {
+            LoadComboBox(
+                    @"SELECT CurriculumYear
+              FROM Curriculum
+              GROUP BY CurriculumYear
+              ORDER BY CurriculumYear DESC",
+                cmbCurriculum,
+                "CurriculumYear",
+                "CurriculumYear"
+            );
+        }
+
+        private void LoadCurriculumYears(int programID)
+        {
+            if (programID == 0)
             {
+                cmbCurriculum.DataSource = null;
+                return;
+            }
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(
+                @"SELECT DISTINCT CurriculumYear 
+          FROM Curriculum 
+          WHERE ProgramID = @ProgramID 
+          ORDER BY CurriculumYear DESC", con))
+            {
+                cmd.Parameters.AddWithValue("@ProgramID", programID);
+
                 DataTable dt = new DataTable();
                 con.Open();
                 dt.Load(cmd.ExecuteReader());
+
+                DataRow placeholder = dt.NewRow();
+                placeholder["CurriculumYear"] = "Select Curriculum";
+                dt.Rows.InsertAt(placeholder, 0);
+
+                cmbCurriculum.DataSource = dt;
+                cmbCurriculum.DisplayMember = "CurriculumYear";
+                cmbCurriculum.ValueMember = "CurriculumYear";
+                cmbCurriculum.SelectedIndex = 0;
+            }
+        }
+
+
+
+        private void LoadComboBox(string query, ComboBox cmb, string display, string value)
+        {
+            try
+            {
+                var dt = new DataTable();
+                using (var con = new SqlConnection(connectionString))
+                using (var cmd = new SqlCommand(query, con))
+                {
+                    con.Open();
+                    dt.Load(cmd.ExecuteReader());
+                }
+
                 cmb.DataSource = dt;
                 cmb.DisplayMember = display;
                 cmb.ValueMember = value;
             }
+            catch (Exception ex)
+            {
+                // Best-effort: keep control empty on failure
+                cmb.DataSource = null;
+                MessageBox.Show("Failed to load lookup: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-     
+        // ========================= SAFE COMBO HELPERS =========================
 
-        private void roundedButton1_Click(object sender, EventArgs e)
-        {
-            EnableEditMode();
-        }
-
-        private void btnSaves_Click(object sender, EventArgs e)
+        private void SafeSetComboSelectedValue(ComboBox cmb, object value)
         {
             try
             {
-                // 1. Generate the NEW filename and Folder based on the current selections
-                string newFileName = GenerateFileName();
-                string newTargetFolder = BuildImageFolderPath(); // Generates path based on Year/Sem
-                string newFullFilePath = Path.Combine(newTargetFolder, newFileName);
-
-                // 2. Check if the details changed resulting in a new path/name
-                if (originalImagePath != newFullFilePath)
+                if (cmb == null) return;
+                if (value == null || value == DBNull.Value)
                 {
-                    // A. Check if the original file actually exists before trying to move it
-                    if (File.Exists(originalImagePath))
-                    {
-                        // B. IMPORTANT: Dispose the image in the PictureBox to unlock the file
-                        if (pbPreview.Image != null)
-                        {
-                            pbPreview.Image.Dispose();
-                            pbPreview.Image = null;
-                        }
-
-                        // Force garbage collection to ensure the file handle is released immediately
-                        GC.Collect();
-                        GC.WaitForPendingFinalizers();
-
-                        // C. Create the new directory if it doesn't exist (e.g. New School Year folder)
-                        if (!Directory.Exists(newTargetFolder))
-                        {
-                            Directory.CreateDirectory(newTargetFolder);
-                        }
-
-                        // D. Move (Rename) the file to the new location
-                        // This handles both renaming the file AND moving it to a new folder
-                        File.Move(originalImagePath, newFullFilePath);
-
-                        // Update internal tracking variables
-                        originalImagePath = newFullFilePath;
-                        currentFilePath = newFullFilePath;
-                    }
-                    else
-                    {
-                        MessageBox.Show("The original file could not be found. It may have been deleted or moved manually.",
-                                        "File Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                    cmb.SelectedIndex = -1;
+                    return;
                 }
 
-                // 3. Database Update
-                using (SqlConnection con = new SqlConnection(connectionString))
-                using (SqlCommand cmd = new SqlCommand("sp_UpdateGradeSheet", con))
+                // If bound to a DataTable and value is a DataRowView use lookup by value member
+                var val = value is DataRowView drv ? drv.Row.ItemArray.FirstOrDefault() : value;
+                if (cmb.DataSource is DataTable dt && !string.IsNullOrEmpty(cmb.ValueMember) && dt.Columns.Contains(cmb.ValueMember))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
-                    cmd.Parameters.AddWithValue("@Filename", newFileName);
-                    cmd.Parameters.AddWithValue("@Filepath", newTargetFolder); // Updates to the new folder path
-                    cmd.Parameters.AddWithValue("@SchoolYear", cmbSchoolYear.SelectedValue);
-                    cmd.Parameters.AddWithValue("@Semester", cmbSemester.SelectedValue);
-                    cmd.Parameters.AddWithValue("@ProgramID", cmbProgram.SelectedValue);
-                    cmd.Parameters.AddWithValue("@YearLevel", cmbYearLevel.SelectedValue);
-                    cmd.Parameters.AddWithValue("@CourseID", cmbCourse.SelectedValue);
-                    cmd.Parameters.AddWithValue("@FacultyID", cmbProfessor.SelectedValue);
-                    cmd.Parameters.AddWithValue("@PageNumber", Convert.ToInt32(txtPageNumber.Text));
-
-                    con.Open();
-                    cmd.ExecuteNonQuery();
+                    // try to find the row and set SelectedValue
+                    try
+                    {
+                        cmb.SelectedValue = Convert.ChangeType(value, dt.Columns[cmb.ValueMember].DataType);
+                        return;
+                    }
+                    catch { }
                 }
 
-                // 4. Update UI
-                txtFilename.Text = newFileName;
-
-                // Reload the image from the NEW location to verify it works
-                LoadThumbnail(originalImagePath);
-
-                DisableEditMode();
-                MessageBox.Show("Grade sheet details and file location updated successfully.");
+                // fallback
+                cmb.SelectedValue = value;
             }
-            catch (IOException ioEx)
+            catch { /* ignore selection failures */ }
+        }
+
+        private int GetComboSelectedValueInt(ComboBox cmb)
+        {
+            try
             {
-                MessageBox.Show("File Access Error (File might be open elsewhere): " + ioEx.Message,
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // Attempt to reload original if move failed
-                LoadThumbnail(originalImagePath);
+                if (cmb == null || cmb.SelectedValue == null) return 0;
+                if (cmb.SelectedValue is DataRowView drv)
+                {
+                    // try value member
+                    if (!string.IsNullOrEmpty(cmb.ValueMember) && drv.DataView != null && drv.DataView.Table.Columns.Contains(cmb.ValueMember))
+                    {
+                        var v = drv[cmb.ValueMember];
+                        if (v != null && v != DBNull.Value) return Convert.ToInt32(v);
+                    }
+
+                    // fallback first int column
+                    foreach (DataColumn c in drv.DataView.Table.Columns)
+                    {
+                        if (c.DataType == typeof(int))
+                        {
+                            var vv = drv[c.ColumnName];
+                            if (vv != null && vv != DBNull.Value) return Convert.ToInt32(vv);
+                        }
+                    }
+                    return 0;
+                }
+
+                return Convert.ToInt32(cmb.SelectedValue);
             }
-            catch (Exception ex)
+            catch { return 0; }
+        }
+
+        private string GetComboSelectedValueString(ComboBox cmb)
+        {
+            try
             {
-                MessageBox.Show("Error updating details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                LoadGradeSheetData();
+                if (cmb == null || cmb.SelectedValue == null) return null;
+                if (cmb.SelectedValue is DataRowView drv)
+                {
+                    if (!string.IsNullOrEmpty(cmb.ValueMember) && drv.DataView != null && drv.DataView.Table.Columns.Contains(cmb.ValueMember))
+                        return drv[cmb.ValueMember]?.ToString();
+                    return drv.Row.ItemArray.Length > 0 ? drv.Row.ItemArray[0]?.ToString() : null;
+                }
+
+                return cmb.SelectedValue.ToString();
             }
-
+            catch { return null; }
         }
 
-        private void btnCancels_Click(object sender, EventArgs e)
+        private string GetComboSelectedText(ComboBox cmb)
         {
-            LoadGradeSheetData();
-            DisableEditMode();
-        }
-
-        private void roundedShadowPanel5_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void roundedShadowPanel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void roundedShadowPanel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void btnSave_Click_1(object sender, EventArgs e)
-        {
-            if (!imageChanged || string.IsNullOrEmpty(stagedImagePath))
+            try
             {
-                MessageBox.Show("No image selected.", "Info");
-                return;
+                if (cmb == null) return null;
+                return cmb.Text;
             }
-
-            string fileName = GenerateFileName();
-            //string targetFolder = Path.Combine(Application.StartupPath, "GradeSheets");
-            string targetFolder = BuildImageFolderPath();
-
-            Directory.CreateDirectory(targetFolder);
-
-            string finalPath = Path.Combine(targetFolder, fileName);
-
-            File.Copy(stagedImagePath, finalPath, true);
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(
-                @"UPDATE GradeSheet
-          SET Filename=@Filename, Filepath=@Filepath
-          WHERE GradeSheetID=@GradeSheetID", con))
-            {
-                cmd.Parameters.AddWithValue("@Filename", fileName);
-                cmd.Parameters.AddWithValue("@Filepath", targetFolder);
-                cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
-
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
-
-            // commit state
-            originalImagePath = finalPath;
-            currentFilePath = finalPath;
-            stagedImagePath = null;
-            imageChanged = false;
-
-            btnSave.Visible = false;
-            btnCancel.Visible = false;
-            btnEdit.Enabled = true;
-
-            MessageBox.Show("Image saved successfully.");
+            catch { return null; }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            stagedImagePath = null;
-            imageChanged = false;
+        // ========================= MISC UI =========================
 
-            LoadThumbnail(originalImagePath);
-
-            btnSave.Visible = false;
-            btnCancel.Visible = false;
-            btnEdit.Enabled = true;
-        }
-
-        private void btnUpload_Click_1(object sender, EventArgs e)
-        {
-            btnEdit.Enabled = false;
-            using (OpenFileDialog ofd = new OpenFileDialog
-            {
-                Filter = "Image files (*.jpg;*.png)|*.jpg;*.png"
-            })
-            {
-                if (ofd.ShowDialog() != DialogResult.OK)
-                    return; // cancel = do nothing
-
-                stagedImagePath = ofd.FileName; // source only
-
-                LoadThumbnail(stagedImagePath); // preview only
-
-                imageChanged = true;
-                btnSave.Visible = true;
-                btnCancel.Visible = true;
-            }
-        }
-
-        private string BuildImageFolderPath()
-        {
-            // Use the currently selected text from the dropdowns
-            string schoolYear = SanitizePath(cmbSchoolYear.Text);
-            string semester = SanitizePath(cmbSemester.Text);
-
-            // Combine: BasePath \ SchoolYear \ Semester
-            return Path.Combine(baseImagePath, schoolYear, semester);
-        }
-
-        private string SanitizePath(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input)) return "Unknown";
-
-            foreach (char c in Path.GetInvalidFileNameChars())
-            {
-                input = input.Replace(c.ToString(), "");
-            }
-            return input.Trim();
-        }
-
-        private void btnClose_Click_1(object sender, EventArgs e)=>Close();
+        private void btnClose_Click_1(object sender, EventArgs e) => Close();
 
         private void roundedButton1_Click_1(object sender, EventArgs e)
         {
             if (pbPreview.Image == null)
             {
-                MessageBox.Show("Image is required.");
+                MessageBox.Show("Image is required.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            else
-            {
-                var previewForm = new currentpicturePreview();
-                previewForm.PassedImage = pbPreview.Image;
-                previewForm.Show();
-            }
+
+            var previewForm = new currentpicturePreview();
+            previewForm.PassedImage = pbPreview.Image;
+            previewForm.Show();
+        }
+
+        private void tlpEditControls_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblFilename_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbProgram_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbCurriculum_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbYearLevel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbSemester_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbCourse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbCourse_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
