@@ -89,6 +89,9 @@ namespace PUP_RMS.Forms
                 frm.GradeSheetID = selectedGradeSheetID;
                 frm.ShowDialog(this);
             }
+
+            btnSearch.PerformClick();
+
         }
 
 
@@ -593,6 +596,9 @@ namespace PUP_RMS.Forms
                 frm.GradeSheetID = selectedGradeSheetID;
                 frm.ShowDialog(this);
             }
+
+            btnSearch.PerformClick();
+
         }
 
 

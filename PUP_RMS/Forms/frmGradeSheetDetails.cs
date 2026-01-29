@@ -590,27 +590,33 @@ namespace PUP_RMS.Forms
 
         private string BuildImageFolderPath()
         {
-            // Use the existing original path as base if available
+            // Start with base folder
             string baseFolder = baseImagePath;
 
+            // Use the existing original path as base if available
             if (!string.IsNullOrEmpty(originalImagePath))
             {
                 baseFolder = Path.GetDirectoryName(originalImagePath) ?? baseImagePath;
             }
 
-            // Only rebuild subfolders if in edit mode and combos changed
+            // Only rebuild subfolders if in edit mode
             if (isEditMode)
             {
-                string schoolYear = SanitizePath(GetComboSelectedValueString(cmbSchoolYear) ?? cmbSchoolYear.Text ?? "");
-                string semester = SanitizePath(GetComboSelectedText(cmbSemester) ?? cmbSemester.Text ?? "");
-                string program = SanitizePath(GetComboSelectedText(cmbProgram) ?? "UNKNOWN_PROGRAM");
-                string section = SanitizePath(GetComboSelectedText(cmbSection) ?? "UNKNOWN_SECTION");
+                // Use displayed text from combo boxes to preserve the readable names
+                string schoolYear = SanitizePath(cmbSchoolYear.Text ?? "UnknownSchoolYear");
+                string semester = SanitizePath(cmbSemester.Text ?? "UnknownSemester");
+                string program = SanitizePath(cmbProgram.Text ?? "UnknownProgram");
+                string yearLevel = SanitizePath(cmbYearLevel.Text ?? "UnknownYearLevel");
+                string section = SanitizePath(cmbSection.Text ?? "UnknownSection");
+                string course = SanitizePath(cmbCourse.Text ?? "UnknownCourse");
+                string professor = SanitizePath(cmbProfessor.Text ?? "UnknownProfessor"); // full name with middle initial
 
-                baseFolder = Path.Combine(baseImagePath, schoolYear, semester, program, section);
+                baseFolder = Path.Combine(baseImagePath, schoolYear, semester, program, yearLevel, section, course, professor);
             }
 
             return baseFolder;
         }
+
 
 
 
