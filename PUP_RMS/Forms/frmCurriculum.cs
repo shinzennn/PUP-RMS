@@ -256,10 +256,14 @@ namespace PUP_RMS.Forms
             {
                 insertEditedCurriculum();
                 selectCurriculumCourse();
+                cbxCourse.SelectedIndex = -1;
+                cbxFaculty.SelectedIndex = -1;
             }
             else
             {
                 dgvCurriculumCourse.Rows.Add(cbxCourse.SelectedValue, cbxFaculty.SelectedValue, cbxCourse.Text, cbxFaculty.Text);
+                cbxCourse.SelectedIndex = -1;
+                cbxFaculty.SelectedIndex = -1;
             }
 
                 
@@ -291,6 +295,9 @@ namespace PUP_RMS.Forms
 
             pnlYearLevelAndSem.Enabled = true;
             pnlCurriculumCourse.Enabled = false;
+
+            cbxYearLevel.SelectedIndex = -1;
+            cbxSemester.SelectedIndex = -1;
 
         }
 
@@ -561,7 +568,6 @@ namespace PUP_RMS.Forms
                     {
                         conn.Open();
                         curriculumCount = Convert.ToInt32(cmd.ExecuteScalar());
-                        MessageBox.Show(curriculumCount.ToString());
                     }
                     catch (Exception ex)
                     {

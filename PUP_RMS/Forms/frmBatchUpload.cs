@@ -111,6 +111,20 @@ namespace PUP_RMS.Forms
             LoadSection();
 
         }
+        public void loadData()
+        {
+            LoadProfessors();
+            LoadSemester();
+            InitializeImageList();
+            LoadPrograms();
+            LoadYearLevels();
+
+
+            LoadPageNumber();
+            LoadAcademicYears();
+            yearCmbox.Text = "";
+            LoadSection();
+        }
 
         private void InitializeImageList()
         {

@@ -101,6 +101,26 @@ namespace PUP_RMS.Forms
             isLoading = false;
         }
 
+        public void loadData()
+        {
+            isLoading = true;
+
+            LoadPrograms();       // Program is independent
+            LoadSchoolYears();    // School Year is independent
+            LoadYearLevels();     // Year Level is independent
+            LoadSemesters();      // Semester is independent
+            LoadSections();       // Section is independent
+
+            // Load dependent combos as empty / placeholders
+            cmbCurriculum.DataSource = null;
+            cmbCourse.DataSource = null;
+            cmbProfessor.DataSource = null;
+
+            LoadAllGradeSheets(); // Populate the grid with all data initially
+
+            isLoading = false;
+        }
+
         private void frmSearch_Shown(object sender, EventArgs e)
         {
         }

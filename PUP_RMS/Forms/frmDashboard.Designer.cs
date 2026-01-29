@@ -90,7 +90,7 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 98F));
@@ -113,7 +113,7 @@
             this.roundedPanel3.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.roundedPanel3.HoverBorderColor = System.Drawing.Color.Maroon;
             this.roundedPanel3.Location = new System.Drawing.Point(4, 4);
-            this.roundedPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.roundedPanel3.Margin = new System.Windows.Forms.Padding(4);
             this.roundedPanel3.Name = "roundedPanel3";
             this.roundedPanel3.ShadowBlur = 15;
             this.roundedPanel3.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -169,11 +169,11 @@
             this.tableLayoutPanel3.Controls.Add(this.headerPanelCard3, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 324);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 318F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 317F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1485, 317);
             this.tableLayoutPanel3.TabIndex = 9;
             // 
@@ -196,7 +196,7 @@
             this.headerPanelCard4.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard4.IconHeader")));
             this.headerPanelCard4.IconSize = 25;
             this.headerPanelCard4.Location = new System.Drawing.Point(969, 4);
-            this.headerPanelCard4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.headerPanelCard4.Margin = new System.Windows.Forms.Padding(4);
             this.headerPanelCard4.Name = "headerPanelCard4";
             this.headerPanelCard4.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.headerPanelCard4.ShadowDepth = 4;
@@ -230,7 +230,7 @@
             this.tableLayoutPanel6.Controls.Add(this.cpDriveUsage, 0, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(15, 50);
-            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -262,7 +262,7 @@
             this.cpDriveUsage.GradientEnd = System.Drawing.Color.Maroon;
             this.cpDriveUsage.GradientStart = System.Drawing.Color.Maroon;
             this.cpDriveUsage.Location = new System.Drawing.Point(168, 31);
-            this.cpDriveUsage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cpDriveUsage.Margin = new System.Windows.Forms.Padding(4);
             this.cpDriveUsage.Maximum = 100;
             this.cpDriveUsage.Minimum = 0;
             this.cpDriveUsage.Name = "cpDriveUsage";
@@ -292,7 +292,7 @@
             this.headerPanelCard3.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard3.IconHeader")));
             this.headerPanelCard3.IconSize = 25;
             this.headerPanelCard3.Location = new System.Drawing.Point(4, 4);
-            this.headerPanelCard3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.headerPanelCard3.Margin = new System.Windows.Forms.Padding(4);
             this.headerPanelCard3.Name = "headerPanelCard3";
             this.headerPanelCard3.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.headerPanelCard3.ShadowDepth = 4;
@@ -313,7 +313,7 @@
             this.colUploadedBy});
             this.dgvRecentUploads.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvRecentUploads.Location = new System.Drawing.Point(15, 50);
-            this.dgvRecentUploads.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvRecentUploads.Margin = new System.Windows.Forms.Padding(4);
             this.dgvRecentUploads.Name = "dgvRecentUploads";
             this.dgvRecentUploads.RowHeadersWidth = 51;
             this.dgvRecentUploads.Size = new System.Drawing.Size(927, 244);
@@ -383,11 +383,11 @@
             this.tableLayoutPanel2.Controls.Add(this.dcTotalGradesheets, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(16, 51);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 135F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 151F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1453, 151);
             this.tableLayoutPanel2.TabIndex = 10;
             // 
@@ -509,7 +509,7 @@
             this.tableLayoutPanel4.Controls.Add(this.headerPanelCard1, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 649);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -534,7 +534,7 @@
             this.recentActivityLog1.IconHeader = ((System.Drawing.Image)(resources.GetObject("recentActivityLog1.IconHeader")));
             this.recentActivityLog1.IconSize = 25;
             this.recentActivityLog1.Location = new System.Drawing.Point(4, 4);
-            this.recentActivityLog1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.recentActivityLog1.Margin = new System.Windows.Forms.Padding(4);
             this.recentActivityLog1.Name = "recentActivityLog1";
             this.recentActivityLog1.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.recentActivityLog1.ShadowDepth = 4;
@@ -565,7 +565,7 @@
             this.headerPanelCard1.IconHeader = ((System.Drawing.Image)(resources.GetObject("headerPanelCard1.IconHeader")));
             this.headerPanelCard1.IconSize = 25;
             this.headerPanelCard1.Location = new System.Drawing.Point(969, 4);
-            this.headerPanelCard1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.headerPanelCard1.Margin = new System.Windows.Forms.Padding(4);
             this.headerPanelCard1.Name = "headerPanelCard1";
             this.headerPanelCard1.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.headerPanelCard1.ShadowDepth = 4;
@@ -586,7 +586,7 @@
             this.tableLayoutPanel5.Controls.Add(this.pnlByProgram, 0, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(15, 50);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -609,7 +609,7 @@
             this.pnlBySubject.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlBySubject.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.pnlBySubject.Location = new System.Drawing.Point(245, 126);
-            this.pnlBySubject.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlBySubject.Margin = new System.Windows.Forms.Padding(4);
             this.pnlBySubject.Name = "pnlBySubject";
             this.pnlBySubject.NormalCardBorderColor = System.Drawing.Color.LightGray;
             this.pnlBySubject.ShadowBlur = 15;
@@ -636,7 +636,7 @@
             this.pnlByYear_Sem.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlByYear_Sem.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.pnlByYear_Sem.Location = new System.Drawing.Point(4, 126);
-            this.pnlByYear_Sem.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlByYear_Sem.Margin = new System.Windows.Forms.Padding(4);
             this.pnlByYear_Sem.Name = "pnlByYear_Sem";
             this.pnlByYear_Sem.NormalCardBorderColor = System.Drawing.Color.LightGray;
             this.pnlByYear_Sem.ShadowBlur = 15;
@@ -663,7 +663,7 @@
             this.pnlByProfessor.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlByProfessor.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.pnlByProfessor.Location = new System.Drawing.Point(245, 4);
-            this.pnlByProfessor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlByProfessor.Margin = new System.Windows.Forms.Padding(4);
             this.pnlByProfessor.Name = "pnlByProfessor";
             this.pnlByProfessor.NormalCardBorderColor = System.Drawing.Color.LightGray;
             this.pnlByProfessor.ShadowBlur = 15;
@@ -689,7 +689,7 @@
             this.pnlByProgram.LabelFont = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlByProgram.LabelForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.pnlByProgram.Location = new System.Drawing.Point(4, 4);
-            this.pnlByProgram.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlByProgram.Margin = new System.Windows.Forms.Padding(4);
             this.pnlByProgram.Name = "pnlByProgram";
             this.pnlByProgram.NormalCardBorderColor = System.Drawing.Color.LightGray;
             this.pnlByProgram.ShadowBlur = 15;
@@ -716,7 +716,7 @@
             this.ClientSize = new System.Drawing.Size(1493, 970);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmDashboard";
             this.Text = "frmDashboard";
             this.Load += new System.EventHandler(this.frmDashboard_Load_1);
