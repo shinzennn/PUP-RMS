@@ -94,6 +94,12 @@ namespace PUP_RMS.Forms
 
             // 4. Start Animation
             tmrFadeIn.Start();
+
+            if(CurrentAccount.AccountType == "User")
+            {
+                pnlAdminSubMenu.Visible = false;
+                btnAdminTool.Visible = false;
+            }
         }
         private void InitializeAllForms()
         {
