@@ -65,6 +65,17 @@ namespace PUP_RMS.Forms
 
                 LoadGradeSheetData();
                 DisableEditMode();
+
+                if (MainDashboard.CurrentAccount?.AccountType != "Admin")
+                {
+                    btnEdit.Visible = false;   // hide the Edit button
+                    btnUpload.Visible = false; // optionally hide upload button too
+                }
+                else
+                {
+                    btnEdit.Visible = true;
+                    btnUpload.Visible = true;
+                }
             }
             catch (Exception ex)
             {
@@ -438,6 +449,9 @@ namespace PUP_RMS.Forms
 
         private void EnableEditMode()
         {
+            if (MainDashboard.CurrentAccount?.AccountType != "Admin")
+                return; // block non-admins
+
             isEditMode = true;
 
             txtPageNumber.ReadOnly = false;
