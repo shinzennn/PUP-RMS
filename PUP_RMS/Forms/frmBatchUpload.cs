@@ -26,6 +26,12 @@ namespace PUP_RMS.Forms
 
         public frmBatchUpload()
         {
+            // Anti-flicker settings
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+            this.UpdateStyles();
+
             InitializeComponent();
             this.Load += frmBatchUpload_Load;
 
@@ -56,7 +62,38 @@ namespace PUP_RMS.Forms
                 currentImage.Visible = false;
             }
 
+            ApplyDoubleBufferingRecursively(this.Controls);
 
+            // Start hidden (important for child forms)
+            this.Visible = false;
+
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.Style |= 0x02000000;  // WS_CLIPCHILDREN
+                return cp;
+            }
+        }
+        private void ApplyDoubleBufferingRecursively(Control.ControlCollection controls)
+        {
+            foreach (Control c in controls)
+            {
+                SetDoubleBuffered(c);
+                if (c.HasChildren)
+                    ApplyDoubleBufferingRecursively(c.Controls);
+            }
+        }
+
+        private static void SetDoubleBuffered(Control c)
+        {
+            if (System.Windows.Forms.SystemInformation.TerminalServerSession) return;
+
+            System.Reflection.PropertyInfo prop = typeof(Control).GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            prop?.SetValue(c, true, null);
         }
 
         private void frmBatchUpload_Load(object sender, EventArgs e)

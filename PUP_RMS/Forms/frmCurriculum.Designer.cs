@@ -974,6 +974,7 @@
             this.Name = "frmCurriculum";
             this.Text = "frmCurriculum";
             this.Load += new System.EventHandler(this.frmCurriculum_Load);
+            this.Shown += new System.EventHandler(this.frmCurriculum_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.roundedShadowPanel2.ResumeLayout(false);
             this.roundedShadowPanel2.PerformLayout();

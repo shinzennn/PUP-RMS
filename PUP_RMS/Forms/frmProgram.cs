@@ -17,42 +17,61 @@ namespace PUP_RMS.Forms
     {
         public frmProgram()
         {
-            // 1. ENABLE FORM-LEVEL DOUBLE BUFFERING
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
-                          ControlStyles.UserPaint |
-                          ControlStyles.DoubleBuffer |
-                          ControlStyles.OptimizedDoubleBuffer |
-                          ControlStyles.ResizeRedraw, true);
+            // Anti-flicker settings
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             this.UpdateStyles();
 
             InitializeComponent();
 
-            // 2. FORCE CONTROLS TO BE DOUBLE BUFFERED
-            SetDoubleBuffered(panelProginfo);
-            SetDoubleBuffered(dgvProgram);
-        }
+            ApplyDoubleBufferingRecursively(this.Controls);
 
-        // 3. PREVENT BACKGROUND PAINTING FLICKER (WS_EX_COMPOSITED)
+            // Start hidden (important for child forms)
+            this.Visible = false;
+
+        }
         protected override CreateParams CreateParams
         {
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;  // Turn on Composited Painting
+                cp.Style |= 0x02000000;  // WS_CLIPCHILDREN
                 return cp;
             }
         }
+        private void ApplyDoubleBufferingRecursively(Control.ControlCollection controls)
+        {
+            foreach (Control c in controls)
+            {
+                SetDoubleBuffered(c);
+                if (c.HasChildren)
+                    ApplyDoubleBufferingRecursively(c.Controls);
+            }
+        }
 
-        // 4. HELPER METHOD FOR DOUBLE BUFFERING CONTROLS
-        public static void SetDoubleBuffered(System.Windows.Forms.Control c)
+        private static void SetDoubleBuffered(Control c)
         {
             if (System.Windows.Forms.SystemInformation.TerminalServerSession) return;
-            System.Reflection.PropertyInfo aProp = typeof(System.Windows.Forms.Control).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            if (aProp != null) aProp.SetValue(c, true, null);
+
+            System.Reflection.PropertyInfo prop = typeof(Control).GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            prop?.SetValue(c, true, null);
         }
+
 
         DataGridViewRow selectedRow = null;
         int btnClickState = 0; // 0 - None, 1 - Create, 2 - Edit
+
+        private void frmProgram_Load(object sender, EventArgs e)
+        {
+            this.SuspendLayout(); // Freeze
+
+            txtSearch.Focus();
+            RefreshGrid();
+
+            this.ResumeLayout(); // Unfreeze
+        }
 
         public void Reset()
         {
@@ -110,15 +129,7 @@ namespace PUP_RMS.Forms
                 dgvProgram.Columns["ProgramCode"].Width = 180;
         }
 
-        private void frmProgram_Load(object sender, EventArgs e)
-        {
-            this.SuspendLayout(); // Freeze
-
-            txtSearch.Focus();
-            RefreshGrid();
-
-            this.ResumeLayout(); // Unfreeze
-        }
+        
 
         private void btnSave_Click(object sender, EventArgs e)
         {

@@ -21,6 +21,8 @@ namespace PUP_RMS.Forms
 {
     public partial class frmCurriculum : Form
     {
+        // Add this with your other fields
+        private Timer tmrFadeIn;
 
         int curriculumID = 0;
         int selectedRow = 0;
@@ -29,11 +31,92 @@ namespace PUP_RMS.Forms
         bool view = false;
         public frmCurriculum()
         {
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+            this.UpdateStyles();
+
             InitializeComponent();
 
+            ApplyDoubleBufferingRecursively(this.Controls);
+
+            // Start hidden
+            this.Visible = false;
 
         }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.Style |= 0x02000000;  // WS_CLIPCHILDREN
+                return cp;
+            }
+        }
+        private void ApplyDoubleBufferingRecursively(Control.ControlCollection controls)
+        {
+            foreach (Control c in controls)
+            {
+                SetDoubleBuffered(c);
+                if (c.HasChildren)
+                    ApplyDoubleBufferingRecursively(c.Controls);
+            }
+        }
 
+        private static void SetDoubleBuffered(Control c)
+        {
+            if (System.Windows.Forms.SystemInformation.TerminalServerSession) return;
+
+            System.Reflection.PropertyInfo prop = typeof(Control).GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            prop?.SetValue(c, true, null);
+        }
+        private void InitializeFadeTimer()
+        {
+            tmrFadeIn = new Timer();
+            tmrFadeIn.Interval = 10;
+            tmrFadeIn.Tick += TmrFadeIn_Tick;
+        }
+
+        private void TmrFadeIn_Tick(object sender, EventArgs e)
+        {
+            if (this.IsDisposed)
+            {
+                tmrFadeIn.Stop();
+                return;
+            }
+
+            if (this.Opacity < 1.0)
+            {
+                this.Opacity += 0.01; // Adjust this for faster/slower fade (0.05 = smooth, 0.1 = faster)
+            }
+            else
+            {
+                tmrFadeIn.Stop();
+            }
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (tmrFadeIn != null)
+                tmrFadeIn.Stop();
+
+            base.OnFormClosing(e);
+        }
+        private void HideAllPanelsTemporarily()
+        {
+            // Find and hide all your main panels during initialization
+            pnlCurriculum.Visible = false;
+            pnlYearLevelAndSem.Visible = false;
+            pnlCurriculumCourse.Visible = false;
+
+            // Hide any other panels or controls that are causing visible build-up
+            dgvCurriculum.Visible = false;
+            dgvCurriculumCourse.Visible = false;
+        }
+
+        //=====================================================
+        // Code Logic Starts Here
+        //=====================================================
         private void frmCurriculum_Load(object sender, EventArgs e)
         {
             txtCurriculumYear.Text = "";
@@ -42,7 +125,12 @@ namespace PUP_RMS.Forms
             LoadCourse();
             LoadFaculty();
             LoadProgram();
+        }
+
+        private void frmCurriculum_Shown(object sender, EventArgs e)
+        {
             
+
         }
 
 
@@ -744,6 +832,8 @@ namespace PUP_RMS.Forms
         {
 
         }
+
+        
     }
 
 }

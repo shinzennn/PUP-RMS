@@ -20,9 +20,13 @@ namespace PUP_RMS.Forms
         // Caching Variables
         private Form activeForm = null;
         private frmDashboard _dashboardInstance = null; // We will use this instance
+        private frmSearch _searchForm = null;
+        private frmBatchUpload _batchUploadForm = null;
+        private frmCurriculum _curriculumForm = null;
         private frmProgram _programForm = null;
         private frmCourse _courseForm = null;
         private frmFaculty _facultyForm = null;
+        private frmAccount _accountForm = null;
 
         // UI Tracking
         private iconButton currentActiveButton = null;
@@ -77,7 +81,7 @@ namespace PUP_RMS.Forms
             ArrangeSidebar();
 
             // 2. Initialize Dashboard Instance if null
-            if (_dashboardInstance == null)
+            if (_dashboardInstance == null || _dashboardInstance.IsDisposed)
             {
                 _dashboardInstance = new frmDashboard();
                 PrepareChildForm(_dashboardInstance);
@@ -119,7 +123,7 @@ namespace PUP_RMS.Forms
         }
 
         // ======================================================
-        // SECTION: BUTTON CLICK EVENTS
+        // SECTION: SUB BUTTON CLICK EVENTS
         // ======================================================
 
         private void btnAdminTool_Click(object sender, EventArgs e)
@@ -133,6 +137,17 @@ namespace PUP_RMS.Forms
             }
             ArrangeSidebar();
             ActivateButton(sender);
+        }
+        private void btnCurriculum_Click_1(object sender, EventArgs e)
+        {
+            if (_curriculumForm == null || _curriculumForm.IsDisposed)
+            {
+                _curriculumForm = new frmCurriculum();
+                PrepareChildForm(_curriculumForm);
+            }
+            ShowForm(_curriculumForm);
+            ActivateAdminSubButton(sender);
+
         }
 
         private void btnProgram_Click_1(object sender, EventArgs e)
@@ -168,13 +183,7 @@ namespace PUP_RMS.Forms
             ActivateAdminSubButton(sender);
         }
 
-        private void btnCurriculum_Click_1(object sender, EventArgs e)
-        {
-            frmCurriculum curriculumForm = new frmCurriculum();
-            ShowForm(curriculumForm);
-            ActivateAdminSubButton(sender);
-        }
-
+       
         // --- STANDARD BUTTONS ---
 
         private void btnDashboard_Click(object sender, EventArgs e)
@@ -201,8 +210,13 @@ namespace PUP_RMS.Forms
             if (currentActiveButton == sender) return;
             if (CanChangeWindow())
             {
+                if(_searchForm == null || _searchForm.IsDisposed)
+                {
+                    _searchForm = new frmSearch();
+                    PrepareChildForm(_searchForm);
+                }
                 ActivateButton(sender);
-                ShowForm(new frmSearch());
+                ShowForm(_searchForm);
             }
         }
 
@@ -211,8 +225,13 @@ namespace PUP_RMS.Forms
             if (currentActiveButton == sender) return;
             if (CanChangeWindow())
             {
+                if(_batchUploadForm == null || _batchUploadForm.IsDisposed)
+                {
+                    _batchUploadForm = new frmBatchUpload();
+                    PrepareChildForm(_batchUploadForm);
+                }
                 ActivateButton(sender);
-                ShowForm(new frmBatchUpload());
+                ShowForm(_batchUploadForm);
             }
         }
 
@@ -221,8 +240,13 @@ namespace PUP_RMS.Forms
             if (currentActiveButton == sender) return;
             if (CanChangeWindow())
             {
+                if(_accountForm == null || _accountForm.IsDisposed)
+                {
+                    _accountForm = new frmAccount();
+                    PrepareChildForm(_accountForm);
+                }
                 ActivateButton(sender);
-                ShowForm(new frmAccount());
+                ShowForm(_accountForm);
             }
         }
 
@@ -246,32 +270,38 @@ namespace PUP_RMS.Forms
 
             if (activeForm != null)
             {
-                // If the active form is one of our "Cached" main forms, just Hide it.
                 if (activeForm == _dashboardInstance ||
+                    activeForm == _searchForm ||
+                    activeForm == _batchUploadForm ||
+                    activeForm == _curriculumForm ||
                     activeForm == _programForm ||
                     activeForm == _courseForm ||
-                    activeForm == _facultyForm)
+                    activeForm == _facultyForm ||
+                    activeForm == _accountForm) 
                 {
-                    activeForm.Hide();
+                    activeForm.Visible = false;
                 }
                 else
                 {
-                    // Otherwise (like Search or Upload), Close it to reset.
                     activeForm.Close();
                 }
             }
 
             activeForm = childForm;
 
-            // Ensure the form is added to the panel if it wasn't already
             if (!pnlContent.Controls.Contains(childForm))
             {
                 PrepareChildForm(childForm);
             }
 
-            childForm.BringToFront();
-            childForm.Show();
-            pnlContent.ResumeLayout();
+            pnlContent.ResumeLayout(false); // false = don't layout yet
+
+            // Use BeginInvoke to delay visibility until ALL painting is done
+            this.BeginInvoke(new Action(() =>
+            {
+                childForm.Visible = true;
+                childForm.BringToFront();
+            }));
         }
 
         private void PrepareChildForm(Form childForm)
@@ -279,8 +309,21 @@ namespace PUP_RMS.Forms
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
+
+            // CRITICAL: Hide the form before adding it
+            childForm.Visible = false;
+
             SetDoubleBuffered(childForm);
             pnlContent.Controls.Add(childForm);
+
+            // TRIGGER LOAD EVENT NOW (while hidden) to populate ComboBoxes
+            if (!childForm.IsHandleCreated)
+            {
+                childForm.CreateControl(); // This triggers the Load event
+            }
+
+            // Force complete layout AFTER loading
+            childForm.PerformLayout();
         }
 
         private void ActivateButton(object btnSender)
