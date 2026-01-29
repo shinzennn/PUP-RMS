@@ -425,6 +425,18 @@ namespace PUP_RMS.Forms
 
             Control newBtn = (Control)btnSender;
             iconButton newIconBtn = btnSender as iconButton;
+            if (newBtn != btnAdminTool && isAdminExpanded) 
+            { 
+                isAdminExpanded = false;
+
+                if (currentAdminSubButton != null) 
+                {
+                    currentAdminSubButton.IsActive = false;
+                    currentAdminSubButton.BackColor = ButtonRed;
+                    currentAdminSubButton = null;
+                }
+                ArrangeSidebar();
+            }
 
             if (currentActiveButton != null && currentActiveButton != newIconBtn)
             {

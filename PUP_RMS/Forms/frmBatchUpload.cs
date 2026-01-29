@@ -605,13 +605,14 @@ namespace PUP_RMS.Forms
         // =========================
         // FOR BUILDING IMAGE PATH
         // =========================
-
+        //wa
         private string BuildImageFolderPath()
         {
            
             string year = SanitizePath(yearCmbox.Text);
             string semester = SanitizePath(semesterCmbox.Text);
             string program = SanitizePath(programCmbox.Text);
+            string yearlevel = SanitizePath(yearLevelCmbox.Text);
             string section = SanitizePath(sectionCmbox.Text);
             string course = SanitizePath(courseCmbox.Text);
             string professor = SanitizePath(professorCmbox.Text);
@@ -619,9 +620,13 @@ namespace PUP_RMS.Forms
             return Path.Combine(
                 baseImagePath,
                 year,
-                semester,
+                semester, 
                 program,
-                section
+                yearlevel,
+                section,
+                course,
+                professor
+
             );
         }
 
@@ -744,7 +749,7 @@ namespace PUP_RMS.Forms
         {
             string query = "Select Initials FROM Faculty WHERE FacultyID = @FacultyID";
             DbControl.AddParameter("@FacultyID", facultyID, SqlDbType.Int);
-            DataTable dt = DbControl.ExecuteQuery(query);
+            DataTable dt = DbControl.GetData(query);
 
             return Convert.ToString(dt.Rows[0]["Initials"]);
         }

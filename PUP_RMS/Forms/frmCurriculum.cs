@@ -306,6 +306,8 @@ namespace PUP_RMS.Forms
             if (facultyForm.DialogResult == DialogResult.OK)
             {
                 LoadFaculty();
+
+
             }
 
         }
@@ -318,6 +320,8 @@ namespace PUP_RMS.Forms
             if (openCouse.DialogResult == DialogResult.OK)
             {
                 LoadCourse();
+                cbxCourse.SelectedIndex = cbxCourse.Items.Count - 1;
+                
             }
         }
 
@@ -328,6 +332,7 @@ namespace PUP_RMS.Forms
             if (newPrograms.DialogResult == DialogResult.OK)
             {
                 LoadProgram();
+                cbxProgram.SelectedIndex = cbxProgram.Items.Count - 1;  
             }
         }
 
@@ -474,9 +479,10 @@ namespace PUP_RMS.Forms
             cbxFaculty.DisplayMember = "DisplayName";
             cbxFaculty.ValueMember = "FacultyID";
             cbxFaculty.SelectedIndex = -1;
+            
         }
 
-        
+        //m
 
         //LOADING CURRICULUM COURSE DATAGRIDVIEW
         private void loadDgvCurriculumCourse()
