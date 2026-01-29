@@ -1,7 +1,7 @@
-CREATE DATABASE RMSDB;
+CREATE DATABASE RMSDB03;
 GO
 
-USE RMSDB;
+USE RMSDB03;
 GO
 
 CREATE TABLE Account(
@@ -96,7 +96,7 @@ GO
 -- Sample Admin Account
 -- =================================================
 INSERT INTO Account(Username, Password, FirstName, LastName, AccountType) VALUES('admin', '12345678', 'Bong', 'Montante', 'Admin');
-
+GO
 -- =================================================
 -- =            STORED PROCEDURES LIST             =
 -- =================================================
@@ -1130,6 +1130,43 @@ BEGIN
 END
 GO
 
+-- 8.7.6 Get Count of Submitted vs Total Curriculum Courses for a Program
+CREATE OR ALTER PROCEDURE sp_GetProgramGradeSheetCounts
+    @ProgramCode VARCHAR(20),
+    @SchoolYear VARCHAR(20) = NULL,
+    @CurriculumYear VARCHAR(10) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- 1. Count Submitted (Numerator): Actual GradeSheets in the database
+    DECLARE @SubmittedCount INT;
+    
+    SELECT @SubmittedCount = COUNT(gs.GradeSheetID)
+    FROM GradeSheet gs
+    INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
+    INNER JOIN Program p ON c.ProgramID = p.ProgramID
+    WHERE p.ProgramCode = @ProgramCode
+      AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
+      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear);
+
+    -- 2. Count Total (Denominator): Total Subjects listed in the Curriculum for this Program
+    DECLARE @TotalCount INT;
+
+    SELECT @TotalCount = COUNT(cc.CurriculumCourseID)
+    FROM CurriculumCourse cc
+    INNER JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
+    INNER JOIN Program p ON c.ProgramID = p.ProgramID
+    WHERE p.ProgramCode = @ProgramCode
+      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear);
+
+    -- 3. Return Result
+    SELECT 
+        ISNULL(@SubmittedCount, 0) AS SubmittedCount, 
+        ISNULL(@TotalCount, 0) AS TotalCurriculumCourses;
+END
+GO
+
 --------------------------------------------------
 -- 8.8. Distribution by PROFESSOR
 --------------------------------------------------
@@ -1184,6 +1221,58 @@ SELECT
         gs.DateUploaded DESC;
 END
 GO
+
+-- 8.8.3. FACULTY COUNT
+CREATE OR ALTER PROCEDURE sp_GetFacultyDistribution_WithCounts
+    @SchoolYear VARCHAR(20) = NULL,
+    @CurriculumYear VARCHAR(10) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        f.FacultyID,
+        -- Format Name: Last, First
+        f.LastName + ', ' + f.FirstName AS Name,
+        
+        -- 1. COUNT SUBMITTED (Numerator)
+        -- Counts actual uploads in GradeSheet table
+        (SELECT COUNT(gs.GradeSheetID) 
+         FROM GradeSheet gs
+         INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
+         WHERE gs.FacultyID = f.FacultyID
+           AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
+           AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
+        ) AS SubmittedCount,
+
+        -- 2. COUNT TOTAL ASSIGNED (Denominator)
+        -- Counts courses assigned to this faculty in the CurriculumCourse table
+        (SELECT COUNT(cc.CurriculumCourseID) 
+         FROM CurriculumCourse cc
+         INNER JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
+         WHERE cc.FacultyID = f.FacultyID
+           AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
+        ) AS TotalAssigned
+
+    FROM Faculty f
+    -- Only return faculty who have at least one course assigned OR one grade sheet submitted
+    WHERE EXISTS (
+        SELECT 1 FROM CurriculumCourse cc 
+        INNER JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
+        WHERE cc.FacultyID = f.FacultyID
+        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
+    ) 
+    OR EXISTS (
+        SELECT 1 FROM GradeSheet gs
+        INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
+        WHERE gs.FacultyID = f.FacultyID
+        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
+        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
+    )
+    ORDER BY Name ASC;
+END
+GO
+
 --------------------------------------------------
 -- 8.9. Distribution by SUBJECT
 --------------------------------------------------
@@ -1258,6 +1347,39 @@ BEGIN
         curr.CurriculumYear DESC, FacultyName ASC;
 END
 GO
+
+-- 8.9.3. GET TOTAL CURRICULUM COURSES
+CREATE OR ALTER PROCEDURE sp_GetTotalCurriculumCourses
+    @SchoolYear VARCHAR(20) = NULL,
+    @CurriculumYear VARCHAR(10) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- 1. Calculate Total Submitted (The Numerator)
+    -- Counts actual files uploaded to GradeSheet table matching the filters
+    DECLARE @SubmittedCount INT;
+    SELECT @SubmittedCount = COUNT(gs.GradeSheetID)
+    FROM GradeSheet gs
+    INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
+    WHERE (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
+      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear);
+
+    -- 2. Calculate Total Expected (The Denominator)
+    -- Counts the number of courses defined in the Curriculum (The "Plan")
+    DECLARE @TotalCount INT;
+    SELECT @TotalCount = COUNT(cc.CurriculumCourseID)
+    FROM CurriculumCourse cc
+    INNER JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
+    WHERE (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear);
+
+    -- Return as a single row
+    SELECT 
+        ISNULL(@SubmittedCount, 0) AS SubmittedCount, 
+        ISNULL(@TotalCount, 0) AS TotalCount;
+END
+GO
+
 
 --------------------------------------------------
 -- 8.10. Distribution by YEAR & SEMESTER 
@@ -1396,3 +1518,7 @@ LEFT JOIN GradeSheet gs ON gs.CourseID = cc.CourseID
     AND gs.FacultyID = cc.FacultyID
     AND gs.CurriculumID = cc.CurriculumID
 ORDER BY c.CurriculumYear, p.ProgramCode, c.YearLevel, c.Semester;
+
+
+--================================================================================================================
+
