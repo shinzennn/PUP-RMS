@@ -152,7 +152,26 @@ namespace PUP_RMS.Forms
             string fullname = MainDashboard.CurrentAccount.FirstName + " " + MainDashboard.CurrentAccount.LastName;
             LoadAccountName(fullname);
         }
+        public void loadData()
+        {
+            LoadDashboardCounts();
+            if (this.cpDriveUsage != null)
+            {
+                _defaultGradientStart = this.cpDriveUsage.GradientStart;
+                _defaultGradientEnd = this.cpDriveUsage.GradientEnd;
+            }
 
+            this.SuspendLayout();
+            this.ResumeLayout(true);
+            tmrFadeIn.Start();
+            UpdateDriveStatus();
+            if (timerStorageUpdate != null) timerStorageUpdate.Start();
+
+            LoadDashboardCounts();
+            LoadRecentUploads();
+            string fullname = MainDashboard.CurrentAccount.FirstName + " " + MainDashboard.CurrentAccount.LastName;
+            LoadAccountName(fullname);
+        }
         public void LoadAccountName(string fullname)
         {
             lblAccountName.Text = fullname;

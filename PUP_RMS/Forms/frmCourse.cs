@@ -87,7 +87,10 @@ namespace PUP_RMS.Forms
             txtSearch.Focus();
             RefreshGrid();
         }
-
+        public void loadData()
+        {
+            RefreshGrid();
+        }
       
 
         // DATA GRID VIEW ROW HOVER COLOR CHANGE

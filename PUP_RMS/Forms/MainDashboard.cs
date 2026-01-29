@@ -222,6 +222,7 @@ namespace PUP_RMS.Forms
                 _programForm = new frmProgram();
                 PrepareChildForm(_programForm);
             }
+            _programForm.Reset();
             ShowForm(_programForm);
             ActivateAdminSubButton(sender);
         }
@@ -233,6 +234,7 @@ namespace PUP_RMS.Forms
                 _courseForm = new frmCourse();
                 PrepareChildForm(_courseForm);
             }
+            _courseForm.loadData();
             ShowForm(_courseForm);
             ActivateAdminSubButton(sender);
         }
@@ -244,6 +246,7 @@ namespace PUP_RMS.Forms
                 _facultyForm = new frmFaculty();
                 PrepareChildForm(_facultyForm);
             }
+            _facultyForm.loadData();
             ShowForm(_facultyForm);
             ActivateAdminSubButton(sender);
         }
@@ -261,6 +264,7 @@ namespace PUP_RMS.Forms
                     _dashboardInstance = new frmDashboard();
                     PrepareChildForm(_dashboardInstance);
                 }
+                _dashboardInstance.loadData();
                 ActivateButton(sender);
                 ShowForm(_dashboardInstance);
             }
@@ -276,6 +280,7 @@ namespace PUP_RMS.Forms
                     _searchForm = new frmSearch();
                     PrepareChildForm(_searchForm);
                 }
+                _searchForm.loadData();
                 ActivateButton(sender);
                 ShowForm(_searchForm);
             }
@@ -291,6 +296,7 @@ namespace PUP_RMS.Forms
                     _batchUploadForm = new frmBatchUpload();
                     PrepareChildForm(_batchUploadForm);
                 }
+                _batchUploadForm.loadData();
                 ActivateButton(sender);
                 ShowForm(_batchUploadForm);
             }

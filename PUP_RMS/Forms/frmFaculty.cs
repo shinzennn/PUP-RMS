@@ -59,7 +59,10 @@ namespace PUP_RMS.Forms
             txtSearch.Focus();
             RefreshGrid();
         }
-
+        public void loadData()
+        {
+            RefreshGrid();
+        } 
         private void dgvFacultyColumnDesign()
         {
             dgvFaculty.Columns["FacultyID"].Visible = false;
