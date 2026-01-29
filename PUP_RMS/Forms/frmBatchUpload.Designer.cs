@@ -31,9 +31,14 @@
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.toUploadMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeItemMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOpenCouse = new System.Windows.Forms.Button();
+            this.createNewFaculty = new System.Windows.Forms.Button();
+            this.cbxKeep = new System.Windows.Forms.CheckBox();
+            this.gradientLabel1 = new GradientLabel();
             this.pnlGradesheetForm = new PUP_RMS.RoundedShadowPanel();
             this.imagePanel = new System.Windows.Forms.FlowLayoutPanel();
             this.currentImage = new System.Windows.Forms.PictureBox();
@@ -66,20 +71,16 @@
             this.panelFacultyList = new PUP_RMS.RoundedPanel();
             this.uploadBtn = new System.Windows.Forms.Button();
             this.toUpload = new System.Windows.Forms.ListView();
-            this.toUploadMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.removeItemMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOpenCouse = new System.Windows.Forms.Button();
-            this.createNewFaculty = new System.Windows.Forms.Button();
-            this.cbxKeep = new System.Windows.Forms.CheckBox();
+            this.removeAll = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHeader.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.toUploadMenu.SuspendLayout();
             this.pnlGradesheetForm.SuspendLayout();
             this.imagePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImage)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFacultyList.SuspendLayout();
-            this.toUploadMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -106,18 +107,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1493, 111);
             this.panelHeader.TabIndex = 21;
-            // 
-            // gradientLabel1
-            // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(32, 17);
-            this.gradientLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(324, 46);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "Upload Gradesheet";
             // 
             // label10
             // 
@@ -151,6 +140,62 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1336, 673);
             this.tableLayoutPanel3.TabIndex = 25;
             this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
+            // 
+            // toUploadMenu
+            // 
+            this.toUploadMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toUploadMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeItemMenu,
+            this.removeAll});
+            this.toUploadMenu.Name = "contextMenuStrip1";
+            this.toUploadMenu.Size = new System.Drawing.Size(211, 80);
+            // 
+            // removeItemMenu
+            // 
+            this.removeItemMenu.Name = "removeItemMenu";
+            this.removeItemMenu.Size = new System.Drawing.Size(210, 24);
+            this.removeItemMenu.Text = "Remove";
+            // 
+            // btnOpenCouse
+            // 
+            this.btnOpenCouse.Location = new System.Drawing.Point(12, 12);
+            this.btnOpenCouse.Name = "btnOpenCouse";
+            this.btnOpenCouse.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenCouse.TabIndex = 13;
+            this.btnOpenCouse.Text = "Create Course";
+            this.btnOpenCouse.UseVisualStyleBackColor = true;
+            // 
+            // createNewFaculty
+            // 
+            this.createNewFaculty.Location = new System.Drawing.Point(12, 41);
+            this.createNewFaculty.Name = "createNewFaculty";
+            this.createNewFaculty.Size = new System.Drawing.Size(75, 23);
+            this.createNewFaculty.TabIndex = 14;
+            this.createNewFaculty.Text = "Create Faculty";
+            this.createNewFaculty.UseVisualStyleBackColor = true;
+            // 
+            // cbxKeep
+            // 
+            this.cbxKeep.AutoSize = true;
+            this.cbxKeep.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cbxKeep.Location = new System.Drawing.Point(562, 128);
+            this.cbxKeep.Name = "cbxKeep";
+            this.cbxKeep.Size = new System.Drawing.Size(51, 17);
+            this.cbxKeep.TabIndex = 15;
+            this.cbxKeep.Text = "Keep";
+            this.cbxKeep.UseVisualStyleBackColor = true;
+            // 
+            // gradientLabel1
+            // 
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(32, 17);
+            this.gradientLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(324, 46);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "Upload Gradesheet";
             // 
             // pnlGradesheetForm
             // 
@@ -643,48 +688,12 @@
             this.toUpload.TabIndex = 6;
             this.toUpload.UseCompatibleStateImageBehavior = false;
             // 
-            // toUploadMenu
+            // removeAll
             // 
-            this.toUploadMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toUploadMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeItemMenu});
-            this.toUploadMenu.Name = "contextMenuStrip1";
-            this.toUploadMenu.Size = new System.Drawing.Size(133, 28);
-            // 
-            // removeItemMenu
-            // 
-            this.removeItemMenu.Name = "removeItemMenu";
-            this.removeItemMenu.Size = new System.Drawing.Size(132, 24);
-            this.removeItemMenu.Text = "Remove";
-            // 
-            // btnOpenCouse
-            // 
-            this.btnOpenCouse.Location = new System.Drawing.Point(12, 12);
-            this.btnOpenCouse.Name = "btnOpenCouse";
-            this.btnOpenCouse.Size = new System.Drawing.Size(75, 23);
-            this.btnOpenCouse.TabIndex = 13;
-            this.btnOpenCouse.Text = "Create Course";
-            this.btnOpenCouse.UseVisualStyleBackColor = true;
-            // 
-            // createNewFaculty
-            // 
-            this.createNewFaculty.Location = new System.Drawing.Point(12, 41);
-            this.createNewFaculty.Name = "createNewFaculty";
-            this.createNewFaculty.Size = new System.Drawing.Size(75, 23);
-            this.createNewFaculty.TabIndex = 14;
-            this.createNewFaculty.Text = "Create Faculty";
-            this.createNewFaculty.UseVisualStyleBackColor = true;
-            // 
-            // cbxKeep
-            // 
-            this.cbxKeep.AutoSize = true;
-            this.cbxKeep.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.cbxKeep.Location = new System.Drawing.Point(562, 128);
-            this.cbxKeep.Name = "cbxKeep";
-            this.cbxKeep.Size = new System.Drawing.Size(51, 17);
-            this.cbxKeep.TabIndex = 15;
-            this.cbxKeep.Text = "Keep";
-            this.cbxKeep.UseVisualStyleBackColor = true;
+            this.removeAll.Name = "removeAll";
+            this.removeAll.Size = new System.Drawing.Size(210, 24);
+            this.removeAll.Text = "Remove All ";
+            this.removeAll.Click += new System.EventHandler(this.removeAll_Click);
             // 
             // frmBatchUpload
             // 
@@ -706,6 +715,7 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
+            this.toUploadMenu.ResumeLayout(false);
             this.pnlGradesheetForm.ResumeLayout(false);
             this.pnlGradesheetForm.PerformLayout();
             this.imagePanel.ResumeLayout(false);
@@ -714,7 +724,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panelFacultyList.ResumeLayout(false);
-            this.toUploadMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -764,5 +773,6 @@
         private System.Windows.Forms.ToolStripMenuItem removeItemMenu;
         private System.Windows.Forms.FlowLayoutPanel imagePanel;
         private System.Windows.Forms.PictureBox currentImage;
+        private System.Windows.Forms.ToolStripMenuItem removeAll;
     }
 }

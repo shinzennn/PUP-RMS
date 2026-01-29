@@ -772,6 +772,20 @@ namespace PUP_RMS.Forms
         {
 
         }
+
+        private void removeAll_Click(object sender, EventArgs e)
+        {
+            var choice = MessageBox.Show("Are you sure you want to remove ALL items?", "Removing All Images", MessageBoxButtons.YesNo);
+            if (choice == DialogResult.Yes)
+            {
+                toUpload.Items.Clear();
+            }
+            else
+            {
+                return;
+            }
+            DisplayCurrentImage();
+        }
     }
 
 
