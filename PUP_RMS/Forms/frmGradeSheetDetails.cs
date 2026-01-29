@@ -504,16 +504,21 @@ namespace PUP_RMS.Forms
 
             string program = SanitizeForFilename(GetComboSelectedText(cmbProgram) ?? "PRG");
 
+            string yearLevel = GetComboSelectedValueString(cmbYearLevel) ?? "0";
+
+            // ===== Add section here =====
+            string section = GetComboSelectedValueString(cmbSection) ?? cmbSection.Text ?? "0";
+
             string rawCourse = GetComboSelectedText(cmbCourse);
             string course = FormatCourseCode(rawCourse);
 
             string faculty = GetFacultyInitials();
-            string yearLevel = GetComboSelectedValueString(cmbYearLevel) ?? "0";
+
             string page = string.IsNullOrWhiteSpace(txtPageNumber.Text) ? "0" : txtPageNumber.Text.Trim();
 
-            return $"PUPLQ_GRSH_{acadYear}_{sem}_{program}_{yearLevel}_{course}_{faculty}_P{page}.jpg";
+            // Insert section after yearLevel
+            return $"PUPLQ_GRSH_{acadYear}_{sem}_{program}_{yearLevel}_{section}_{course}_{faculty}_P{page}.jpg";
         }
-
 
         private string FormatAcademicYear(string schoolYear)
         {
