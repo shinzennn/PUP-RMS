@@ -71,6 +71,7 @@
             this.btnOpenCouse = new System.Windows.Forms.Button();
             this.createNewFaculty = new System.Windows.Forms.Button();
             this.cbxKeep = new System.Windows.Forms.CheckBox();
+            this.removeAll = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHeader.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.pnlGradesheetForm.SuspendLayout();
@@ -647,14 +648,15 @@
             // 
             this.toUploadMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toUploadMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeItemMenu});
+            this.removeItemMenu,
+            this.removeAll});
             this.toUploadMenu.Name = "contextMenuStrip1";
-            this.toUploadMenu.Size = new System.Drawing.Size(133, 28);
+            this.toUploadMenu.Size = new System.Drawing.Size(211, 80);
             // 
             // removeItemMenu
             // 
             this.removeItemMenu.Name = "removeItemMenu";
-            this.removeItemMenu.Size = new System.Drawing.Size(132, 24);
+            this.removeItemMenu.Size = new System.Drawing.Size(210, 24);
             this.removeItemMenu.Text = "Remove";
             // 
             // btnOpenCouse
@@ -685,6 +687,13 @@
             this.cbxKeep.TabIndex = 15;
             this.cbxKeep.Text = "Keep";
             this.cbxKeep.UseVisualStyleBackColor = true;
+            // 
+            // removeAll
+            // 
+            this.removeAll.Name = "removeAll";
+            this.removeAll.Size = new System.Drawing.Size(210, 24);
+            this.removeAll.Text = "Remove All";
+            this.removeAll.Click += new System.EventHandler(this.removeAll_Click);
             // 
             // frmBatchUpload
             // 
@@ -764,5 +773,6 @@
         private System.Windows.Forms.ToolStripMenuItem removeItemMenu;
         private System.Windows.Forms.FlowLayoutPanel imagePanel;
         private System.Windows.Forms.PictureBox currentImage;
+        private System.Windows.Forms.ToolStripMenuItem removeAll;
     }
 }
