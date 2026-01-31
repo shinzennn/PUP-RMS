@@ -58,6 +58,7 @@ namespace PUP_RMS.Forms
         {
             txtSearch.Focus();
             RefreshGrid();
+            FacultyTextboxEnable(false);
         }
         public void loadData()
         {
@@ -98,17 +99,19 @@ namespace PUP_RMS.Forms
         {
             txtFirstName.Focus();
             btnClickState = 1; // CREATE
-            panelFacultyForm.Enabled = true;
+            FacultyTextboxEnable(true);
             dgvFaculty.Enabled = false;
             btnEdit.Visible = false;
             btnSave.Visible = true;
             btnCancel.Visible = true;
+
+            btnCreate.Visible = false;
         }
         private void btnEdit_Click(object sender, EventArgs e)
         {
             txtFirstName.Focus();
             btnClickState = 2; // EDIT
-            panelFacultyForm.Enabled = true;
+            FacultyTextboxEnable(true);
             btnCreate.Visible = false;
             btnSave.Visible = true;
             btnCancel.Visible = true;
@@ -168,7 +171,7 @@ namespace PUP_RMS.Forms
             txtFirstName.Text = "";
             txtMiddleName.Text = "";
             txtLastName.Text = "";
-            panelFacultyForm.Enabled = false;
+            FacultyTextboxEnable(false);
             dgvFaculty.Enabled = true;
             btnCreate.Visible = true;
             btnEdit.Visible = false;
@@ -181,7 +184,7 @@ namespace PUP_RMS.Forms
             txtFirstName.Text = "";
             txtMiddleName.Text = "";
             txtLastName.Text = "";
-            panelFacultyForm.Enabled = false;
+            FacultyTextboxEnable(false);
             dgvFaculty.Enabled = true;
             btnCreate.Visible = true;
             btnEdit.Visible = false;
@@ -198,6 +201,13 @@ namespace PUP_RMS.Forms
                 btnEdit.Visible = true;
             }
         }
+        
+        private void FacultyTextboxEnable(bool state)
+        {
+            txtFirstName.Enabled = state;
+            txtMiddleName.Enabled = state;
+            txtLastName.Enabled = state;
+        }
 
 
         private void dgvFaculty_CellMouseEnter(object sender, DataGridViewCellEventArgs e) { }
@@ -205,6 +215,11 @@ namespace PUP_RMS.Forms
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e) { }
 
         private void cbxProgram_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtMiddleName_TextChanged(object sender, EventArgs e)
         {
 
         }

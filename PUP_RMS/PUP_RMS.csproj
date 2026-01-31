@@ -149,12 +149,6 @@
     <Compile Include="Forms\frmActivityLogs.Designer.cs">
       <DependentUpon>frmActivityLogs.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmAdminTool.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmAdminTool.Designer.cs">
-      <DependentUpon>frmAdminTool.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\frmCourseDescription.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,12 +160,6 @@
     </Compile>
     <Compile Include="Forms\frmCurriculum.Designer.cs">
       <DependentUpon>frmCurriculum.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmDashPlaceHolder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmDashPlaceHolder.Designer.cs">
-      <DependentUpon>frmDashPlaceHolder.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmDistributionProfessor.cs">
       <SubType>Form</SubType>
@@ -351,9 +339,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmActivityLogs.resx">
       <DependentUpon>frmActivityLogs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmAdminTool.resx">
-      <DependentUpon>frmAdminTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmCourseDescription.resx">
       <DependentUpon>frmCourseDescription.cs</DependentUpon>

@@ -28,16 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmFaculty));
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
             this.btnEdit = new PUP_RMS.RoundedButton();
-            this.panelFacultyList = new PUP_RMS.RoundedPanel();
-            this.label1 = new System.Windows.Forms.Label();
             this.dgvFaculty = new System.Windows.Forms.DataGridView();
-            this.panelFacultyForm = new PUP_RMS.RoundedShadowPanel();
             this.roundedShadowPanel4 = new PUP_RMS.RoundedShadowPanel();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.roundedShadowPanel3 = new PUP_RMS.RoundedShadowPanel();
@@ -49,9 +46,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnCreate = new PUP_RMS.RoundedButton();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutSearch = new System.Windows.Forms.TableLayoutPanel();
             this.btnSearch = new PUP_RMS.RoundedButton();
             this.btnRefresh = new PUP_RMS.RoundedButton();
             this.panelSearch = new PUP_RMS.RoundedShadowPanel();
@@ -59,41 +55,46 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panelFacultyList.SuspendLayout();
+            this.tableLayoutForm = new System.Windows.Forms.TableLayoutPanel();
+            this.panelFacultyForm = new PUP_RMS.CustomControls.HeaderPanelCard();
+            this.tableLayoutName = new System.Windows.Forms.TableLayoutPanel();
+            this.headerPanelFacultyList = new PUP_RMS.CustomControls.HeaderPanelCard();
+            this.tableLayoutMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFaculty)).BeginInit();
-            this.panelFacultyForm.SuspendLayout();
             this.roundedShadowPanel4.SuspendLayout();
             this.roundedShadowPanel3.SuspendLayout();
             this.roundedShadowPanel2.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutSearch.SuspendLayout();
             this.panelSearch.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tableLayoutForm.SuspendLayout();
+            this.panelFacultyForm.SuspendLayout();
+            this.tableLayoutName.SuspendLayout();
+            this.headerPanelFacultyList.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // tableLayoutMain
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tableLayoutMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.btnEdit, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panelFacultyList, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panelFacultyForm, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnCreate, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(59, 191);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(50);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1002, 550);
-            this.tableLayoutPanel1.TabIndex = 17;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            this.tableLayoutMain.AutoSize = true;
+            this.tableLayoutMain.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutMain.ColumnCount = 2;
+            this.tableLayoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutMain.Controls.Add(this.btnEdit, 1, 1);
+            this.tableLayoutMain.Controls.Add(this.tableLayoutForm, 0, 0);
+            this.tableLayoutMain.Controls.Add(this.headerPanelFacultyList, 1, 0);
+            this.tableLayoutMain.Location = new System.Drawing.Point(59, 191);
+            this.tableLayoutMain.Margin = new System.Windows.Forms.Padding(50);
+            this.tableLayoutMain.Name = "tableLayoutMain";
+            this.tableLayoutMain.RowCount = 2;
+            this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutMain.Size = new System.Drawing.Size(1002, 750);
+            this.tableLayoutMain.TabIndex = 17;
+            this.tableLayoutMain.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // btnEdit
             // 
@@ -108,7 +109,8 @@
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.ForeColor = System.Drawing.Color.White;
             this.btnEdit.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnEdit.Location = new System.Drawing.Point(795, 505);
+            this.btnEdit.Location = new System.Drawing.Point(783, 705);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(3, 3, 15, 3);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(204, 40);
             this.btnEdit.TabIndex = 18;
@@ -117,42 +119,6 @@
             this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Visible = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
-            // panelFacultyList
-            // 
-            this.panelFacultyList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelFacultyList.BackColor = System.Drawing.Color.White;
-            this.panelFacultyList.BorderColor = System.Drawing.Color.Black;
-            this.panelFacultyList.BorderRadius = 20;
-            this.panelFacultyList.BorderSize = 2;
-            this.panelFacultyList.Controls.Add(this.label1);
-            this.panelFacultyList.Controls.Add(this.dgvFaculty);
-            this.panelFacultyList.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.panelFacultyList.HoverBorderColor = System.Drawing.Color.Maroon;
-            this.panelFacultyList.Location = new System.Drawing.Point(526, 3);
-            this.panelFacultyList.Margin = new System.Windows.Forms.Padding(25, 3, 3, 3);
-            this.panelFacultyList.Name = "panelFacultyList";
-            this.panelFacultyList.ShadowBlur = 15;
-            this.panelFacultyList.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.panelFacultyList.ShadowEnabled = true;
-            this.panelFacultyList.ShadowOffset = 5;
-            this.panelFacultyList.Size = new System.Drawing.Size(473, 494);
-            this.panelFacultyList.TabIndex = 16;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(34, 20);
-            this.label1.Margin = new System.Windows.Forms.Padding(20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(165, 31);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Faculty List";
             // 
             // dgvFaculty
             // 
@@ -165,79 +131,48 @@
             this.dgvFaculty.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvFaculty.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvFaculty.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFaculty.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFaculty.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvFaculty.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFaculty.ColumnHeadersVisible = false;
             this.dgvFaculty.GridColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dgvFaculty.Location = new System.Drawing.Point(40, 67);
+            this.dgvFaculty.Location = new System.Drawing.Point(26, 76);
             this.dgvFaculty.Margin = new System.Windows.Forms.Padding(40);
             this.dgvFaculty.Name = "dgvFaculty";
             this.dgvFaculty.ReadOnly = true;
             this.dgvFaculty.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFaculty.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFaculty.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvFaculty.RowHeadersVisible = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Goldenrod;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFaculty.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Goldenrod;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFaculty.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvFaculty.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvFaculty.Size = new System.Drawing.Size(393, 387);
+            this.dgvFaculty.Size = new System.Drawing.Size(442, 593);
             this.dgvFaculty.TabIndex = 12;
             this.dgvFaculty.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFaculty_CellClick);
             this.dgvFaculty.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFaculty_CellMouseEnter);
             this.dgvFaculty.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFaculty_CellMouseLeave);
-            // 
-            // panelFacultyForm
-            // 
-            this.panelFacultyForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelFacultyForm.BackColor = System.Drawing.Color.Transparent;
-            this.panelFacultyForm.BorderColor = System.Drawing.Color.Transparent;
-            this.panelFacultyForm.BorderRadius = 20;
-            this.panelFacultyForm.BorderSize = 0;
-            this.panelFacultyForm.Controls.Add(this.roundedShadowPanel4);
-            this.panelFacultyForm.Controls.Add(this.roundedShadowPanel3);
-            this.panelFacultyForm.Controls.Add(this.roundedShadowPanel2);
-            this.panelFacultyForm.Controls.Add(this.btnCancel);
-            this.panelFacultyForm.Controls.Add(this.btnSave);
-            this.panelFacultyForm.Controls.Add(this.label5);
-            this.panelFacultyForm.Controls.Add(this.label4);
-            this.panelFacultyForm.Controls.Add(this.label3);
-            this.panelFacultyForm.Controls.Add(this.label2);
-            this.panelFacultyForm.Enabled = false;
-            this.panelFacultyForm.Location = new System.Drawing.Point(3, 3);
-            this.panelFacultyForm.Margin = new System.Windows.Forms.Padding(3, 3, 25, 3);
-            this.panelFacultyForm.Name = "panelFacultyForm";
-            this.panelFacultyForm.PanelColor = System.Drawing.Color.White;
-            this.panelFacultyForm.PanelImage = null;
-            this.panelFacultyForm.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.panelFacultyForm.ShadowDepth = 10;
-            this.panelFacultyForm.ShadowEnabled = true;
-            this.panelFacultyForm.ShadowShift = 5;
-            this.panelFacultyForm.Size = new System.Drawing.Size(473, 494);
-            this.panelFacultyForm.TabIndex = 17;
             // 
             // roundedShadowPanel4
             // 
@@ -248,7 +183,7 @@
             this.roundedShadowPanel4.BorderRadius = 20;
             this.roundedShadowPanel4.BorderSize = 0;
             this.roundedShadowPanel4.Controls.Add(this.txtFirstName);
-            this.roundedShadowPanel4.Location = new System.Drawing.Point(50, 126);
+            this.roundedShadowPanel4.Location = new System.Drawing.Point(33, 93);
             this.roundedShadowPanel4.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.roundedShadowPanel4.Name = "roundedShadowPanel4";
             this.roundedShadowPanel4.PanelColor = System.Drawing.Color.LightGray;
@@ -257,7 +192,7 @@
             this.roundedShadowPanel4.ShadowDepth = 10;
             this.roundedShadowPanel4.ShadowEnabled = true;
             this.roundedShadowPanel4.ShadowShift = 5;
-            this.roundedShadowPanel4.Size = new System.Drawing.Size(373, 64);
+            this.roundedShadowPanel4.Size = new System.Drawing.Size(423, 64);
             this.roundedShadowPanel4.TabIndex = 21;
             // 
             // txtFirstName
@@ -271,7 +206,7 @@
             this.txtFirstName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtFirstName.Size = new System.Drawing.Size(327, 19);
+            this.txtFirstName.Size = new System.Drawing.Size(377, 19);
             this.txtFirstName.TabIndex = 20;
             // 
             // roundedShadowPanel3
@@ -283,7 +218,7 @@
             this.roundedShadowPanel3.BorderRadius = 20;
             this.roundedShadowPanel3.BorderSize = 0;
             this.roundedShadowPanel3.Controls.Add(this.txtMiddleName);
-            this.roundedShadowPanel3.Location = new System.Drawing.Point(50, 216);
+            this.roundedShadowPanel3.Location = new System.Drawing.Point(10, 35);
             this.roundedShadowPanel3.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.roundedShadowPanel3.Name = "roundedShadowPanel3";
             this.roundedShadowPanel3.PanelColor = System.Drawing.Color.LightGray;
@@ -292,7 +227,7 @@
             this.roundedShadowPanel3.ShadowDepth = 10;
             this.roundedShadowPanel3.ShadowEnabled = true;
             this.roundedShadowPanel3.ShadowShift = 5;
-            this.roundedShadowPanel3.Size = new System.Drawing.Size(373, 64);
+            this.roundedShadowPanel3.Size = new System.Drawing.Size(200, 64);
             this.roundedShadowPanel3.TabIndex = 21;
             // 
             // txtMiddleName
@@ -306,8 +241,9 @@
             this.txtMiddleName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
             this.txtMiddleName.Name = "txtMiddleName";
             this.txtMiddleName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtMiddleName.Size = new System.Drawing.Size(327, 19);
+            this.txtMiddleName.Size = new System.Drawing.Size(154, 19);
             this.txtMiddleName.TabIndex = 20;
+            this.txtMiddleName.TextChanged += new System.EventHandler(this.txtMiddleName_TextChanged);
             // 
             // roundedShadowPanel2
             // 
@@ -318,7 +254,7 @@
             this.roundedShadowPanel2.BorderRadius = 20;
             this.roundedShadowPanel2.BorderSize = 0;
             this.roundedShadowPanel2.Controls.Add(this.txtLastName);
-            this.roundedShadowPanel2.Location = new System.Drawing.Point(50, 306);
+            this.roundedShadowPanel2.Location = new System.Drawing.Point(230, 35);
             this.roundedShadowPanel2.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.roundedShadowPanel2.Name = "roundedShadowPanel2";
             this.roundedShadowPanel2.PanelColor = System.Drawing.Color.LightGray;
@@ -327,7 +263,7 @@
             this.roundedShadowPanel2.ShadowDepth = 10;
             this.roundedShadowPanel2.ShadowEnabled = true;
             this.roundedShadowPanel2.ShadowShift = 5;
-            this.roundedShadowPanel2.Size = new System.Drawing.Size(373, 64);
+            this.roundedShadowPanel2.Size = new System.Drawing.Size(201, 64);
             this.roundedShadowPanel2.TabIndex = 18;
             // 
             // txtLastName
@@ -341,7 +277,7 @@
             this.txtLastName.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtLastName.Size = new System.Drawing.Size(327, 19);
+            this.txtLastName.Size = new System.Drawing.Size(155, 19);
             this.txtLastName.TabIndex = 20;
             // 
             // btnCancel
@@ -357,7 +293,7 @@
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCancel.Location = new System.Drawing.Point(248, 423);
+            this.btnCancel.Location = new System.Drawing.Point(254, 275);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(152, 40);
             this.btnCancel.TabIndex = 22;
@@ -380,7 +316,7 @@
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSave.Location = new System.Drawing.Point(74, 423);
+            this.btnSave.Location = new System.Drawing.Point(82, 275);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 40);
             this.btnSave.TabIndex = 21;
@@ -392,11 +328,10 @@
             // 
             // label5
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(70, 286);
+            this.label5.Location = new System.Drawing.Point(250, 10);
+            this.label5.Margin = new System.Windows.Forms.Padding(30, 10, 3, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(90, 20);
             this.label5.TabIndex = 17;
@@ -404,11 +339,10 @@
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(70, 196);
+            this.label4.Location = new System.Drawing.Point(30, 10);
+            this.label4.Margin = new System.Windows.Forms.Padding(30, 10, 3, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(105, 20);
             this.label4.TabIndex = 16;
@@ -420,24 +354,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(70, 106);
+            this.label3.Location = new System.Drawing.Point(53, 73);
+            this.label3.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(90, 20);
             this.label3.TabIndex = 15;
             this.label3.Text = "First Name:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(25, 25);
-            this.label2.Margin = new System.Windows.Forms.Padding(25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(265, 31);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Faculty Information";
             // 
             // btnCreate
             // 
@@ -452,7 +374,7 @@
             this.btnCreate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreate.ForeColor = System.Drawing.Color.White;
             this.btnCreate.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCreate.Location = new System.Drawing.Point(148, 505);
+            this.btnCreate.Location = new System.Drawing.Point(141, 275);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(204, 40);
             this.btnCreate.TabIndex = 13;
@@ -461,26 +383,26 @@
             this.btnCreate.UseVisualStyleBackColor = false;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
-            // tableLayoutPanel2
+            // tableLayoutSearch
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tableLayoutSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.14371F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.17764F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Controls.Add(this.btnSearch, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnRefresh, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panelSearch, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(59, 106);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(50);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1002, 64);
-            this.tableLayoutPanel2.TabIndex = 18;
+            this.tableLayoutSearch.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutSearch.ColumnCount = 3;
+            this.tableLayoutSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.14371F));
+            this.tableLayoutSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.17764F));
+            this.tableLayoutSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.66667F));
+            this.tableLayoutSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutSearch.Controls.Add(this.btnSearch, 1, 0);
+            this.tableLayoutSearch.Controls.Add(this.btnRefresh, 2, 0);
+            this.tableLayoutSearch.Controls.Add(this.panelSearch, 0, 0);
+            this.tableLayoutSearch.Location = new System.Drawing.Point(59, 106);
+            this.tableLayoutSearch.Margin = new System.Windows.Forms.Padding(50);
+            this.tableLayoutSearch.Name = "tableLayoutSearch";
+            this.tableLayoutSearch.RowCount = 1;
+            this.tableLayoutSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutSearch.Size = new System.Drawing.Size(1002, 64);
+            this.tableLayoutSearch.TabIndex = 18;
             // 
             // btnSearch
             // 
@@ -603,37 +525,139 @@
             this.label10.TabIndex = 8;
             this.label10.Text = "Create and manage faculty records";
             // 
+            // tableLayoutForm
+            // 
+            this.tableLayoutForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutForm.ColumnCount = 1;
+            this.tableLayoutForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutForm.Controls.Add(this.panelFacultyForm, 0, 0);
+            this.tableLayoutForm.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutForm.Name = "tableLayoutForm";
+            this.tableLayoutForm.RowCount = 2;
+            this.tableLayoutForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutForm.Size = new System.Drawing.Size(495, 694);
+            this.tableLayoutForm.TabIndex = 19;
+            // 
+            // panelFacultyForm
+            // 
+            this.panelFacultyForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelFacultyForm.BackColor = System.Drawing.Color.Transparent;
+            this.panelFacultyForm.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(233)))), ((int)(((byte)(237)))));
+            this.panelFacultyForm.BorderRadius = 10;
+            this.panelFacultyForm.BorderThickness = 1;
+            this.panelFacultyForm.ContentBackColor = System.Drawing.Color.White;
+            this.panelFacultyForm.Controls.Add(this.tableLayoutName);
+            this.panelFacultyForm.Controls.Add(this.btnCreate);
+            this.panelFacultyForm.Controls.Add(this.roundedShadowPanel4);
+            this.panelFacultyForm.Controls.Add(this.btnCancel);
+            this.panelFacultyForm.Controls.Add(this.btnSave);
+            this.panelFacultyForm.Controls.Add(this.label3);
+            this.panelFacultyForm.EnableHoverEffect = false;
+            this.panelFacultyForm.HeaderBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
+            this.panelFacultyForm.HeaderFontSize = 16F;
+            this.panelFacultyForm.HeaderForeColor = System.Drawing.Color.Maroon;
+            this.panelFacultyForm.HeaderHeight = 45;
+            this.panelFacultyForm.HeaderLabel = "Faculty Information";
+            this.panelFacultyForm.IconHeader = null;
+            this.panelFacultyForm.IconSize = 22;
+            this.panelFacultyForm.Location = new System.Drawing.Point(3, 3);
+            this.panelFacultyForm.Name = "panelFacultyForm";
+            this.panelFacultyForm.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.panelFacultyForm.ShadowDepth = 10;
+            this.panelFacultyForm.ShadowPadding = 12;
+            this.panelFacultyForm.ShowHeaderDivider = true;
+            this.panelFacultyForm.ShowShadow = true;
+            this.panelFacultyForm.Size = new System.Drawing.Size(489, 341);
+            this.panelFacultyForm.TabIndex = 0;
+            // 
+            // tableLayoutName
+            // 
+            this.tableLayoutName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutName.ColumnCount = 2;
+            this.tableLayoutName.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutName.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutName.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutName.Controls.Add(this.roundedShadowPanel3, 0, 1);
+            this.tableLayoutName.Controls.Add(this.roundedShadowPanel2, 1, 1);
+            this.tableLayoutName.Controls.Add(this.label5, 1, 0);
+            this.tableLayoutName.Location = new System.Drawing.Point(24, 163);
+            this.tableLayoutName.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutName.Name = "tableLayoutName";
+            this.tableLayoutName.RowCount = 2;
+            this.tableLayoutName.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutName.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tableLayoutName.Size = new System.Drawing.Size(441, 100);
+            this.tableLayoutName.TabIndex = 22;
+            // 
+            // headerPanelFacultyList
+            // 
+            this.headerPanelFacultyList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.headerPanelFacultyList.BackColor = System.Drawing.Color.Transparent;
+            this.headerPanelFacultyList.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(233)))), ((int)(((byte)(237)))));
+            this.headerPanelFacultyList.BorderRadius = 10;
+            this.headerPanelFacultyList.BorderThickness = 1;
+            this.headerPanelFacultyList.ContentBackColor = System.Drawing.Color.White;
+            this.headerPanelFacultyList.Controls.Add(this.dgvFaculty);
+            this.headerPanelFacultyList.EnableHoverEffect = false;
+            this.headerPanelFacultyList.HeaderBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
+            this.headerPanelFacultyList.HeaderFontSize = 16F;
+            this.headerPanelFacultyList.HeaderForeColor = System.Drawing.Color.Maroon;
+            this.headerPanelFacultyList.HeaderHeight = 45;
+            this.headerPanelFacultyList.HeaderLabel = "FacultyList";
+            this.headerPanelFacultyList.IconHeader = null;
+            this.headerPanelFacultyList.IconSize = 22;
+            this.headerPanelFacultyList.Location = new System.Drawing.Point(504, 3);
+            this.headerPanelFacultyList.Name = "headerPanelFacultyList";
+            this.headerPanelFacultyList.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.headerPanelFacultyList.ShadowDepth = 6;
+            this.headerPanelFacultyList.ShadowPadding = 12;
+            this.headerPanelFacultyList.ShowHeaderDivider = true;
+            this.headerPanelFacultyList.ShowShadow = true;
+            this.headerPanelFacultyList.Size = new System.Drawing.Size(495, 694);
+            this.headerPanelFacultyList.TabIndex = 20;
+            // 
             // frmFaculty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::PUP_RMS.Properties.Resources._619384472_920609864259422_4656079368386240362_n;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1120, 800);
+            this.ClientSize = new System.Drawing.Size(1120, 1000);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.tableLayoutPanel2);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.tableLayoutSearch);
+            this.Controls.Add(this.tableLayoutMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmFaculty";
             this.Text = "frmFaculty";
             this.Load += new System.EventHandler(this.frmFaculty_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panelFacultyList.ResumeLayout(false);
-            this.panelFacultyList.PerformLayout();
+            this.tableLayoutMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFaculty)).EndInit();
-            this.panelFacultyForm.ResumeLayout(false);
-            this.panelFacultyForm.PerformLayout();
             this.roundedShadowPanel4.ResumeLayout(false);
             this.roundedShadowPanel4.PerformLayout();
             this.roundedShadowPanel3.ResumeLayout(false);
             this.roundedShadowPanel3.PerformLayout();
             this.roundedShadowPanel2.ResumeLayout(false);
             this.roundedShadowPanel2.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutSearch.ResumeLayout(false);
             this.panelSearch.ResumeLayout(false);
             this.panelSearch.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tableLayoutForm.ResumeLayout(false);
+            this.panelFacultyForm.ResumeLayout(false);
+            this.panelFacultyForm.PerformLayout();
+            this.tableLayoutName.ResumeLayout(false);
+            this.tableLayoutName.PerformLayout();
+            this.headerPanelFacultyList.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -645,15 +669,11 @@
         private RoundedButton btnCreate;
         private System.Windows.Forms.DataGridView dgvFaculty;
         private RoundedButton btnSearch;
-        private RoundedPanel panelFacultyList;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private RoundedShadowPanel panelFacultyForm;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutMain;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutSearch;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtSearch;
         private RoundedButton btnSave;
         private System.Windows.Forms.TextBox txtLastName;
@@ -668,5 +688,9 @@
         private RoundedShadowPanel roundedShadowPanel2;
         private RoundedShadowPanel roundedShadowPanel4;
         private System.Windows.Forms.TextBox txtFirstName;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutForm;
+        private CustomControls.HeaderPanelCard panelFacultyForm;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutName;
+        private CustomControls.HeaderPanelCard headerPanelFacultyList;
     }
 }
