@@ -59,6 +59,7 @@ namespace PUP_RMS.Forms
             txtSearch.Focus();
             RefreshGrid();
             FacultyTextboxEnable(false);
+            panelFacultyForm.ShadowDepth = 6;
         }
         public void loadData()
         {
@@ -100,6 +101,7 @@ namespace PUP_RMS.Forms
             txtFirstName.Focus();
             btnClickState = 1; // CREATE
             FacultyTextboxEnable(true);
+            panelFacultyForm.ShadowDepth = 10;
             dgvFaculty.Enabled = false;
             btnEdit.Visible = false;
             btnSave.Visible = true;
@@ -111,7 +113,8 @@ namespace PUP_RMS.Forms
         {
             txtFirstName.Focus();
             btnClickState = 2; // EDIT
-            FacultyTextboxEnable(true);
+            FacultyTextboxEnable(true); 
+            panelFacultyForm.ShadowDepth = 10;
             btnCreate.Visible = false;
             btnSave.Visible = true;
             btnCancel.Visible = true;
@@ -172,6 +175,7 @@ namespace PUP_RMS.Forms
             txtMiddleName.Text = "";
             txtLastName.Text = "";
             FacultyTextboxEnable(false);
+            panelFacultyForm.ShadowDepth = 6;
             dgvFaculty.Enabled = true;
             btnCreate.Visible = true;
             btnEdit.Visible = false;
@@ -185,6 +189,7 @@ namespace PUP_RMS.Forms
             txtMiddleName.Text = "";
             txtLastName.Text = "";
             FacultyTextboxEnable(false);
+            panelFacultyForm.ShadowDepth = 6;
             dgvFaculty.Enabled = true;
             btnCreate.Visible = true;
             btnEdit.Visible = false;
@@ -204,6 +209,9 @@ namespace PUP_RMS.Forms
         
         private void FacultyTextboxEnable(bool state)
         {
+            label3.Enabled = state;
+            label4.Enabled = state;
+            label5.Enabled = state;
             txtFirstName.Enabled = state;
             txtMiddleName.Enabled = state;
             txtLastName.Enabled = state;

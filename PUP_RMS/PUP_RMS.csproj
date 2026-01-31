@@ -460,6 +460,7 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\magnifying-glass.png" />
     <None Include="Resources\AccountIcon.png" />
     <None Include="Resources\Icons\account %281%29.png" />
     <None Include="Resources\Icons\740b6f73-591a-445a-9bdd-ae960fb84374_removalai_preview%281%29.png" />

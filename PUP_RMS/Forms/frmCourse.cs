@@ -75,6 +75,7 @@ namespace PUP_RMS.Forms
             txtSubDesc.Text = courseDesc;
 
             panelSubInfo.Enabled = true;
+            panelSubInfo.ShadowDepth = 10;
             btnSave.Visible = true;
             btnCancel.Visible = true;
         }
@@ -131,6 +132,9 @@ namespace PUP_RMS.Forms
             dgvCourse.CurrentCell = null;
             dgvCourse.Columns["CourseID"].Visible = false;
             dgvCourse.Columns["CourseCode"].Visible = false;
+
+            panelSubInfo.Enabled = false;
+            panelSubInfo.ShadowDepth = 6;
         }
 
         private void Reset()
@@ -138,6 +142,7 @@ namespace PUP_RMS.Forms
             txtCrsCode.Text = "";
             txtSubDesc.Text = "";
             panelSubInfo.Enabled = false;
+            panelSubInfo.ShadowDepth = 6;
             btnCancel.Visible = false;
             btnSave.Visible = false;
             btnEdit.Visible = false;
@@ -146,15 +151,7 @@ namespace PUP_RMS.Forms
 
        
 
-        private void btnCreate_Click(object sender, EventArgs e)
-        {
-            panelSubInfo.Enabled = true;
-            txtCrsCode.Focus();
-            btnClickState = 1; // CREATE
-            btnSave.Visible = true;
-            btnCancel.Visible = true;
-            btnEdit.Visible = false;
-        }
+        
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -243,6 +240,7 @@ namespace PUP_RMS.Forms
 
             }
             panelSubInfo.Enabled = true;
+            panelSubInfo.ShadowDepth = 10;
             txtCrsCode.Focus();
             btnClickState = 2; // EDIT
             btnSave.Visible = true;

@@ -71,8 +71,18 @@ namespace PUP_RMS
                 }
             }
 
-            // 3. Draw Text
+            // 3. Draw Image
+            if (this.Image != null)
+            {
+                int imageX = (this.Width - this.Image.Width) / 2;
+                int imageY = (this.Height - this.Image.Height) / 2;
+
+                pevent.Graphics.DrawImage(this.Image, imageX, imageY, this.Image.Width, this.Image.Height);
+            }
+
+            // 4. Draw Text
             TextRenderer.DrawText(pevent.Graphics, this.Text, this.Font, ClientRectangle, this.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+
         }
 
         // Helper to get the round path

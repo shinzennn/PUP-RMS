@@ -82,6 +82,7 @@ namespace PUP_RMS.Forms
             txtProgramDesc.Clear();
             txtSearch.Clear();
             panelProginfo.Enabled = false;
+            panelProginfo.ShadowDepth = 6;
             dgvProgram.Enabled = true;
             btnEdit.Visible = false;
             btnSave.Visible = false;
@@ -180,6 +181,7 @@ namespace PUP_RMS.Forms
             txtProgamCode.Focus();
             btnClickState = 1; // CREATE
             panelProginfo.Enabled = true;
+            panelProginfo.ShadowDepth = 10;
             dgvProgram.Enabled = false;
             btnEdit.Visible = false;
             btnSave.Visible = true;
@@ -200,6 +202,7 @@ namespace PUP_RMS.Forms
             txtProgamCode.Focus();
             btnClickState = 2; // EDIT
             panelProginfo.Enabled = true;
+            panelProginfo.ShadowDepth = 10;
             btnSave.Visible = true;
             btnCancel.Visible = true;
 
