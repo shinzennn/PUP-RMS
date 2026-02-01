@@ -1,11 +1,13 @@
-﻿using FontAwesome.Sharp;
-using PUP_RMS.Core;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using FontAwesome.Sharp;
+using PUP_RMS.Core;
+using PUP_RMS.Model;
 
 namespace PUP_RMS.Forms
 {
@@ -89,7 +91,7 @@ namespace PUP_RMS.Forms
             LoadSchoolYears();    // School Year is independent
             LoadYearLevels();     // Year Level is independent
             LoadSemesters();      // Semester is independent
-            LoadSections();       // Section is independent
+           // LoadSections();       // Section is independent
 
             // Load dependent combos as empty / placeholders
             cmbCurriculum.DataSource = null;
@@ -109,7 +111,7 @@ namespace PUP_RMS.Forms
             LoadSchoolYears();    // School Year is independent
             LoadYearLevels();     // Year Level is independent
             LoadSemesters();      // Semester is independent
-            LoadSections();       // Section is independent
+           // LoadSections();       // Section is independent
 
             // Load dependent combos as empty / placeholders
             cmbCurriculum.DataSource = null;
@@ -217,26 +219,33 @@ namespace PUP_RMS.Forms
             //cmbCurriculum.ValueMember = "CurriculumID";
             //cmbCurriculum.SelectedIndex = 0;
 
-            using (SqlConnection con = new SqlConnection(DbControl.ConnString("RMSDB")))
-            using (SqlCommand cmd = new SqlCommand(
-                "SELECT DISTINCT CurriculumYear FROM CurriculumHeader WHERE ProgramID = @ProgramID ORDER BY CurriculumYear DESC", con))
-            {
-                cmd.Parameters.AddWithValue("@ProgramID", programID);
-                DataTable dt = new DataTable();
-                con.Open();
-                dt.Load(cmd.ExecuteReader());
+            //using (SqlConnection con = new SqlConnection(DbControl.ConnString("RMSDB")))
+            //using (SqlCommand cmd = new SqlCommand(
+            //    "SELECT DISTINCT CurriculumYear FROM CurriculumHeader WHERE ProgramID = @ProgramID ORDER BY CurriculumYear DESC", con))
+            //{
+            //    cmd.Parameters.AddWithValue("@ProgramID", programID);
+            //    DataTable dt = new DataTable();
+            //    con.Open();
+            //    dt.Load(cmd.ExecuteReader());
 
-                // Add placeholder
-                DataRow placeholder = dt.NewRow();
-                placeholder["CurriculumYear"] = "Curriculum";
-                dt.Rows.InsertAt(placeholder, 0);
+            //    // Add placeholder
+            //    DataRow placeholder = dt.NewRow();
+            //    placeholder["CurriculumYear"] = "Curriculum";
+            //    dt.Rows.InsertAt(placeholder, 0);
 
-                // Use CurriculumYear (string) as the ValueMember so searches use the year string.
-                cmbCurriculum.DataSource = dt;
-                cmbCurriculum.DisplayMember = "CurriculumYear";
-                cmbCurriculum.ValueMember = "CurriculumYear";
-                cmbCurriculum.SelectedIndex = 0;
-            }
+            //    // Use CurriculumYear (string) as the ValueMember so searches use the year string.
+            //    cmbCurriculum.DataSource = dt;
+            //    cmbCurriculum.DisplayMember = "CurriculumYear";
+            //    cmbCurriculum.ValueMember = "CurriculumYear";
+            //    cmbCurriculum.SelectedIndex = 0;
+            //}
+
+            int programId = Convert.ToInt32(cmbProgram.SelectedValue);
+
+            cmbCurriculum.DataSource = DbControl.GetCurriculumsByProgram(programId);
+            cmbCurriculum.DisplayMember = "CurriculumYear";
+            cmbCurriculum.ValueMember = "CurriculumHeaderID";
+            cmbCurriculum.SelectedIndex = -1;
 
         }
 
@@ -292,71 +301,52 @@ namespace PUP_RMS.Forms
 
         private void LoadSections()
         {
-            var dt = new DataTable();
-            dt.Columns.Add("ID", typeof(int));
-            dt.Columns.Add("Name", typeof(string));
-
-            dt.Rows.Add(0, "");
-            dt.Rows.Add(1, "1");
-            dt.Rows.Add(2, "2");
-            dt.Rows.Add(3, "3");
-
-            cmbSection.DataSource = dt;
-            cmbSection.DisplayMember = "Name";
-            cmbSection.ValueMember = "ID";
-            cmbSection.SelectedIndex = 0;
-        }
-
-        private void LoadCourses(int curriculumID, int yearLevel, int section)
-        {
-            // Require curriculum and year level
-            if (curriculumID == 0 || yearLevel == 0)
-            {
-                cmbCourse.DataSource = null;
-                return;
-            }
-
-            // Use CurriculumCourse + Curriculum to find courses for the specified curriculum/year/semester
             try
             {
-                using (SqlConnection con = new SqlConnection(DbControl.ConnString("RMSDB")))
-                using (SqlCommand cmd = new SqlCommand(@"
-                                        SELECT DISTINCT 
-                                            co.CourseID, 
-                                            co.CourseCode
-                                        FROM Offering o
-                                        JOIN Course co 
-                                            ON o.CourseID = co.CourseID
-                                        JOIN Curriculum cur 
-                                            ON o.CurriculumID = cur.CurriculumID
-                                        WHERE cur.CurriculumID = @CurriculumID
-                                          AND cur.YearLevel = @YearLevel
-                                          AND cur.Semester = @Semester
-                                        ORDER BY co.CourseCode;", con))
-                {
-                    cmd.Parameters.AddWithValue("@CurriculumID", curriculumID);
-                    cmd.Parameters.AddWithValue("@YearLevel", yearLevel);
-                    cmd.Parameters.AddWithValue("@Semester", selectedSemester);
+               
+                string query = "SELECT Section \r\nFROM ClassSection AS CS\r\nINNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID\r\nWHERE SchoolYear = @SchoolYear AND O.CourseID = @CourseID\r\nORDER BY Section ASC;";
+                DbControl.AddParameter("@SchoolYear", cmbSchoolYear.SelectedValue ?? DBNull.Value, SqlDbType.VarChar);
+                DbControl.AddParameter("@CourseID", selectedCourseID != 0 ? (object)selectedCourseID : DBNull.Value, SqlDbType.Int);
+                DataTable dt = DbControl.GetData(query);
 
-                    DataTable dt = new DataTable();
-                    con.Open();
-                    dt.Load(cmd.ExecuteReader());
+                DataRow placeholder = dt.NewRow();
+                cmbSection.DataSource = dt;
+                cmbSection.DisplayMember = "Section";
+                cmbSection.ValueMember = "Section";
 
-                    DataRow placeholder = dt.NewRow();
-                    placeholder["CourseID"] = 0;
-                    placeholder["CourseCode"] = "";
-                    dt.Rows.InsertAt(placeholder, 0);
+               
 
-                    cmbCourse.DataSource = dt;
-                    cmbCourse.DisplayMember = "CourseCode";
-                    cmbCourse.ValueMember = "CourseID";
-                    cmbCourse.SelectedIndex = 0;
-                }
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine("Section Load Error: " + ex.Message);
+            }
+        }
+
+        // private void LoadCourses(int curriculumID)
+        private void LoadCourses()
+        {
+            try
+            {
+               cmbCourse.DataSource = DbControl.GetCourse(
+                    Convert.ToInt32(cmbYearLevel.SelectedValue),
+                    Convert.ToInt32(cmbSemester.SelectedValue),
+                    Convert.ToInt32(cmbProgram.SelectedValue)
+                );
+
+                cmbCourse.DisplayMember = "CourseCode";
+                cmbCourse.ValueMember = "CourseID";
+                cmbCourse.SelectedIndex = -1;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 cmbCourse.DataSource = null;
             }
+
+
+
         }
 
         private void LoadProfessorForCourse(int courseID)
@@ -370,13 +360,14 @@ namespace PUP_RMS.Forms
             // C#
             using (SqlConnection con = new SqlConnection(DbControl.ConnString("RMSDB")))
             using (SqlCommand cmd = new SqlCommand(@"
-                SELECT DISTINCT f.FacultyID,
-                    f.LastName + ', ' + f.FirstName +
-                    ISNULL(' ' + LEFT(f.MiddleName, 1) + '.', '') AS Professor
-                FROM GradeSheet gs
-                INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-                WHERE gs.CourseID = @CourseID
-                ORDER BY Professor", con))
+                 SELECT 
+                 F.FacultyID,
+                 F.LastName + ', ' + F.FirstName + ' ' + ISNULL(NULLIF(SUBSTRING(F.MiddleName, 1, 1), '') + '.', '') AS Professor
+                 FROM Faculty as F
+                 INNER JOIN ClassSection AS CS ON F.FacultyID = CS.FacultyID
+                 INNER JOIN GradeSheet AS GS ON GS.SectionID = CS.SectionID
+                 INNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID
+                 WHERE O.CourseID = @CourseID;", con))
             {
                 cmd.Parameters.AddWithValue("@CourseID", courseID);
                 DataTable dt = new DataTable();
@@ -433,7 +424,7 @@ namespace PUP_RMS.Forms
             {
                 selectedCurriculumYear = null;
                 selectedCurriculumID = 0;
-                cmbCourse.DataSource = null;
+               // cmbCourse.DataSource = null;
                 cmbProfessor.DataSource = null;
                 return;
             }
@@ -459,10 +450,15 @@ namespace PUP_RMS.Forms
             cmbCourse.DataSource = null;
             cmbProfessor.DataSource = null;
 
+          
+
             // If we resolved an ID and year/section are chosen, attempt to load courses
             if (selectedCurriculumID > 0)
             {
-                LoadCourses(selectedCurriculumID, selectedYearLevel, selectedSection);
+                MessageBox.Show(selectedCurriculumID.ToString());
+                int curriculumid = frmBatchUpload.getCurriculumID(selectedCurriculumID, selectedYearLevel, selectedSection);
+                MessageBox.Show(curriculumid.ToString());
+                LoadCourses();
             }
 
             // Trigger search
@@ -484,6 +480,9 @@ namespace PUP_RMS.Forms
         {
             if (isLoading) return;
 
+            LoadCourses();
+            
+
             selectedSemester = GetSafeComboInt(cmbSemester);
             // Semester affects resolution and search
             cmbCurriculum_SelectedIndexChanged(sender, e);
@@ -502,6 +501,8 @@ namespace PUP_RMS.Forms
         {
             if (isLoading) return;
 
+           
+
             selectedCourseID = GetSafeComboInt(cmbCourse);
             LoadProfessorForCourse(selectedCourseID);
 
@@ -519,7 +520,8 @@ namespace PUP_RMS.Forms
         private void cmbSchoolYear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (isLoading) return;
-
+            LoadSections();
+            LoadProfessorForCourse(selectedCourseID);
             selectedSchoolYear = cmbSchoolYear.SelectedIndex > 0 && cmbSchoolYear.SelectedValue != null
                 ? cmbSchoolYear.SelectedValue.ToString()
                 : null;

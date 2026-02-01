@@ -1,8 +1,4 @@
-﻿using Dapper;
-using PUP_RMS.Core;
-using PUP_RMS.Helper;
-using PUP_RMS.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Dapper;
+using PUP_RMS.Core;
+using PUP_RMS.Helper;
+using PUP_RMS.Model;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 
 namespace PUP_RMS.Forms
@@ -45,7 +46,7 @@ namespace PUP_RMS.Forms
             professorCmbox.SelectedIndexChanged += UpdateFileName;
             pageCmbox.SelectedIndexChanged += UpdateFileName;
             curriculumCmbox.SelectedIndexChanged += UpdateFileName;
-            sectionCmbox.SelectedIndexChanged += UpdateFileName;
+            sectionCmbox.TextChanged += UpdateFileName;
 
             // FOR RIGHT CLICK CONTEXT MENU
 
@@ -55,7 +56,10 @@ namespace PUP_RMS.Forms
             uploadBtn.Click += uploadBtn_Click;
             saveBtn.Click += saveBtn_Click;
             undoBtn.Click += undoBtn_Click;
-            
+
+            // Add these to your constructor or Load method
+            yearLevelCmbox.SelectedIndexChanged += (s, e) => LoadAcademicYears();
+            curriculumCmbox.SelectedIndexChanged += (s, e) => LoadAcademicYears();
 
             if (currentImage.Image == null)
             {
@@ -98,32 +102,33 @@ namespace PUP_RMS.Forms
 
         private void frmBatchUpload_Load(object sender, EventArgs e)
         {
-            LoadProfessors();
+           // LoadProfessors();
             LoadSemester();
             InitializeImageList();
             LoadPrograms();
             LoadYearLevels();
+            LoadCourses();
 
-            
+
             LoadPageNumber();
             LoadAcademicYears();
             yearCmbox.Text = ""; 
-            LoadSection();
+          //  LoadSection();
 
         }
         public void loadData()
         {
-            LoadProfessors();
+          //  LoadProfessors();
             LoadSemester();
             InitializeImageList();
             LoadPrograms();
             LoadYearLevels();
-
+            LoadCourses();
 
             LoadPageNumber();
             LoadAcademicYears();
             yearCmbox.Text = "";
-            LoadSection();
+          //  LoadSection();
         }
 
         private void InitializeImageList()
@@ -142,12 +147,55 @@ namespace PUP_RMS.Forms
         // DATA LOADING
         // =========================
 
+        private void LoadCourses()
+        {
+            courseCmbox.DataSource = DbControl.GetCourse(Convert.ToInt32(yearLevelCmbox.SelectedValue), Convert.ToInt32(semesterCmbox.SelectedValue),Convert.ToInt32(programCmbox.SelectedValue));
+            courseCmbox.DisplayMember = "CourseCode";
+            courseCmbox.ValueMember = "CourseID";
+            courseCmbox.SelectedIndex = -1;
+        }
+
         private void LoadProfessors()
         {
-            professorCmbox.DataSource = DbControl.GetProfessors();
-            professorCmbox.DisplayMember = "DisplayName";
+          
+            if (yearCmbox.Text == null ||
+                sectionCmbox.Text == null ||
+                courseCmbox.Text == null)
+            {
+                MessageBox.Show("Please make sure Year, Section, and Course are selected.");
+                return;
+            }
+              
+            
+            string query = @"
+            SELECT 
+                F.FacultyID,
+                CONCAT(F.LastName, ', ', F.FirstName) AS FullName
+            FROM ClassSection CS
+            INNER JOIN Faculty F ON CS.FacultyID = F.FacultyID
+            INNER JOIN Offering O ON CS.OfferingID = O.OfferingID
+            WHERE CS.SchoolYear = @SchoolYear
+              AND CS.Section = @Section
+              AND O.CourseID = @CourseID";
+
+            DbControl.ClearParameters();
+            DbControl.AddParameter("@SchoolYear", yearCmbox.Text, SqlDbType.VarChar);
+            DbControl.AddParameter("@Section", Convert.ToInt32(sectionCmbox.Text), SqlDbType.Int);
+            DbControl.AddParameter("@CourseID", Convert.ToInt32(courseCmbox.SelectedValue), SqlDbType.Int);
+
+            DataTable dt = DbControl.GetData(query);
+
+            if (dt.Rows.Count == 0)
+            {
+                professorCmbox.DataSource = null;
+                return;
+            }
+
+            professorCmbox.DataSource = dt;
+            professorCmbox.Text= dt.Rows[0]["FullName"].ToString();
+            professorCmbox.DisplayMember = "FullName";
             professorCmbox.ValueMember = "FacultyID";
-            professorCmbox.SelectedIndex = -1;
+           // professorCmbox.SelectedIndex = -1;
         }
 
         private void LoadSemester()
@@ -213,27 +261,75 @@ namespace PUP_RMS.Forms
                 return;
 
             int programId = Convert.ToInt32(programCmbox.SelectedValue);
-
+            
             curriculumCmbox.DataSource = DbControl.GetCurriculumsByProgram(programId);
             curriculumCmbox.DisplayMember = "CurriculumYear";
-            curriculumCmbox.ValueMember = "CurriculumID";
+            curriculumCmbox.ValueMember = "CurriculumHeaderID";
             curriculumCmbox.SelectedIndex = -1;
+
         }
 
         private void LoadAcademicYears()
         {
-            yearCmbox.Items.Clear();
 
-            int startYear = 1970;
-            int currentAYStart = GetCurrentAcademicYearStart();
-
-            for (int year = currentAYStart; year >= startYear; year--)
+           
+            // 1. Validation: Ensure all necessary filters are selected
+            if (curriculumCmbox.SelectedValue == null ||
+                courseCmbox.SelectedValue == null ||
+                semesterCmbox.SelectedValue == null ||
+                yearLevelCmbox.SelectedValue == null)
             {
-                string academicYear = $"{year}-{year + 1}";
-                yearCmbox.Items.Add(academicYear);
+                return;
             }
 
-            yearCmbox.SelectedItem = $"{currentAYStart}-{currentAYStart + 1}";
+            // 2. Refined Query: Include Semester and YearLevel to find the UNIQUE Offering
+            // Adjust table names/columns based on your actual schema if 'Offering' holds these
+            string query = @"
+           SELECT 
+             OfferingID 
+             FROM Offering AS O
+             INNER JOIN Curriculum AS C ON O.CurriculumID = C.CurriculumID
+             WHERE C.CurriculumID = @CurriculumID AND CourseID = @CourseID AND Semester = @Semester AND YearLevel = @YearLevel;";
+
+            int curriculumid = getCurriculumID(Convert.ToInt32(curriculumCmbox.SelectedValue), Convert.ToInt32(yearLevelCmbox.SelectedValue), Convert.ToInt32(semesterCmbox.SelectedValue));
+            //MessageBox.Show("Debug: Executing LoadAcademicYears with CurriculumID=" + curriculumid +
+            //    ", CourseID=" + courseCmbox.SelectedValue +
+            //    ", Semester=" + semesterCmbox.SelectedValue +
+            //    ", YearLevel=" + yearLevelCmbox.SelectedValue);
+            DbControl.ClearParameters();
+            DbControl.AddParameter("@CurriculumID", curriculumid, SqlDbType.Int);
+            DbControl.AddParameter("@CourseID", courseCmbox.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@Semester", semesterCmbox.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@YearLevel", yearLevelCmbox.SelectedValue, SqlDbType.Int);
+
+            DataTable dt = DbControl.GetData(query);
+
+            if (dt.Rows.Count == 0)
+            {
+                // Clear fields if no offering exists for this specific combination
+                yearCmbox.Text = "";
+                sectionCmbox.Text = "";
+                return;
+            }
+
+            int offeringid = Convert.ToInt32(dt.Rows[0]["OfferingID"]);
+
+            // 3. Get the Section and School Year
+            string query2 = @" 
+        SELECT SchoolYear, Section 
+        FROM ClassSection 
+        WHERE OfferingID = @OfferingID;";
+
+            DbControl.ClearParameters();
+            DbControl.AddParameter("@OfferingID", offeringid, SqlDbType.Int);
+
+            DataTable ddt = DbControl.GetData(query2);
+            if (ddt.Rows.Count > 0)
+            {
+                yearCmbox.Text = ddt.Rows[0]["SchoolYear"].ToString();
+                sectionCmbox.Text = ddt.Rows[0]["Section"].ToString();
+                LoadProfessors();
+            }
         }
 
 
@@ -259,17 +355,17 @@ namespace PUP_RMS.Forms
         // =========================
         private void UpdateFileName(object sender, EventArgs e)
         {
+            // Use string.IsNullOrWhiteSpace for ComboBoxes where you set .Text manually
             if (string.IsNullOrWhiteSpace(yearCmbox.Text) ||
-                pageCmbox.SelectedValue == null ||
+                string.IsNullOrWhiteSpace(sectionCmbox.Text) ||
+                string.IsNullOrWhiteSpace(courseCmbox.Text) ||
                 curriculumCmbox.SelectedValue == null ||
-                semesterCmbox.SelectedItem == null ||
-                programCmbox.SelectedItem == null ||
-                sectionCmbox.SelectedValue == null ||
-                yearLevelCmbox.SelectedItem == null ||
-                courseCmbox.SelectedItem == null)// ||
-               // professorCmbox.SelectedItem == null)
+                semesterCmbox.SelectedValue == null ||
+                programCmbox.SelectedValue == null ||
+                yearLevelCmbox.SelectedValue == null ||
+                pageCmbox.SelectedValue == null)
             {
-                return;
+                return; // It exits here because one of these is still 'null' during the loading phase
             }
 
             try
@@ -475,13 +571,13 @@ namespace PUP_RMS.Forms
             int yearLevel = yearLevelCmbox.SelectedValue != null ? Convert.ToInt32(yearLevelCmbox.SelectedValue) : 0;
             int sem = semesterCmbox.SelectedValue != null ? Convert.ToInt32(semesterCmbox.SelectedValue) : 0;
 
-            if (yearCmbox.SelectedItem == null ||
+            if (yearCmbox.Text == null ||
                 pageCmbox.SelectedValue == null ||
-                semesterCmbox.SelectedItem == null ||
-                programCmbox.SelectedItem == null ||
-                yearLevelCmbox.SelectedItem == null ||
-                courseCmbox.SelectedItem == null ||
-                professorCmbox.SelectedItem == null)
+                semesterCmbox.Text == null ||
+                programCmbox.Text == null ||
+                yearLevelCmbox.Text == null ||
+                courseCmbox.Text == null ||
+                professorCmbox.Text == null)
             {
                 MessageBox.Show("Complete All Fields.");
                 return;
@@ -526,11 +622,8 @@ namespace PUP_RMS.Forms
                 File.Copy(sourcePath, savedFilePath, true);
 
                 int gradeSheetId = DbControl.InsertGradeSheet(
-                    savedFileName, folderPath, yearCmbox.Text,
-                    getCurriculumID(curriculumYear, progID, yearLevel, sem),
-                    Convert.ToInt32(sectionCmbox.SelectedValue),
-                    Convert.ToInt32(courseCmbox.SelectedValue),
-                    Convert.ToInt32(professorCmbox.SelectedValue),
+                    savedFileName, folderPath,
+                    Convert.ToInt32(sectionCmbox.Text),
                     Convert.ToInt32(pageCmbox.SelectedValue), loggedInAdminId
                 );
 
@@ -704,24 +797,9 @@ namespace PUP_RMS.Forms
         // COMBO BOX FILTERING LOGIC
         private void courseCmbox_Click(object sender, EventArgs e)
         {
-            // wag na gawing stored proc tangina
-            string query = "SELECT \r\n\tCO.CourseID,\r\n    CO.CourseCode AS [Description]\r\nFROM Curriculum C\r\nJOIN CurriculumCourse CC ON C.CurriculumID = CC.CurriculumID\r\nJOIN Course CO ON CC.CourseID = CO.CourseID\r\nWHERE\r\n\tc.CurriculumYear = @CurriculumYear AND c.ProgramID = @ProgramID and c.YearLevel = @YearLevel and c.Semester = @Semester\r\nORDER BY CO.CourseCode;";
 
-            string curriculumYear = curriculumCmbox.Text;
-            int programID = programCmbox.SelectedValue != null ? Convert.ToInt32(programCmbox.SelectedValue) : 0;
-            int yearLevel = yearLevelCmbox.SelectedValue != null ? Convert.ToInt32(yearLevelCmbox.SelectedValue) : 0;
-            int semester = semesterCmbox.SelectedValue != null ? Convert.ToInt32(semesterCmbox.SelectedValue) : 0;
-
-            DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
-            DbControl.AddParameter("@ProgramID", programID, SqlDbType.Int);
-            DbControl.AddParameter("@YearLevel", yearLevel, SqlDbType.Int);
-            DbControl.AddParameter("@Semester", semester, SqlDbType.Int);
-
-            DataTable dt = DbControl.GetData(query);
-            courseCmbox.DisplayMember = "Description";
-            courseCmbox.ValueMember = "CourseID";
-            courseCmbox.DataSource = dt;
-
+            LoadCourses();
+          
 
         }
         
@@ -733,29 +811,8 @@ namespace PUP_RMS.Forms
 
         private void courseCmbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string curriculumYear = curriculumCmbox.Text;
-            int programID = programCmbox.SelectedValue != null ? Convert.ToInt32(programCmbox.SelectedValue) : 0;
-            int yearLevel = yearLevelCmbox.SelectedValue != null ? Convert.ToInt32(yearLevelCmbox.SelectedValue) : 0;
-            int semester = semesterCmbox.SelectedValue != null ? Convert.ToInt32(semesterCmbox.SelectedValue) : 0;
-            
-            int curriculumID = getCurriculumID(curriculumYear, programID, yearLevel, semester);
-            int courseID = courseCmbox.SelectedValue != null ? Convert.ToInt32(courseCmbox.SelectedValue) : 0;
-            
-            // wag na gawing stored proc
-            string query = "select\r\n    F.LastName + ', ' + F.FirstName + ' ' + F.MiddleName AS FullName, F.FacultyID \r\nFROM\r\n    CurriculumCourse CC\r\nJOIN Faculty F ON CC.FacultyID = F.FacultyID\r\nWhere \r\n    CurriculumID = @CurriculumID and CourseID = @CourseID";
-
-            DbControl.AddParameter("@CurriculumID", curriculumID, SqlDbType.Int);
-            DbControl.AddParameter("@CourseID", courseID, SqlDbType.Int);
-            DataTable dt = DbControl.GetData(query);
-            //string fullname = Convert.ToString(dt.Rows[0]["FullName"]);
-            //professorCmbox.Text = fullname;
-            professorCmbox.DisplayMember = "Fullname";
-            professorCmbox.ValueMember = "FacultyID";
-            professorCmbox.DataSource = dt;
-            
-
-
-
+         
+           
 
         }
 
@@ -785,6 +842,59 @@ namespace PUP_RMS.Forms
                 return;
             }
             DisplayCurrentImage();
+        }
+
+        public static int getCurriculumID(int curriculumheader, int yearLevel, int semester)
+        {
+            string query = " SELECT \r\n CurriculumID\r\n FROM Curriculum as C\r\n INNER JOIN CurriculumHeader AS CH ON C.CurriculumHeaderID = CH.CurriculumHeaderID\r\n WHERE CH.CurriculumHeaderID = @CurriculumHeaderID AND C.YearLevel = @YearLevel AND C.Semester = @Semester";
+
+            DbControl.AddParameter("@CurriculumHeaderID", curriculumheader, SqlDbType.Int);
+            DbControl.AddParameter("@YearLevel", yearLevel, SqlDbType.Int);
+            DbControl.AddParameter("@Semester", semester, SqlDbType.Int);
+            DataTable dt = DbControl.GetData(query);
+
+            return Convert.ToInt32(dt.Rows[0]["CurriculumID"]);
+
+        }
+
+        private void professorCmbox_Click(object sender, EventArgs e)
+        {
+            LoadProfessors();
+        }
+
+        private void sectionCmbox_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void sectionCmbox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void sectionCmbox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            LoadProfessors();
+        }
+
+        private void sectionCmbox_TextUpdate(object sender, EventArgs e)
+        {
+            LoadProfessors();
+        }
+
+        private void pageCmbox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void courseCmbox_TextUpdate(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void courseCmbox_SelectedValueChanged(object sender, EventArgs e)
+        {
+          LoadAcademicYears();
         }
     }
 

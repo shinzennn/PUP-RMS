@@ -136,27 +136,27 @@ namespace PUP_RMS.Forms
             using (var con = new SqlConnection(connectionString))
             using (var cmd = new SqlCommand(@"
                 SELECT 
-                    gs.GradeSheetID,
-                    p.ProgramID,
-                    c.CourseID,
-                    f.FacultyID,
-                    cur.YearLevel,
-                    cur.Semester,
-                    cs.SchoolYear,
-                    gs.PageNumber,
-                    gs.Filename,
-                    gs.Filepath,
-                    a.LastName + ', ' + a.FirstName AS UploadedBy
-                FROM GradeSheet gs
-                    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
-                    INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
-                    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
-                    INNER JOIN Course c ON o.CourseID = c.CourseID
-                    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
-                    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
-                    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
-                    INNER JOIN Account a ON gs.AccountID = a.AccountID
-                WHERE gs.GradeSheetID = @GradeSheetID
+                    GS.GradeSheetID,
+                    P.ProgramID,
+                    O.CourseID, 
+                    F.FacultyID,
+                    C.YearLevel,
+                    C.Semester,
+                    CS.SchoolYear,
+                    GS.PageNumber,
+                    GS.Filename,
+                    GS.Filepath,
+                    A.LastName + ', ' + A.FirstName AS UploadedBy
+                FROM GradeSheet GS
+                INNER JOIN ClassSection CS ON GS.SectionID = CS.SectionID
+                INNER JOIN Faculty F ON CS.FacultyID = F.FacultyID
+                INNER JOIN Offering O ON CS.OfferingID = O.OfferingID
+                INNER JOIN Course Co ON O.CourseID = Co.CourseID
+                INNER JOIN Curriculum C ON O.CurriculumID = C.CurriculumID
+                INNER JOIN CurriculumHeader CH ON C.CurriculumHeaderID = CH.CurriculumHeaderID
+                INNER JOIN Program P ON CH.ProgramID = P.ProgramID
+                INNER JOIN Account A ON GS.AccountID = A.AccountID
+                WHERE GS.GradeSheetID = @GradeSheetID;
             ", con))
             {
                 cmd.Parameters.AddWithValue("@GradeSheetID", GradeSheetID);
