@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvGradeSheets = new System.Windows.Forms.DataGridView();
             this.rMSDBDataSet = new PUP_RMS.RMSDBDataSet();
             this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -42,14 +42,24 @@
             this.programBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.programTableAdapter1 = new PUP_RMS.RMSDBDataSet1TableAdapters.ProgramTableAdapter();
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btnSearch = new PUP_RMS.RoundedButton();
+            this.btnClear = new PUP_RMS.RoundedButton();
+            this.cmbSemester = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cmbProgram = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmbCurriculum = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbYearLevel = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cmbCourse = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbSection = new System.Windows.Forms.ComboBox();
+            this.cmbSchoolYear = new System.Windows.Forms.ComboBox();
+            this.cmbProfessor = new System.Windows.Forms.ComboBox();
             this.lblSchoolYear = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.btnView = new PUP_RMS.RoundedButton();
             this.rspSearch = new PUP_RMS.RoundedShadowPanel();
             this.tlpSearch = new System.Windows.Forms.TableLayoutPanel();
@@ -57,16 +67,6 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
-            this.cmbSchoolYear = new System.Windows.Forms.ComboBox();
-            this.cmbSection = new System.Windows.Forms.ComboBox();
-            this.cmbCourse = new System.Windows.Forms.ComboBox();
-            this.cmbYearLevel = new System.Windows.Forms.ComboBox();
-            this.cmbCurriculum = new System.Windows.Forms.ComboBox();
-            this.cmbProgram = new System.Windows.Forms.ComboBox();
-            this.cmbSemester = new System.Windows.Forms.ComboBox();
-            this.cmbProfessor = new System.Windows.Forms.ComboBox();
-            this.btnClear = new PUP_RMS.RoundedButton();
-            this.btnSearch = new PUP_RMS.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGradeSheets)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rMSDBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).BeginInit();
@@ -84,8 +84,8 @@
             this.dgvGradeSheets.AllowUserToDeleteRows = false;
             this.dgvGradeSheets.AllowUserToResizeColumns = false;
             this.dgvGradeSheets.AllowUserToResizeRows = false;
-            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control;
-            this.dgvGradeSheets.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvGradeSheets.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvGradeSheets.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -95,25 +95,25 @@
             this.dgvGradeSheets.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvGradeSheets.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvGradeSheets.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle22.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGradeSheets.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGradeSheets.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvGradeSheets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle23.Padding = new System.Windows.Forms.Padding(5);
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGradeSheets.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvGradeSheets.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvGradeSheets.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dgvGradeSheets.EnableHeadersVisualStyles = false;
             this.dgvGradeSheets.GridColor = System.Drawing.Color.White;
@@ -121,23 +121,23 @@
             this.dgvGradeSheets.Name = "dgvGradeSheets";
             this.dgvGradeSheets.ReadOnly = true;
             this.dgvGradeSheets.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle24.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.Goldenrod;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGradeSheets.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Goldenrod;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGradeSheets.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvGradeSheets.RowHeadersVisible = false;
-            dataGridViewCellStyle25.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle25.ForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle25.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
-            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.Color.Goldenrod;
-            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.Color.Maroon;
-            this.dgvGradeSheets.RowsDefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Goldenrod;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Maroon;
+            this.dgvGradeSheets.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvGradeSheets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGradeSheets.Size = new System.Drawing.Size(987, 385);
             this.dgvGradeSheets.TabIndex = 10;
@@ -190,11 +190,9 @@
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.848378F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.02687F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.184673F));
-            this.tlpControls.Controls.Add(this.label8, 7, 0);
             this.tlpControls.Controls.Add(this.label4, 3, 0);
             this.tlpControls.Controls.Add(this.btnSearch, 8, 1);
             this.tlpControls.Controls.Add(this.btnClear, 9, 1);
-            this.tlpControls.Controls.Add(this.cmbProfessor, 7, 1);
             this.tlpControls.Controls.Add(this.cmbSemester, 3, 1);
             this.tlpControls.Controls.Add(this.label1, 0, 0);
             this.tlpControls.Controls.Add(this.cmbProgram, 0, 1);
@@ -205,9 +203,11 @@
             this.tlpControls.Controls.Add(this.label7, 4, 0);
             this.tlpControls.Controls.Add(this.cmbCourse, 4, 1);
             this.tlpControls.Controls.Add(this.label6, 6, 0);
-            this.tlpControls.Controls.Add(this.lblSchoolYear, 5, 0);
             this.tlpControls.Controls.Add(this.cmbSection, 6, 1);
             this.tlpControls.Controls.Add(this.cmbSchoolYear, 5, 1);
+            this.tlpControls.Controls.Add(this.cmbProfessor, 7, 1);
+            this.tlpControls.Controls.Add(this.lblSchoolYear, 5, 0);
+            this.tlpControls.Controls.Add(this.label8, 7, 0);
             this.tlpControls.Location = new System.Drawing.Point(25, 57);
             this.tlpControls.Margin = new System.Windows.Forms.Padding(5);
             this.tlpControls.Name = "tlpControls";
@@ -216,54 +216,6 @@
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.82278F));
             this.tlpControls.Size = new System.Drawing.Size(983, 66);
             this.tlpControls.TabIndex = 9;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(744, 2);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(77, 20);
-            this.label8.TabIndex = 37;
-            this.label8.Text = "Professor";
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(416, 2);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(60, 20);
-            this.label7.TabIndex = 36;
-            this.label7.Text = "Course";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(645, 2);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 20);
-            this.label6.TabIndex = 35;
-            this.label6.Text = "Section";
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label5.Location = new System.Drawing.Point(215, 2);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(84, 20);
-            this.label5.TabIndex = 34;
-            this.label5.Text = "Year Level";
             // 
             // label4
             // 
@@ -277,17 +229,65 @@
             this.label4.TabIndex = 33;
             this.label4.Text = "Semester";
             // 
-            // label3
+            // btnSearch
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(109, 2);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 20);
-            this.label3.TabIndex = 32;
-            this.label3.Text = "Curriculum";
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearch.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnSearch.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSearch.BorderRadius = 10;
+            this.btnSearch.BorderSize = 0;
+            this.btnSearch.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnSearch.FlatAppearance.BorderSize = 0;
+            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.ForeColor = System.Drawing.Color.White;
+            this.btnSearch.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnSearch.Location = new System.Drawing.Point(840, 25);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(82, 38);
+            this.btnSearch.TabIndex = 6;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.TextColor = System.Drawing.Color.White;
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnClear.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnClear.BorderRadius = 10;
+            this.btnClear.BorderSize = 0;
+            this.btnClear.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnClear.FlatAppearance.BorderSize = 0;
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.ForeColor = System.Drawing.Color.White;
+            this.btnClear.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnClear.Location = new System.Drawing.Point(928, 25);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(52, 38);
+            this.btnClear.TabIndex = 7;
+            this.btnClear.Text = "Clear";
+            this.btnClear.TextColor = System.Drawing.Color.White;
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // cmbSemester
+            // 
+            this.cmbSemester.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSemester.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbSemester.FormattingEnabled = true;
+            this.cmbSemester.Items.AddRange(new object[] {
+            "1st",
+            "2nd"});
+            this.cmbSemester.Location = new System.Drawing.Point(309, 30);
+            this.cmbSemester.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbSemester.Name = "cmbSemester";
+            this.cmbSemester.Size = new System.Drawing.Size(102, 28);
+            this.cmbSemester.TabIndex = 1;
+            this.cmbSemester.SelectedIndexChanged += new System.EventHandler(this.cmbSemester_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -301,129 +301,124 @@
             this.label1.TabIndex = 31;
             this.label1.Text = "Program";
             // 
-            // lblSchoolYear
+            // cmbProgram
             // 
-            this.lblSchoolYear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblSchoolYear.AutoSize = true;
-            this.lblSchoolYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSchoolYear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblSchoolYear.Location = new System.Drawing.Point(522, 2);
-            this.lblSchoolYear.Name = "lblSchoolYear";
-            this.lblSchoolYear.Size = new System.Drawing.Size(96, 20);
-            this.lblSchoolYear.TabIndex = 30;
-            this.lblSchoolYear.Text = "School Year";
+            this.cmbProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbProgram.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbProgram.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbProgram.FormattingEnabled = true;
+            this.cmbProgram.Location = new System.Drawing.Point(2, 30);
+            this.cmbProgram.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbProgram.Name = "cmbProgram";
+            this.cmbProgram.Size = new System.Drawing.Size(102, 28);
+            this.cmbProgram.TabIndex = 2;
+            this.cmbProgram.SelectedIndexChanged += new System.EventHandler(this.cmbProgram_SelectedIndexChanged);
             // 
-            // btnView
+            // label3
             // 
-            this.btnView.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnView.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnView.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnView.BorderRadius = 10;
-            this.btnView.BorderSize = 0;
-            this.btnView.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnView.FlatAppearance.BorderSize = 0;
-            this.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnView.ForeColor = System.Drawing.Color.White;
-            this.btnView.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnView.Location = new System.Drawing.Point(861, 522);
-            this.btnView.Margin = new System.Windows.Forms.Padding(2);
-            this.btnView.Name = "btnView";
-            this.btnView.Size = new System.Drawing.Size(150, 33);
-            this.btnView.TabIndex = 8;
-            this.btnView.Text = "View";
-            this.btnView.TextColor = System.Drawing.Color.White;
-            this.btnView.UseVisualStyleBackColor = false;
-            this.btnView.Click += new System.EventHandler(this.btnView_Click);
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label3.Location = new System.Drawing.Point(109, 2);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 20);
+            this.label3.TabIndex = 32;
+            this.label3.Text = "Curriculum";
             // 
-            // rspSearch
+            // cmbCurriculum
             // 
-            this.rspSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rspSearch.BackColor = System.Drawing.Color.Transparent;
-            this.rspSearch.BorderColor = System.Drawing.Color.Transparent;
-            this.rspSearch.BorderRadius = 20;
-            this.rspSearch.BorderSize = 0;
-            this.rspSearch.Controls.Add(this.tlpSearch);
-            this.rspSearch.Location = new System.Drawing.Point(41, 111);
-            this.rspSearch.Name = "rspSearch";
-            this.rspSearch.PanelColor = System.Drawing.Color.White;
-            this.rspSearch.PanelImage = null;
-            this.rspSearch.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.rspSearch.ShadowDepth = 10;
-            this.rspSearch.ShadowEnabled = true;
-            this.rspSearch.ShadowShift = 5;
-            this.rspSearch.Size = new System.Drawing.Size(1039, 575);
-            this.rspSearch.TabIndex = 21;
+            this.cmbCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbCurriculum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCurriculum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.cmbCurriculum.FormattingEnabled = true;
+            this.cmbCurriculum.Location = new System.Drawing.Point(109, 30);
+            this.cmbCurriculum.Name = "cmbCurriculum";
+            this.cmbCurriculum.Size = new System.Drawing.Size(100, 28);
+            this.cmbCurriculum.TabIndex = 38;
+            this.cmbCurriculum.SelectedIndexChanged += new System.EventHandler(this.cmbCurriculum_SelectedIndexChanged);
             // 
-            // tlpSearch
+            // label5
             // 
-            this.tlpSearch.ColumnCount = 3;
-            this.tlpSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.960081F));
-            this.tlpSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 95.63462F));
-            this.tlpSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.405298F));
-            this.tlpSearch.Controls.Add(this.tlpControls, 1, 1);
-            this.tlpSearch.Controls.Add(this.label2, 1, 0);
-            this.tlpSearch.Controls.Add(this.btnView, 1, 3);
-            this.tlpSearch.Controls.Add(this.dgvGradeSheets, 1, 2);
-            this.tlpSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpSearch.Location = new System.Drawing.Point(0, 0);
-            this.tlpSearch.Name = "tlpSearch";
-            this.tlpSearch.RowCount = 5;
-            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.043478F));
-            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.21739F));
-            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 68F));
-            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.782609F));
-            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2.956522F));
-            this.tlpSearch.Size = new System.Drawing.Size(1039, 575);
-            this.tlpSearch.TabIndex = 0;
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label5.Location = new System.Drawing.Point(215, 2);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 20);
+            this.label5.TabIndex = 34;
+            this.label5.Text = "Year Level";
             // 
-            // label2
+            // cmbYearLevel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(23, 20);
-            this.label2.Margin = new System.Windows.Forms.Padding(3, 20, 0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(248, 25);
-            this.label2.TabIndex = 26;
-            this.label2.Text = "Enter Required Fields:";
+            this.cmbYearLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbYearLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbYearLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbYearLevel.FormattingEnabled = true;
+            this.cmbYearLevel.Items.AddRange(new object[] {
+            "1st",
+            "2nd",
+            "3rd",
+            "4th",
+            "5th"});
+            this.cmbYearLevel.Location = new System.Drawing.Point(214, 30);
+            this.cmbYearLevel.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbYearLevel.Name = "cmbYearLevel";
+            this.cmbYearLevel.Size = new System.Drawing.Size(91, 28);
+            this.cmbYearLevel.TabIndex = 3;
+            this.cmbYearLevel.SelectedIndexChanged += new System.EventHandler(this.cmbYearLevel_SelectedIndexChanged);
             // 
-            // panelHeader
+            // label7
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.panelHeader.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panelHeader.Controls.Add(this.gradientLabel1);
-            this.panelHeader.Controls.Add(this.label10);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1120, 90);
-            this.panelHeader.TabIndex = 22;
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label7.Location = new System.Drawing.Point(416, 2);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(60, 20);
+            this.label7.TabIndex = 36;
+            this.label7.Text = "Course";
             // 
-            // gradientLabel1
+            // cmbCourse
             // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(255, 37);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "Search Gradesheet";
+            this.cmbCourse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbCourse.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbCourse.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbCourse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCourse.FormattingEnabled = true;
+            this.cmbCourse.Location = new System.Drawing.Point(415, 30);
+            this.cmbCourse.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbCourse.Name = "cmbCourse";
+            this.cmbCourse.Size = new System.Drawing.Size(102, 28);
+            this.cmbCourse.TabIndex = 4;
+            this.cmbCourse.SelectedIndexChanged += new System.EventHandler(this.cmbCourse_SelectedIndexChanged);
             // 
-            // label10
+            // label6
             // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(27, 51);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(261, 21);
-            this.label10.TabIndex = 8;
-            this.label10.Text = "Search gradesheet in the database";
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label6.Location = new System.Drawing.Point(645, 2);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(63, 20);
+            this.label6.TabIndex = 35;
+            this.label6.Text = "Section";
+            // 
+            // cmbSection
+            // 
+            this.cmbSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbSection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.cmbSection.FormattingEnabled = true;
+            this.cmbSection.Location = new System.Drawing.Point(645, 30);
+            this.cmbSection.Name = "cmbSection";
+            this.cmbSection.Size = new System.Drawing.Size(93, 28);
+            this.cmbSection.TabIndex = 39;
+            this.cmbSection.SelectedIndexChanged += new System.EventHandler(this.cmbSection_SelectedIndexChanged);
             // 
             // cmbSchoolYear
             // 
@@ -601,93 +596,6 @@
             this.cmbSchoolYear.TabIndex = 0;
             this.cmbSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cmbSchoolYear_SelectedIndexChanged);
             // 
-            // cmbSection
-            // 
-            this.cmbSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.cmbSection.FormattingEnabled = true;
-            this.cmbSection.Location = new System.Drawing.Point(645, 30);
-            this.cmbSection.Name = "cmbSection";
-            this.cmbSection.Size = new System.Drawing.Size(93, 28);
-            this.cmbSection.TabIndex = 39;
-            this.cmbSection.SelectedIndexChanged += new System.EventHandler(this.cmbSection_SelectedIndexChanged);
-            // 
-            // cmbCourse
-            // 
-            this.cmbCourse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbCourse.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cmbCourse.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cmbCourse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCourse.FormattingEnabled = true;
-            this.cmbCourse.Location = new System.Drawing.Point(415, 30);
-            this.cmbCourse.Margin = new System.Windows.Forms.Padding(2);
-            this.cmbCourse.Name = "cmbCourse";
-            this.cmbCourse.Size = new System.Drawing.Size(102, 28);
-            this.cmbCourse.TabIndex = 4;
-            this.cmbCourse.SelectedIndexChanged += new System.EventHandler(this.cmbCourse_SelectedIndexChanged);
-            // 
-            // cmbYearLevel
-            // 
-            this.cmbYearLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbYearLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbYearLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbYearLevel.FormattingEnabled = true;
-            this.cmbYearLevel.Items.AddRange(new object[] {
-            "1st",
-            "2nd",
-            "3rd",
-            "4th",
-            "5th"});
-            this.cmbYearLevel.Location = new System.Drawing.Point(214, 30);
-            this.cmbYearLevel.Margin = new System.Windows.Forms.Padding(2);
-            this.cmbYearLevel.Name = "cmbYearLevel";
-            this.cmbYearLevel.Size = new System.Drawing.Size(91, 28);
-            this.cmbYearLevel.TabIndex = 3;
-            this.cmbYearLevel.SelectedIndexChanged += new System.EventHandler(this.cmbYearLevel_SelectedIndexChanged);
-            // 
-            // cmbCurriculum
-            // 
-            this.cmbCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbCurriculum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCurriculum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.cmbCurriculum.FormattingEnabled = true;
-            this.cmbCurriculum.Location = new System.Drawing.Point(109, 30);
-            this.cmbCurriculum.Name = "cmbCurriculum";
-            this.cmbCurriculum.Size = new System.Drawing.Size(100, 28);
-            this.cmbCurriculum.TabIndex = 38;
-            this.cmbCurriculum.SelectedIndexChanged += new System.EventHandler(this.cmbCurriculum_SelectedIndexChanged);
-            // 
-            // cmbProgram
-            // 
-            this.cmbProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbProgram.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cmbProgram.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cmbProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbProgram.FormattingEnabled = true;
-            this.cmbProgram.Location = new System.Drawing.Point(2, 30);
-            this.cmbProgram.Margin = new System.Windows.Forms.Padding(2);
-            this.cmbProgram.Name = "cmbProgram";
-            this.cmbProgram.Size = new System.Drawing.Size(102, 28);
-            this.cmbProgram.TabIndex = 2;
-            this.cmbProgram.SelectedIndexChanged += new System.EventHandler(this.cmbProgram_SelectedIndexChanged);
-            // 
-            // cmbSemester
-            // 
-            this.cmbSemester.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSemester.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbSemester.FormattingEnabled = true;
-            this.cmbSemester.Items.AddRange(new object[] {
-            "1st",
-            "2nd"});
-            this.cmbSemester.Location = new System.Drawing.Point(309, 30);
-            this.cmbSemester.Margin = new System.Windows.Forms.Padding(2);
-            this.cmbSemester.Name = "cmbSemester";
-            this.cmbSemester.Size = new System.Drawing.Size(102, 28);
-            this.cmbSemester.TabIndex = 1;
-            this.cmbSemester.SelectedIndexChanged += new System.EventHandler(this.cmbSemester_SelectedIndexChanged);
-            // 
             // cmbProfessor
             // 
             this.cmbProfessor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -702,49 +610,141 @@
             this.cmbProfessor.TabIndex = 5;
             this.cmbProfessor.SelectedIndexChanged += new System.EventHandler(this.cmbProfessor_SelectedIndexChanged);
             // 
-            // btnClear
+            // lblSchoolYear
             // 
-            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnClear.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnClear.BorderRadius = 10;
-            this.btnClear.BorderSize = 0;
-            this.btnClear.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnClear.FlatAppearance.BorderSize = 0;
-            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.ForeColor = System.Drawing.Color.White;
-            this.btnClear.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnClear.Location = new System.Drawing.Point(928, 25);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(52, 38);
-            this.btnClear.TabIndex = 7;
-            this.btnClear.Text = "Clear";
-            this.btnClear.TextColor = System.Drawing.Color.White;
-            this.btnClear.UseVisualStyleBackColor = false;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.lblSchoolYear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblSchoolYear.AutoSize = true;
+            this.lblSchoolYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSchoolYear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblSchoolYear.Location = new System.Drawing.Point(522, 2);
+            this.lblSchoolYear.Name = "lblSchoolYear";
+            this.lblSchoolYear.Size = new System.Drawing.Size(96, 20);
+            this.lblSchoolYear.TabIndex = 30;
+            this.lblSchoolYear.Text = "School Year";
             // 
-            // btnSearch
+            // label8
             // 
-            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearch.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnSearch.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSearch.BorderRadius = 10;
-            this.btnSearch.BorderSize = 0;
-            this.btnSearch.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnSearch.FlatAppearance.BorderSize = 0;
-            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.ForeColor = System.Drawing.Color.White;
-            this.btnSearch.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSearch.Location = new System.Drawing.Point(840, 25);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(82, 38);
-            this.btnSearch.TabIndex = 6;
-            this.btnSearch.Text = "Search";
-            this.btnSearch.TextColor = System.Drawing.Color.White;
-            this.btnSearch.UseVisualStyleBackColor = false;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label8.Location = new System.Drawing.Point(744, 2);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 20);
+            this.label8.TabIndex = 37;
+            this.label8.Text = "Professor";
+            // 
+            // btnView
+            // 
+            this.btnView.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnView.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnView.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnView.BorderRadius = 10;
+            this.btnView.BorderSize = 0;
+            this.btnView.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnView.FlatAppearance.BorderSize = 0;
+            this.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnView.ForeColor = System.Drawing.Color.White;
+            this.btnView.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnView.Location = new System.Drawing.Point(861, 522);
+            this.btnView.Margin = new System.Windows.Forms.Padding(2);
+            this.btnView.Name = "btnView";
+            this.btnView.Size = new System.Drawing.Size(150, 33);
+            this.btnView.TabIndex = 8;
+            this.btnView.Text = "View";
+            this.btnView.TextColor = System.Drawing.Color.White;
+            this.btnView.UseVisualStyleBackColor = false;
+            this.btnView.Click += new System.EventHandler(this.btnView_Click);
+            // 
+            // rspSearch
+            // 
+            this.rspSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rspSearch.BackColor = System.Drawing.Color.Transparent;
+            this.rspSearch.BorderColor = System.Drawing.Color.Transparent;
+            this.rspSearch.BorderRadius = 20;
+            this.rspSearch.BorderSize = 0;
+            this.rspSearch.Controls.Add(this.tlpSearch);
+            this.rspSearch.Location = new System.Drawing.Point(41, 111);
+            this.rspSearch.Name = "rspSearch";
+            this.rspSearch.PanelColor = System.Drawing.Color.White;
+            this.rspSearch.PanelImage = null;
+            this.rspSearch.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.rspSearch.ShadowDepth = 10;
+            this.rspSearch.ShadowEnabled = true;
+            this.rspSearch.ShadowShift = 5;
+            this.rspSearch.Size = new System.Drawing.Size(1039, 575);
+            this.rspSearch.TabIndex = 21;
+            // 
+            // tlpSearch
+            // 
+            this.tlpSearch.ColumnCount = 3;
+            this.tlpSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.960081F));
+            this.tlpSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 95.63462F));
+            this.tlpSearch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.405298F));
+            this.tlpSearch.Controls.Add(this.tlpControls, 1, 1);
+            this.tlpSearch.Controls.Add(this.label2, 1, 0);
+            this.tlpSearch.Controls.Add(this.btnView, 1, 3);
+            this.tlpSearch.Controls.Add(this.dgvGradeSheets, 1, 2);
+            this.tlpSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpSearch.Location = new System.Drawing.Point(0, 0);
+            this.tlpSearch.Name = "tlpSearch";
+            this.tlpSearch.RowCount = 5;
+            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.043478F));
+            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.21739F));
+            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 68F));
+            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.782609F));
+            this.tlpSearch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2.956522F));
+            this.tlpSearch.Size = new System.Drawing.Size(1039, 575);
+            this.tlpSearch.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(23, 20);
+            this.label2.Margin = new System.Windows.Forms.Padding(3, 20, 0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(248, 25);
+            this.label2.TabIndex = 26;
+            this.label2.Text = "Enter Required Fields:";
+            // 
+            // panelHeader
+            // 
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
+            this.panelHeader.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelHeader.Controls.Add(this.gradientLabel1);
+            this.panelHeader.Controls.Add(this.label10);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(1120, 90);
+            this.panelHeader.TabIndex = 22;
+            // 
+            // gradientLabel1
+            // 
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(255, 37);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "Search Gradesheet";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(27, 51);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(261, 21);
+            this.label10.TabIndex = 8;
+            this.label10.Text = "Search gradesheet in the database";
             // 
             // frmSearch
             // 

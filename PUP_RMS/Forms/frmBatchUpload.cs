@@ -56,7 +56,10 @@ namespace PUP_RMS.Forms
             uploadBtn.Click += uploadBtn_Click;
             saveBtn.Click += saveBtn_Click;
             undoBtn.Click += undoBtn_Click;
-            
+
+            // Add these to your constructor or Load method
+            yearLevelCmbox.SelectedIndexChanged += (s, e) => LoadAcademicYears();
+            curriculumCmbox.SelectedIndexChanged += (s, e) => LoadAcademicYears();
 
             if (currentImage.Image == null)
             {
@@ -258,56 +261,75 @@ namespace PUP_RMS.Forms
                 return;
 
             int programId = Convert.ToInt32(programCmbox.SelectedValue);
-
+            
             curriculumCmbox.DataSource = DbControl.GetCurriculumsByProgram(programId);
             curriculumCmbox.DisplayMember = "CurriculumYear";
             curriculumCmbox.ValueMember = "CurriculumHeaderID";
             curriculumCmbox.SelectedIndex = -1;
+
         }
 
         private void LoadAcademicYears()
         {
-       
+
+           
+            // 1. Validation: Ensure all necessary filters are selected
             if (curriculumCmbox.SelectedValue == null ||
-            courseCmbox.SelectedValue == null)
+                courseCmbox.SelectedValue == null ||
+                semesterCmbox.SelectedValue == null ||
+                yearLevelCmbox.SelectedValue == null)
             {
                 return;
             }
-               
 
+            // 2. Refined Query: Include Semester and YearLevel to find the UNIQUE Offering
+            // Adjust table names/columns based on your actual schema if 'Offering' holds these
             string query = @"
-            SELECT
-            OfferingID
-            FROM Offering
-            WHERE CurriculumID = @CurriculumID AND CourseID = @CourseID;
-            ";
-      
-            DbControl.AddParameter("@CurriculumID", curriculumCmbox.SelectedValue, SqlDbType.Int);
+           SELECT 
+             OfferingID 
+             FROM Offering AS O
+             INNER JOIN Curriculum AS C ON O.CurriculumID = C.CurriculumID
+             WHERE C.CurriculumID = @CurriculumID AND CourseID = @CourseID AND Semester = @Semester AND YearLevel = @YearLevel;";
+
+            int curriculumid = getCurriculumID(Convert.ToInt32(curriculumCmbox.SelectedValue), Convert.ToInt32(yearLevelCmbox.SelectedValue), Convert.ToInt32(semesterCmbox.SelectedValue));
+            //MessageBox.Show("Debug: Executing LoadAcademicYears with CurriculumID=" + curriculumid +
+            //    ", CourseID=" + courseCmbox.SelectedValue +
+            //    ", Semester=" + semesterCmbox.SelectedValue +
+            //    ", YearLevel=" + yearLevelCmbox.SelectedValue);
+            DbControl.ClearParameters();
+            DbControl.AddParameter("@CurriculumID", curriculumid, SqlDbType.Int);
             DbControl.AddParameter("@CourseID", courseCmbox.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@Semester", semesterCmbox.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@YearLevel", yearLevelCmbox.SelectedValue, SqlDbType.Int);
 
             DataTable dt = DbControl.GetData(query);
-            if( dt.Rows.Count == 0)
+
+            if (dt.Rows.Count == 0)
             {
+                // Clear fields if no offering exists for this specific combination
+                yearCmbox.Text = "";
+                sectionCmbox.Text = "";
                 return;
             }
+
             int offeringid = Convert.ToInt32(dt.Rows[0]["OfferingID"]);
 
+            // 3. Get the Section and School Year
+            string query2 = @" 
+        SELECT SchoolYear, Section 
+        FROM ClassSection 
+        WHERE OfferingID = @OfferingID;";
 
-            string query2 = @" SELECT
-            CS.SchoolYear,
-            CS.Section
-            FROM ClassSection AS CS
-            INNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID
-            WHERE O.OfferingID = @OfferingID;";
-
-             DbControl.AddParameter("@OfferingID", offeringid, SqlDbType.Int);
+            DbControl.ClearParameters();
+            DbControl.AddParameter("@OfferingID", offeringid, SqlDbType.Int);
 
             DataTable ddt = DbControl.GetData(query2);
-            yearCmbox.Text = ddt.Rows[0]["SchoolYear"].ToString();
-            sectionCmbox.Text = ddt.Rows[0]["Section"].ToString();
-
-            LoadProfessors();
-
+            if (ddt.Rows.Count > 0)
+            {
+                yearCmbox.Text = ddt.Rows[0]["SchoolYear"].ToString();
+                sectionCmbox.Text = ddt.Rows[0]["Section"].ToString();
+                LoadProfessors();
+            }
         }
 
 
@@ -777,24 +799,7 @@ namespace PUP_RMS.Forms
         {
 
             LoadCourses();
-            // wag na gawing stored proc tangina
-            //string query = "SELECT \r\n\tCO.CourseID,\r\n    CO.CourseCode AS [Description]\r\nFROM Curriculum C\r\nJOIN CurriculumCourse CC ON C.CurriculumID = CC.CurriculumID\r\nJOIN Course CO ON CC.CourseID = CO.CourseID\r\nWHERE\r\n\tc.CurriculumYear = @CurriculumYear AND c.ProgramID = @ProgramID and c.YearLevel = @YearLevel and c.Semester = @Semester\r\nORDER BY CO.CourseCode;";
-
-            //string curriculumYear = curriculumCmbox.Text;
-            //int programID = programCmbox.SelectedValue != null ? Convert.ToInt32(programCmbox.SelectedValue) : 0;
-            //int yearLevel = yearLevelCmbox.SelectedValue != null ? Convert.ToInt32(yearLevelCmbox.SelectedValue) : 0;
-            //int semester = semesterCmbox.SelectedValue != null ? Convert.ToInt32(semesterCmbox.SelectedValue) : 0;
-
-            //DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
-            //DbControl.AddParameter("@ProgramID", programID, SqlDbType.Int);
-            //DbControl.AddParameter("@YearLevel", yearLevel, SqlDbType.Int);
-            //DbControl.AddParameter("@Semester", semester, SqlDbType.Int);
-
-            //DataTable dt = DbControl.GetData(query);
-            //courseCmbox.DisplayMember = "Description";
-            //courseCmbox.ValueMember = "CourseID";
-            //courseCmbox.DataSource = dt;
-
+          
 
         }
         
@@ -806,29 +811,8 @@ namespace PUP_RMS.Forms
 
         private void courseCmbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //string curriculumYear = curriculumCmbox.Text;
-            //int programID = programCmbox.SelectedValue != null ? Convert.ToInt32(programCmbox.SelectedValue) : 0;
-            //int yearLevel = yearLevelCmbox.SelectedValue != null ? Convert.ToInt32(yearLevelCmbox.SelectedValue) : 0;
-            //int semester = semesterCmbox.SelectedValue != null ? Convert.ToInt32(semesterCmbox.SelectedValue) : 0;
-            
-            //int curriculumID = getCurriculumID(curriculumYear, programID, yearLevel, semester);
-            //int courseID = courseCmbox.SelectedValue != null ? Convert.ToInt32(courseCmbox.SelectedValue) : 0;
-            
-            //// wag na gawing stored proc
-            //string query = "select\r\n    F.LastName + ', ' + F.FirstName + ' ' + F.MiddleName AS FullName, F.FacultyID \r\nFROM\r\n    CurriculumCourse CC\r\nJOIN Faculty F ON CC.FacultyID = F.FacultyID\r\nWhere \r\n    CurriculumID = @CurriculumID and CourseID = @CourseID";
-
-            //DbControl.AddParameter("@CurriculumID", curriculumID, SqlDbType.Int);
-            //DbControl.AddParameter("@CourseID", courseID, SqlDbType.Int);
-            //DataTable dt = DbControl.GetData(query);
-            ////string fullname = Convert.ToString(dt.Rows[0]["FullName"]);
-            ////professorCmbox.Text = fullname;
-            //professorCmbox.DisplayMember = "Fullname";
-            //professorCmbox.ValueMember = "FacultyID";
-            //professorCmbox.DataSource = dt;
-            
-
-
-
+         
+           
 
         }
 
@@ -858,6 +842,19 @@ namespace PUP_RMS.Forms
                 return;
             }
             DisplayCurrentImage();
+        }
+
+        public static int getCurriculumID(int curriculumheader, int yearLevel, int semester)
+        {
+            string query = " SELECT \r\n CurriculumID\r\n FROM Curriculum as C\r\n INNER JOIN CurriculumHeader AS CH ON C.CurriculumHeaderID = CH.CurriculumHeaderID\r\n WHERE CH.CurriculumHeaderID = @CurriculumHeaderID AND C.YearLevel = @YearLevel AND C.Semester = @Semester";
+
+            DbControl.AddParameter("@CurriculumHeaderID", curriculumheader, SqlDbType.Int);
+            DbControl.AddParameter("@YearLevel", yearLevel, SqlDbType.Int);
+            DbControl.AddParameter("@Semester", semester, SqlDbType.Int);
+            DataTable dt = DbControl.GetData(query);
+
+            return Convert.ToInt32(dt.Rows[0]["CurriculumID"]);
+
         }
 
         private void professorCmbox_Click(object sender, EventArgs e)
