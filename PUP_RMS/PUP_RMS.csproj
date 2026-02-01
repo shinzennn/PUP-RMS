@@ -251,6 +251,12 @@
     <Compile Include="Forms\frmBatchUpload.Designer.cs">
       <DependentUpon>frmBatchUpload.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmSearchView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSearchView.Designer.cs">
+      <DependentUpon>frmSearchView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmStorageDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -390,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmBatchUpload.resx">
       <DependentUpon>frmBatchUpload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSearchView.resx">
+      <DependentUpon>frmSearchView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmStorageDetails.resx">
       <DependentUpon>frmStorageDetails.cs</DependentUpon>

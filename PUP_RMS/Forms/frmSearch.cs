@@ -242,7 +242,7 @@ namespace PUP_RMS.Forms
 
         private void LoadSchoolYears()
         {
-            var dt = DbControl.GetData("SELECT DISTINCT SchoolYear FROM GradeSheet ORDER BY SchoolYear DESC");
+            var dt = DbControl.GetData("SELECT DISTINCT SchoolYear FROM ClassSection ORDER BY SchoolYear DESC");
 
             DataRow placeholder = dt.NewRow();
             placeholder["SchoolYear"] = "";
