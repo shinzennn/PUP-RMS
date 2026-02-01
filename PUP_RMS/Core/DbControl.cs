@@ -77,7 +77,8 @@ namespace PUP_RMS.Core
                
                 string sql = @"
 
-                SELECT Distinct CurriculumYear
+                SELECT Distinct CurriculumYear,
+                   CurriculumHeaderID
                   FROM CurriculumHeader
                  WHERE ProgramID = @ProgramID
                 ORDER BY CurriculumYear DESC; ";
@@ -156,7 +157,7 @@ namespace PUP_RMS.Core
         public static int InsertGradeSheet(
             string filename,
             string filepath,
-            int sectionid,
+            int section,
             int pageNumber,
             int accountId
 )
@@ -168,7 +169,7 @@ namespace PUP_RMS.Core
                     var parameters = new DynamicParameters();
                     parameters.Add("@Filename", filename);
                     parameters.Add("@Filepath", filepath);
-                    parameters.Add("@Section", sectionid);
+                    parameters.Add("@SectionID", section);
                     parameters.Add("@PageNumber", pageNumber);
                     parameters.Add("@AccountID", accountId);
 

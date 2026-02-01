@@ -533,7 +533,6 @@
             this.sectionCmbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.sectionCmbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sectionCmbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.sectionCmbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sectionCmbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sectionCmbox.FormattingEnabled = true;
             this.sectionCmbox.Location = new System.Drawing.Point(133, 94);
@@ -558,6 +557,8 @@
             this.courseCmbox.Size = new System.Drawing.Size(101, 28);
             this.courseCmbox.TabIndex = 5;
             this.courseCmbox.SelectedIndexChanged += new System.EventHandler(this.courseCmbox_SelectedIndexChanged);
+            this.courseCmbox.TextUpdate += new System.EventHandler(this.courseCmbox_TextUpdate);
+            this.courseCmbox.SelectedValueChanged += new System.EventHandler(this.courseCmbox_SelectedValueChanged);
             this.courseCmbox.Click += new System.EventHandler(this.courseCmbox_Click);
             // 
             // filenameTxtbox

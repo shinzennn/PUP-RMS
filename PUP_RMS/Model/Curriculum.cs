@@ -14,6 +14,8 @@ namespace PUP_RMS.Model
         public int YearLevel { get; set; }
         public int Semester { get; set; }
 
+        public int CurriculumHeaderID { get; set; }
+
         // Optional: convenience property for display
         public string DisplayName
         {
