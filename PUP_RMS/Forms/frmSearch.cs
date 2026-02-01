@@ -219,7 +219,7 @@ namespace PUP_RMS.Forms
 
             using (SqlConnection con = new SqlConnection(DbControl.ConnString("RMSDB")))
             using (SqlCommand cmd = new SqlCommand(
-                "SELECT DISTINCT CurriculumYear FROM Curriculum WHERE ProgramID = @ProgramID ORDER BY CurriculumYear DESC", con))
+                "SELECT DISTINCT CurriculumYear FROM CurriculumHeader WHERE ProgramID = @ProgramID ORDER BY CurriculumYear DESC", con))
             {
                 cmd.Parameters.AddWithValue("@ProgramID", programID);
                 DataTable dt = new DataTable();
@@ -242,7 +242,7 @@ namespace PUP_RMS.Forms
 
         private void LoadSchoolYears()
         {
-            var dt = DbControl.GetData("SELECT DISTINCT SchoolYear FROM GradeSheet ORDER BY SchoolYear DESC");
+            var dt = DbControl.GetData("SELECT DISTINCT SchoolYear FROM ClassSection ORDER BY SchoolYear DESC");
 
             DataRow placeholder = dt.NewRow();
             placeholder["SchoolYear"] = "";

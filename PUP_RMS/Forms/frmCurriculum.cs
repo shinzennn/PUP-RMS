@@ -482,10 +482,10 @@ namespace PUP_RMS.Forms
 
         private void LoadFaculty()
         {
-            cbxFaculty.DataSource = DbControl.GetProfessors();
-            cbxFaculty.DisplayMember = "DisplayName";
-            cbxFaculty.ValueMember = "FacultyID";
-            cbxFaculty.SelectedIndex = -1;
+            //cbxFaculty.DataSource = DbControl.GetProfessors();
+            //cbxFaculty.DisplayMember = "DisplayName";
+            //cbxFaculty.ValueMember = "FacultyID";
+            //cbxFaculty.SelectedIndex = -1;
             
         }
 

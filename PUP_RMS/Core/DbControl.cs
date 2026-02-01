@@ -33,20 +33,30 @@ namespace PUP_RMS.Core
             }
         }
 
-        public static List<Faculty> GetProfessors()
+        public static List<Faculty> GetProfessors(string schoolyear, int section, int offeringid)
         {
             using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
             {
-                return conn.Query<Faculty>(@"
-            SELECT 
-                FacultyID, 
-                Initials, 
-                UPPER(LastName) + ', ' + UPPER(FirstName) + ' ' + 
-                ISNULL(UPPER(MiddleName), '') AS DisplayName
-            FROM Faculty
-            ORDER BY LastName, FirstName"
+                string sql = @"
 
-                ).ToList();
+                SELECT 
+                F.Lastname + ', ' + F.FirstName + 
+	                ISNULL(' ' + NULLIF(LEFT(F.MiddleName, 1), '') + '.', '') AS FullName
+                FROM ClassSection AS CS
+                INNER JOIN Faculty AS F ON CS.FacultyID = F.FacultyID
+                INNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID
+                INNER JOIN Curriculum AS C ON O.CurriculumID = C.CurriculumID
+                INNER JOIN CurriculumHeader AS CH ON C.CurriculumHeaderID = CH.CurriculumHeaderID
+                WHERE  CS.SchoolYear = @SchoolYear AND SECTION = @Section AND O.OfferingID = @OfferingID;";
+
+                return conn.Query<Faculty>( sql, new
+                {
+
+                    SchoolYear = schoolyear,
+                    Section = section,
+                    OfferingID = offeringid
+
+                }).ToList();
             }
         }
 
@@ -68,7 +78,7 @@ namespace PUP_RMS.Core
                 string sql = @"
 
                 SELECT Distinct CurriculumYear
-                  FROM Curriculum
+                  FROM CurriculumHeader
                  WHERE ProgramID = @ProgramID
                 ORDER BY CurriculumYear DESC; ";
 
@@ -76,6 +86,32 @@ namespace PUP_RMS.Core
                 {
 
                     ProgramID = programId
+                }).ToList();
+            }
+        }
+
+        public static List<Course> GetCourse(int yearlevel, int semester,int programid)
+        {
+            using (IDbConnection conn = new SqlConnection(ConnString("RMSDB")))
+            {
+
+                string sql = @"
+
+                SELECT 
+                O.CourseID,
+                CO.CourseCode
+                FROM Offering as O
+                INNER JOIN Course AS CO ON O.CourseID = CO.CourseID
+                INNER JOIN Curriculum AS C ON O.CurriculumID = C.CurriculumID
+                INNER JOIN CurriculumHeader AS CH ON C.CurriculumHeaderID = CH.CurriculumHeaderID
+                WHERE YearLevel = @YearLevel AND Semester = @Semester AND CH.ProgramID = @ProgramID; ";
+
+                return conn.Query<Course>(sql, new
+                {
+
+                    YearLevel = yearlevel,
+                    Semester = semester,
+                    ProgramID = programid
                 }).ToList();
             }
         }
@@ -115,14 +151,12 @@ namespace PUP_RMS.Core
 
 
 
+
+
         public static int InsertGradeSheet(
             string filename,
             string filepath,
-            string schoolYear,
-            int curriculumId,
-            int section,
-            int courseId,
-            int facultyId, 
+            int sectionid,
             int pageNumber,
             int accountId
 )
@@ -134,11 +168,7 @@ namespace PUP_RMS.Core
                     var parameters = new DynamicParameters();
                     parameters.Add("@Filename", filename);
                     parameters.Add("@Filepath", filepath);
-                    parameters.Add("@SchoolYear", schoolYear);
-                    parameters.Add("@CurriculumID", curriculumId);
-                    parameters.Add("@Section", section);
-                    parameters.Add("@CourseID", courseId);
-                    parameters.Add("@FacultyID", facultyId);
+                    parameters.Add("@Section", sectionid);
                     parameters.Add("@PageNumber", pageNumber);
                     parameters.Add("@AccountID", accountId);
 
