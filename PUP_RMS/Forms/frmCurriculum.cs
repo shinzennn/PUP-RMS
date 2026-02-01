@@ -24,11 +24,18 @@ namespace PUP_RMS.Forms
         // Add this with your other fields
         private Timer tmrFadeIn;
 
+
+        int curriculumHeaderID = 0;
         int curriculumID = 0;
         int selectedRow = 0;
         int selectedCurriculumRow = 0;
         bool AddingCurriculumCourse = true;
-        bool view = false;
+        bool editing = false;
+
+
+        bool isLoading = false;
+
+
         public frmCurriculum()
         {
             this.DoubleBuffered = true;
@@ -123,54 +130,30 @@ namespace PUP_RMS.Forms
             LoadSemester();
             LoadYearLevel();
             LoadCourse();
-            LoadFaculty();
             LoadProgram();
-        }
-
-        private void frmCurriculum_Shown(object sender, EventArgs e)
-        {
-            
-
+            LoadSearchProgram();
         }
 
 
-        private void btnViewCurriculum_Click(object sender, EventArgs e)
-        {
-            pnlCurriculum.Enabled = true;
-            pnlYearLevelAndSem.Enabled = false;
-            pnlCurriculumCourse.Enabled = false;
-
-            view = true;
-            deleteRow.Enabled = false;
-
-            txtCurriculumYear.DropDownStyle = ComboBoxStyle.DropDown;
-
-            LoadComboBox(txtCurriculumYear, "CurriculumYear", "CurriculumID", "Curriculum", "CurriculumYear");
-            loadDgvCurriculumCourse();
-
-            dgvCurriculum.DataSource = null;
-            dgvCurriculumCourse.Rows.Clear();
-            lblHeader.Text = "";
-            lblYearAndSem.Text = "";
-            btnSaveCurriculum.Text = "SEARCH";
-            btnSaveCurriculumCourse.Visible = false;
-
-        }
+        
 
 
         //CURRICULUM
         private void btnCreateCurriculum_Click(object sender, EventArgs e)
         {
+            pnlYearLevelAndSem.Enabled = false;
+            pnlCurriculumCourse.Enabled = false;
+            
+            cbxSeachCurriculumYear.Visible = false;
+            cbxSearchCurriculumProgram.Visible = false;
+            btnSearchView.Visible = false;
+            btnSearchEdit.Visible = false;
+            editing = false;
+
 
             pnlCurriculum.Enabled = true;
             txtCurriculumYear.Text = "";
-            
-            view = false;
-            deleteRow.Enabled = true;
 
-            txtCurriculumYear.DataSource = null;
-            txtCurriculumYear.Items.Clear();
-            txtCurriculumYear.DropDownStyle = ComboBoxStyle.Simple;
             loadDgvCurriculumCourse();
 
             dgvCurriculum.DataSource = null;
@@ -179,7 +162,7 @@ namespace PUP_RMS.Forms
             lblHeader.Text = "";
             lblYearAndSem.Text = "";
             btnSaveCurriculum.Text = "SAVE";
-            btnSaveCurriculumCourse.Visible = true;
+            btnSaveCurriculumCourse.Visible = false;
         }
 
         private void btnSaveCurriculum_Click(object sender, EventArgs e)
@@ -189,17 +172,24 @@ namespace PUP_RMS.Forms
                 MessageBox.Show("Please Fill all the fields");
                 return;
             }
-
-            if (!view)
+            else
             {
-                pnlCurriculum.Enabled = false;
-                pnlYearLevelAndSem.Enabled = true;
+                if (!curriculumHeaderExist())
+                {
+                    insertCurriculumHeader();
+                    pnlCurriculum.Enabled = false;
+                    pnlYearLevelAndSem.Enabled = true;
+
+                    selectCurriculumHeaderID();
+                    viewAllCurriculum();
+
+                    lblHeader.Text = cbxProgram.Text + " - " + txtCurriculumYear.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Curriculum Already Exists");
+                }
             }
-            
-
-            viewAllCurriculum();
-
-            lblHeader.Text = cbxProgram.Text + " - " + txtCurriculumYear.Text;
 
         }
 
@@ -212,8 +202,7 @@ namespace PUP_RMS.Forms
         //YEAR LEVEL AND SEMESTER 
         private void btnAddYearLevelAndSem_Click(object sender, EventArgs e)
         {
-            btnAddCurriculumCourse.Text = "ADD";
-            btnSaveCurriculumCourse.Visible = true;
+            
             if (cbxSemester.SelectedItem == null || cbxYearLevel.SelectedItem == null)
             {
                 MessageBox.Show("Please Fill all the fields");
@@ -225,8 +214,14 @@ namespace PUP_RMS.Forms
                 MessageBox.Show("This Curriculum Data Already Exist");
                 return;
             }
+            else
+            {
+                btnAddCurriculumCourse.Text = "ADD";
+                btnSaveCurriculumCourse.Visible = true;
+            }
 
-            pnlYearLevelAndSem.Enabled = false;
+
+                pnlYearLevelAndSem.Enabled = false;
             pnlCurriculumCourse.Enabled = true;
 
             insertCurriculum();
@@ -246,7 +241,7 @@ namespace PUP_RMS.Forms
         //CURRICULUM COURSE
         private void btnAddCurriculumCourse_Click(object sender, EventArgs e)
         {
-            if (cbxCourse.SelectedItem == null || cbxFaculty.SelectedItem == null)
+            if (cbxCourse.SelectedItem == null)
             {
                 MessageBox.Show("Please Fill all the fields");
                 return;
@@ -257,13 +252,13 @@ namespace PUP_RMS.Forms
                 insertEditedCurriculum();
                 selectCurriculumCourse();
                 cbxCourse.SelectedIndex = -1;
-                cbxFaculty.SelectedIndex = -1;
+                
             }
             else
             {
-                dgvCurriculumCourse.Rows.Add(cbxCourse.SelectedValue, cbxFaculty.SelectedValue, cbxCourse.Text, cbxFaculty.Text);
+                dgvCurriculumCourse.Rows.Add(cbxCourse.SelectedValue, cbxCourse.Text);
                 cbxCourse.SelectedIndex = -1;
-                cbxFaculty.SelectedIndex = -1;
+                
             }
 
                 
@@ -275,7 +270,7 @@ namespace PUP_RMS.Forms
         private void btnCancelCurriculumCourse_Click(object sender, EventArgs e)
         {
             cbxCourse.SelectedIndex = -1;
-            cbxFaculty.SelectedIndex = -1;
+            
         }
 
         private void btnSaveCurriculumCourse_Click(object sender, EventArgs e)
@@ -305,19 +300,6 @@ namespace PUP_RMS.Forms
 
 
         //COMBO BOX DATA ADDING
-        private void btnAddFaculty_Click(object sender, EventArgs e)
-        {
-            newFaculty facultyForm = new newFaculty();
-            facultyForm.ShowDialog();
-
-            if (facultyForm.DialogResult == DialogResult.OK)
-            {
-                LoadFaculty();
-
-
-            }
-
-        }
 
         private void btnAddCourse_Click(object sender, EventArgs e)
         {
@@ -351,8 +333,7 @@ namespace PUP_RMS.Forms
             dgvCurriculumCourse.Rows.Clear();
             dgvCurriculumCourse.Columns.Clear();
 
-            //dgvCurriculumCourse.Columns["Course"].Visible = false;
-            //dgvCurriculumCourse.Columns["Faculty"].Visible = false;
+            
             dgvCurriculum.Rows[e.RowIndex].Selected = true;
             selectedCurriculumRow = e.RowIndex;
 
@@ -360,13 +341,10 @@ namespace PUP_RMS.Forms
             {
                 selectCurriculumCourse();
 
-                if (!view)
-                {
+
                     pnlYearLevelAndSem.Enabled = true;
                     pnlCurriculumCourse.Enabled = true;
-                    btnAddCurriculumCourse.Text = "EDIT";
-                    btnSaveCurriculumCourse.Visible = false;
-                }
+
 
                 
             }
@@ -376,6 +354,7 @@ namespace PUP_RMS.Forms
             }
 
             AddingCurriculumCourse = false;
+            btnAddCurriculumCourse.Text = "EDIT";
 
             string currentSemester = "";
             if (Convert.ToInt32(dgvCurriculum.Rows[selectedCurriculumRow].Cells["Semester"].Value) == 1)
@@ -396,15 +375,6 @@ namespace PUP_RMS.Forms
             { currentYearLevel = "4th Year"; }
 
             lblYearAndSem.Text = currentYearLevel + " | " + currentSemester;
-
-
-        }
-
-        private void dgvCurriculum_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-
-            
 
 
         }
@@ -474,22 +444,17 @@ namespace PUP_RMS.Forms
             cbxProgram.ValueMember = "ProgramID";
             cbxProgram.SelectedIndex = -1;
         }
-
+        private void LoadSearchProgram()
+        {
+            cbxSearchCurriculumProgram.DataSource = DbControl.GetPrograms();
+            cbxSearchCurriculumProgram.DisplayMember = "ProgramCode";
+            cbxSearchCurriculumProgram.ValueMember = "ProgramID";
+            cbxSearchCurriculumProgram.SelectedIndex = -1;
+        }
         private void LoadCourse()
         {
             LoadComboBox(cbxCourse, "CourseCode", "CourseID", "Course");
         }
-
-        private void LoadFaculty()
-        {
-            cbxFaculty.DataSource = DbControl.GetProfessors();
-            cbxFaculty.DisplayMember = "DisplayName";
-            cbxFaculty.ValueMember = "FacultyID";
-            cbxFaculty.SelectedIndex = -1;
-            
-        }
-
-        //m
 
         //LOADING CURRICULUM COURSE DATAGRIDVIEW
         private void loadDgvCurriculumCourse()
@@ -503,23 +468,71 @@ namespace PUP_RMS.Forms
                 dgvCurriculumCourse.Columns.Add("CourseID", "Courses");
                 dgvCurriculumCourse.Columns["CourseID"].Visible = false;
             }
-            if (!dgvCurriculumCourse.Columns.Contains("FacultyID"))
-            {
-                dgvCurriculumCourse.Columns.Add("FacultyID", "Faculty");
-                dgvCurriculumCourse.Columns["FacultyID"].Visible = false;
-            }
             if (!dgvCurriculumCourse.Columns.Contains("Course"))
             {
                 dgvCurriculumCourse.Columns.Add("Course", "Courses"); ;
             }
-            if (!dgvCurriculumCourse.Columns.Contains("Faculty"))
-            {
-                dgvCurriculumCourse.Columns.Add("Faculty", "Faculty");
-            }
+
             AddingCurriculumCourse = true;
         }
 
         //DATABASE
+
+        void insertCurriculumHeader()
+        {
+            using (SqlConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_InsertCurriculumHeader", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@ProgramID", Convert.ToInt32(cbxProgram.SelectedValue));
+                    cmd.Parameters.AddWithValue("@CurriculumYear", txtCurriculumYear.Text);
+                    
+                    try
+                    {
+                        conn.Open();
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Successfully Added");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to Add data | Error:" + ex.Message);
+                    }
+
+                }
+            }
+        }
+
+        void selectCurriculumHeaderID()
+        {
+            using (SqlConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_SelectCurriculumHeaderID", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@ProgramID", Convert.ToInt32(cbxProgram.SelectedValue));
+                    cmd.Parameters.AddWithValue("@CurriculumYear", txtCurriculumYear.Text);
+                    
+                    try
+                    {
+                        conn.Open();
+                        curriculumHeaderID = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to Find the Curriculum ID | Error:" + ex.Message);
+                    }
+                }
+
+            }
+        }
+
 
         void insertCurriculum()
         {
@@ -530,8 +543,7 @@ namespace PUP_RMS.Forms
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@CurriculumYear", txtCurriculumYear.Text);
-                    cmd.Parameters.AddWithValue("@ProgramID", Convert.ToInt32(cbxProgram.SelectedValue));
+                    cmd.Parameters.AddWithValue("@CurriculumHeaderID", curriculumHeaderID);
                     cmd.Parameters.AddWithValue("@YearLevel", Convert.ToInt32(cbxYearLevel.SelectedValue));
                     cmd.Parameters.AddWithValue("@Semester", Convert.ToInt32(cbxSemester.SelectedValue));
                     try
@@ -560,8 +572,7 @@ namespace PUP_RMS.Forms
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@CurriculumYear", txtCurriculumYear.Text);
-                    cmd.Parameters.AddWithValue("@ProgramID", Convert.ToInt32(cbxProgram.SelectedValue));
+                    cmd.Parameters.AddWithValue("@CurriculumHeaderID", curriculumHeaderID);
                     cmd.Parameters.AddWithValue("@YearLevel", Convert.ToInt32(cbxYearLevel.SelectedValue));
                     cmd.Parameters.AddWithValue("@Semester", Convert.ToInt32(cbxSemester.SelectedValue));
                     try
@@ -587,6 +598,40 @@ namespace PUP_RMS.Forms
             }
         }
 
+        bool curriculumHeaderExist()
+        {
+            int curriculumCount = 0;
+            using (SqlConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_CountCurriculumHeader", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@ProgramID", Convert.ToInt32(cbxProgram.SelectedValue));
+                    cmd.Parameters.AddWithValue("@CurriculumYear", txtCurriculumYear.Text);
+                    try
+                    {
+                        conn.Open();
+                        curriculumCount = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to count curriculum | Error:" + ex.Message);
+                    }
+                }
+
+            }
+
+            if (curriculumCount >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         void selectCurriculumID()
         {
             
@@ -596,8 +641,7 @@ namespace PUP_RMS.Forms
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@CurriculumYear", txtCurriculumYear.Text);
-                    cmd.Parameters.AddWithValue("@ProgramID", Convert.ToInt32(cbxProgram.SelectedValue));
+                    cmd.Parameters.AddWithValue("@CurriculumHeaderID", curriculumHeaderID);
                     cmd.Parameters.AddWithValue("@YearLevel", Convert.ToInt32(cbxYearLevel.SelectedValue));
                     cmd.Parameters.AddWithValue("@Semester", Convert.ToInt32(cbxSemester.SelectedValue));
                     try
@@ -626,8 +670,7 @@ namespace PUP_RMS.Forms
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@CurriculumYear", txtCurriculumYear.Text);
-                    cmd.Parameters.AddWithValue("@ProgramID", Convert.ToInt32(cbxProgram.SelectedValue));
+                    cmd.Parameters.AddWithValue("@CurriculumHeaderID", curriculumHeaderID);
                    
                     try
                     {
@@ -643,13 +686,52 @@ namespace PUP_RMS.Forms
                         MessageBox.Show("Failed to Find the Curriculum ID | Error:" + ex.Message);
                     }
 
-                    dgvCurriculum.Columns["CurriculumID"].Visible = false;
-                    dgvCurriculum.Columns["CurriculumYear"].Visible = false;
-                    dgvCurriculum.Columns["ProgramCode"].Visible = false;
                 }
 
             }
         }
+
+        public void LoadComboBox(ComboBox comboBox, string display, string table)
+        {
+            
+
+            string query = $"SELECT {display} FROM {table}";
+
+
+            using (SqlConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+
+                    try
+                    {
+                        conn.Open();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        
+                        isLoading = true;
+
+                        
+                        comboBox.DisplayMember = display;
+                        comboBox.ValueMember = display;
+
+                        comboBox.DataSource = dt;
+                        isLoading = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to Find the Curriculum ID | Error:" + ex.Message);
+                    }
+                }
+
+            }
+
+        }
+
+
+
+
 
         public void LoadComboBox(ComboBox comboBox, string display, string value, string table)
         {
@@ -668,9 +750,12 @@ namespace PUP_RMS.Forms
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        comboBox.DataSource = dt;
+                        isLoading = true;
                         comboBox.DisplayMember = display;
                         comboBox.ValueMember = value;
+
+                        comboBox.DataSource = dt;
+                        isLoading = false;
                     }
                     catch (Exception ex)
                     {
@@ -682,15 +767,16 @@ namespace PUP_RMS.Forms
 
         }
 
-        public void LoadComboBox(ComboBox comboBox, string display, string value, string table, string groupBy)
+        public void LoadComboBox(ComboBox comboBox, string display, string value, string table, string where)
         {
-            string query = $"SELECT {display} FROM {table} GROUP BY {groupBy}";
+            string query = $"SELECT {display}, {value} FROM {table} JOIN CurriculumHeader CH ON {value} = CH.ProgramID WHERE CH.CurriculumYear = @CurriculumYear";
 
 
             using (SqlConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
             {
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("@CurriculumYear", where);
 
                     try
                     {
@@ -699,9 +785,15 @@ namespace PUP_RMS.Forms
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        comboBox.DataSource = dt;
+                        isLoading = true;
+                        
                         comboBox.DisplayMember = display;
-                        comboBox.ValueMember = display;
+                        comboBox.ValueMember = value;
+
+                        comboBox.DataSource = dt;
+                        isLoading = false;
+
+
                     }
                     catch (Exception ex)
                     {
@@ -712,8 +804,6 @@ namespace PUP_RMS.Forms
             }
 
         }
-
-
         void insertCurriculumCourse()
         {
 
@@ -729,7 +819,7 @@ namespace PUP_RMS.Forms
 
 
                     int courseID = Convert.ToInt32(row.Cells["CourseID"].Value);
-                    int FacultyID = Convert.ToInt32(row.Cells["FacultyID"].Value);
+                    
 
                     using (SqlCommand cmd = new SqlCommand("sp_InsertCurriculumCourse", conn))
                     {
@@ -738,7 +828,6 @@ namespace PUP_RMS.Forms
                         cmd.Parameters.AddWithValue("@CurriculumID", curriculumID);
                         
                         cmd.Parameters.AddWithValue("@CourseID", courseID);
-                        cmd.Parameters.AddWithValue("@FacultyID", FacultyID);
 
                         cmd.ExecuteNonQuery();
                     }
@@ -772,9 +861,6 @@ namespace PUP_RMS.Forms
                         MessageBox.Show("Failed to Find the Curriculum ID | Error:" + ex.Message);
                     }
 
-                    dgvCurriculumCourse.Columns["CurriculumID"].Visible = false;
-                    dgvCurriculumCourse.Columns["CourseID"].Visible = false;
-                    dgvCurriculumCourse.Columns["FacultyID"].Visible = false;
                 }
 
             }
@@ -788,9 +874,7 @@ namespace PUP_RMS.Forms
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@CurriculumID", Convert.ToInt32(dgvCurriculumCourse.Rows[selectedRow].Cells["CurriculumID"].Value));
-                    cmd.Parameters.AddWithValue("@CourseID", Convert.ToInt32(dgvCurriculumCourse.Rows[selectedRow].Cells["CourseID"].Value));
-                    cmd.Parameters.AddWithValue("@FacultyID", Convert.ToInt32(dgvCurriculumCourse.Rows[selectedRow].Cells["FacultyID"].Value));
+                    cmd.Parameters.AddWithValue("@OfferingID", Convert.ToInt32(dgvCurriculumCourse.Rows[selectedRow].Cells["OfferingID"].Value));
                    
                     try
                     {
@@ -821,7 +905,6 @@ namespace PUP_RMS.Forms
 
                     cmd.Parameters.AddWithValue("@CurriculumID", Convert.ToInt32(dgvCurriculum.Rows[selectedCurriculumRow].Cells["CurriculumID"].Value));
                     cmd.Parameters.AddWithValue("@CourseID", Convert.ToInt32(cbxCourse.SelectedValue));
-                    cmd.Parameters.AddWithValue("@FacultyID", Convert.ToInt32(cbxFaculty.SelectedValue));
                     try
                     {
                         conn.Open();
@@ -840,12 +923,90 @@ namespace PUP_RMS.Forms
             }
         }
 
-        private void dgvCurriculum_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void btnSearchCurriculum_Click(object sender, EventArgs e)
         {
+            cbxSeachCurriculumYear.Visible = true;
+            cbxSearchCurriculumProgram.Visible = true;
+
+            txtCurriculumYear.Text = "";
+            cbxProgram.SelectedIndex = -1;
+            cbxYearLevel.SelectedIndex = -1;
+            cbxCourse.SelectedIndex = -1;
+            cbxSemester.SelectedIndex = -1;
+
+
+            pnlCurriculum.Enabled = false;
+            pnlCurriculumCourse.Enabled = false;
+            pnlYearLevelAndSem.Enabled = false;
+            
+            LoadComboBox(cbxSeachCurriculumYear, "CurriculumYear", "CurriculumHeader");
+        }
+
+        private void cbxSeachCurriculumYear_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (isLoading) { return; }
+
+            if (cbxSeachCurriculumYear.SelectedIndex != -1 )
+            {
+                if (cbxSearchCurriculumProgram.SelectedIndex != -1)
+                {
+                    btnSearchView.Visible = true;
+                    btnSearchEdit.Visible = true;
+                }
+                LoadComboBox(cbxSearchCurriculumProgram, "P.ProgramCode", "P.ProgramID", "Program P", cbxSeachCurriculumYear.Text.ToString());
+                
+            }
+            
+        }
+
+        private void cbxSearchCurriculumProgram_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (isLoading) { return; }
+
+            if (cbxSeachCurriculumYear.SelectedIndex != -1)
+            {
+                if (cbxSearchCurriculumProgram.SelectedIndex != -1)
+                {
+                    btnSearchView.Visible = true;
+                    btnSearchEdit.Visible = true;
+                }
+            }
+        }
+
+        private void btnSearchEdit_Click(object sender, EventArgs e)
+        {
+            if (cbxSeachCurriculumYear.SelectedItem == null || cbxSearchCurriculumProgram.SelectedItem == null)
+            {
+                MessageBox.Show("Please Fill all the fields");
+                return;
+            }
+
+            txtCurriculumYear.Text = cbxSeachCurriculumYear.Text;
+            
+            int index = cbxProgram.FindStringExact(cbxSearchCurriculumProgram.Text);
+            if (index != -1)
+            {
+                cbxProgram.SelectedIndex = index;
+            }
+
+            editing = true;
+            pnlCurriculum.Enabled = false;
+            pnlYearLevelAndSem.Enabled = true;
+            btnSaveCurriculumCourse.Visible = false;
+
+            selectCurriculumHeaderID();
+            viewAllCurriculum();
+
+            lblHeader.Text = cbxProgram.Text + " - " + txtCurriculumYear.Text;
 
         }
 
-        
-    }
+        private void btnSearchView_Click(object sender, EventArgs e)
+        {
+            frmSearchView viewSearchCurriculum = new frmSearchView(cbxSeachCurriculumYear.Text, Convert.ToInt32(cbxSearchCurriculumProgram.SelectedValue), cbxSearchCurriculumProgram.Text);
+            viewSearchCurriculum.Show();
+        }
 
+    }
+    
 }
