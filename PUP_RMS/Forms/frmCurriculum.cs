@@ -143,8 +143,10 @@ namespace PUP_RMS.Forms
         {
             pnlYearLevelAndSem.Enabled = false;
             pnlCurriculumCourse.Enabled = false;
-            
+
+            lblSeachCurriculumYear.Visible = false;
             cbxSeachCurriculumYear.Visible = false;
+            lblSearchCurriculumProgram.Visible = false;
             cbxSearchCurriculumProgram.Visible = false;
             btnSearchView.Visible = false;
             btnSearchEdit.Visible = false;
@@ -159,8 +161,6 @@ namespace PUP_RMS.Forms
             dgvCurriculum.DataSource = null;
             dgvCurriculumCourse.Rows.Clear();
 
-            lblHeader.Text = "";
-            lblYearAndSem.Text = "";
             btnSaveCurriculum.Text = "SAVE";
             btnSaveCurriculumCourse.Visible = false;
         }
@@ -183,7 +183,7 @@ namespace PUP_RMS.Forms
                     selectCurriculumHeaderID();
                     viewAllCurriculum();
 
-                    lblHeader.Text = cbxProgram.Text + " - " + txtCurriculumYear.Text;
+                    pnlCurriculumHeader.HeaderLabel = cbxProgram.Text + " - " + txtCurriculumYear.Text;
                 }
                 else
                 {
@@ -374,7 +374,7 @@ namespace PUP_RMS.Forms
             else if (Convert.ToInt32(dgvCurriculum.Rows[selectedCurriculumRow].Cells["YearLevel"].Value) == 4)
             { currentYearLevel = "4th Year"; }
 
-            lblYearAndSem.Text = currentYearLevel + " | " + currentSemester;
+            pnlOffering.HeaderLabel = "Year Level: " + currentYearLevel + " | " + "Semester: " + currentSemester;
 
 
         }
@@ -925,8 +925,11 @@ namespace PUP_RMS.Forms
 
         private void btnSearchCurriculum_Click(object sender, EventArgs e)
         {
+            lblSeachCurriculumYear.Visible = true;
             cbxSeachCurriculumYear.Visible = true;
+            lblSearchCurriculumProgram.Visible = true;
             cbxSearchCurriculumProgram.Visible = true;
+
 
             txtCurriculumYear.Text = "";
             cbxProgram.SelectedIndex = -1;
@@ -997,7 +1000,7 @@ namespace PUP_RMS.Forms
             selectCurriculumHeaderID();
             viewAllCurriculum();
 
-            lblHeader.Text = cbxProgram.Text + " - " + txtCurriculumYear.Text;
+            pnlCurriculumHeader.HeaderLabel = cbxProgram.Text + " - " + txtCurriculumYear.Text;
 
         }
 
