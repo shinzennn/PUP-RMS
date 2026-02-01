@@ -219,7 +219,7 @@ namespace PUP_RMS.Forms
 
             using (SqlConnection con = new SqlConnection(DbControl.ConnString("RMSDB")))
             using (SqlCommand cmd = new SqlCommand(
-                "SELECT DISTINCT CurriculumYear FROM Curriculum WHERE ProgramID = @ProgramID ORDER BY CurriculumYear DESC", con))
+                "SELECT DISTINCT CurriculumYear FROM CurriculumHeader WHERE ProgramID = @ProgramID ORDER BY CurriculumYear DESC", con))
             {
                 cmd.Parameters.AddWithValue("@ProgramID", programID);
                 DataTable dt = new DataTable();
@@ -242,7 +242,7 @@ namespace PUP_RMS.Forms
 
         private void LoadSchoolYears()
         {
-            var dt = DbControl.GetData("SELECT DISTINCT SchoolYear FROM GradeSheet ORDER BY SchoolYear DESC");
+            var dt = DbControl.GetData("SELECT DISTINCT SchoolYear FROM ClassSection ORDER BY SchoolYear DESC");
 
             DataRow placeholder = dt.NewRow();
             placeholder["SchoolYear"] = "";
@@ -321,14 +321,18 @@ namespace PUP_RMS.Forms
             {
                 using (SqlConnection con = new SqlConnection(DbControl.ConnString("RMSDB")))
                 using (SqlCommand cmd = new SqlCommand(@"
-                    SELECT DISTINCT co.CourseID, co.CourseCode
-                    FROM CurriculumCourse cc
-                    JOIN Course co ON cc.CourseID = co.CourseID
-                    JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
-                    WHERE c.CurriculumID = @CurriculumID
-                      AND c.YearLevel = @YearLevel
-                      AND c.Semester = @Semester
-                    ORDER BY co.CourseCode", con))
+                                        SELECT DISTINCT 
+                                            co.CourseID, 
+                                            co.CourseCode
+                                        FROM Offering o
+                                        JOIN Course co 
+                                            ON o.CourseID = co.CourseID
+                                        JOIN Curriculum cur 
+                                            ON o.CurriculumID = cur.CurriculumID
+                                        WHERE cur.CurriculumID = @CurriculumID
+                                          AND cur.YearLevel = @YearLevel
+                                          AND cur.Semester = @Semester
+                                        ORDER BY co.CourseCode;", con))
                 {
                     cmd.Parameters.AddWithValue("@CurriculumID", curriculumID);
                     cmd.Parameters.AddWithValue("@YearLevel", yearLevel);
