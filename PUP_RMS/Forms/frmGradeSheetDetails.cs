@@ -5,6 +5,7 @@
 //using System.Windows.Forms;
 
 //csharp PUP_RMS\Forms\frmGradeSheetDetails.cs
+using PUP_RMS.Core;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -136,19 +137,25 @@ namespace PUP_RMS.Forms
             using (var cmd = new SqlCommand(@"
                 SELECT 
                     gs.GradeSheetID,
-                    c.ProgramID,
-                    gs.CourseID,
-                    gs.FacultyID,
-                    c.YearLevel,
-                    c.Semester,
-                    gs.SchoolYear,
+                    p.ProgramID,
+                    c.CourseID,
+                    f.FacultyID,
+                    cur.YearLevel,
+                    cur.Semester,
+                    cs.SchoolYear,
                     gs.PageNumber,
                     gs.Filename,
                     gs.Filepath,
                     a.LastName + ', ' + a.FirstName AS UploadedBy
                 FROM GradeSheet gs
-                INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-                LEFT JOIN Account a ON gs.AccountID = a.AccountID
+                    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+                    INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+                    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+                    INNER JOIN Course c ON o.CourseID = c.CourseID
+                    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+                    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+                    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
+                    INNER JOIN Account a ON gs.AccountID = a.AccountID
                 WHERE gs.GradeSheetID = @GradeSheetID
             ", con))
             {
@@ -329,7 +336,7 @@ namespace PUP_RMS.Forms
 
                 int pageNum = 0;
                 int.TryParse(txtPageNumber.Text, out pageNum);
-
+                int offeringID = GetOfferingID();
                 string newFileName = GenerateFileName();
                 string newTargetFolder = BuildImageFolderPath();
                 Directory.CreateDirectory(newTargetFolder); // ensure folder exists
@@ -388,18 +395,7 @@ namespace PUP_RMS.Forms
                     cmd.Parameters.Add("@GradeSheetID", SqlDbType.Int).Value = GradeSheetID;
                     cmd.Parameters.Add("@Filename", SqlDbType.VarChar, 255).Value = newFileName;
                     cmd.Parameters.Add("@Filepath", SqlDbType.VarChar, 500).Value = newTargetFolder;
-                    cmd.Parameters.Add("@SchoolYear", SqlDbType.VarChar, 20)
-                        .Value = GetComboSelectedValueString(cmbSchoolYear);
-                    cmd.Parameters.Add("@Semester", SqlDbType.Int)
-                        .Value = GetComboSelectedValueInt(cmbSemester);
-                    cmd.Parameters.Add("@ProgramID", SqlDbType.Int)
-                        .Value = GetComboSelectedValueInt(cmbProgram);
-                    cmd.Parameters.Add("@YearLevel", SqlDbType.Int)
-                        .Value = GetComboSelectedValueInt(cmbYearLevel);
-                    cmd.Parameters.Add("@CourseID", SqlDbType.Int)
-                        .Value = GetComboSelectedValueInt(cmbCourse);
-                    cmd.Parameters.Add("@FacultyID", SqlDbType.Int)
-                        .Value = GetComboSelectedValueInt(cmbProfessor);
+                    cmd.Parameters.Add("@SectionID", SqlDbType.Int).Value = offeringID;
                     cmd.Parameters.Add("@PageNumber", SqlDbType.Int).Value = pageNum;
 
                     con.Open();
@@ -434,7 +430,27 @@ namespace PUP_RMS.Forms
             }
         }
 
+        private int GetOfferingID()
+        {
+            int offeringID = 0;
 
+            string sql = "SELECT \r\n    cs.SectionID\r\nFROM ClassSection cs\r\nINNER JOIN Faculty f ON cs.FacultyID = f.FacultyID\r\nINNER JOIN Offering o ON cs.OfferingID = o.OfferingID\r\nINNER JOIN Course c ON o.CourseID = c.CourseID\r\nINNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID\r\nINNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID\r\nINNER JOIN Program p ON ch.ProgramID = p.ProgramID\r\nWHERE p.ProgramCode = @ProgramCode\r\n  AND ch.CurriculumYear = @CurriculumYear\r\n  AND cur.YearLevel = @YearLevel\r\n  AND cur.Semester = @Semester\r\n  AND cs.SchoolYear = @SchoolYear\r\n  AND f.FacultyID = @FacultyID";
+
+            DbControl.AddParameter("@ProgramCode", cmbProgram.Text, SqlDbType.VarChar);
+            DbControl.AddParameter("@CurriculumYear", cmbCurriculum.Text, SqlDbType.VarChar);
+            DbControl.AddParameter("@YearLevel", cmbYearLevel.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@Semester", cmbSemester.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@SchoolYear", cmbSchoolYear.Text, SqlDbType.VarChar);
+            DbControl.AddParameter("@FacultyID", cmbProfessor.SelectedValue, SqlDbType.Int);
+
+            DataTable dt = DbControl.GetData(sql);
+            if(dt != null)
+            {
+                offeringID = Convert.ToInt32(dt.Rows[0]["SectionID"]);
+            }
+
+            return offeringID;
+        }
 
         private void btnCancels_Click(object sender, EventArgs e)
         {
@@ -750,7 +766,7 @@ namespace PUP_RMS.Forms
         {
             LoadComboBox(
                         @"SELECT SchoolYear
-                  FROM GradeSheet
+                  FROM ClassSection
                   GROUP BY SchoolYear
                   ORDER BY SchoolYear DESC",
                 cmbSchoolYear,
@@ -762,7 +778,7 @@ namespace PUP_RMS.Forms
         {
             LoadComboBox(
                     @"SELECT CurriculumYear
-              FROM Curriculum
+              FROM CurriculumHeader
               GROUP BY CurriculumYear
               ORDER BY CurriculumYear DESC",
                 cmbCurriculum,
