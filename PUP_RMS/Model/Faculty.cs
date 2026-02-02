@@ -17,5 +17,6 @@ namespace PUP_RMS.Model
 
         public string FacultyCode { get; set; }
         public string DisplayName { get; set; }
+        public string FacultyName { get; set; }
     }
 }

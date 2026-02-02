@@ -219,9 +219,21 @@ namespace PUP_RMS.Forms
                 _curriculumForm = new frmCurriculum();
                 PrepareChildForm(_curriculumForm);
             }
+            _curriculumForm.LoadData();
             ShowForm(_curriculumForm);
             ActivateAdminSubButton(sender);
 
+        }
+        private void btnSection_Click(object sender, EventArgs e)
+        {
+            if (_sectionForm == null || _sectionForm.IsDisposed)
+            {
+                _sectionForm = new frmSection();
+                PrepareChildForm(_sectionForm);
+            }
+            _sectionForm.LoadData();
+            ShowForm(_sectionForm);
+            ActivateAdminSubButton(sender);
         }
 
         private void btnProgram_Click_1(object sender, EventArgs e)
@@ -309,16 +321,6 @@ namespace PUP_RMS.Forms
                 ActivateButton(sender);
                 ShowForm(_batchUploadForm);
             }
-        }
-        private void btnSection_Click(object sender, EventArgs e)
-        {
-            if (_sectionForm == null || _sectionForm.IsDisposed)
-            {
-                _sectionForm = new frmSection();
-                PrepareChildForm(_sectionForm);
-            }
-            ShowForm(_sectionForm);
-            ActivateAdminSubButton(sender);
         }
 
         private void btnAccounts_Click(object sender, EventArgs e)

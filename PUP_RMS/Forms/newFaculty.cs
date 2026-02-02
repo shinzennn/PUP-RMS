@@ -17,6 +17,13 @@ namespace PUP_RMS.Forms
         public newFaculty()
         {
             InitializeComponent();
+
+            // TAB ORDER
+            txtFirstName.TabIndex = 0;
+            txtMiddleName.TabIndex = 1;
+            txtLastName.TabIndex = 2;
+            btnSave.TabIndex = 3;
+            btnCancel.TabIndex = 4;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -54,6 +61,11 @@ namespace PUP_RMS.Forms
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void newFaculty_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

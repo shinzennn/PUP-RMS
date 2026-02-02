@@ -134,7 +134,15 @@ namespace PUP_RMS.Forms
             LoadSearchProgram();
         }
 
-
+        public void LoadData() 
+        {
+            txtCurriculumYear.Text = "";
+            LoadSemester();
+            LoadYearLevel();
+            LoadCourse();
+            LoadProgram();
+            LoadSearchProgram();
+        }
         
 
 

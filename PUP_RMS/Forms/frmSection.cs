@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
+using PUP_RMS.Forms;
 
 namespace PUP_RMS
 {
@@ -77,41 +78,29 @@ namespace PUP_RMS
 
         private void frmSection_Load(object sender, EventArgs e)
         {
+            this.SuspendLayout();
+            LoadData();
+            this.ResumeLayout();
+        }
+
+        public void LoadData()
+        {
+            pnlWorksheet.HeaderLabel = "";
+            dataGridView1.Visible = false;
+            btnSaveUpdate.Visible = false;
+            btnAddFaculty.Visible = false;
+
+            cbxCurriculum.SelectedItem = null;
+            cbxProgram.SelectedItem = null;
+            cbxYearLevel.SelectedItem = null;
+            cbxSemester.SelectedItem = null;
+            cbxSchoolYear.SelectedItem = null;
+            cbxSection.SelectedItem = null;
+        }
+
+        private void cbxCurriculum_Click(object sender, EventArgs e)
+        {
             LoadCurriculumYear();
-            LoadAcademicYears();
-            EditButton();
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            if (!Editable)
-            {
-                LoadCourses();
-            }
-            else
-            {
-                EditCourses();
-            }
-
-        }
-
-        private void EditButton()
-        {
-            if (Editable == true)
-            {
-                label6.Show();
-                label7.Show();
-                cbxSectionFilter.Show();
-                cbxSchoolYearFilter.Show();
-            }
-            else
-            {
-                label6.Hide();
-                label7.Hide();
-                cbxSectionFilter.Hide();
-                cbxSectionFilter.Hide();
-                cbxSchoolYearFilter.Hide();
-            }
         }
 
         private void LoadCurriculumYear()
@@ -219,114 +208,14 @@ namespace PUP_RMS
             );
         }
 
-
-        private void EditCourses()
+        private void cbxSchoolYear_Click(object sender, EventArgs e)
         {
-            string sql = @"
-            SELECT 
-                C.CourseCode,
-                C.CourseDescription,
-                CS.Section,
-                CS.FacultyID 
-            FROM Offering O
-            INNER JOIN Course C ON O.CourseID = C.CourseID
-            INNER JOIN Curriculum CU ON O.CurriculumID = CU.CurriculumID
-            INNER JOIN CurriculumHeader CH ON CU.CurriculumHeaderID = CH.CurriculumHeaderID
-            INNER JOIN Program P ON CH.ProgramID = P.ProgramID
-            LEFT JOIN ClassSection CS ON O.OfferingID = CS.OfferingID 
-                                      AND CS.SchoolYear = @SchoolYear
-            WHERE CH.CurriculumYear = @CurriculumYear
-              AND P.ProgramCode = @ProgramCode
-              AND CU.YearLevel = @YearLevel
-              AND CU.Semester = @Semester
-              AND CS.Section = @Section
-            ORDER BY C.CourseCode, CS.Section;";
-
-            using (var con = GetConnection())
-            {
-                // 1. Fetch data once
-                var data = con.Query(sql, new
-                {
-                    CurriculumYear = cbxCurriculum.Text,
-                    ProgramCode = cbxProgram.Text,
-                    YearLevel = int.Parse(cbxYearLevel.Text),
-                    Semester = int.Parse(cbxSemester.Text),
-                    SchoolYear = cbxSchoolYear.Text,
-                    Section = Convert.ToInt32(cbxSectionFilter.Text)
-                }).ToList();
-
-                // 2. Setup the Grid Structure
-                dataGridView1.DataSource = null;
-                dataGridView1.Columns.Clear();
-                dataGridView1.AutoGenerateColumns = false;
-
-                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    Name = "CourseCode",
-                    DataPropertyName = "CourseCode",
-                    HeaderText = "Course Code",
-                    ReadOnly = true,
-                    Width = 90
-                });
-
-                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    Name = "Description",
-                    DataPropertyName = "CourseDescription",
-                    HeaderText = "Description",
-                    ReadOnly = true,
-                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                });
-
-                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    Name = "Section",
-                    DataPropertyName = "Section",
-                    HeaderText = "Section",
-                    Width = 60
-                });
-
-                // 3. Add the Faculty ComboBox Column BEFORE binding data
-                AddFacultyComboBoxColumn();
-                deleteFacultyButton();
-                // 4. Finally bind the data
-                dataGridView1.DataSource = data;
-            }
-        }
-
-        private void AddFacultyComboBoxColumn()
-        {
-            string sql = "SELECT FacultyID, CONCAT(LastName, ', ', FirstName) AS FacultyName FROM Faculty ORDER BY LastName";
-
-            using (var con = GetConnection())
-            {
-                var facultyList = con.Query(sql).ToList();
-
-
-                DataGridViewComboBoxColumn facultyCol = new DataGridViewComboBoxColumn
-                {
-                    Name = "Faculty",
-                    HeaderText = "Faculty",
-                    DataSource = facultyList,
-                    ValueMember = "FacultyID",
-                    DisplayMember = "FacultyName",
-                    DataPropertyName = "FacultyID",
-                    FlatStyle = FlatStyle.Flat,
-                    Width = 180,
-                    // This ensures it looks like a label when ReadOnly is true
-                    DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox
-                };
-
-                
-
-                dataGridView1.Columns.Add(facultyCol);
-            }
+            LoadAcademicYears();
         }
 
         private void LoadAcademicYears()
         {
             cbxSchoolYear.Items.Clear();
-            cbxSchoolYearFilter.Items.Clear();
 
             int startYear = 1970;
             int currentAYStart = GetCurrentAcademicYearStart();
@@ -335,13 +224,11 @@ namespace PUP_RMS
             {
                 string academicYear = $"{year}-{year + 1}";
                 cbxSchoolYear.Items.Add(academicYear);
-                cbxSchoolYearFilter.Items.Add(academicYear);
             }
 
             cbxSchoolYear.SelectedItem = $"{currentAYStart}-{currentAYStart + 1}";
-            cbxSchoolYearFilter.SelectedItem = $"{currentAYStart}-{currentAYStart + 1}";
-
         }
+
         private int GetCurrentAcademicYearStart()
         {
             DateTime now = DateTime.Now;
@@ -350,202 +237,34 @@ namespace PUP_RMS
                 ? now.Year
                 : now.Year - 1;
         }
+      
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e){}
+        private void what(object sender, EventArgs e){}
 
-        private void LoadCourses()
+        // BUTTON CLICK EVENTS
+        private void btnLoadCourse_Click(object sender, EventArgs e)
         {
-            string sql = @"
-            SELECT 
-                C.CourseCode,
-                C.CourseDescription,
-                CS.Section,
-                CS.FacultyID 
-            FROM Offering O
-            INNER JOIN Course C ON O.CourseID = C.CourseID
-            INNER JOIN Curriculum CU ON O.CurriculumID = CU.CurriculumID
-            INNER JOIN CurriculumHeader CH ON CU.CurriculumHeaderID = CH.CurriculumHeaderID
-            INNER JOIN Program P ON CH.ProgramID = P.ProgramID
-            LEFT JOIN ClassSection CS ON O.OfferingID = CS.OfferingID 
-                                      AND CS.SchoolYear = @SchoolYear
-            WHERE CH.CurriculumYear = @CurriculumYear
-              AND P.ProgramCode = @ProgramCode
-              AND CU.YearLevel = @YearLevel
-              AND CU.Semester = @Semester
-            ORDER BY C.CourseCode, CS.Section;";
-
-            using (var con = GetConnection())
+            if(cbxCurriculum.SelectedItem == null ||
+                cbxProgram.SelectedItem == null ||
+                cbxYearLevel.SelectedItem == null ||
+                cbxSemester.SelectedItem == null ||
+                cbxSchoolYear.SelectedItem == null ||
+                cbxSection.SelectedItem == null)
             {
-                // 1. Fetch data once
-                var data = con.Query(sql, new
-                {
-                    SchoolYear = cbxSchoolYear.Text,
-                    CurriculumYear = cbxCurriculum.Text,
-                    ProgramCode = cbxProgram.Text,
-                    YearLevel = int.Parse(cbxYearLevel.Text),
-                    Semester = int.Parse(cbxSemester.Text)
-
-                }).ToList();
-
-                // 2. Setup the Grid Structure
-                dataGridView1.DataSource = null;
-                dataGridView1.Columns.Clear();
-                dataGridView1.AutoGenerateColumns = false;
-
-                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    Name = "CourseCode",
-                    DataPropertyName = "CourseCode",
-                    HeaderText = "Course Code",
-                    ReadOnly = true,
-                    Width = 90
-                });
-
-                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    Name = "Description",
-                    DataPropertyName = "CourseDescription",
-                    HeaderText = "Description",
-                    ReadOnly = true,
-                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                });
-
-                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    Name = "Section",
-                    DataPropertyName = "Section",
-                    HeaderText = "Section",
-                    Width = 60
-                });
-
-                // 3. Add the Faculty ComboBox Column BEFORE binding data
-                AddFacultyComboBoxColumn();
-                deleteFacultyButton();
-
-                // 4. Finally bind the data
-                dataGridView1.DataSource = data;
-
-                // 5. Apply "Disable" logic for already assigned faculty
-                foreach (DataGridViewRow row in dataGridView1.Rows)
-                {
-                    if (row.DataBoundItem == null) continue;
-
-                    var item = (dynamic)row.DataBoundItem;
-
-                    if (item.FacultyID != null)
-                    {
-
-                        DataGridViewCell facultyCell = row.Cells["Faculty"];
-                        facultyCell.ReadOnly = true;
-
-                        // Visual feedback to show it's "locked"
-                        facultyCell.Style.BackColor = Color.LightGray;
-                        facultyCell.Style.ForeColor = Color.DarkSlateGray;
-                    }
-                }
-            }
-        }
-
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            // Validation
-            if (cbxSection.SelectedItem == null || cbxSchoolYear.SelectedItem == null)
-            {
-                MessageBox.Show("Please select Section and School Year.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select all required fields before loading the worksheet.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            try
-            {
-                using (var con = GetConnection())
-                {
-                    con.Open();
-                    using (var transaction = con.BeginTransaction())
-                    {
-                        foreach (DataGridViewRow row in dataGridView1.Rows)
-                        {
-                            if (row.IsNewRow) continue;
-
-                            // Get FacultyID from the ComboBox column
-                            var facultyIdValue = row.Cells["Faculty"].Value;
-
-                            // Skip if no faculty is assigned to this specific course
-                            if (facultyIdValue == null || facultyIdValue == DBNull.Value) continue;
-
-
-
-                            if (!Editable)
-                            {
-                                var parameters = new
-                                {
-                                    CurriculumYear = cbxCurriculum.Text,
-                                    ProgramCode = cbxProgram.Text,
-                                    YearLevel = int.Parse(cbxYearLevel.Text),
-                                    Semester = int.Parse(cbxSemester.Text),
-                                    CourseCode = row.Cells["CourseCode"].Value.ToString(),
-                                    FacultyID = Convert.ToInt32(facultyIdValue),
-                                    Section = int.Parse(cbxSection.Text),
-                                    SchoolYear = cbxSchoolYear.Text
-                                };
-
-                                con.Execute("sp_InsertClassSection", parameters,
-                                transaction: transaction,
-                                commandType: CommandType.StoredProcedure);
-                            }
-                            else
-                            {
-                                var parameters = new
-                                {
-                                    CurriculumYear = cbxCurriculum.Text,
-                                    ProgramCode = cbxProgram.Text,
-                                    YearLevel = int.Parse(cbxYearLevel.Text),
-                                    Semester = int.Parse(cbxSemester.Text),
-                                    CourseCode = row.Cells["CourseCode"].Value.ToString(),
-
-                                    OldSection = Convert.ToInt32(cbxSectionFilter.Text),
-                                    OldSchoolYear = cbxSchoolYearFilter.Text,
-
-                                    NewFacultyID = Convert.ToInt32(facultyIdValue),
-                                    NewSection = int.Parse(cbxSection.Text),
-                                    NewSchoolYear = cbxSchoolYear.Text
-                                };
-
-                                con.Execute("sp_UpdateClassSection", parameters,
-                                transaction: transaction,
-                                commandType: CommandType.StoredProcedure);
-                            }
-
-                        }
-
-                        transaction.Commit();
-                        MessageBox.Show("Faculty assignments saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error saving data: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void what(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnLoadCourse_Click(object sender, EventArgs e)
-        {
             pnlWorksheet.HeaderLabel = "CY: " + cbxCurriculum.Text + " -> Program: " + cbxProgram.Text + " -> YL: " + cbxYearLevel.Text + " -> Sem: " + cbxSemester.Text + " -> SY: " + cbxSchoolYear.Text + " -> Section: " + cbxSection.Text;
             LoadWorksheet();
+            dataGridView1.Visible = true;
+            btnSaveUpdate.Visible = true;
+            btnAddFaculty.Visible = true;
+        }
+
+        private void btnSaveUpdate_Click(object sender, EventArgs e)
+        {
+            SaveAndUpdateWorksheet();
         }
 
         private void LoadWorksheet()
@@ -557,7 +276,7 @@ namespace PUP_RMS
                 c.CourseDescription,
                 cs.SectionID,        -- If NULL, it hasn't been saved yet
                 f.FacultyID,         -- Current assigned faculty
-                f.LastName + ', ' + f.FirstName AS FacultyName,
+                CONCAT(f.LastName, ', ', f.FirstName) AS FacultyName,
                 -- Check if a GradeSheet exists to lock the row in the UI
                 CASE WHEN gs.GradeSheetID IS NOT NULL THEN 1 ELSE 0 END AS IsLocked
             FROM Offering o
@@ -609,7 +328,7 @@ namespace PUP_RMS
                     DataPropertyName = "CourseCode",
                     HeaderText = "Course Code",
                     ReadOnly = true,
-                    Width = 90
+                    Width = 130
                 });
 
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
@@ -624,10 +343,12 @@ namespace PUP_RMS
                 // 3. Add the Faculty ComboBox Column BEFORE binding data
                 AddFacultyComboBoxColumn();
                 deleteFacultyButton();
+
                 // 4. Finally bind the data
                 dataGridView1.DataSource = data;
 
                 dataGridView1.Columns["OfferingID"].Visible = false;
+                dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Maroon;
             }
 
 
@@ -683,11 +404,6 @@ namespace PUP_RMS
             }
         }
 
-        private void btnSaveUpdate_Click(object sender, EventArgs e)
-        {
-            SaveAndUpdateWorksheet();
-        }
-
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             if (dataGridView1.CurrentCell.ColumnIndex == dataGridView1.Columns["Faculty"].Index)
@@ -719,31 +435,14 @@ namespace PUP_RMS
             e.ThrowException = false;
         }
 
-        private void btnDeleteFaculty_Click(object sender, EventArgs e)
-        {
-            int facultyColumnIndex = dataGridView1.Columns["Faculty"].Index;
-
-            // 2. Loop through every row
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                // Skip the 'new row' placeholder at the bottom if it exists
-                if (!row.IsNewRow)
-                {
-                    // 3. Set the value to null
-                    row.Cells[facultyColumnIndex].Value = DBNull.Value;
-                }
-            }
-        }
-
-
-        void deleteFacultyButton() {
+        private void deleteFacultyButton() {
             DataGridViewButtonColumn clearBtnCol = new DataGridViewButtonColumn
             {
                 Name = "ClearAction",
                 HeaderText = "",
                 Text = "Clear",
                 UseColumnTextForButtonValue = true, // Shows "Clear" on every button
-                Width = 60,
+                Width = 80,
                 FlatStyle = FlatStyle.Flat
             };
             // Optional: Make the button look distinct
@@ -757,11 +456,80 @@ namespace PUP_RMS
             // 1. Check if the clicked cell is in our Button Column
             if (dataGridView1.Columns[e.ColumnIndex].Name == "ClearAction" && e.RowIndex >= 0)
             {
+                if(MessageBox.Show("Are you sure you want to clear the faculty assignment for this course?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                {return;}
+
                 // 2. Set the Faculty cell in this specific row to DBNull
                 dataGridView1.Rows[e.RowIndex].Cells["Faculty"].Value = DBNull.Value;
 
                 // 3. (Optional) Force the grid to end edit mode so the change is "seen"
                 dataGridView1.EndEdit();
+            }
+        }
+
+        private void btnAddFaculty_Click(object sender, EventArgs e)
+        {
+            newFaculty frm = new newFaculty();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                RefreshFacultyComboBoxColumn();
+            }
+        }
+
+        private void AddFacultyComboBoxColumn()
+        {
+            string sql = "SELECT FacultyID, CONCAT(LastName, ', ', FirstName) AS FacultyName FROM Faculty ORDER BY LastName";
+
+            using (var con = GetConnection())
+            {
+                var facultyList = con.Query<Faculty>(sql).ToList();
+
+                DataGridViewComboBoxColumn facultyCol = new DataGridViewComboBoxColumn
+                {
+                    Name = "Faculty",
+                    HeaderText = "Faculty",
+                    DataSource = facultyList,
+                    ValueMember = "FacultyID",
+                    DisplayMember = "FacultyName",
+                    DataPropertyName = "FacultyID",
+                    FlatStyle = FlatStyle.Flat,
+                    Width = 220,
+
+                    // This ensures it looks like a label when ReadOnly is true
+                    DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox
+                };
+
+                dataGridView1.Columns.Add(facultyCol);
+            }
+        }
+
+        private void RefreshFacultyComboBoxColumn()
+        {
+            var facultyCol = dataGridView1.Columns["Faculty"] as DataGridViewComboBoxColumn;
+            if (facultyCol != null)
+            {
+                string sql = "SELECT FacultyID, CONCAT(LastName, ', ', FirstName) AS FacultyName FROM Faculty ORDER BY LastName";
+                using (var con = GetConnection())
+                {
+                    try
+                    {
+                        var facultyList = con.Query<Faculty>(sql).ToList();
+                        facultyCol.DataSource = facultyList;
+
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show("Query Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+                }
             }
         }
 

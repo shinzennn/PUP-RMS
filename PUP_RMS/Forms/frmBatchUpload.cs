@@ -118,6 +118,7 @@ namespace PUP_RMS.Forms
         }
         public void loadData()
         {
+            filenameTxtbox.Text = "";
           //  LoadProfessors();
             LoadSemester();
             InitializeImageList();

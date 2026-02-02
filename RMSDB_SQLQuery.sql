@@ -108,6 +108,18 @@ CREATE TABLE ActivityLog (
 INSERT INTO Account (Username, Password, FirstName, LastName, AccountType) VALUES ('admin', '12345678', 'John', 'Doe', 'Admin');
 GO
 
+SELECT * FROM Account;
+SELECT * FROM Program;
+SELECT * FROM Course;
+SELECT * FROM Faculty;
+SELECT * FROM CurriculumHeader;
+SELECT * FROM Curriculum;
+SELECT * FROM Offering;
+SELECT * FROM ClassSection;
+SELECT * FROM GradeSheet;
+SELECT * FROM ActivityLog;
+GO
+
 --==================================================
 -- 1. COURSE STORED PROCEDURES                   
 --==================================================
