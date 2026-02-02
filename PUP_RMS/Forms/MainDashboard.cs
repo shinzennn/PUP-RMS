@@ -26,7 +26,9 @@ namespace PUP_RMS.Forms
         private frmProgram _programForm = null;
         private frmCourse _courseForm = null;
         private frmFaculty _facultyForm = null;
+        private frmSection _sectionForm = null;
         private frmAccount _accountForm = null;
+
 
         // UI Tracking
         private iconButton currentActiveButton = null;
@@ -150,6 +152,13 @@ namespace PUP_RMS.Forms
             {
                 _batchUploadForm = new frmBatchUpload();
                 PrepareAndLoadChildForm(_batchUploadForm);
+            }
+
+            // Initialize Section
+            if (_searchForm == null)
+            {
+                _sectionForm = new frmSection();
+                PrepareAndLoadChildForm(_sectionForm);
             }
 
             // Initialize Account
@@ -301,6 +310,16 @@ namespace PUP_RMS.Forms
                 ShowForm(_batchUploadForm);
             }
         }
+        private void btnSection_Click(object sender, EventArgs e)
+        {
+            if (_sectionForm == null || _sectionForm.IsDisposed)
+            {
+                _sectionForm = new frmSection();
+                PrepareChildForm(_sectionForm);
+            }
+            ShowForm(_sectionForm);
+            ActivateAdminSubButton(sender);
+        }
 
         private void btnAccounts_Click(object sender, EventArgs e)
         {
@@ -344,6 +363,7 @@ namespace PUP_RMS.Forms
                     activeForm == _programForm ||
                     activeForm == _courseForm ||
                     activeForm == _facultyForm ||
+                    activeForm == _sectionForm ||
                     activeForm == _accountForm) 
                 {
                     activeForm.Visible = false;
@@ -530,7 +550,7 @@ namespace PUP_RMS.Forms
         private void SetupAdminSubButtons()
         {
 
-            iconButton[] adminButtons = { btnProgram, btnCourse, btnFaculty, btnCurriculum };
+            iconButton[] adminButtons = { btnSection, btnProgram, btnFaculty, btnCurriculum };
 
             foreach (var btn in adminButtons)
             {
@@ -543,5 +563,7 @@ namespace PUP_RMS.Forms
         {
 
         }
+
+        
     }
 }

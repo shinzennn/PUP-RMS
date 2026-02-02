@@ -125,6 +125,12 @@
     <Compile Include="CustomControls\SubjectTile.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\frmSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSection.Designer.cs">
+      <DependentUpon>frmSection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\currentpicturePreview.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -333,6 +339,9 @@
     <Compile Include="StorageMonitor.cs" />
     <EmbeddedResource Include="CustomControls\CustomMsgBox.resx">
       <DependentUpon>CustomMsgBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSection.resx">
+      <DependentUpon>frmSection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\currentpicturePreview.resx">
       <DependentUpon>currentpicturePreview.cs</DependentUpon>
