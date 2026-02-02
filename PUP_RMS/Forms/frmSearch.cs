@@ -310,9 +310,17 @@ namespace PUP_RMS.Forms
                 DataTable dt = DbControl.GetData(query);
 
                 DataRow placeholder = dt.NewRow();
-                cmbSection.DataSource = dt;
-                cmbSection.DisplayMember = "Section";
-                cmbSection.ValueMember = "Section";
+                if(dt != null && dt.Rows.Count > 0)
+                {
+                    cmbSection.DataSource = dt;
+                    cmbSection.DisplayMember = "Section";
+                    cmbSection.ValueMember = "Section";
+                }
+                else
+                {
+                    return;
+                }
+    
 
                
 
@@ -622,6 +630,7 @@ namespace PUP_RMS.Forms
                 cmbCurriculum.DataSource = null;
                 cmbCourse.DataSource = null;
                 cmbProfessor.DataSource = null;
+                cmbSection = null;
 
                 // Ensure any displayed selection text is cleared
                 DeselectComboText(cmbProgram);

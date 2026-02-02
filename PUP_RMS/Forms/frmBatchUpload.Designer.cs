@@ -475,6 +475,7 @@
             this.semesterCmbox.Name = "semesterCmbox";
             this.semesterCmbox.Size = new System.Drawing.Size(131, 28);
             this.semesterCmbox.TabIndex = 4;
+            this.semesterCmbox.SelectedValueChanged += new System.EventHandler(this.semesterCmbox_SelectedValueChanged);
             // 
             // label3
             // 

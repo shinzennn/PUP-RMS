@@ -1,105 +1,112 @@
-CREATE DATABASE RMSDB03;
+CREATE DATABASE RMSDB;
+GO
+USE RMSDB;
 GO
 
-USE RMSDB03;
-GO
-
-CREATE TABLE Account(
-	AccountID INT IDENTITY(1,1) PRIMARY KEY,
-	Username VARCHAR(50) UNIQUE NOT NULL,
-	Password VARCHAR(50) NOT NULL,
-	FirstName VARCHAR(50) NOT NULL,
-	LastName VARCHAR(50) NOT NULL,
-	AccountType VARCHAR(20) NOT NULL
+-- 1. Account
+CREATE TABLE Account (
+    AccountID INT IDENTITY(1,1) PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    AccountType VARCHAR(20) NOT NULL
 );
-GO
 
-CREATE TABLE Program(
-	ProgramID INT IDENTITY(1,1) PRIMARY KEY,
-	ProgramCode VARCHAR(20) NOT NULL,
-	ProgramDescription VARCHAR(100) NOT NULL,
+-- 2. Program
+CREATE TABLE Program (
+    ProgramID INT IDENTITY(1,1) PRIMARY KEY,
+    ProgramCode VARCHAR(20) UNIQUE NOT NULL,
+    ProgramDescription VARCHAR(100) NOT NULL
 );
-GO
 
-CREATE TABLE Course(
-	CourseID INT IDENTITY(1,1) PRIMARY KEY,
-	CourseCode VARCHAR(20) NOT NULL,
-	CourseDescription VARCHAR(100) NOT NULL,
+-- 3. Course
+CREATE TABLE Course (
+    CourseID INT IDENTITY(1,1) PRIMARY KEY,
+    CourseCode VARCHAR(20) UNIQUE NOT NULL,
+    CourseDescription VARCHAR(100) NOT NULL
 );
-GO
 
-CREATE TABLE Faculty(
-	FacultyID INT IDENTITY(1,1) PRIMARY KEY,
-	FirstName VARCHAR(50) NOT NULL,
-	MiddleName VARCHAR(20),
-	LastName VARCHAR(50) NOT NULL,
-	Suffix VARCHAR(10),
-	Initials VARCHAR(20)
+-- 4. Faculty
+CREATE TABLE Faculty (
+    FacultyID INT IDENTITY(1,1) PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    MiddleName VARCHAR(50),
+    LastName VARCHAR(50) NOT NULL,
+    Suffix VARCHAR(10),
+    Initials VARCHAR(20)
 );
-GO
 
-CREATE TABLE Curriculum(
-    CurriculumID INT IDENTITY(1, 1) PRIMARY KEY,
-    CurriculumYear VARCHAR(10),
-    ProgramID INT,
-    YearLevel INT,
-    Semester INT,
+-- 5. CurriculumHeader
+CREATE TABLE CurriculumHeader (
+    CurriculumHeaderID INT IDENTITY(1,1) PRIMARY KEY,
+    ProgramID INT NOT NULL,
+    CurriculumYear VARCHAR(10) NOT NULL,
 
-    CONSTRAINT FK_ProgramID_Curriculum FOREIGN KEY (ProgramID) REFERENCES Program(ProgramID)
+    CONSTRAINT FK_CH_Program FOREIGN KEY (ProgramID) REFERENCES Program(ProgramID),
+    CONSTRAINT UQ_ProgramYear UNIQUE (ProgramID, CurriculumYear)
 );
-GO
 
-CREATE TABLE CurriculumCourse(
-    CurriculumCourseID INT IDENTITY(1, 1) PRIMARY KEY,
-    CurriculumID INT,
-    CourseID INT,
-    FacultyID INT
-    
-    CONSTRAINT FK_CurriculumID_CurriculumCourse FOREIGN KEY (CurriculumID) REFERENCES Curriculum(CurriculumID),
-    CONSTRAINT FK_CourseID_CurriculumCourse FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
-    CONSTRAINT FK_Faculty_CurriculumCourse FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID),
-   
+-- 6. Curriculum
+CREATE TABLE Curriculum (
+    CurriculumID INT IDENTITY(1,1) PRIMARY KEY,
+    CurriculumHeaderID INT NOT NULL,
+    YearLevel INT NOT NULL,
+    Semester INT NOT NULL,
+
+    CONSTRAINT FK_CS_Header FOREIGN KEY (CurriculumHeaderID) REFERENCES CurriculumHeader(CurriculumHeaderID),
+    CONSTRAINT UQ_YearSem UNIQUE (CurriculumHeaderID, YearLevel, Semester)
 );
-GO
 
-CREATE TABLE GradeSheet(
-	GradeSheetID INT IDENTITY(1,1) PRIMARY KEY,
-	Filename VARCHAR(100) UNIQUE NOT NULL,
+-- 7. Offering
+CREATE TABLE Offering (
+    OfferingID INT IDENTITY(1,1) PRIMARY KEY,
+    CurriculumID INT NOT NULL,
+    CourseID INT NOT NULL,
+
+    CONSTRAINT FK_Offering_Curriculum FOREIGN KEY (CurriculumID) REFERENCES Curriculum(CurriculumID),
+    CONSTRAINT FK_Offering_Course FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
+);
+
+-- 8. Section
+CREATE TABLE ClassSection (
+    SectionID INT IDENTITY(1,1) PRIMARY KEY,
+    OfferingID INT NOT NULL,
+    FacultyID INT NOT NULL,
+    Section INT NOT NULL,
+    SchoolYear VARCHAR(20) NOT NULL,
+
+    CONSTRAINT FK_Section_Offering FOREIGN KEY (OfferingID) REFERENCES Offering(OfferingID),
+    CONSTRAINT FK_Section_Faculty FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID)
+);
+
+-- 9. GradeSheet
+CREATE TABLE GradeSheet (
+    GradeSheetID INT IDENTITY(1,1) PRIMARY KEY,
+    SectionID INT NOT NULL,
+    Filename VARCHAR(100) UNIQUE NOT NULL,
     Filepath VARCHAR(200) NOT NULL,
-	SchoolYear VARCHAR(20) NOT NULL,
-	CurriculumID INT,
-    Section INT,
-	CourseID INT,
-	FacultyID INT,
-    PageNumber INT,
-	AccountID INT,
-    DateUploaded DATETIME DEFAULT GETDATE()
+    PageNumber INT DEFAULT 1,
+    AccountID INT NOT NULL,
+    DateUploaded DATETIME DEFAULT GETDATE(),
 
-	CONSTRAINT FK_CourseID_GradeSheet FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
-	CONSTRAINT FK_FacultyID_GradeSheet FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID),
-	CONSTRAINT FK_AccountID_GradeSheet FOREIGN KEY (AccountID) REFERENCES Account(AccountID),
-	CONSTRAINT FK_CurriculumID_Curriculum FOREIGN KEY (CurriculumID) REFERENCES Curriculum(CurriculumID)
+    CONSTRAINT FK_GradeSheet_Section FOREIGN KEY (SectionID) REFERENCES ClassSection(SectionID),
+    CONSTRAINT FK_GradeSheet_Account FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
 );
-GO
 
-CREATE TABLE ActivityLog(
-	LogID INT IDENTITY(1,1) PRIMARY KEY,
-	AccountID INT,
-	ActivityDescription VARCHAR(255) NOT NULL,
-	ActivityDate DATETIME,
+-- 10. ActivityLog: Audit trail
+CREATE TABLE ActivityLog (
+    LogID INT IDENTITY(1,1) PRIMARY KEY,
+    AccountID INT NOT NULL,
+    ActivityDescription VARCHAR(255) NOT NULL,
+    ActivityDate DATETIME DEFAULT GETDATE(),
 
-	CONSTRAINT FK_AccountID_ActivityLog FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
+    CONSTRAINT FK_Log_Account FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
 );
-GO
 
--- =================================================
--- Sample Admin Account
--- =================================================
-INSERT INTO Account(Username, Password, FirstName, LastName, AccountType) VALUES('admin', '12345678', 'Bong', 'Montante', 'Admin');
+-- SAMPLE ACCOUNT FOR LOG IN
+INSERT INTO Account (Username, Password, FirstName, LastName, AccountType) VALUES ('admin', '12345678', 'John', 'Doe', 'Admin');
 GO
--- =================================================
--- =            STORED PROCEDURES LIST             =
--- =================================================
 
 --==================================================
 -- 1. COURSE STORED PROCEDURES                   
@@ -128,26 +135,28 @@ END
 GO
 
 -- 1.3. GET ALL COURSE CODE PER COURSE DESCRIPTION //
-CREATE PROCEDURE sp_GetAllCourseCodePerDescription
+CREATE OR ALTER PROCEDURE sp_GetAllCourseCodePerDescription
     @CourseDescription VARCHAR(100)
 AS
 BEGIN
     SELECT DISTINCT
         c.CourseID,
         c.CourseCode,
-        cur.CurriculumYear
+        ch.CurriculumYear
     FROM Course c
-    LEFT JOIN CurriculumCourse cc
-        ON c.CourseID = cc.CourseID
-    LEFT JOIN Curriculum cur
-        ON cc.CurriculumID = cur.CurriculumID
+    LEFT JOIN Offering o 
+        ON c.CourseID = o.CourseID
+    LEFT JOIN Curriculum cur 
+        ON o.CurriculumID = cur.CurriculumID
+    LEFT JOIN CurriculumHeader ch 
+        ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
     WHERE c.CourseDescription = @CourseDescription
-    ORDER BY c.CourseCode, cur.CurriculumYear;
+    ORDER BY c.CourseCode, ch.CurriculumYear;
 END;
 GO
 
 -- 1.4. SEARCH COURSE 
-CREATE PROCEDURE dbo.sp_SearchCourse
+CREATE OR ALTER PROCEDURE sp_SearchCourse
     @SearchTerm VARCHAR(100)       = NULL,
     @CurriculumYear VARCHAR(10)    = NULL,
     @ProgramID INT                 = NULL
@@ -155,36 +164,23 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Normalize search term
-    DECLARE @TrimmedSearch VARCHAR(100) = NULL;
     DECLARE @Term VARCHAR(220) = NULL;
-
-    IF @SearchTerm IS NOT NULL
-        SET @TrimmedSearch = LTRIM(RTRIM(@SearchTerm));
-
-    IF @TrimmedSearch IS NOT NULL AND @TrimmedSearch <> ''
+    IF LTRIM(RTRIM(ISNULL(@SearchTerm, ''))) <> ''
     BEGIN
-        -- Escape wildcard characters so user input is treated literally
-        SET @Term = REPLACE(REPLACE(REPLACE(@TrimmedSearch, '[', '[[]'), '%', '[%]'), '_', '[_]');
-        SET @Term = '%' + @Term + '%';
+        SET @Term = '%' + REPLACE(REPLACE(REPLACE(@SearchTerm, '[', '[[]'), '%', '[%]'), '_', '[_]') + '%';
     END
 
     SELECT
         c.CourseDescription
     FROM dbo.Course c
-    LEFT JOIN dbo.CurriculumCourse cc
-        ON c.CourseID = cc.CourseID
-    LEFT JOIN dbo.Curriculum cur
-        ON cc.CurriculumID = cur.CurriculumID
+    LEFT JOIN dbo.Offering o ON c.CourseID = o.CourseID
+    LEFT JOIN dbo.Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    LEFT JOIN dbo.CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
     WHERE
-        -- Program filter (ignored when @ProgramID IS NULL)
-        (@ProgramID IS NULL OR cur.ProgramID = @ProgramID)
-        -- CurriculumYear filter (ignored when @CurriculumYear IS NULL)
-        AND (@CurriculumYear IS NULL OR cur.CurriculumYear = @CurriculumYear)
-        -- Search term filter (ignored when search is NULL/empty)
+        (@ProgramID IS NULL OR ch.ProgramID = @ProgramID)
+        AND (@CurriculumYear IS NULL OR ch.CurriculumYear = @CurriculumYear)
         AND (
-            @TrimmedSearch IS NULL
-            OR @TrimmedSearch = ''
+            @Term IS NULL
             OR c.CourseCode LIKE @Term
             OR c.CourseDescription LIKE @Term
         )
@@ -209,27 +205,26 @@ END
 GO
 
 -- 1.6. DELETE COURSE //
-CREATE PROCEDURE sp_DeleteCourse
+CREATE OR ALTER PROCEDURE sp_DeleteCourse
     @CourseID INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- CANCEL DELETE IF COURSE IS LINKED TO GRADESHEET
-    IF EXISTS (SELECT 1 FROM GradeSheet WHERE CourseID = @CourseID)
+    -- CANCEL DELETE IF COURSE IS LINKED TO AN OFFERING (The Academic Plan)
+    IF EXISTS (SELECT 1 FROM Offering WHERE CourseID = @CourseID)
     BEGIN
-        RAISERROR('Cannot delete: This course is linked to existing Grade Sheets.', 16, 1);
+        RAISERROR('Cannot delete: This course is linked to an existing Curriculum Offering.', 16, 1);
         RETURN;
     END
 
-    -- PERFORM DELETE IT NOT LINKED
     DELETE FROM Course WHERE CourseID = @CourseID;
-END
+END;
 GO
 
 -- 1.7 Get all course by program
-CREATE PROCEDURE sp_GetCoursesByProgram
-    @ProgramID INT = null
+CREATE OR ALTER PROCEDURE sp_GetCoursesByProgram
+    @ProgramID INT = NULL
 AS
 BEGIN
     SELECT DISTINCT
@@ -237,22 +232,21 @@ BEGIN
         c.CourseCode,
         c.CourseDescription,
         cur.CurriculumID,
-        cur.CurriculumYear,
+        ch.CurriculumYear,
         cur.YearLevel,
         cur.Semester
-    FROM CurriculumCourse cc
-    INNER JOIN Curriculum cur
-        ON cc.CurriculumID = cur.CurriculumID
-    INNER JOIN Course c
-        ON cc.CourseID = c.CourseID
-    WHERE cur.ProgramID = @ProgramID
+    FROM Offering o
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Course c ON o.CourseID = c.CourseID
+    WHERE (@ProgramID IS NULL OR ch.ProgramID = @ProgramID)
     ORDER BY c.CourseCode;
 END;
 GO
 
 -- 1.8. Get all course per Curriculum Year
-CREATE PROCEDURE sp_GetCoursesByCurriculumYear
-    @CurriculumYear VARCHAR(10) = NULL  -- pass NULL to return courses from all years
+CREATE OR ALTER PROCEDURE sp_GetCoursesByCurriculumYear
+    @CurriculumYear VARCHAR(10) = NULL
 AS
 BEGIN
     SELECT DISTINCT
@@ -260,16 +254,15 @@ BEGIN
         c.CourseCode,
         c.CourseDescription,
         cur.CurriculumID,
-        cur.CurriculumYear,
-        cur.ProgramID,
+        ch.CurriculumYear,
+        ch.ProgramID,
         cur.YearLevel,
         cur.Semester
-    FROM CurriculumCourse cc
-    INNER JOIN Curriculum cur
-        ON cc.CurriculumID = cur.CurriculumID
-    INNER JOIN Course c
-        ON cc.CourseID = c.CourseID
-    WHERE (@CurriculumYear IS NULL OR cur.CurriculumYear = @CurriculumYear)
+    FROM Offering o
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Course c ON o.CourseID = c.CourseID
+    WHERE (@CurriculumYear IS NULL OR ch.CurriculumYear = @CurriculumYear)
     ORDER BY c.CourseCode;
 END;
 GO
@@ -302,24 +295,19 @@ END
 GO
 
 -- 2.3. SEARCH PROGRAM //
-CREATE PROCEDURE sp_SearchProgram
+CREATE OR ALTER PROCEDURE sp_SearchProgram
     @SearchTerm VARCHAR(100)      = NULL,
     @CurriculumYear VARCHAR(10)   = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Normalize and escape search term (treat user input literally)
-    DECLARE @TrimmedSearch VARCHAR(100) = NULL;
+    -- Normalize and escape search term
     DECLARE @Filter VARCHAR(220) = NULL;
 
-    IF @SearchTerm IS NOT NULL
-        SET @TrimmedSearch = LTRIM(RTRIM(@SearchTerm));
-
-    IF @TrimmedSearch IS NOT NULL AND @TrimmedSearch <> ''
+    IF LTRIM(RTRIM(ISNULL(@SearchTerm, ''))) <> ''
     BEGIN
-        SET @Filter = REPLACE(REPLACE(REPLACE(@TrimmedSearch, '[', '[[]'), '%', '[%]'), '_', '[_]');
-        SET @Filter = '%' + @Filter + '%';
+        SET @Filter = '%' + REPLACE(REPLACE(REPLACE(@SearchTerm, '[', '[[]'), '%', '[%]'), '_', '[_]') + '%';
     END
 
     SELECT DISTINCT
@@ -327,15 +315,15 @@ BEGIN
         p.ProgramCode,
         p.ProgramDescription
     FROM Program p
-    LEFT JOIN Curriculum cur
-        ON cur.ProgramID = p.ProgramID
+    LEFT JOIN CurriculumHeader ch
+        ON ch.ProgramID = p.ProgramID
     WHERE
-        -- search term filter (ignored when @SearchTerm is NULL/empty)
+        -- Search term filter
         (@Filter IS NULL OR p.ProgramCode LIKE @Filter OR p.ProgramDescription LIKE @Filter)
-        -- curriculum year filter (ignored when @CurriculumYear IS NULL)
-        AND (@CurriculumYear IS NULL OR cur.CurriculumYear = @CurriculumYear)
+        -- Curriculum year filter (now using CurriculumHeader)
+        AND (@CurriculumYear IS NULL OR ch.CurriculumYear = @CurriculumYear)
     ORDER BY p.ProgramCode;
-END;
+END
 GO
 
 -- 2.4. UPDATE PROGRAM //
@@ -368,7 +356,7 @@ END
 GO
 
 -- 2.6. Get all program by curriculum year
-CREATE PROCEDURE sp_GetProgramsByCurriculumYear
+CREATE OR ALTER PROCEDURE sp_GetProgramsByCurriculumYear
     @CurriculumYear VARCHAR(10) = NULL
 AS
 BEGIN
@@ -377,9 +365,9 @@ BEGIN
         p.ProgramCode,
         p.ProgramDescription
     FROM Program p
-    INNER JOIN Curriculum c
-        ON p.ProgramID = c.ProgramID
-    WHERE (@CurriculumYear IS NULL OR c.CurriculumYear = @CurriculumYear)
+    INNER JOIN CurriculumHeader ch
+        ON p.ProgramID = ch.ProgramID
+    WHERE (@CurriculumYear IS NULL OR ch.CurriculumYear = @CurriculumYear)
     ORDER BY p.ProgramCode;
 END
 GO
@@ -399,7 +387,6 @@ BEGIN
     INSERT INTO Faculty (FirstName, MiddleName, LastName, Suffix, Initials)
     VALUES (@FirstName, @MiddleName, @LastName, @Suffix, @Initials);
 END;
-
 GO
 
 -- 3.2. GET ALL FACULTY //
@@ -416,7 +403,6 @@ BEGIN
     FROM Faculty
     ORDER BY LastName, FirstName ASC;
 END;
-
 GO
 
 -- 3.3. SEARCH FACULTY 
@@ -446,7 +432,6 @@ BEGIN
         ))
     ORDER BY LastName, FirstName ASC;
 END;
-
 GO
 
 -- 3.4. UPDATE FACULTY //
@@ -476,7 +461,7 @@ CREATE PROCEDURE sp_DeleteFaculty
 AS
 BEGIN
     -- para di agad madelete pag connected sa iabng table alsin nalang if di needed
-    IF EXISTS (SELECT 1 FROM GradeSheet WHERE FacultyID = @FacultyID)
+    IF EXISTS (SELECT 1 FROM ClassSection WHERE FacultyID = @FacultyID)
 
     BEGIN
         RAISERROR('Cannot delete Faculty. Faculty is currently in use.', 16, 1);
@@ -491,20 +476,41 @@ GO
 --==================================================
 -- 4. CURRICULUM STORED PROCEDURE
 --==================================================
--- 4.1. CREATE CURRICULUM
-CREATE PROCEDURE sp_InsertCurriculum
-	@CurriculumYear VARCHAR(10),
-    @ProgramID INT,
-    @YearLevel INT,
-    @Semester INT
-
-AS BEGIN
-	INSERT INTO Curriculum (CurriculumYear, ProgramID, YearLevel, Semester)
-	VALUES (@CurriculumYear, @ProgramID, @YearLevel, @Semester)
+--------------------------------------------------
+-- 4.1. CURRICULUM HEADER
+--------------------------------------------------
+-- 4.1.1. INSERT CURRICULUM HEADER
+CREATE PROCEDURE sp_InsertCurriculumHeader
+    @ProgramID INT,    
+    @CurriculumYear VARCHAR(10)
+AS BEGIN 
+	INSERT INTO CurriculumHeader (ProgramID, CurriculumYear)
+	VALUES (@ProgramID, @CurriculumYear);
 END
 GO
 
--- 4.2. Get all Curriculum grouped by curriculum year
+-- 4.1.2. GET CURRICULUM HEADER ID
+CREATE PROCEDURE sp_SelectCurriculumHeaderID
+    @ProgramID INT ,    
+    @CurriculumYear VARCHAR(10) 
+AS BEGIN
+	SELECT CurriculumHeaderID FROM CurriculumHeader 
+	WHERE ProgramID = @ProgramID AND
+	      CurriculumYear = @CurriculumYear 
+END
+GO
+
+-- 4.1.3. COUNT CURRICULUM HEADER
+CREATE PROCEDURE sp_CountCurriculumHeader
+    @ProgramID INT,
+    @CurriculumYear VARCHAR(10)
+    
+AS BEGIN
+    SELECT COUNT(*) From CurriculumHeader where CurriculumYear = @CurriculumYear and ProgramID = @ProgramID
+END
+GO
+
+-- 4.1.4. Get all Curriculum grouped by curriculum year
 CREATE PROCEDURE sp_GetAllCurriculum
 AS
 BEGIN
@@ -512,100 +518,290 @@ BEGIN
 
     SELECT
         CurriculumYear
-    FROM Curriculum
+    FROM CurriculumHeader
     GROUP BY CurriculumYear
     ORDER BY CurriculumYear;
 END
 GO
 
--- 4.3. COUNT CURRICULUM
-CREATE PROCEDURE sp_CountCurriculum
-    @CurriculumYear VARCHAR(10),
-    @ProgramID INT,
+--------------------------------------------------
+-- 4.2. CURRICULUM STRUCTURE
+--------------------------------------------------
+-- 4.2.1. INSERT CURRICULUM
+CREATE PROCEDURE sp_InsertCurriculum
+    @CurriculumHeaderID INT,
     @YearLevel INT,
     @Semester INT
 AS BEGIN
-    SELECT COUNT(*) From Curriculum where CurriculumYear = @CurriculumYear and ProgramID = @ProgramID and YearLevel = @YearLevel and Semester = @Semester
+	INSERT INTO Curriculum (CurriculumHeaderID, YearLevel, Semester)
+	VALUES (@CurriculumHeaderID, @YearLevel, @Semester)
 END
 GO
 
--- 4.4. VIEW ALL CURRICULUM
-CREATE PROCEDURE sp_ViewAllCurriculum
-	@CurriculumYear VARCHAR(10),
-    @ProgramID INT
-
-	AS BEGIN
-		SELECT Curriculum.CurriculumID, Curriculum.CurriculumYear, Program.ProgramCode, Curriculum.YearLevel, Curriculum.Semester
-		FROM Curriculum INNER JOIN Program ON Curriculum.ProgramID = Program.ProgramID
-		WHERE Curriculum.CurriculumYear = @CurriculumYear AND Curriculum.ProgramID = @ProgramID
-        ORDER BY Curriculum.YearLevel ASC, Curriculum.Semester ASC
-	END
-GO
-
--- 4.5. SELECT CURRICULUM 
+-- 4.2.2. GET CURRICULUM ID
 CREATE PROCEDURE sp_SelectCurriculumID
-	@CurriculumYear VARCHAR(10),
-    @ProgramID INT,
+    @CurriculumHeaderID INT,
     @YearLevel INT,
     @Semester INT
-
-	AS BEGIN
-		SELECT CurriculumID FROM Curriculum 
-		WHERE CurriculumYear = @CurriculumYear AND 
-			  ProgramID = @ProgramID AND 
-			  YearLevel = @YearLevel AND 
-			  Semester = @Semester
-	END
+AS BEGIN
+	SELECT CurriculumID FROM Curriculum 
+	WHERE CurriculumHeaderID = @CurriculumHeaderID AND
+	      YearLevel = @YearLevel AND
+	      Semester = @Semester
+END
 GO
 
--- 4.6. CREATE CURRICULUM COURSE
+-- 4.2.3. VIEW ALL CURRICULUM
+CREATE PROCEDURE sp_ViewAllCurriculum
+    @CurriculumHeaderID VARCHAR(10)
+AS 
+BEGIN
+    SELECT 
+        C.CurriculumID,
+        C.YearLevel, 
+        C.Semester
+    FROM Curriculum C
+    INNER JOIN CurriculumHeader CH ON C.CurriculumHeaderID = CH.CurriculumHeaderID
+    WHERE CH.CurriculumHeaderID = @CurriculumHeaderID
+    ORDER BY C.YearLevel ASC, C.Semester ASC;
+END
+GO
+
+-- 4.2.4. COUNT CURRICULUM
+CREATE PROCEDURE sp_CountCurriculum
+    @CurriculumHeaderID VARCHAR(10),
+    @YearLevel INT,
+    @Semester INT
+AS BEGIN
+    SELECT COUNT(*) From Curriculum where CurriculumHeaderID = @CurriculumHeaderID and YearLevel = @YearLevel and Semester = @Semester
+END
+GO
+
+-- 4.2.5. SEARCH VIEW CURRICULUM
+CREATE PROCEDURE sp_SearchViewCurriculum
+    @ProgramID INT,
+    @CurriculumYear VARCHAR(10)
+AS BEGIN
+    SELECT 
+        c.YearLevel, 
+        c.Semester, 
+        co.CourseID,
+        co.CourseCode,
+        co.CourseDescription
+    FROM CurriculumHeader ch
+    JOIN Curriculum c ON ch.CurriculumHeaderID = c.CurriculumHeaderID
+    JOIN Offering o ON c.CurriculumID = o.CurriculumID
+    JOIN Course co ON o.CourseID = co.CourseID
+    WHERE ch.ProgramID = @ProgramID          
+      AND ch.CurriculumYear = @CurriculumYear
+    ORDER BY c.YearLevel, c.Semester, co.CourseDescription;
+END
+GO
+
+--------------------------------------------------
+-- 4.3. OFFERING
+--------------------------------------------------
+-- 4.3.1. INSERT OFFERING COURSE
 CREATE PROCEDURE sp_InsertCurriculumCourse
-	@CurriculumID INT,
-    @CourseID INT,
-    @FacultyID INT
-
-	AS BEGIN
-		INSERT INTO CurriculumCourse (CurriculumID, CourseID, FacultyID)
-        VALUES (@CurriculumID, @CourseID, @FacultyID)
-	END
+    @CurriculumID INT,
+    @CourseID INT
+   
+AS BEGIN
+	INSERT INTO Offering (CurriculumID, CourseID)
+        VALUES (@CurriculumID, @CourseID)
+END
 GO
 
--- 4.7. SELECT CURRICULUM COURSE
+-- 4.3.2. GET OFFERING COURSE
 CREATE PROCEDURE sp_SelectCurriculumCourse
     @CurriculumID INT
+AS 
+BEGIN
 
-    AS BEGIN
-        SELECT CurriculumCourse.CurriculumID, CurriculumCourse.CourseID, CurriculumCourse.FacultyID, Course.CourseCode, 
-        CONCAT(Faculty.LastName, ', ', Faculty.FirstName, Faculty.MiddleName) AS [Full Name]
-        FROM CurriculumCourse INNER JOIN Course ON CurriculumCourse.CourseID = Course.CourseID
-                        INNER JOIN Faculty ON CurriculumCourse.FacultyID = Faculty.FacultyID 
-        WHERE CurriculumCourse.CurriculumID = @CurriculumID
-    END
+    SELECT 
+        O.CurriculumID,
+        O.OfferingID,
+        O.CourseID,
+        C.CourseCode,
+        C.CourseDescription
+    FROM Offering O
+    INNER JOIN Course C ON O.CourseID = C.CourseID
+    WHERE O.CurriculumID = @CurriculumID
+    ORDER BY C.CourseCode ASC;
+END
 GO
 
--- 4.8. DELETE CURRICULUM COURSE
+-- 4.3.3. DELETE OFFERING COURSE
 CREATE PROCEDURE sp_DeleteCurriculumCourse
-    @CurriculumID INT,
-    @CourseID INT,
-    @FacultyID INT
+    @OfferingID INT
 
-    AS BEGIN 
-        DELETE FROM CurriculumCourse WHERE CurriculumID = @CurriculumID AND CourseID = @CourseID AND FacultyID = @FacultyID
+AS BEGIN 
+    DELETE FROM Offering WHERE OfferingID = @OfferingID 
+END
+GO
+
+--------------------------------------------------
+-- 4.4. CLASS SECTION
+--------------------------------------------------
+-- 4.4.1. INSERT CLASS SECTION
+CREATE PROCEDURE sp_InsertClassSection
+    @CurriculumYear VARCHAR(10),
+    @ProgramCode VARCHAR(20),
+    @YearLevel INT,
+    @Semester INT,
+    @CourseCode VARCHAR(20),
+    @FacultyID INT,
+    @Section INT,
+    @SchoolYear VARCHAR(20)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @OfferingID INT;
+
+    -- Look up the OfferingID based on the provided filters
+    SELECT @OfferingID = O.OfferingID
+    FROM Offering O
+    INNER JOIN Curriculum CU ON O.CurriculumID = CU.CurriculumID
+    INNER JOIN CurriculumHeader CH ON CU.CurriculumHeaderID = CH.CurriculumHeaderID
+    INNER JOIN Program P ON CH.ProgramID = P.ProgramID
+    INNER JOIN Course C ON O.CourseID = C.CourseID
+    WHERE CH.CurriculumYear = @CurriculumYear
+      AND P.ProgramCode = @ProgramCode
+      AND CU.YearLevel = @YearLevel
+      AND CU.Semester = @Semester
+      AND C.CourseCode = @CourseCode;
+
+    IF @OfferingID IS NOT NULL
+    BEGIN
+        -- Check if assignment exists for this section and school year to prevent duplicates
+        -- You can choose to UPDATE or IGNORE if it exists.
+        IF EXISTS (SELECT 1 FROM ClassSection WHERE OfferingID = @OfferingID AND Section = @Section AND SchoolYear = @SchoolYear)
+        BEGIN
+            UPDATE ClassSection
+            SET FacultyID = @FacultyID
+            WHERE OfferingID = @OfferingID AND Section = @Section AND SchoolYear = @SchoolYear;
+        END
+        ELSE
+        BEGIN
+            INSERT INTO ClassSection (OfferingID, FacultyID, Section, SchoolYear)
+            VALUES (@OfferingID, @FacultyID, @Section, @SchoolYear);
+        END
     END
+    ELSE
+    BEGIN
+        RAISERROR('Offering not found for the specified course and curriculum.', 16, 1);
+    END
+END
+GO
+
+-- 4.4.2. UPDATE CLASS SECTION
+CREATE PROCEDURE sp_UpdateClassSection
+    @CurriculumYear VARCHAR(10),
+    @ProgramCode VARCHAR(20),
+    @YearLevel INT,
+    @Semester INT,
+    @CourseCode VARCHAR(20),
+    -- Search Criteria (The "Old" values)
+    @OldSection INT,
+    @OldSchoolYear VARCHAR(20),
+    -- New Values to set
+    @NewFacultyID INT,
+    @NewSection INT,
+    @NewSchoolYear VARCHAR(20)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @OfferingID INT;
+
+    -- 1. Look up the OfferingID based on the curriculum/course filters
+    SELECT @OfferingID = O.OfferingID
+    FROM Offering O
+    INNER JOIN Curriculum CU ON O.CurriculumID = CU.CurriculumID
+    INNER JOIN CurriculumHeader CH ON CU.CurriculumHeaderID = CH.CurriculumHeaderID
+    INNER JOIN Program P ON CH.ProgramID = P.ProgramID
+    INNER JOIN Course C ON O.CourseID = C.CourseID
+    WHERE CH.CurriculumYear = @CurriculumYear
+      AND P.ProgramCode = @ProgramCode
+      AND CU.YearLevel = @YearLevel
+      AND CU.Semester = @Semester
+      AND C.CourseCode = @CourseCode;
+
+    -- 2. Update the record using the OfferingID + Old Section/Year
+    IF @OfferingID IS NOT NULL
+    BEGIN
+        UPDATE ClassSection
+        SET FacultyID = @NewFacultyID,
+            Section = @NewSection,
+            SchoolYear = @NewSchoolYear
+        WHERE OfferingID = @OfferingID 
+          AND Section = @OldSection 
+          AND SchoolYear = @OldSchoolYear;
+
+        IF @@ROWCOUNT = 0
+        BEGIN
+            RAISERROR('Update failed: No existing record found with the provided Section and School Year.', 16, 1);
+        END
+    END
+    ELSE
+    BEGIN
+        RAISERROR('Update failed: Offering not found.', 16, 1);
+    END
+END
+GO
+
+-- 4.4.3. SAVE AND UPDATE WORKSHEET
+CREATE OR ALTER PROCEDURE sp_SyncClassSectionAssignment
+    @OfferingID INT,
+    @FacultyID INT,      -- Can be NULL for partial save
+    @Section INT,
+    @SchoolYear VARCHAR(20)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- CASE 1: User selected a faculty (Save/Update)
+    IF @FacultyID IS NOT NULL
+    BEGIN
+        IF EXISTS (SELECT 1 FROM ClassSection WHERE OfferingID = @OfferingID AND Section = @Section AND SchoolYear = @SchoolYear)
+        BEGIN
+            UPDATE ClassSection 
+            SET FacultyID = @FacultyID
+            WHERE OfferingID = @OfferingID AND Section = @Section AND SchoolYear = @SchoolYear;
+        END
+        ELSE
+        BEGIN
+            INSERT INTO ClassSection (OfferingID, FacultyID, Section, SchoolYear)
+            VALUES (@OfferingID, @FacultyID, @Section, @SchoolYear);
+        END
+    END
+
+    -- CASE 2: User left faculty blank (Delete if exists and safe)
+    ELSE 
+    BEGIN
+        -- We only delete the assignment if there is no GradeSheet uploaded yet
+        IF NOT EXISTS (
+            SELECT 1 FROM GradeSheet gs
+            INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+            WHERE cs.OfferingID = @OfferingID AND cs.Section = @Section AND cs.SchoolYear = @SchoolYear
+        )
+        BEGIN
+            DELETE FROM ClassSection 
+            WHERE OfferingID = @OfferingID AND Section = @Section AND SchoolYear = @SchoolYear;
+        END
+    END
+END
 GO
 
 --==================================================
 -- 5. GRADESHEET STORED PROCEDURE
 --==================================================
--- 5.1 CREATE GRADESHEET
-CREATE OR ALTER PROCEDURE sp_AddGradeSheet
+-- 5.1. UPLOAD GRADESHEET
+CREATE PROCEDURE sp_AddGradeSheet
     @Filename      VARCHAR(100),
     @Filepath      VARCHAR(200),
-    @SchoolYear    VARCHAR(20),
-    @CurriculumID  INT,
-    @Section       INT,
-    @CourseID      INT,
-    @FacultyID     INT,
+    @SectionID     INT,
     @PageNumber    INT,
     @AccountID     INT
 AS
@@ -629,11 +825,7 @@ BEGIN
     (
         Filename,
         Filepath,
-        SchoolYear,
-        CurriculumID,
-        Section,
-        CourseID,
-        FacultyID,
+        SectionID,
         PageNumber,
         AccountID
     )
@@ -641,11 +833,7 @@ BEGIN
     (
         @Filename,
         @Filepath,
-        @SchoolYear,
-        @CurriculumID,
-        @Section,
-        @CourseID,
-        @FacultyID,
+        @SectionID,
         @PageNumber,
         @AccountID
     );
@@ -656,7 +844,6 @@ END;
 GO
 
 -- 5.2 DELETE GRADESHEET
-
 CREATE OR ALTER PROCEDURE sp_DeleteGradeSheet
 @GradeSheetID INT
 AS
@@ -672,47 +859,33 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    SELECT
-        gs.GradeSheetID,           -- newly added
+    SELECT 
+        gs.GradeSheetID,
         gs.Filename,
-        gs.SchoolYear,
-
-        -- Curriculum year
-        c.CurriculumYear AS Curriculum,
-
-        -- Program
+        cs.SchoolYear,
+        ch.CurriculumYear AS Curriculum,
         p.ProgramCode AS Program,
-
-        -- Academic info
-        c.YearLevel,
-        gs.Section,
-        c.Semester,
-
-        -- Course
-        co.CourseCode AS Course,
-
-        -- Professor (Last, First M.)
-        f.LastName + ', ' + f.FirstName +
-            ISNULL(
-                ' ' + NULLIF(LEFT(f.MiddleName, 1), '') + '.',
-                ''
-            ) AS Professor,
-
-        -- Page number
+        cur.YearLevel,
+        cs.Section,
+        cur.Semester,
+        c.CourseCode AS Course,
+        f.LastName + ', ' + f.FirstName AS Professor,
         gs.PageNumber
-
     FROM GradeSheet gs
-        INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-        INNER JOIN Program p ON c.ProgramID = p.ProgramID
-        INNER JOIN Course co ON gs.CourseID = co.CourseID
-        INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-
-    ORDER BY
-        gs.SchoolYear DESC,
-        c.Semester DESC,
-        c.YearLevel ASC,
-        gs.Section ASC,
-        co.CourseCode ASC,
+        INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+        INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+        INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+        INNER JOIN Course c ON o.CourseID = c.CourseID
+        INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+        INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+        INNER JOIN Program p ON ch.ProgramID = p.ProgramID
+        INNER JOIN Account a ON gs.AccountID = a.AccountID
+    ORDER BY 
+        cs.SchoolYear DESC,
+        cur.Semester DESC,
+        cur.YearLevel ASC,
+        cs.Section ASC,
+        c.CourseCode ASC,
         gs.PageNumber ASC;
 END;
 GO
@@ -722,7 +895,7 @@ CREATE OR ALTER PROCEDURE sp_SearchGradeSheets
     @SchoolYear VARCHAR(20) = NULL,
     @Semester INT = NULL,
     @ProgramID INT = NULL,
-    @CurriculumYear VARCHAR(10) = NULL,  -- filter by string
+    @CurriculumYear VARCHAR(10) = NULL,
     @YearLevel INT = NULL,
     @Section INT = NULL,
     @CourseID INT = NULL,
@@ -734,35 +907,37 @@ BEGIN
     SELECT
         gs.GradeSheetID,           -- newly added
         gs.Filename,
-        gs.SchoolYear,
-        c.CurriculumYear AS Curriculum,
+        cs.SchoolYear,
+        ch.CurriculumYear AS Curriculum,
         p.ProgramCode AS Program,
-        c.YearLevel,
-        gs.Section,
-        c.Semester,
-        co.CourseCode AS Course,
-        f.LastName + ', ' + f.FirstName +
-            ISNULL(' ' + NULLIF(LEFT(f.MiddleName, 1), ''), '') AS Professor,
+        cur.YearLevel,
+        cs.Section,
+        cur.Semester,
+        c.CourseCode AS Course,
+        f.LastName + ', ' + f.FirstName + ISNULL(' ' + NULLIF(LEFT(f.MiddleName, 1), ''), '') AS Professor,
         gs.PageNumber
     FROM GradeSheet gs
-        INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-        INNER JOIN Program p ON c.ProgramID = p.ProgramID
-        INNER JOIN Course co ON gs.CourseID = co.CourseID
-        INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    WHERE (@SchoolYear IS NULL OR gs.SchoolYear = @SchoolYear)
-      AND (@Semester IS NULL OR c.Semester = @Semester)
+        INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+        INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+        INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+        INNER JOIN Course c ON o.CourseID = c.CourseID
+        INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+        INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+        INNER JOIN Program p ON ch.ProgramID = p.ProgramID
+    WHERE (@SchoolYear IS NULL OR cs.SchoolYear = @SchoolYear)
+      AND (@Semester IS NULL OR cur.Semester = @Semester)
       AND (@ProgramID IS NULL OR p.ProgramID = @ProgramID)
-      AND (@CurriculumYear IS NULL OR c.CurriculumYear = @CurriculumYear)
-      AND (@YearLevel IS NULL OR c.YearLevel = @YearLevel)
-      AND (@Section IS NULL OR gs.Section = @Section)
-      AND (@CourseID IS NULL OR co.CourseID = @CourseID)
+      AND (@CurriculumYear IS NULL OR ch.CurriculumYear = @CurriculumYear)
+      AND (@YearLevel IS NULL OR cur.YearLevel = @YearLevel)
+      AND (@Section IS NULL OR cs.Section = @Section)
+      AND (@CourseID IS NULL OR c.CourseID = @CourseID)
       AND (@FacultyID IS NULL OR f.FacultyID = @FacultyID)
     ORDER BY
-        gs.SchoolYear DESC,
-        c.Semester DESC,
-        c.YearLevel ASC,
-        gs.Section ASC,
-        co.CourseCode ASC,
+        cs.SchoolYear DESC,
+        cur.Semester DESC,
+        cur.YearLevel ASC,
+        cs.Section ASC,
+        c.CourseCode ASC,
         gs.PageNumber ASC;
 END;
 GO
@@ -770,46 +945,39 @@ GO
 -- 5.5. UPDATE GRADESHEETS
 CREATE OR ALTER PROCEDURE sp_UpdateGradeSheets
     @GradeSheetID INT,
-    @Filename VARCHAR(255),
-    @Filepath VARCHAR(500),
-    @SchoolYear VARCHAR(20),
-    @Semester INT,
-    @ProgramID INT,
-    @YearLevel INT,
-    @CourseID INT,
-    @FacultyID INT,
+    @SectionID INT = NULL,      -- The new Class Section it belongs to
+    @Filename VARCHAR(100) = NULL,
+    @Filepath VARCHAR(200) = NULL,
     @PageNumber INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @CurriculumID INT;
-
-    SELECT TOP 1 @CurriculumID = c.CurriculumID
-    FROM Curriculum c
-    WHERE c.ProgramID = @ProgramID
-      AND c.YearLevel = @YearLevel
-      AND c.Semester = @Semester
-    ORDER BY c.CurriculumYear DESC; 
-
-    IF @CurriculumID IS NULL
+    -- 1. Validation: Ensure the GradeSheet exists
+    IF NOT EXISTS (SELECT 1 FROM GradeSheet WHERE GradeSheetID = @GradeSheetID)
     BEGIN
-        RAISERROR('No matching Curriculum found.', 16, 1);
+        RAISERROR('GradeSheet record not found.', 16, 1);
         RETURN;
     END
 
-    -- Update GradeSheet
+    -- 2. Validation: If SectionID is being updated, ensure the new section exists
+    IF @SectionID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM ClassSection WHERE SectionID = @SectionID)
+    BEGIN
+        RAISERROR('The target Class Section does not exist.', 16, 1);
+        RETURN;
+    END
+
+    -- 3. Perform the Update
     UPDATE GradeSheet
-    SET
-        CurriculumID = @CurriculumID,
-        CourseID     = @CourseID,
-        FacultyID    = @FacultyID,
-        SchoolYear   = @SchoolYear,
-        PageNumber   = @PageNumber,
-        Filename     = @Filename,
-        Filepath     = @Filepath
+    SET 
+        SectionID = ISNULL(@SectionID, SectionID),
+        Filename = ISNULL(@Filename, Filename),
+        Filepath = ISNULL(@Filepath, Filepath),
+        PageNumber = ISNULL(@PageNumber, PageNumber)
     WHERE GradeSheetID = @GradeSheetID;
-END
+
+    SELECT 'Success' AS Result;
+END;
 GO
 
 --==================================================
@@ -818,7 +986,7 @@ GO
 -- 6.1. CREATE ACCOUNT //
 CREATE OR ALTER PROCEDURE sp_CreateAccount
     @Username     VARCHAR(50),
-    @Password     VARCHAR(50),
+    @Password     VARCHAR(255),
     @FirstName    VARCHAR(50),
     @LastName     VARCHAR(50),
     @AccountType  VARCHAR(20)
@@ -833,7 +1001,6 @@ BEGIN
     INSERT INTO Account (Username, Password, FirstName, LastName, AccountType)
     VALUES (@Username, @Password, @FirstName, @LastName, @AccountType);
 END;
-
 GO
 
 -- 6.2. GET ALL ACCOUNT //
@@ -852,7 +1019,6 @@ BEGIN
     ORDER BY 
         LastName, FirstName ASC;
 END;
-
 GO
 
 -- 6.3. SEARCH ACCOUNT //
@@ -905,7 +1071,6 @@ BEGIN
     WHERE 
         AccountID = @AccountID;
 END;
-
 GO
 
 -- 6.5. DELETE ACCOUNT //
@@ -936,7 +1101,6 @@ BEGIN
     WHERE Username = @Username
       AND Password = @Password;
 END;
-
 GO
 
 --==================================================
@@ -1022,19 +1186,20 @@ END
 GO
 
 -- 8.6. show recently upload gradesheet in dashboard
-CREATE PROCEDURE RecentUploadedGradeSheets
-AS BEGIN
+CREATE OR ALTER PROCEDURE RecentUploadedGradeSheets
+AS 
+BEGIN
     SELECT TOP 10
            g.Filename, 
            c.CourseCode, 
-           a.Firstname + ' ' + a.LastName AS UploadedBy
+           a.FirstName + ' ' + a.LastName AS UploadedBy
     FROM GradeSheet g
-    JOIN Course AS c
-        ON g.CourseID = c.CourseID
-    JOIN Account AS a  
-        ON g.AccountID = a.AccountID
-    ORDER BY g.GradeSheetID DESC
-END
+    JOIN ClassSection cs ON g.SectionID = cs.SectionID
+    JOIN Offering o ON cs.OfferingID = o.OfferingID
+    JOIN Course c ON o.CourseID = c.CourseID
+    JOIN Account a ON g.AccountID = a.AccountID
+    ORDER BY g.GradeSheetID DESC;
+END;
 GO
 
 --------------------------------------------------
@@ -1044,11 +1209,10 @@ GO
 CREATE OR ALTER PROCEDURE sp_GetAllCurriculums
 AS
 BEGIN
-    SET NOCOUNT ON;
     SELECT DISTINCT CurriculumYear 
-    FROM Curriculum 
+    FROM CurriculumHeader 
     ORDER BY CurriculumYear DESC;
-END
+END;
 GO
 
 -- 8.7.2. Get School Years filtered by the selected Curriculum
@@ -1057,34 +1221,37 @@ CREATE OR ALTER PROCEDURE sp_GetSchoolYearsByCurriculum
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT DISTINCT gs.SchoolYear
-    FROM GradeSheet gs
-    INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-    WHERE (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
-    ORDER BY gs.SchoolYear DESC;
-END
-Go
+    SELECT DISTINCT cs.SchoolYear
+    FROM ClassSection cs
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    WHERE (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
+    ORDER BY cs.SchoolYear DESC;
+END;
+GO
+
 -- 8.7.3. Get Chart Data: Joins GradeSheet -> Curriculum -> Program
 CREATE OR ALTER PROCEDURE sp_GetDistributionByProgram_Filtered
     @SchoolYear VARCHAR(20) = NULL,
     @CurriculumYear VARCHAR(10) = NULL
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     SELECT 
         p.ProgramCode AS Label, 
         COUNT(gs.GradeSheetID) AS Value
     FROM GradeSheet gs
-    INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID -- Link to Curriculum
-    INNER JOIN Program p ON c.ProgramID = p.ProgramID       -- Link to Program
+    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
     WHERE 
-        (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear) -- Filter by School Year
-        AND 
-        (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear) -- Filter by Curriculum
+        (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
     GROUP BY p.ProgramCode
     ORDER BY Value DESC;
-END
+END;
 GO
 
 --8.7.4 Get Year Level Distribution for a specific Program
@@ -1094,20 +1261,21 @@ CREATE OR ALTER PROCEDURE sp_GetYearLevelDistributionByProgram
     @CurriculumYear VARCHAR(10) = NULL
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     SELECT 
-        c.YearLevel,
+        cur.YearLevel,
         COUNT(gs.GradeSheetID) AS Total
     FROM GradeSheet gs
-    INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-    INNER JOIN Program p ON c.ProgramID = p.ProgramID
+    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
     WHERE 
         p.ProgramCode = @ProgramCode
-        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
-    GROUP BY c.YearLevel
-    ORDER BY c.YearLevel ASC;
+        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
+    GROUP BY cur.YearLevel
+    ORDER BY cur.YearLevel ASC;
 END
 GO
 
@@ -1118,16 +1286,16 @@ CREATE OR ALTER PROCEDURE sp_GetSchoolYearsByCurriculumAndProgram
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT DISTINCT gs.SchoolYear
-    FROM GradeSheet gs
-    INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-    INNER JOIN Program p ON c.ProgramID = p.ProgramID
-    WHERE 
-        (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
-        AND
-        (@ProgramCode IS NULL OR @ProgramCode = 'All' OR p.ProgramCode = @ProgramCode)
-    ORDER BY gs.SchoolYear DESC;
-END
+    SELECT DISTINCT cs.SchoolYear
+    FROM ClassSection cs
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
+    WHERE (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
+      AND (@ProgramCode IS NULL OR @ProgramCode = 'All' OR p.ProgramCode = @ProgramCode)
+    ORDER BY cs.SchoolYear DESC;
+END;
 GO
 
 -- 8.7.6 Get Count of Submitted vs Total Curriculum Courses for a Program
@@ -1137,92 +1305,86 @@ CREATE OR ALTER PROCEDURE sp_GetProgramGradeSheetCounts
     @CurriculumYear VARCHAR(10) = NULL
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    -- 1. Count Submitted (Numerator): Actual GradeSheets in the database
     DECLARE @SubmittedCount INT;
-    
-    SELECT @SubmittedCount = COUNT(gs.GradeSheetID)
-    FROM GradeSheet gs
-    INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-    INNER JOIN Program p ON c.ProgramID = p.ProgramID
-    WHERE p.ProgramCode = @ProgramCode
-      AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear);
-
-    -- 2. Count Total (Denominator): Total Subjects listed in the Curriculum for this Program
     DECLARE @TotalCount INT;
 
-    SELECT @TotalCount = COUNT(cc.CurriculumCourseID)
-    FROM CurriculumCourse cc
-    INNER JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
-    INNER JOIN Program p ON c.ProgramID = p.ProgramID
+    -- 1. Count actual uploads (via GradeSheet)
+    SELECT @SubmittedCount = COUNT(gs.GradeSheetID)
+    FROM GradeSheet gs
+    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
     WHERE p.ProgramCode = @ProgramCode
-      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear);
+      AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear);
 
-    -- 3. Return Result
-    SELECT 
-        ISNULL(@SubmittedCount, 0) AS SubmittedCount, 
-        ISNULL(@TotalCount, 0) AS TotalCurriculumCourses;
+    -- 2. Count Total Offerings defined in that curriculum (The "Target")
+    SELECT @TotalCount = COUNT(o.OfferingID)
+    FROM Offering o
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
+    WHERE p.ProgramCode = @ProgramCode
+      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear);
+
+    SELECT ISNULL(@SubmittedCount, 0) AS SubmittedCount, ISNULL(@TotalCount, 0) AS TotalCurriculumCourses;
 END
 GO
 
 --------------------------------------------------
 -- 8.8. Distribution by PROFESSOR
 --------------------------------------------------
--- 8.8.1. 
+-- 8.8.1. Main Faculty Distribution
 CREATE OR ALTER PROCEDURE sp_GetDistributionByFaculty_Filtered
     @SchoolYear VARCHAR(20) = NULL,
     @CurriculumYear VARCHAR(10) = NULL
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-SELECT
+    SELECT
         f.LastName + ', ' + f.FirstName AS Name,
         COUNT(gs.GradeSheetID) AS RecordCount
     FROM GradeSheet gs
-    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    -- We use LEFT JOIN here in case a gradesheet wasn't tagged with a curriculum (optional safety)
-    LEFT JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID 
+    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+    INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
     WHERE 
-        (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-        AND
-        (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
+        (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
     GROUP BY f.LastName, f.FirstName
     ORDER BY RecordCount DESC;
-END
+END;
 GO
 
 -- 8.8.2. Stored Procedure that fetches the specific files based on the Professor's name and the active filters
 CREATE OR ALTER PROCEDURE sp_GetGradeSheetsByFacultyDetails
-    @FacultyName VARCHAR(100), -- Matches the format "LastName, FirstName"
+    @FacultyName VARCHAR(100), -- "LastName, FirstName"
     @SchoolYear VARCHAR(20) = NULL,
     @CurriculumYear VARCHAR(10) = NULL
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-SELECT
-        gs.Filename AS[File Name],
+    SELECT
+        gs.Filename AS [File Name],
         c.CourseCode AS [Course Code],
-        gs.DateUploaded AS[Date Uploaded]
+        gs.DateUploaded AS [Date Uploaded]
     FROM GradeSheet gs
-    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    INNER JOIN Course c ON gs.CourseID = c.CourseID
-    LEFT JOIN Curriculum curr ON gs.CurriculumID = curr.CurriculumID
-    WHERE   
-        (f.LastName + ', ' + f.FirstName) = @FacultyName
-        AND
-        (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-        AND
-        (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR curr.CurriculumYear = @CurriculumYear)
-    ORDER BY 
-        gs.DateUploaded DESC;
+    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+    INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Course c ON o.CourseID = c.CourseID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    WHERE (f.LastName + ', ' + f.FirstName) = @FacultyName
+      AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
+    ORDER BY gs.DateUploaded DESC;
 END
 GO
 
--- 8.8.3. FACULTY COUNT
+-- 8.8.3. FACULTY COUNT (Submitted vs Total Assigned)
 CREATE OR ALTER PROCEDURE sp_GetFacultyDistribution_WithCounts
     @SchoolYear VARCHAR(20) = NULL,
     @CurriculumYear VARCHAR(10) = NULL
@@ -1232,51 +1394,52 @@ BEGIN
 
     SELECT 
         f.FacultyID,
-        -- Format Name: Last, First
         f.LastName + ', ' + f.FirstName AS Name,
         
         -- 1. COUNT SUBMITTED (Numerator)
-        -- Counts actual uploads in GradeSheet table
+        -- Counts actual uploads in GradeSheet table linked to this faculty via Section
         (SELECT COUNT(gs.GradeSheetID) 
          FROM GradeSheet gs
-         INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-         WHERE gs.FacultyID = f.FacultyID
-           AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-           AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
+         INNER JOIN ClassSection cs_sub ON gs.SectionID = cs_sub.SectionID
+         INNER JOIN Offering o_sub ON cs_sub.OfferingID = o_sub.OfferingID
+         INNER JOIN Curriculum cur_sub ON o_sub.CurriculumID = cur_sub.CurriculumID
+         INNER JOIN CurriculumHeader ch_sub ON cur_sub.CurriculumHeaderID = ch_sub.CurriculumHeaderID
+         WHERE cs_sub.FacultyID = f.FacultyID
+           AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs_sub.SchoolYear = @SchoolYear)
+           AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch_sub.CurriculumYear = @CurriculumYear)
         ) AS SubmittedCount,
 
         -- 2. COUNT TOTAL ASSIGNED (Denominator)
-        -- Counts courses assigned to this faculty in the CurriculumCourse table
-        (SELECT COUNT(cc.CurriculumCourseID) 
-         FROM CurriculumCourse cc
-         INNER JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
-         WHERE cc.FacultyID = f.FacultyID
-           AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
+        -- In the new schema, total assigned is found in ClassSection
+        (SELECT COUNT(cs_all.SectionID) 
+         FROM ClassSection cs_all
+         INNER JOIN Offering o_all ON cs_all.OfferingID = o_all.OfferingID
+         INNER JOIN Curriculum cur_all ON o_all.CurriculumID = cur_all.CurriculumID
+         INNER JOIN CurriculumHeader ch_all ON cur_all.CurriculumHeaderID = ch_all.CurriculumHeaderID
+         WHERE cs_all.FacultyID = f.FacultyID
+           AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs_all.SchoolYear = @SchoolYear)
+           AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch_all.CurriculumYear = @CurriculumYear)
         ) AS TotalAssigned
 
     FROM Faculty f
-    -- Only return faculty who have at least one course assigned OR one grade sheet submitted
+    -- Filtering to show only faculty with active assignments or uploads
     WHERE EXISTS (
-        SELECT 1 FROM CurriculumCourse cc 
-        INNER JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
-        WHERE cc.FacultyID = f.FacultyID
-        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
-    ) 
-    OR EXISTS (
-        SELECT 1 FROM GradeSheet gs
-        INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-        WHERE gs.FacultyID = f.FacultyID
-        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
+        SELECT 1 FROM ClassSection cs_exist
+        INNER JOIN Offering o_exist ON cs_exist.OfferingID = o_exist.OfferingID
+        INNER JOIN Curriculum cur_exist ON o_exist.CurriculumID = cur_exist.CurriculumID
+        INNER JOIN CurriculumHeader ch_exist ON cur_exist.CurriculumHeaderID = ch_exist.CurriculumHeaderID
+        WHERE cs_exist.FacultyID = f.FacultyID
+        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs_exist.SchoolYear = @SchoolYear)
+        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch_exist.CurriculumYear = @CurriculumYear)
     )
     ORDER BY Name ASC;
-END
+END;
 GO
 
 --------------------------------------------------
 -- 8.9. Distribution by SUBJECT
 --------------------------------------------------
--- 8.9.1. 
+-- 8.9.1. Get Semesters By Filters
 CREATE OR ALTER PROCEDURE sp_GetSemestersByFilters
     @CurriculumYear VARCHAR(10) = NULL,
     @SchoolYear VARCHAR(20) = NULL
@@ -1284,15 +1447,15 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    SELECT DISTINCT c.Semester  -- Changed from gs.Semester to c.Semester
-    FROM GradeSheet gs
-    INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-    WHERE 
-        (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear)
-        AND
-        (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-    ORDER BY c.Semester ASC;
-END
+    SELECT DISTINCT cur.Semester
+    FROM ClassSection cs
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    WHERE (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
+      AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+    ORDER BY cur.Semester ASC;
+END;
 GO
 
 -- 8.9.2. GET SUBJECT DISTRIBUTION (Filtered by Curr, Year, Sem)
@@ -1302,122 +1465,110 @@ CREATE OR ALTER PROCEDURE sp_GetDistributionBySubject_FilteredFull
     @Semester INT = NULL
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     SELECT 
         c.CourseDescription AS SubjectName,
         COUNT(gs.GradeSheetID) AS Count
     FROM GradeSheet gs
-    INNER JOIN Course c ON gs.CourseID = c.CourseID
-    INNER JOIN Curriculum cur ON gs.CurriculumID = cur.CurriculumID
+    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Course c ON o.CourseID = c.CourseID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
     WHERE 
-        (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR cur.CurriculumYear = @CurriculumYear)
-        AND
-        (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-        AND
-        (@Semester IS NULL OR cur.Semester = @Semester)
+        (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
+        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+        AND (@Semester IS NULL OR cur.Semester = @Semester)
     GROUP BY c.CourseDescription
     ORDER BY Count DESC;
-END
+END;
 GO
+
 -- 8.9.3. Get Subject Details
-CREATE PROCEDURE sp_GetSubjectDetailsByName
+CREATE OR ALTER PROCEDURE sp_GetSubjectDetailsByName
     @CourseDescription VARCHAR(100)
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     SELECT DISTINCT
         c.CourseCode,
-        -- Formatted Faculty Name
         f.LastName + ', ' + f.FirstName + ISNULL(' ' + LEFT(f.MiddleName, 1) + '.', '') AS FacultyName,
-        -- Pulled from the Curriculum table as per your schema
-        curr.CurriculumYear
-    FROM 
-        GradeSheet gs
-    INNER JOIN 
-        Course c ON gs.CourseID = c.CourseID
-    INNER JOIN 
-        Faculty f ON gs.FacultyID = f.FacultyID
-    INNER JOIN 
-        Curriculum curr ON gs.CurriculumID = curr.CurriculumID
-    WHERE 
-        c.CourseDescription = @CourseDescription
-    ORDER BY 
-        curr.CurriculumYear DESC, FacultyName ASC;
+        ch.CurriculumYear
+    FROM ClassSection cs
+    INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Course c ON o.CourseID = c.CourseID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    WHERE c.CourseDescription = @CourseDescription
+    ORDER BY ch.CurriculumYear DESC, FacultyName ASC;
 END
 GO
 
--- 8.9.3. GET TOTAL CURRICULUM COURSES
+-- 8.9.4. GET TOTAL CURRICULUM COURSES (Global Numerator/Denominator)
 CREATE OR ALTER PROCEDURE sp_GetTotalCurriculumCourses
     @SchoolYear VARCHAR(20) = NULL,
     @CurriculumYear VARCHAR(10) = NULL
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    -- 1. Calculate Total Submitted (The Numerator)
-    -- Counts actual files uploaded to GradeSheet table matching the filters
     DECLARE @SubmittedCount INT;
+    DECLARE @TotalCount INT;
+
+    -- Numerator: Actual Files
     SELECT @SubmittedCount = COUNT(gs.GradeSheetID)
     FROM GradeSheet gs
-    INNER JOIN Curriculum c ON gs.CurriculumID = c.CurriculumID
-    WHERE (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear);
+    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    WHERE (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear);
 
-    -- 2. Calculate Total Expected (The Denominator)
-    -- Counts the number of courses defined in the Curriculum (The "Plan")
-    DECLARE @TotalCount INT;
-    SELECT @TotalCount = COUNT(cc.CurriculumCourseID)
-    FROM CurriculumCourse cc
-    INNER JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
-    WHERE (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR c.CurriculumYear = @CurriculumYear);
+    -- Denominator: All Offerings defined in the Plan
+    SELECT @TotalCount = COUNT(o.OfferingID)
+    FROM Offering o
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    WHERE (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear);
 
-    -- Return as a single row
-    SELECT 
-        ISNULL(@SubmittedCount, 0) AS SubmittedCount, 
-        ISNULL(@TotalCount, 0) AS TotalCount;
+    SELECT ISNULL(@SubmittedCount, 0) AS SubmittedCount, ISNULL(@TotalCount, 0) AS TotalCount;
 END
 GO
-
 
 --------------------------------------------------
 -- 8.10. Distribution by YEAR & SEMESTER 
 --------------------------------------------------
--- 8.10.1. GET PROGRAMS (Filtered by Curriculum)
+-- 8.10.1. GET PROGRAMS (Filtered by Curriculum Year)
 CREATE OR ALTER PROCEDURE sp_GetProgramsByFilter
     @Curriculum VARCHAR(10) = NULL
 AS
 BEGIN
     SELECT DISTINCT p.ProgramCode AS Label
-    FROM GradeSheet gs
-    INNER JOIN Curriculum cur ON gs.CurriculumID = cur.CurriculumID
-    INNER JOIN Program p ON cur.ProgramID = p.ProgramID
-    WHERE (@Curriculum IS NULL OR @Curriculum = 'All' OR cur.CurriculumYear = @Curriculum)
+    FROM Program p
+    INNER JOIN CurriculumHeader ch ON p.ProgramID = ch.ProgramID
+    WHERE (@Curriculum IS NULL OR @Curriculum = 'All' OR ch.CurriculumYear = @Curriculum)
     ORDER BY p.ProgramCode;
 END
 GO
 
-
--- 8.10.2. GET PROFESSORS (Filtered by Curr + Prog)
+-- 8.10.2 GET PROFESSORS (Filtered by Curr + Prog)
 CREATE OR ALTER PROCEDURE sp_GetFacultyByFilter
     @Curriculum VARCHAR(10) = NULL,
     @Program    VARCHAR(50) = NULL
 AS
 BEGIN
     SELECT DISTINCT f.LastName + ', ' + f.FirstName AS Name
-    FROM GradeSheet gs
-    INNER JOIN Curriculum cur ON gs.CurriculumID = cur.CurriculumID
-    INNER JOIN Program p ON cur.ProgramID = p.ProgramID
-    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    WHERE 
-        (@Curriculum IS NULL OR @Curriculum = 'All' OR cur.CurriculumYear = @Curriculum)
-        AND (@Program IS NULL OR @Program = 'All' OR p.ProgramCode = @Program)
+    FROM ClassSection cs
+    INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
+    WHERE (@Curriculum IS NULL OR @Curriculum = 'All' OR ch.CurriculumYear = @Curriculum)
+      AND (@Program IS NULL OR @Program = 'All' OR p.ProgramCode = @Program)
     ORDER BY Name;
 END
 GO
 
--- 8.10.3. GET SUBJECTS (Filtered by Curr + Prog + Prof)
+-- 8.10.3 GET SUBJECTS (Filtered by Curr + Prog + Prof)
 CREATE OR ALTER PROCEDURE sp_GetSubjectsByFilter
     @Curriculum VARCHAR(10) = NULL,
     @Program    VARCHAR(50) = NULL,
@@ -1425,20 +1576,21 @@ CREATE OR ALTER PROCEDURE sp_GetSubjectsByFilter
 AS
 BEGIN
     SELECT DISTINCT c.CourseDescription AS SubjectName
-    FROM GradeSheet gs
-    INNER JOIN Curriculum cur ON gs.CurriculumID = cur.CurriculumID
-    INNER JOIN Program p ON cur.ProgramID = p.ProgramID
-    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    INNER JOIN Course c ON gs.CourseID = c.CourseID
-    WHERE 
-        (@Curriculum IS NULL OR @Curriculum = 'All' OR cur.CurriculumYear = @Curriculum)
-        AND (@Program IS NULL OR @Program = 'All' OR p.ProgramCode = @Program)
-        AND (@Faculty IS NULL OR @Faculty = 'All' OR (f.LastName + ', ' + f.FirstName) = @Faculty)
+    FROM Offering o
+    INNER JOIN Course c ON o.CourseID = c.CourseID
+    INNER JOIN ClassSection cs ON o.OfferingID = cs.OfferingID
+    INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
+    WHERE (@Curriculum IS NULL OR @Curriculum = 'All' OR ch.CurriculumYear = @Curriculum)
+      AND (@Program IS NULL OR @Program = 'All' OR p.ProgramCode = @Program)
+      AND (@Faculty IS NULL OR @Faculty = 'All' OR (f.LastName + ', ' + f.FirstName) = @Faculty)
     ORDER BY c.CourseDescription;
 END
 GO
 
--- 8.10.4. GET SCHOOL YEARS (Filtered by All Previous)
+-- 8.10.4. GET SCHOOL YEARS (Filtered by Curriculum, Program, Faculty, and Subject)
 CREATE OR ALTER PROCEDURE sp_GetSchoolYearsByFilter
     @Curriculum VARCHAR(10) = NULL,
     @Program    VARCHAR(50) = NULL,
@@ -1446,21 +1598,22 @@ CREATE OR ALTER PROCEDURE sp_GetSchoolYearsByFilter
     @Subject    VARCHAR(100) = NULL
 AS
 BEGIN
-    SELECT DISTINCT gs.SchoolYear
-    FROM GradeSheet gs
-    INNER JOIN Curriculum cur ON gs.CurriculumID = cur.CurriculumID
-    INNER JOIN Program p ON cur.ProgramID = p.ProgramID
-    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    INNER JOIN Course c ON gs.CourseID = c.CourseID
+    SELECT DISTINCT cs.SchoolYear
+    FROM ClassSection cs
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Course c ON o.CourseID = c.CourseID
+    INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
     WHERE 
-        (@Curriculum IS NULL OR @Curriculum = 'All' OR cur.CurriculumYear = @Curriculum)
+        (@Curriculum IS NULL OR @Curriculum = 'All' OR ch.CurriculumYear = @Curriculum)
         AND (@Program IS NULL OR @Program = 'All' OR p.ProgramCode = @Program)
         AND (@Faculty IS NULL OR @Faculty = 'All' OR (f.LastName + ', ' + f.FirstName) = @Faculty)
         AND (@Subject IS NULL OR @Subject = 'All' OR c.CourseDescription = @Subject)
-    ORDER BY gs.SchoolYear DESC;
+    ORDER BY cs.SchoolYear DESC;
 END
 GO
-
 
 -- 8.10.5. THE CHART DATA (Final Distribution) - FIXED
 CREATE OR ALTER PROCEDURE sp_GetDistributionByYearSem
@@ -1471,54 +1624,25 @@ CREATE OR ALTER PROCEDURE sp_GetDistributionByYearSem
     @SchoolYear VARCHAR(20) = NULL
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     SELECT 
-        cur.Semester, -- FIXED: Semester comes from the Curriculum table, not GradeSheet
+        cur.Semester,
         COUNT(gs.GradeSheetID) AS Total
     FROM GradeSheet gs
-    INNER JOIN Curriculum cur ON gs.CurriculumID = cur.CurriculumID
-    INNER JOIN Program p ON cur.ProgramID = p.ProgramID
-    INNER JOIN Faculty f ON gs.FacultyID = f.FacultyID
-    INNER JOIN Course c ON gs.CourseID = c.CourseID
+    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+    INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
+    INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
+    INNER JOIN Course c ON o.CourseID = c.CourseID
+    INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
+    INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
     WHERE 
-        (@Curriculum IS NULL OR @Curriculum = 'All' OR cur.CurriculumYear = @Curriculum)
+        (@Curriculum IS NULL OR @Curriculum = 'All' OR ch.CurriculumYear = @Curriculum)
         AND (@Program IS NULL OR @Program = 'All' OR p.ProgramCode = @Program)
         AND (@Faculty IS NULL OR @Faculty = 'All' OR (f.LastName + ', ' + f.FirstName) = @Faculty)
         AND (@Subject IS NULL OR @Subject = 'All' OR c.CourseDescription = @Subject)
-        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR gs.SchoolYear = @SchoolYear)
-    GROUP BY 
-        cur.Semester -- FIXED
-    ORDER BY 
-        cur.Semester ASC; -- FIXED
-END
+        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+    GROUP BY cur.Semester
+    ORDER BY cur.Semester ASC;
+END;
 GO
-
-
---==================================================
--- 9. REPORT STORED PROCEDURES
---==================================================
--- 9.1 GET ALL EXISTING AND NOT EXISTING GRADESHEETS
-SELECT 
-    CASE 
-        WHEN gs.GradeSheetID IS NOT NULL THEN 'Grade Sheet Submitted'
-        ELSE 'No Grade Sheet'
-    END AS Remarks,
-    gs.SchoolYear,
-    co.CourseCode,
-    f.FirstName + ' ' + f.LastName AS Faculty,
-    p.ProgramCode,
-    c.YearLevel AS [Year Level]
-FROM CurriculumCourse cc
-INNER JOIN Curriculum c ON cc.CurriculumID = c.CurriculumID
-INNER JOIN Program p ON c.ProgramID = p.ProgramID
-INNER JOIN Course co ON cc.CourseID = co.CourseID
-INNER JOIN Faculty f ON cc.FacultyID = f.FacultyID
-LEFT JOIN GradeSheet gs ON gs.CourseID = cc.CourseID
-    AND gs.FacultyID = cc.FacultyID
-    AND gs.CurriculumID = cc.CurriculumID
-ORDER BY c.CurriculumYear, p.ProgramCode, c.YearLevel, c.Semester;
-
-
---================================================================================================================
 
