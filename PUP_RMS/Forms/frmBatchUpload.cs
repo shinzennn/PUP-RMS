@@ -564,6 +564,15 @@ namespace PUP_RMS.Forms
 
         // =========================
 
+
+        private int GetSectionID()
+        {
+            string query = @"SELECT SectionID From ClassSection WHERE Section = @Section";
+            DbControl.AddParameter("@Section", sectionCmbox.Text, SqlDbType.VarChar);
+            DataTable dt = DbControl.GetData(query);
+            return Convert.ToInt32(dt.Rows[0]["SectionID"]);
+        }
+
         private void saveBtn_Click(object sender, EventArgs e)
         {
             string curriculumYear = curriculumCmbox.Text;
@@ -577,7 +586,8 @@ namespace PUP_RMS.Forms
                 programCmbox.Text == null ||
                 yearLevelCmbox.Text == null ||
                 courseCmbox.Text == null ||
-                professorCmbox.Text == null)
+                professorCmbox.Text == null ||
+                sectionCmbox.Text == null)
             {
                 MessageBox.Show("Complete All Fields.");
                 return;
@@ -595,6 +605,7 @@ namespace PUP_RMS.Forms
 
             try
             {
+                int sectionid = GetSectionID();
                 string sourcePath = toUpload.Items[0].Tag.ToString();
                 string extension = Path.GetExtension(sourcePath);
                 string folderPath = BuildImageFolderPath();
@@ -620,10 +631,9 @@ namespace PUP_RMS.Forms
                 }
 
                 File.Copy(sourcePath, savedFilePath, true);
-
                 int gradeSheetId = DbControl.InsertGradeSheet(
                     savedFileName, folderPath,
-                    Convert.ToInt32(sectionCmbox.Text),
+                    sectionid,
                     Convert.ToInt32(pageCmbox.SelectedValue), loggedInAdminId
                 );
 

@@ -71,11 +71,13 @@ namespace PUP_RMS.Forms
                 {
                     btnEdit.Visible = false;   // hide the Edit button
                     btnUpload.Visible = false; // optionally hide upload button too
+                    deleteBtn.Visible = false; // hide delete button
                 }
                 else
                 {
                     btnEdit.Visible = false;
                     btnUpload.Visible = true;
+                    deleteBtn.Visible = true;
                 }
             }
             catch (Exception ex)
@@ -990,6 +992,36 @@ namespace PUP_RMS.Forms
         private void cmbCourse_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void deleteBtn_Click(object sender, EventArgs e)
+        {
+            string query2 = "SELECT GradeSheetID FROM GradeSheet WHERE Filename = @Filename";
+            DbControl.AddParameter("@Filename", txtFilename.Text, SqlDbType.VarChar);
+            DataTable dt = DbControl.GetData(query2);
+
+            int gradeSheetID = dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["GradeSheetID"]) : 0;
+            MessageBox.Show(gradeSheetID.ToString());
+
+
+            DialogResult a = MessageBox.Show("Are you sure you want to delete this grade sheet?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (a == DialogResult.Yes)
+            {
+                if(pbPreview != null)
+                {
+                    string filePath = pbPreview.ImageLocation;
+                    if (File.Exists(filePath)) File.Delete(filePath);
+                }
+
+                DbControl.DeleteGradeSheet(gradeSheetID);
+                MessageBox.Show("Grade sheet deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                return;
+
+
+            }
         }
     }
 }

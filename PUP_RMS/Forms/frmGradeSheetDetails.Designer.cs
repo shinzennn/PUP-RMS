@@ -30,15 +30,6 @@
         {
             this.tlpEdit = new System.Windows.Forms.TableLayoutPanel();
             this.tlpEditControls = new System.Windows.Forms.TableLayoutPanel();
-            this.tlpPreview = new System.Windows.Forms.TableLayoutPanel();
-            this.panelPreview = new System.Windows.Forms.Panel();
-            this.pbPreview = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.roundedButton1 = new PUP_RMS.RoundedButton();
-            this.btnSave = new PUP_RMS.RoundedButton();
-            this.btnCancel = new PUP_RMS.RoundedButton();
-            this.btnUpload = new PUP_RMS.RoundedButton();
-            this.btnClose = new PUP_RMS.RoundedButton();
             this.btnCancels = new PUP_RMS.RoundedButton();
             this.btnSaves = new PUP_RMS.RoundedButton();
             this.headerPanelCard1 = new PUP_RMS.CustomControls.HeaderPanelCard();
@@ -75,12 +66,18 @@
             this.txtUploader = new System.Windows.Forms.TextBox();
             this.roundedShadowPanel4 = new PUP_RMS.RoundedShadowPanel();
             this.txtPageNumber = new System.Windows.Forms.TextBox();
+            this.tlpPreview = new System.Windows.Forms.TableLayoutPanel();
+            this.panelPreview = new System.Windows.Forms.Panel();
+            this.pbPreview = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.roundedButton1 = new PUP_RMS.RoundedButton();
+            this.btnSave = new PUP_RMS.RoundedButton();
+            this.btnCancel = new PUP_RMS.RoundedButton();
+            this.btnUpload = new PUP_RMS.RoundedButton();
+            this.btnClose = new PUP_RMS.RoundedButton();
+            this.deleteBtn = new PUP_RMS.RoundedButton();
             this.tlpEdit.SuspendLayout();
             this.tlpEditControls.SuspendLayout();
-            this.tlpPreview.SuspendLayout();
-            this.panelPreview.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
-            this.tableLayoutPanel5.SuspendLayout();
             this.headerPanelCard1.SuspendLayout();
             this.roundedShadowPanel12.SuspendLayout();
             this.roundedShadowPanel11.SuspendLayout();
@@ -92,6 +89,10 @@
             this.roundedShadowPanel6.SuspendLayout();
             this.roundedShadowPanel5.SuspendLayout();
             this.roundedShadowPanel4.SuspendLayout();
+            this.tlpPreview.SuspendLayout();
+            this.panelPreview.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpEdit
@@ -126,180 +127,6 @@
             this.tlpEditControls.Size = new System.Drawing.Size(526, 48);
             this.tlpEditControls.TabIndex = 28;
             this.tlpEditControls.Paint += new System.Windows.Forms.PaintEventHandler(this.tlpEditControls_Paint);
-            // 
-            // tlpPreview
-            // 
-            this.tlpPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tlpPreview.ColumnCount = 1;
-            this.tlpPreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpPreview.Controls.Add(this.panelPreview, 0, 0);
-            this.tlpPreview.Controls.Add(this.tableLayoutPanel5, 0, 1);
-            this.tlpPreview.Location = new System.Drawing.Point(588, 34);
-            this.tlpPreview.Margin = new System.Windows.Forms.Padding(25, 25, 25, 50);
-            this.tlpPreview.Name = "tlpPreview";
-            this.tlpPreview.RowCount = 2;
-            this.tlpPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93F));
-            this.tlpPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
-            this.tlpPreview.Size = new System.Drawing.Size(862, 768);
-            this.tlpPreview.TabIndex = 2;
-            // 
-            // panelPreview
-            // 
-            this.panelPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelPreview.AutoScroll = true;
-            this.panelPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelPreview.Controls.Add(this.pbPreview);
-            this.panelPreview.Location = new System.Drawing.Point(3, 3);
-            this.panelPreview.Name = "panelPreview";
-            this.panelPreview.Size = new System.Drawing.Size(856, 708);
-            this.panelPreview.TabIndex = 34;
-            // 
-            // pbPreview
-            // 
-            this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbPreview.Location = new System.Drawing.Point(0, 0);
-            this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(854, 706);
-            this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbPreview.TabIndex = 19;
-            this.pbPreview.TabStop = false;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 5;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 264F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 181F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
-            this.tableLayoutPanel5.Controls.Add(this.roundedButton1, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.btnSave, 3, 0);
-            this.tableLayoutPanel5.Controls.Add(this.btnCancel, 4, 0);
-            this.tableLayoutPanel5.Controls.Add(this.btnUpload, 1, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 717);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(856, 48);
-            this.tableLayoutPanel5.TabIndex = 1;
-            // 
-            // roundedButton1
-            // 
-            this.roundedButton1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.roundedButton1.BackColor = System.Drawing.Color.Goldenrod;
-            this.roundedButton1.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.roundedButton1.BorderRadius = 20;
-            this.roundedButton1.BorderSize = 0;
-            this.roundedButton1.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.roundedButton1.FlatAppearance.BorderSize = 0;
-            this.roundedButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.roundedButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.roundedButton1.ForeColor = System.Drawing.Color.White;
-            this.roundedButton1.HoverColor = System.Drawing.Color.DarkRed;
-            this.roundedButton1.Location = new System.Drawing.Point(25, 4);
-            this.roundedButton1.Name = "roundedButton1";
-            this.roundedButton1.Size = new System.Drawing.Size(100, 40);
-            this.roundedButton1.TabIndex = 38;
-            this.roundedButton1.Text = "View";
-            this.roundedButton1.TextColor = System.Drawing.Color.White;
-            this.roundedButton1.UseVisualStyleBackColor = false;
-            this.roundedButton1.Click += new System.EventHandler(this.roundedButton1_Click_1);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnSave.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnSave.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSave.BorderRadius = 20;
-            this.btnSave.BorderSize = 0;
-            this.btnSave.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnSave.FlatAppearance.BorderSize = 0;
-            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSave.Location = new System.Drawing.Point(626, 4);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(100, 40);
-            this.btnSave.TabIndex = 36;
-            this.btnSave.Text = "Save";
-            this.btnSave.TextColor = System.Drawing.Color.White;
-            this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Visible = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click_1);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnCancel.BackColor = System.Drawing.Color.DarkRed;
-            this.btnCancel.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCancel.BorderRadius = 20;
-            this.btnCancel.BorderSize = 0;
-            this.btnCancel.ButtonColor = System.Drawing.Color.DarkRed;
-            this.btnCancel.FlatAppearance.BorderSize = 0;
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.HoverColor = System.Drawing.Color.Maroon;
-            this.btnCancel.Location = new System.Drawing.Point(732, 4);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 40);
-            this.btnCancel.TabIndex = 37;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.TextColor = System.Drawing.Color.White;
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Visible = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnUpload
-            // 
-            this.btnUpload.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnUpload.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnUpload.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnUpload.BorderRadius = 20;
-            this.btnUpload.BorderSize = 0;
-            this.btnUpload.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnUpload.FlatAppearance.BorderSize = 0;
-            this.btnUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpload.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpload.ForeColor = System.Drawing.Color.White;
-            this.btnUpload.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnUpload.Location = new System.Drawing.Point(131, 4);
-            this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(100, 40);
-            this.btnUpload.TabIndex = 35;
-            this.btnUpload.Text = "Upload";
-            this.btnUpload.TextColor = System.Drawing.Color.White;
-            this.btnUpload.UseVisualStyleBackColor = false;
-            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click_1);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnClose.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnClose.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnClose.BorderRadius = 20;
-            this.btnClose.BorderSize = 0;
-            this.btnClose.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnClose.Location = new System.Drawing.Point(1332, 818);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(118, 31);
-            this.btnClose.TabIndex = 33;
-            this.btnClose.Text = "Close";
-            this.btnClose.TextColor = System.Drawing.Color.White;
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click_1);
             // 
             // btnCancels
             // 
@@ -921,6 +748,203 @@
             this.txtPageNumber.TabIndex = 2;
             this.txtPageNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // tlpPreview
+            // 
+            this.tlpPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlpPreview.ColumnCount = 1;
+            this.tlpPreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpPreview.Controls.Add(this.panelPreview, 0, 0);
+            this.tlpPreview.Controls.Add(this.tableLayoutPanel5, 0, 1);
+            this.tlpPreview.Location = new System.Drawing.Point(588, 34);
+            this.tlpPreview.Margin = new System.Windows.Forms.Padding(25, 25, 25, 50);
+            this.tlpPreview.Name = "tlpPreview";
+            this.tlpPreview.RowCount = 2;
+            this.tlpPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93F));
+            this.tlpPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
+            this.tlpPreview.Size = new System.Drawing.Size(862, 768);
+            this.tlpPreview.TabIndex = 2;
+            // 
+            // panelPreview
+            // 
+            this.panelPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelPreview.AutoScroll = true;
+            this.panelPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelPreview.Controls.Add(this.pbPreview);
+            this.panelPreview.Location = new System.Drawing.Point(3, 3);
+            this.panelPreview.Name = "panelPreview";
+            this.panelPreview.Size = new System.Drawing.Size(856, 708);
+            this.panelPreview.TabIndex = 34;
+            // 
+            // pbPreview
+            // 
+            this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbPreview.Location = new System.Drawing.Point(0, 0);
+            this.pbPreview.Name = "pbPreview";
+            this.pbPreview.Size = new System.Drawing.Size(854, 706);
+            this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbPreview.TabIndex = 19;
+            this.pbPreview.TabStop = false;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 5;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 264F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 181F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
+            this.tableLayoutPanel5.Controls.Add(this.deleteBtn, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.roundedButton1, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.btnSave, 3, 0);
+            this.tableLayoutPanel5.Controls.Add(this.btnCancel, 4, 0);
+            this.tableLayoutPanel5.Controls.Add(this.btnUpload, 1, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 717);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(856, 48);
+            this.tableLayoutPanel5.TabIndex = 1;
+            // 
+            // roundedButton1
+            // 
+            this.roundedButton1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.roundedButton1.BackColor = System.Drawing.Color.Goldenrod;
+            this.roundedButton1.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.roundedButton1.BorderRadius = 20;
+            this.roundedButton1.BorderSize = 0;
+            this.roundedButton1.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.roundedButton1.FlatAppearance.BorderSize = 0;
+            this.roundedButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.roundedButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.roundedButton1.ForeColor = System.Drawing.Color.White;
+            this.roundedButton1.HoverColor = System.Drawing.Color.DarkRed;
+            this.roundedButton1.Location = new System.Drawing.Point(25, 4);
+            this.roundedButton1.Name = "roundedButton1";
+            this.roundedButton1.Size = new System.Drawing.Size(100, 40);
+            this.roundedButton1.TabIndex = 38;
+            this.roundedButton1.Text = "View";
+            this.roundedButton1.TextColor = System.Drawing.Color.White;
+            this.roundedButton1.UseVisualStyleBackColor = false;
+            this.roundedButton1.Click += new System.EventHandler(this.roundedButton1_Click_1);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnSave.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnSave.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSave.BorderRadius = 20;
+            this.btnSave.BorderSize = 0;
+            this.btnSave.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.ForeColor = System.Drawing.Color.White;
+            this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnSave.Location = new System.Drawing.Point(626, 4);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(100, 40);
+            this.btnSave.TabIndex = 36;
+            this.btnSave.Text = "Save";
+            this.btnSave.TextColor = System.Drawing.Color.White;
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Visible = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click_1);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnCancel.BackColor = System.Drawing.Color.DarkRed;
+            this.btnCancel.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCancel.BorderRadius = 20;
+            this.btnCancel.BorderSize = 0;
+            this.btnCancel.ButtonColor = System.Drawing.Color.DarkRed;
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.HoverColor = System.Drawing.Color.Maroon;
+            this.btnCancel.Location = new System.Drawing.Point(732, 4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(100, 40);
+            this.btnCancel.TabIndex = 37;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.TextColor = System.Drawing.Color.White;
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Visible = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnUpload
+            // 
+            this.btnUpload.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnUpload.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnUpload.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnUpload.BorderRadius = 20;
+            this.btnUpload.BorderSize = 0;
+            this.btnUpload.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnUpload.FlatAppearance.BorderSize = 0;
+            this.btnUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpload.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpload.ForeColor = System.Drawing.Color.White;
+            this.btnUpload.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnUpload.Location = new System.Drawing.Point(131, 4);
+            this.btnUpload.Name = "btnUpload";
+            this.btnUpload.Size = new System.Drawing.Size(100, 40);
+            this.btnUpload.TabIndex = 35;
+            this.btnUpload.Text = "Upload";
+            this.btnUpload.TextColor = System.Drawing.Color.White;
+            this.btnUpload.UseVisualStyleBackColor = false;
+            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click_1);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnClose.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnClose.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnClose.BorderRadius = 20;
+            this.btnClose.BorderSize = 0;
+            this.btnClose.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnClose.FlatAppearance.BorderSize = 0;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnClose.Location = new System.Drawing.Point(1332, 818);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(118, 31);
+            this.btnClose.TabIndex = 33;
+            this.btnClose.Text = "Close";
+            this.btnClose.TextColor = System.Drawing.Color.White;
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click_1);
+            // 
+            // deleteBtn
+            // 
+            this.deleteBtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.deleteBtn.BackColor = System.Drawing.Color.Goldenrod;
+            this.deleteBtn.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.deleteBtn.BorderRadius = 20;
+            this.deleteBtn.BorderSize = 0;
+            this.deleteBtn.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.deleteBtn.FlatAppearance.BorderSize = 0;
+            this.deleteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deleteBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deleteBtn.ForeColor = System.Drawing.Color.White;
+            this.deleteBtn.HoverColor = System.Drawing.Color.DarkRed;
+            this.deleteBtn.Location = new System.Drawing.Point(287, 4);
+            this.deleteBtn.Name = "deleteBtn";
+            this.deleteBtn.Size = new System.Drawing.Size(100, 40);
+            this.deleteBtn.TabIndex = 39;
+            this.deleteBtn.Text = "Delete";
+            this.deleteBtn.TextColor = System.Drawing.Color.White;
+            this.deleteBtn.UseVisualStyleBackColor = false;
+            this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
+            // 
             // frmGradeSheetDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -936,10 +960,6 @@
             this.Load += new System.EventHandler(this.frmGradeSheetDetails_Load);
             this.tlpEdit.ResumeLayout(false);
             this.tlpEditControls.ResumeLayout(false);
-            this.tlpPreview.ResumeLayout(false);
-            this.panelPreview.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
-            this.tableLayoutPanel5.ResumeLayout(false);
             this.headerPanelCard1.ResumeLayout(false);
             this.headerPanelCard1.PerformLayout();
             this.roundedShadowPanel12.ResumeLayout(false);
@@ -954,6 +974,10 @@
             this.roundedShadowPanel5.ResumeLayout(false);
             this.roundedShadowPanel4.ResumeLayout(false);
             this.roundedShadowPanel4.PerformLayout();
+            this.tlpPreview.ResumeLayout(false);
+            this.panelPreview.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
+            this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1007,5 +1031,6 @@
         private System.Windows.Forms.Panel panelPreview;
         private System.Windows.Forms.PictureBox pbPreview;
         private CustomControls.HeaderPanelCard headerPanelCard1;
+        private RoundedButton deleteBtn;
     }
 }
