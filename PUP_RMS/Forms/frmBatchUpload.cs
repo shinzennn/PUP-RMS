@@ -874,11 +874,13 @@ namespace PUP_RMS.Forms
 
         private void sectionCmbox_SelectedValueChanged(object sender, EventArgs e)
         {
+
             LoadProfessors();
         }
 
         private void sectionCmbox_TextUpdate(object sender, EventArgs e)
         {
+
             LoadProfessors();
         }
 
@@ -894,7 +896,18 @@ namespace PUP_RMS.Forms
 
         private void courseCmbox_SelectedValueChanged(object sender, EventArgs e)
         {
-          LoadAcademicYears();
+            yearCmbox.Text = "";
+            sectionCmbox.Text = "";
+           professorCmbox.Text = "";
+            LoadAcademicYears();
+        }
+
+        private void semesterCmbox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            courseCmbox.Text = "";
+            yearCmbox.Text = "";
+            sectionCmbox.Text = "";
+            professorCmbox.Text = "";
         }
     }
 

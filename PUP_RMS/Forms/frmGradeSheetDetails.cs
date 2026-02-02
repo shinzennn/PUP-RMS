@@ -74,7 +74,7 @@ namespace PUP_RMS.Forms
                 }
                 else
                 {
-                    btnEdit.Visible = true;
+                    btnEdit.Visible = false;
                     btnUpload.Visible = true;
                 }
             }
