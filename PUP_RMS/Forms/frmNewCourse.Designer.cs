@@ -59,8 +59,8 @@
             this.panelSubInfo.Controls.Add(this.roundedShadowPanel5);
             this.panelSubInfo.Controls.Add(this.label5);
             this.panelSubInfo.Controls.Add(this.label2);
-            this.panelSubInfo.Location = new System.Drawing.Point(20, 39);
-            this.panelSubInfo.Margin = new System.Windows.Forms.Padding(33, 4, 0, 4);
+            this.panelSubInfo.Location = new System.Drawing.Point(15, 32);
+            this.panelSubInfo.Margin = new System.Windows.Forms.Padding(25, 3, 0, 3);
             this.panelSubInfo.Name = "panelSubInfo";
             this.panelSubInfo.PanelColor = System.Drawing.Color.White;
             this.panelSubInfo.PanelImage = null;
@@ -68,7 +68,7 @@
             this.panelSubInfo.ShadowDepth = 10;
             this.panelSubInfo.ShadowEnabled = true;
             this.panelSubInfo.ShadowShift = 5;
-            this.panelSubInfo.Size = new System.Drawing.Size(627, 490);
+            this.panelSubInfo.Size = new System.Drawing.Size(470, 398);
             this.panelSubInfo.TabIndex = 22;
             // 
             // tableLayoutPanel4
@@ -77,17 +77,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 15F));
             this.tableLayoutPanel4.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.roundedShadowPanel4, 0, 1);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(41, 103);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(31, 84);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(549, 114);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(412, 93);
             this.tableLayoutPanel4.TabIndex = 30;
             // 
             // label3
@@ -96,10 +95,9 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(4, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(3, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(129, 22);
+            this.label3.Size = new System.Drawing.Size(102, 18);
             this.label3.TabIndex = 22;
             this.label3.Text = "Course Code";
             // 
@@ -112,8 +110,8 @@
             this.roundedShadowPanel4.BorderRadius = 20;
             this.roundedShadowPanel4.BorderSize = 0;
             this.roundedShadowPanel4.Controls.Add(this.txtCrsCode);
-            this.roundedShadowPanel4.Location = new System.Drawing.Point(0, 22);
-            this.roundedShadowPanel4.Margin = new System.Windows.Forms.Padding(0, 0, 13, 0);
+            this.roundedShadowPanel4.Location = new System.Drawing.Point(0, 18);
+            this.roundedShadowPanel4.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
             this.roundedShadowPanel4.Name = "roundedShadowPanel4";
             this.roundedShadowPanel4.PanelColor = System.Drawing.Color.LightGray;
             this.roundedShadowPanel4.PanelImage = null;
@@ -121,7 +119,7 @@
             this.roundedShadowPanel4.ShadowDepth = 10;
             this.roundedShadowPanel4.ShadowEnabled = true;
             this.roundedShadowPanel4.ShadowShift = 5;
-            this.roundedShadowPanel4.Size = new System.Drawing.Size(536, 79);
+            this.roundedShadowPanel4.Size = new System.Drawing.Size(402, 64);
             this.roundedShadowPanel4.TabIndex = 23;
             // 
             // txtCrsCode
@@ -131,12 +129,12 @@
             this.txtCrsCode.BackColor = System.Drawing.Color.LightGray;
             this.txtCrsCode.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtCrsCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCrsCode.Location = new System.Drawing.Point(32, 26);
-            this.txtCrsCode.Margin = new System.Windows.Forms.Padding(67, 37, 67, 37);
+            this.txtCrsCode.Location = new System.Drawing.Point(24, 21);
+            this.txtCrsCode.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
             this.txtCrsCode.Name = "txtCrsCode";
             this.txtCrsCode.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtCrsCode.Size = new System.Drawing.Size(482, 23);
-            this.txtCrsCode.TabIndex = 20;
+            this.txtCrsCode.Size = new System.Drawing.Size(362, 19);
+            this.txtCrsCode.TabIndex = 0;
             // 
             // btnCancel
             // 
@@ -151,11 +149,10 @@
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCancel.Location = new System.Drawing.Point(333, 404);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Location = new System.Drawing.Point(250, 328);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(203, 49);
-            this.btnCancel.TabIndex = 29;
+            this.btnCancel.Size = new System.Drawing.Size(152, 40);
+            this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.TextColor = System.Drawing.Color.White;
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -174,11 +171,10 @@
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSave.Location = new System.Drawing.Point(101, 404);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Location = new System.Drawing.Point(76, 328);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(203, 49);
-            this.btnSave.TabIndex = 28;
+            this.btnSave.Size = new System.Drawing.Size(152, 40);
+            this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Save";
             this.btnSave.TextColor = System.Drawing.Color.White;
             this.btnSave.UseVisualStyleBackColor = false;
@@ -193,8 +189,8 @@
             this.roundedShadowPanel5.BorderRadius = 20;
             this.roundedShadowPanel5.BorderSize = 0;
             this.roundedShadowPanel5.Controls.Add(this.txtSubDesc);
-            this.roundedShadowPanel5.Location = new System.Drawing.Point(41, 300);
-            this.roundedShadowPanel5.Margin = new System.Windows.Forms.Padding(13, 0, 13, 0);
+            this.roundedShadowPanel5.Location = new System.Drawing.Point(31, 244);
+            this.roundedShadowPanel5.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.roundedShadowPanel5.Name = "roundedShadowPanel5";
             this.roundedShadowPanel5.PanelColor = System.Drawing.Color.LightGray;
             this.roundedShadowPanel5.PanelImage = null;
@@ -202,7 +198,7 @@
             this.roundedShadowPanel5.ShadowDepth = 10;
             this.roundedShadowPanel5.ShadowEnabled = true;
             this.roundedShadowPanel5.ShadowShift = 5;
-            this.roundedShadowPanel5.Size = new System.Drawing.Size(549, 79);
+            this.roundedShadowPanel5.Size = new System.Drawing.Size(412, 64);
             this.roundedShadowPanel5.TabIndex = 27;
             // 
             // txtSubDesc
@@ -212,12 +208,12 @@
             this.txtSubDesc.BackColor = System.Drawing.Color.LightGray;
             this.txtSubDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSubDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSubDesc.Location = new System.Drawing.Point(32, 26);
-            this.txtSubDesc.Margin = new System.Windows.Forms.Padding(67, 37, 67, 37);
+            this.txtSubDesc.Location = new System.Drawing.Point(24, 21);
+            this.txtSubDesc.Margin = new System.Windows.Forms.Padding(50, 30, 50, 30);
             this.txtSubDesc.Name = "txtSubDesc";
             this.txtSubDesc.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtSubDesc.Size = new System.Drawing.Size(488, 23);
-            this.txtSubDesc.TabIndex = 20;
+            this.txtSubDesc.Size = new System.Drawing.Size(366, 19);
+            this.txtSubDesc.TabIndex = 0;
             // 
             // label5
             // 
@@ -226,10 +222,9 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(41, 263);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(31, 214);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(178, 25);
+            this.label5.Size = new System.Drawing.Size(144, 20);
             this.label5.TabIndex = 26;
             this.label5.Text = "Course Description";
             // 
@@ -239,21 +234,20 @@
             this.label2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(25, 31);
-            this.label2.Margin = new System.Windows.Forms.Padding(33, 31, 33, 31);
+            this.label2.Location = new System.Drawing.Point(19, 25);
+            this.label2.Margin = new System.Windows.Forms.Padding(25, 25, 25, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(324, 39);
+            this.label2.Size = new System.Drawing.Size(263, 31);
             this.label2.TabIndex = 15;
             this.label2.Text = "Course Information";
             // 
             // frmNewCourse
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 570);
+            this.ClientSize = new System.Drawing.Size(501, 463);
             this.Controls.Add(this.panelSubInfo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmNewCourse";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmNewCourse";

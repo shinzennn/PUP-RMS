@@ -147,7 +147,7 @@
             this.btnCancel.Location = new System.Drawing.Point(257, 374);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(152, 40);
-            this.btnCancel.TabIndex = 29;
+            this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.TextColor = System.Drawing.Color.White;
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -169,7 +169,7 @@
             this.btnSave.Location = new System.Drawing.Point(83, 374);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 40);
-            this.btnSave.TabIndex = 28;
+            this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Save";
             this.btnSave.TextColor = System.Drawing.Color.White;
             this.btnSave.UseVisualStyleBackColor = false;
@@ -208,7 +208,7 @@
             this.txtProgramDesc.Name = "txtProgramDesc";
             this.txtProgramDesc.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtProgramDesc.Size = new System.Drawing.Size(380, 19);
-            this.txtProgramDesc.TabIndex = 20;
+            this.txtProgramDesc.TabIndex = 0;
             // 
             // label5
             // 
@@ -256,7 +256,7 @@
             this.txtProgamCode.Name = "txtProgamCode";
             this.txtProgamCode.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtProgamCode.Size = new System.Drawing.Size(385, 19);
-            this.txtProgamCode.TabIndex = 20;
+            this.txtProgamCode.TabIndex = 0;
             // 
             // label3
             // 

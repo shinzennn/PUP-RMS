@@ -38,15 +38,25 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSaveCurriculumCourse = new System.Windows.Forms.Button();
-            this.pnlCurriculumHeader = new PUP_RMS.CustomControls.HeaderPanelCard();
-            this.dgvCurriculum = new System.Windows.Forms.DataGridView();
-            this.pnlOffering = new PUP_RMS.CustomControls.HeaderPanelCard();
-            this.dgvCurriculumCourse = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteRow = new System.Windows.Forms.ToolStripMenuItem();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnCreateCurriculum = new PUP_RMS.RoundedButton();
+            this.btnSearchCurriculum = new PUP_RMS.RoundedButton();
+            this.roundedShadowPanel1 = new PUP_RMS.RoundedShadowPanel();
+            this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbxSearchCurriculumProgram = new System.Windows.Forms.ComboBox();
+            this.lblSeachCurriculumYear = new System.Windows.Forms.Label();
+            this.cbxSeachCurriculumYear = new System.Windows.Forms.ComboBox();
+            this.lblSearchCurriculumProgram = new System.Windows.Forms.Label();
+            this.btnSearchView = new PUP_RMS.RoundedButton();
+            this.btnSearchEdit = new PUP_RMS.RoundedButton();
+            this.gradientLabel1 = new GradientLabel();
             this.pnlYearLevelAndSem = new PUP_RMS.CustomControls.HeaderPanelCard();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.btnCancelYearLevelAndSem = new System.Windows.Forms.Button();
@@ -74,28 +84,18 @@
             this.cbxProgram = new System.Windows.Forms.ComboBox();
             this.btnAddProgram = new System.Windows.Forms.Button();
             this.txtCurriculumYear = new System.Windows.Forms.TextBox();
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.gradientLabel1 = new GradientLabel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cbxSearchCurriculumProgram = new System.Windows.Forms.ComboBox();
-            this.cbxSeachCurriculumYear = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnCreateCurriculum = new PUP_RMS.RoundedButton();
-            this.btnSearchCurriculum = new PUP_RMS.RoundedButton();
-            this.roundedShadowPanel1 = new PUP_RMS.RoundedShadowPanel();
-            this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblSeachCurriculumYear = new System.Windows.Forms.Label();
-            this.lblSearchCurriculumProgram = new System.Windows.Forms.Label();
-            this.btnSearchView = new PUP_RMS.RoundedButton();
-            this.btnSearchEdit = new PUP_RMS.RoundedButton();
+            this.pnlCurriculumHeader = new PUP_RMS.CustomControls.HeaderPanelCard();
+            this.dgvCurriculum = new System.Windows.Forms.DataGridView();
+            this.pnlOffering = new PUP_RMS.CustomControls.HeaderPanelCard();
+            this.dgvCurriculumCourse = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel9.SuspendLayout();
-            this.pnlCurriculumHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCurriculum)).BeginInit();
-            this.pnlOffering.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCurriculumCourse)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel9.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
+            this.panelHeader.SuspendLayout();
+            this.tableLayoutPanel11.SuspendLayout();
+            this.roundedShadowPanel1.SuspendLayout();
+            this.tableLayoutPanel12.SuspendLayout();
             this.pnlYearLevelAndSem.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
@@ -105,10 +105,10 @@
             this.pnlCurriculum.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.panelHeader.SuspendLayout();
-            this.tableLayoutPanel11.SuspendLayout();
-            this.roundedShadowPanel1.SuspendLayout();
-            this.tableLayoutPanel12.SuspendLayout();
+            this.pnlCurriculumHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCurriculum)).BeginInit();
+            this.pnlOffering.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCurriculumCourse)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -128,6 +128,25 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1019, 773);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.pnlYearLevelAndSem, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.pnlCurriculumCourse, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.pnlCurriculum, 0, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(299, 767);
+            this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel9
             // 
@@ -168,161 +187,6 @@
             this.btnSaveCurriculumCourse.UseVisualStyleBackColor = false;
             this.btnSaveCurriculumCourse.Click += new System.EventHandler(this.btnSaveCurriculumCourse_Click);
             // 
-            // pnlCurriculumHeader
-            // 
-            this.pnlCurriculumHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlCurriculumHeader.BackColor = System.Drawing.Color.Transparent;
-            this.pnlCurriculumHeader.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(233)))), ((int)(((byte)(237)))));
-            this.pnlCurriculumHeader.BorderRadius = 10;
-            this.pnlCurriculumHeader.BorderThickness = 1;
-            this.pnlCurriculumHeader.ContentBackColor = System.Drawing.Color.White;
-            this.pnlCurriculumHeader.Controls.Add(this.dgvCurriculum);
-            this.pnlCurriculumHeader.EnableHoverEffect = false;
-            this.pnlCurriculumHeader.HeaderBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
-            this.pnlCurriculumHeader.HeaderFontSize = 14F;
-            this.pnlCurriculumHeader.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(40)))), ((int)(((byte)(80)))));
-            this.pnlCurriculumHeader.HeaderHeight = 45;
-            this.pnlCurriculumHeader.HeaderLabel = "Curriculum Year: | Program:";
-            this.pnlCurriculumHeader.IconHeader = null;
-            this.pnlCurriculumHeader.IconSize = 22;
-            this.pnlCurriculumHeader.Location = new System.Drawing.Point(3, 3);
-            this.pnlCurriculumHeader.Name = "pnlCurriculumHeader";
-            this.pnlCurriculumHeader.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.pnlCurriculumHeader.ShadowDepth = 6;
-            this.pnlCurriculumHeader.ShadowPadding = 12;
-            this.pnlCurriculumHeader.ShowHeaderDivider = true;
-            this.pnlCurriculumHeader.ShowShadow = true;
-            this.pnlCurriculumHeader.Size = new System.Drawing.Size(704, 340);
-            this.pnlCurriculumHeader.TabIndex = 0;
-            // 
-            // dgvCurriculum
-            // 
-            this.dgvCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvCurriculum.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvCurriculum.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.dgvCurriculum.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCurriculum.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvCurriculum.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCurriculum.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvCurriculum.EnableHeadersVisualStyles = false;
-            this.dgvCurriculum.Location = new System.Drawing.Point(33, 73);
-            this.dgvCurriculum.Margin = new System.Windows.Forms.Padding(10);
-            this.dgvCurriculum.Name = "dgvCurriculum";
-            this.dgvCurriculum.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCurriculum.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvCurriculum.RowHeadersVisible = false;
-            this.dgvCurriculum.RowHeadersWidth = 51;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCurriculum.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvCurriculum.RowTemplate.Height = 24;
-            this.dgvCurriculum.Size = new System.Drawing.Size(638, 234);
-            this.dgvCurriculum.TabIndex = 10;
-            this.dgvCurriculum.TabStop = false;
-            this.dgvCurriculum.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCurriculum_CellDoubleClick);
-            // 
-            // pnlOffering
-            // 
-            this.pnlOffering.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlOffering.BackColor = System.Drawing.Color.Transparent;
-            this.pnlOffering.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(233)))), ((int)(((byte)(237)))));
-            this.pnlOffering.BorderRadius = 10;
-            this.pnlOffering.BorderThickness = 1;
-            this.pnlOffering.ContentBackColor = System.Drawing.Color.White;
-            this.pnlOffering.Controls.Add(this.dgvCurriculumCourse);
-            this.pnlOffering.EnableHoverEffect = false;
-            this.pnlOffering.HeaderBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
-            this.pnlOffering.HeaderFontSize = 14F;
-            this.pnlOffering.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(40)))), ((int)(((byte)(80)))));
-            this.pnlOffering.HeaderHeight = 45;
-            this.pnlOffering.HeaderLabel = "Year Level: | Semester:";
-            this.pnlOffering.IconHeader = null;
-            this.pnlOffering.IconSize = 22;
-            this.pnlOffering.Location = new System.Drawing.Point(3, 349);
-            this.pnlOffering.Name = "pnlOffering";
-            this.pnlOffering.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.pnlOffering.ShadowDepth = 6;
-            this.pnlOffering.ShadowPadding = 12;
-            this.pnlOffering.ShowHeaderDivider = true;
-            this.pnlOffering.ShowShadow = true;
-            this.pnlOffering.Size = new System.Drawing.Size(704, 340);
-            this.pnlOffering.TabIndex = 1;
-            // 
-            // dgvCurriculumCourse
-            // 
-            this.dgvCurriculumCourse.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvCurriculumCourse.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvCurriculumCourse.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.dgvCurriculumCourse.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCurriculumCourse.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvCurriculumCourse.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCurriculumCourse.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCurriculumCourse.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dgvCurriculumCourse.EnableHeadersVisualStyles = false;
-            this.dgvCurriculumCourse.Location = new System.Drawing.Point(33, 73);
-            this.dgvCurriculumCourse.Margin = new System.Windows.Forms.Padding(10);
-            this.dgvCurriculumCourse.Name = "dgvCurriculumCourse";
-            this.dgvCurriculumCourse.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCurriculumCourse.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            this.dgvCurriculumCourse.RowHeadersVisible = false;
-            this.dgvCurriculumCourse.RowHeadersWidth = 51;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCurriculumCourse.RowsDefaultCellStyle = dataGridViewCellStyle8;
-            this.dgvCurriculumCourse.RowTemplate.Height = 24;
-            this.dgvCurriculumCourse.Size = new System.Drawing.Size(638, 234);
-            this.dgvCurriculumCourse.TabIndex = 11;
-            this.dgvCurriculumCourse.TabStop = false;
-            this.dgvCurriculumCourse.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCurriculumCourse_CellClick);
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -338,24 +202,253 @@
             this.deleteRow.Text = "Delete";
             this.deleteRow.Click += new System.EventHandler(this.deleteRow_Click);
             // 
-            // tableLayoutPanel2
+            // panelHeader
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
+            this.panelHeader.Controls.Add(this.gradientLabel1);
+            this.panelHeader.Controls.Add(this.label10);
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(1120, 90);
+            this.panelHeader.TabIndex = 22;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(27, 51);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(267, 21);
+            this.label10.TabIndex = 8;
+            this.label10.Text = "Manage Curriculum in the database";
+            // 
+            // tableLayoutPanel11
+            // 
+            this.tableLayoutPanel11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel11.ColumnCount = 4;
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel11.Controls.Add(this.btnCreateCurriculum, 1, 0);
+            this.tableLayoutPanel11.Controls.Add(this.btnSearchCurriculum, 2, 0);
+            this.tableLayoutPanel11.Controls.Add(this.roundedShadowPanel1, 3, 0);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(49, 110);
+            this.tableLayoutPanel11.Name = "tableLayoutPanel11";
+            this.tableLayoutPanel11.RowCount = 1;
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(1019, 88);
+            this.tableLayoutPanel11.TabIndex = 24;
+            // 
+            // btnCreateCurriculum
+            // 
+            this.btnCreateCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCreateCurriculum.BackColor = System.Drawing.Color.Maroon;
+            this.btnCreateCurriculum.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCreateCurriculum.BorderRadius = 20;
+            this.btnCreateCurriculum.BorderSize = 0;
+            this.btnCreateCurriculum.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnCreateCurriculum.FlatAppearance.BorderSize = 0;
+            this.btnCreateCurriculum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCreateCurriculum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCreateCurriculum.ForeColor = System.Drawing.Color.White;
+            this.btnCreateCurriculum.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnCreateCurriculum.Location = new System.Drawing.Point(103, 24);
+            this.btnCreateCurriculum.Name = "btnCreateCurriculum";
+            this.btnCreateCurriculum.Size = new System.Drawing.Size(94, 40);
+            this.btnCreateCurriculum.TabIndex = 0;
+            this.btnCreateCurriculum.Text = "Create";
+            this.btnCreateCurriculum.TextColor = System.Drawing.Color.White;
+            this.btnCreateCurriculum.UseVisualStyleBackColor = false;
+            this.btnCreateCurriculum.Click += new System.EventHandler(this.btnCreateCurriculum_Click);
+            // 
+            // btnSearchCurriculum
+            // 
+            this.btnSearchCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearchCurriculum.BackColor = System.Drawing.Color.Maroon;
+            this.btnSearchCurriculum.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSearchCurriculum.BorderRadius = 20;
+            this.btnSearchCurriculum.BorderSize = 0;
+            this.btnSearchCurriculum.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnSearchCurriculum.FlatAppearance.BorderSize = 0;
+            this.btnSearchCurriculum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchCurriculum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearchCurriculum.ForeColor = System.Drawing.Color.White;
+            this.btnSearchCurriculum.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnSearchCurriculum.Location = new System.Drawing.Point(203, 24);
+            this.btnSearchCurriculum.Name = "btnSearchCurriculum";
+            this.btnSearchCurriculum.Size = new System.Drawing.Size(94, 40);
+            this.btnSearchCurriculum.TabIndex = 1;
+            this.btnSearchCurriculum.Text = "Search";
+            this.btnSearchCurriculum.TextColor = System.Drawing.Color.White;
+            this.btnSearchCurriculum.UseVisualStyleBackColor = false;
+            this.btnSearchCurriculum.Click += new System.EventHandler(this.btnSearchCurriculum_Click);
+            // 
+            // roundedShadowPanel1
+            // 
+            this.roundedShadowPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.pnlYearLevelAndSem, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.pnlCurriculumCourse, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.pnlCurriculum, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(299, 767);
-            this.tableLayoutPanel2.TabIndex = 0;
+            this.roundedShadowPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel1.BorderColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel1.BorderRadius = 20;
+            this.roundedShadowPanel1.BorderSize = 0;
+            this.roundedShadowPanel1.Controls.Add(this.tableLayoutPanel12);
+            this.roundedShadowPanel1.Location = new System.Drawing.Point(303, 3);
+            this.roundedShadowPanel1.Name = "roundedShadowPanel1";
+            this.roundedShadowPanel1.PanelColor = System.Drawing.Color.White;
+            this.roundedShadowPanel1.PanelImage = null;
+            this.roundedShadowPanel1.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.roundedShadowPanel1.ShadowDepth = 10;
+            this.roundedShadowPanel1.ShadowEnabled = true;
+            this.roundedShadowPanel1.ShadowShift = 5;
+            this.roundedShadowPanel1.Size = new System.Drawing.Size(713, 82);
+            this.roundedShadowPanel1.TabIndex = 2;
+            // 
+            // tableLayoutPanel12
+            // 
+            this.tableLayoutPanel12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel12.ColumnCount = 4;
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
+            this.tableLayoutPanel12.Controls.Add(this.cbxSearchCurriculumProgram, 1, 1);
+            this.tableLayoutPanel12.Controls.Add(this.lblSeachCurriculumYear, 0, 0);
+            this.tableLayoutPanel12.Controls.Add(this.cbxSeachCurriculumYear, 0, 1);
+            this.tableLayoutPanel12.Controls.Add(this.lblSearchCurriculumProgram, 1, 0);
+            this.tableLayoutPanel12.Controls.Add(this.btnSearchView, 2, 1);
+            this.tableLayoutPanel12.Controls.Add(this.btnSearchEdit, 3, 1);
+            this.tableLayoutPanel12.Location = new System.Drawing.Point(18, 13);
+            this.tableLayoutPanel12.Name = "tableLayoutPanel12";
+            this.tableLayoutPanel12.RowCount = 2;
+            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(675, 55);
+            this.tableLayoutPanel12.TabIndex = 0;
+            // 
+            // cbxSearchCurriculumProgram
+            // 
+            this.cbxSearchCurriculumProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxSearchCurriculumProgram.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbxSearchCurriculumProgram.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbxSearchCurriculumProgram.DropDownHeight = 80;
+            this.cbxSearchCurriculumProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxSearchCurriculumProgram.FormattingEnabled = true;
+            this.cbxSearchCurriculumProgram.IntegralHeight = false;
+            this.cbxSearchCurriculumProgram.Location = new System.Drawing.Point(239, 22);
+            this.cbxSearchCurriculumProgram.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxSearchCurriculumProgram.Name = "cbxSearchCurriculumProgram";
+            this.cbxSearchCurriculumProgram.Size = new System.Drawing.Size(233, 28);
+            this.cbxSearchCurriculumProgram.TabIndex = 15;
+            this.cbxSearchCurriculumProgram.Visible = false;
+            this.cbxSearchCurriculumProgram.SelectedValueChanged += new System.EventHandler(this.cbxSearchCurriculumProgram_SelectedValueChanged);
+            // 
+            // lblSeachCurriculumYear
+            // 
+            this.lblSeachCurriculumYear.AutoSize = true;
+            this.lblSeachCurriculumYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSeachCurriculumYear.Location = new System.Drawing.Point(3, 0);
+            this.lblSeachCurriculumYear.Name = "lblSeachCurriculumYear";
+            this.lblSeachCurriculumYear.Size = new System.Drawing.Size(134, 18);
+            this.lblSeachCurriculumYear.TabIndex = 0;
+            this.lblSeachCurriculumYear.Text = "Curriculum Year:";
+            this.lblSeachCurriculumYear.Visible = false;
+            // 
+            // cbxSeachCurriculumYear
+            // 
+            this.cbxSeachCurriculumYear.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxSeachCurriculumYear.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbxSeachCurriculumYear.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbxSeachCurriculumYear.DropDownHeight = 80;
+            this.cbxSeachCurriculumYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxSeachCurriculumYear.FormattingEnabled = true;
+            this.cbxSeachCurriculumYear.IntegralHeight = false;
+            this.cbxSeachCurriculumYear.Location = new System.Drawing.Point(2, 22);
+            this.cbxSeachCurriculumYear.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxSeachCurriculumYear.Name = "cbxSeachCurriculumYear";
+            this.cbxSeachCurriculumYear.Size = new System.Drawing.Size(233, 28);
+            this.cbxSeachCurriculumYear.TabIndex = 14;
+            this.cbxSeachCurriculumYear.Visible = false;
+            this.cbxSeachCurriculumYear.SelectedValueChanged += new System.EventHandler(this.cbxSeachCurriculumYear_SelectedValueChanged);
+            // 
+            // lblSearchCurriculumProgram
+            // 
+            this.lblSearchCurriculumProgram.AutoSize = true;
+            this.lblSearchCurriculumProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSearchCurriculumProgram.Location = new System.Drawing.Point(240, 0);
+            this.lblSearchCurriculumProgram.Name = "lblSearchCurriculumProgram";
+            this.lblSearchCurriculumProgram.Size = new System.Drawing.Size(78, 18);
+            this.lblSearchCurriculumProgram.TabIndex = 1;
+            this.lblSearchCurriculumProgram.Text = "Program:";
+            this.lblSearchCurriculumProgram.Visible = false;
+            // 
+            // btnSearchView
+            // 
+            this.btnSearchView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearchView.BackColor = System.Drawing.Color.Maroon;
+            this.btnSearchView.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSearchView.BorderRadius = 20;
+            this.btnSearchView.BorderSize = 0;
+            this.btnSearchView.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnSearchView.FlatAppearance.BorderSize = 0;
+            this.btnSearchView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearchView.ForeColor = System.Drawing.Color.White;
+            this.btnSearchView.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnSearchView.Location = new System.Drawing.Point(477, 23);
+            this.btnSearchView.Name = "btnSearchView";
+            this.btnSearchView.Size = new System.Drawing.Size(94, 29);
+            this.btnSearchView.TabIndex = 16;
+            this.btnSearchView.Text = "View";
+            this.btnSearchView.TextColor = System.Drawing.Color.White;
+            this.btnSearchView.UseVisualStyleBackColor = false;
+            this.btnSearchView.Visible = false;
+            this.btnSearchView.Click += new System.EventHandler(this.btnSearchView_Click);
+            // 
+            // btnSearchEdit
+            // 
+            this.btnSearchEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearchEdit.BackColor = System.Drawing.Color.Maroon;
+            this.btnSearchEdit.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSearchEdit.BorderRadius = 20;
+            this.btnSearchEdit.BorderSize = 0;
+            this.btnSearchEdit.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnSearchEdit.FlatAppearance.BorderSize = 0;
+            this.btnSearchEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearchEdit.ForeColor = System.Drawing.Color.White;
+            this.btnSearchEdit.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnSearchEdit.Location = new System.Drawing.Point(577, 23);
+            this.btnSearchEdit.Name = "btnSearchEdit";
+            this.btnSearchEdit.Size = new System.Drawing.Size(95, 29);
+            this.btnSearchEdit.TabIndex = 17;
+            this.btnSearchEdit.Text = "Edit";
+            this.btnSearchEdit.TextColor = System.Drawing.Color.White;
+            this.btnSearchEdit.UseVisualStyleBackColor = false;
+            this.btnSearchEdit.Visible = false;
+            this.btnSearchEdit.Click += new System.EventHandler(this.btnSearchEdit_Click);
+            // 
+            // gradientLabel1
+            // 
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(269, 37);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "Manage Curriculum";
             // 
             // pnlYearLevelAndSem
             // 
@@ -845,253 +938,164 @@
             this.txtCurriculumYear.Size = new System.Drawing.Size(198, 26);
             this.txtCurriculumYear.TabIndex = 0;
             // 
-            // panelHeader
+            // pnlCurriculumHeader
             // 
-            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(16)))), ((int)(((byte)(10)))));
-            this.panelHeader.Controls.Add(this.gradientLabel1);
-            this.panelHeader.Controls.Add(this.label10);
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1120, 90);
-            this.panelHeader.TabIndex = 22;
-            // 
-            // gradientLabel1
-            // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(269, 37);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "Manage Curriculum";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(27, 51);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(267, 21);
-            this.label10.TabIndex = 8;
-            this.label10.Text = "Manage Curriculum in the database";
-            // 
-            // cbxSearchCurriculumProgram
-            // 
-            this.cbxSearchCurriculumProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlCurriculumHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxSearchCurriculumProgram.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cbxSearchCurriculumProgram.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbxSearchCurriculumProgram.DropDownHeight = 80;
-            this.cbxSearchCurriculumProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbxSearchCurriculumProgram.FormattingEnabled = true;
-            this.cbxSearchCurriculumProgram.IntegralHeight = false;
-            this.cbxSearchCurriculumProgram.Location = new System.Drawing.Point(239, 22);
-            this.cbxSearchCurriculumProgram.Margin = new System.Windows.Forms.Padding(2);
-            this.cbxSearchCurriculumProgram.Name = "cbxSearchCurriculumProgram";
-            this.cbxSearchCurriculumProgram.Size = new System.Drawing.Size(233, 28);
-            this.cbxSearchCurriculumProgram.TabIndex = 15;
-            this.cbxSearchCurriculumProgram.Visible = false;
-            this.cbxSearchCurriculumProgram.SelectedValueChanged += new System.EventHandler(this.cbxSearchCurriculumProgram_SelectedValueChanged);
+            this.pnlCurriculumHeader.BackColor = System.Drawing.Color.Transparent;
+            this.pnlCurriculumHeader.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(233)))), ((int)(((byte)(237)))));
+            this.pnlCurriculumHeader.BorderRadius = 10;
+            this.pnlCurriculumHeader.BorderThickness = 1;
+            this.pnlCurriculumHeader.ContentBackColor = System.Drawing.Color.White;
+            this.pnlCurriculumHeader.Controls.Add(this.dgvCurriculum);
+            this.pnlCurriculumHeader.EnableHoverEffect = false;
+            this.pnlCurriculumHeader.HeaderBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
+            this.pnlCurriculumHeader.HeaderFontSize = 14F;
+            this.pnlCurriculumHeader.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(40)))), ((int)(((byte)(80)))));
+            this.pnlCurriculumHeader.HeaderHeight = 45;
+            this.pnlCurriculumHeader.HeaderLabel = "Curriculum Year: | Program:";
+            this.pnlCurriculumHeader.IconHeader = null;
+            this.pnlCurriculumHeader.IconSize = 22;
+            this.pnlCurriculumHeader.Location = new System.Drawing.Point(3, 3);
+            this.pnlCurriculumHeader.Name = "pnlCurriculumHeader";
+            this.pnlCurriculumHeader.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.pnlCurriculumHeader.ShadowDepth = 6;
+            this.pnlCurriculumHeader.ShadowPadding = 12;
+            this.pnlCurriculumHeader.ShowHeaderDivider = true;
+            this.pnlCurriculumHeader.ShowShadow = true;
+            this.pnlCurriculumHeader.Size = new System.Drawing.Size(704, 340);
+            this.pnlCurriculumHeader.TabIndex = 0;
             // 
-            // cbxSeachCurriculumYear
+            // dgvCurriculum
             // 
-            this.cbxSeachCurriculumYear.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvCurriculum.AllowUserToAddRows = false;
+            this.dgvCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxSeachCurriculumYear.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cbxSeachCurriculumYear.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbxSeachCurriculumYear.DropDownHeight = 80;
-            this.cbxSeachCurriculumYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbxSeachCurriculumYear.FormattingEnabled = true;
-            this.cbxSeachCurriculumYear.IntegralHeight = false;
-            this.cbxSeachCurriculumYear.Location = new System.Drawing.Point(2, 22);
-            this.cbxSeachCurriculumYear.Margin = new System.Windows.Forms.Padding(2);
-            this.cbxSeachCurriculumYear.Name = "cbxSeachCurriculumYear";
-            this.cbxSeachCurriculumYear.Size = new System.Drawing.Size(233, 28);
-            this.cbxSeachCurriculumYear.TabIndex = 14;
-            this.cbxSeachCurriculumYear.Visible = false;
-            this.cbxSeachCurriculumYear.SelectedValueChanged += new System.EventHandler(this.cbxSeachCurriculumYear_SelectedValueChanged);
+            this.dgvCurriculum.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCurriculum.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.dgvCurriculum.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCurriculum.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCurriculum.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCurriculum.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvCurriculum.EnableHeadersVisualStyles = false;
+            this.dgvCurriculum.Location = new System.Drawing.Point(33, 73);
+            this.dgvCurriculum.Margin = new System.Windows.Forms.Padding(10);
+            this.dgvCurriculum.Name = "dgvCurriculum";
+            this.dgvCurriculum.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCurriculum.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCurriculum.RowHeadersVisible = false;
+            this.dgvCurriculum.RowHeadersWidth = 51;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.dgvCurriculum.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvCurriculum.RowTemplate.Height = 24;
+            this.dgvCurriculum.Size = new System.Drawing.Size(638, 234);
+            this.dgvCurriculum.TabIndex = 10;
+            this.dgvCurriculum.TabStop = false;
+            this.dgvCurriculum.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCurriculum_CellDoubleClick);
             // 
-            // tableLayoutPanel11
+            // pnlOffering
             // 
-            this.tableLayoutPanel11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel11.ColumnCount = 4;
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel11.Controls.Add(this.btnCreateCurriculum, 1, 0);
-            this.tableLayoutPanel11.Controls.Add(this.btnSearchCurriculum, 2, 0);
-            this.tableLayoutPanel11.Controls.Add(this.roundedShadowPanel1, 3, 0);
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(49, 110);
-            this.tableLayoutPanel11.Name = "tableLayoutPanel11";
-            this.tableLayoutPanel11.RowCount = 1;
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(1019, 88);
-            this.tableLayoutPanel11.TabIndex = 24;
-            // 
-            // btnCreateCurriculum
-            // 
-            this.btnCreateCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreateCurriculum.BackColor = System.Drawing.Color.Maroon;
-            this.btnCreateCurriculum.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCreateCurriculum.BorderRadius = 20;
-            this.btnCreateCurriculum.BorderSize = 0;
-            this.btnCreateCurriculum.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnCreateCurriculum.FlatAppearance.BorderSize = 0;
-            this.btnCreateCurriculum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCreateCurriculum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateCurriculum.ForeColor = System.Drawing.Color.White;
-            this.btnCreateCurriculum.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnCreateCurriculum.Location = new System.Drawing.Point(103, 24);
-            this.btnCreateCurriculum.Name = "btnCreateCurriculum";
-            this.btnCreateCurriculum.Size = new System.Drawing.Size(94, 40);
-            this.btnCreateCurriculum.TabIndex = 0;
-            this.btnCreateCurriculum.Text = "Create";
-            this.btnCreateCurriculum.TextColor = System.Drawing.Color.White;
-            this.btnCreateCurriculum.UseVisualStyleBackColor = false;
-            this.btnCreateCurriculum.Click += new System.EventHandler(this.btnCreateCurriculum_Click);
-            // 
-            // btnSearchCurriculum
-            // 
-            this.btnSearchCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchCurriculum.BackColor = System.Drawing.Color.Maroon;
-            this.btnSearchCurriculum.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSearchCurriculum.BorderRadius = 20;
-            this.btnSearchCurriculum.BorderSize = 0;
-            this.btnSearchCurriculum.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnSearchCurriculum.FlatAppearance.BorderSize = 0;
-            this.btnSearchCurriculum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchCurriculum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearchCurriculum.ForeColor = System.Drawing.Color.White;
-            this.btnSearchCurriculum.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSearchCurriculum.Location = new System.Drawing.Point(203, 24);
-            this.btnSearchCurriculum.Name = "btnSearchCurriculum";
-            this.btnSearchCurriculum.Size = new System.Drawing.Size(94, 40);
-            this.btnSearchCurriculum.TabIndex = 1;
-            this.btnSearchCurriculum.Text = "Search";
-            this.btnSearchCurriculum.TextColor = System.Drawing.Color.White;
-            this.btnSearchCurriculum.UseVisualStyleBackColor = false;
-            this.btnSearchCurriculum.Click += new System.EventHandler(this.btnSearchCurriculum_Click);
-            // 
-            // roundedShadowPanel1
-            // 
-            this.roundedShadowPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlOffering.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.roundedShadowPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.roundedShadowPanel1.BorderColor = System.Drawing.Color.Transparent;
-            this.roundedShadowPanel1.BorderRadius = 20;
-            this.roundedShadowPanel1.BorderSize = 0;
-            this.roundedShadowPanel1.Controls.Add(this.tableLayoutPanel12);
-            this.roundedShadowPanel1.Location = new System.Drawing.Point(303, 3);
-            this.roundedShadowPanel1.Name = "roundedShadowPanel1";
-            this.roundedShadowPanel1.PanelColor = System.Drawing.Color.White;
-            this.roundedShadowPanel1.PanelImage = null;
-            this.roundedShadowPanel1.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.roundedShadowPanel1.ShadowDepth = 10;
-            this.roundedShadowPanel1.ShadowEnabled = true;
-            this.roundedShadowPanel1.ShadowShift = 5;
-            this.roundedShadowPanel1.Size = new System.Drawing.Size(713, 82);
-            this.roundedShadowPanel1.TabIndex = 2;
+            this.pnlOffering.BackColor = System.Drawing.Color.Transparent;
+            this.pnlOffering.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(233)))), ((int)(((byte)(237)))));
+            this.pnlOffering.BorderRadius = 10;
+            this.pnlOffering.BorderThickness = 1;
+            this.pnlOffering.ContentBackColor = System.Drawing.Color.White;
+            this.pnlOffering.Controls.Add(this.dgvCurriculumCourse);
+            this.pnlOffering.EnableHoverEffect = false;
+            this.pnlOffering.HeaderBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
+            this.pnlOffering.HeaderFontSize = 14F;
+            this.pnlOffering.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(40)))), ((int)(((byte)(80)))));
+            this.pnlOffering.HeaderHeight = 45;
+            this.pnlOffering.HeaderLabel = "Year Level: | Semester:";
+            this.pnlOffering.IconHeader = null;
+            this.pnlOffering.IconSize = 22;
+            this.pnlOffering.Location = new System.Drawing.Point(3, 349);
+            this.pnlOffering.Name = "pnlOffering";
+            this.pnlOffering.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.pnlOffering.ShadowDepth = 6;
+            this.pnlOffering.ShadowPadding = 12;
+            this.pnlOffering.ShowHeaderDivider = true;
+            this.pnlOffering.ShowShadow = true;
+            this.pnlOffering.Size = new System.Drawing.Size(704, 340);
+            this.pnlOffering.TabIndex = 1;
             // 
-            // tableLayoutPanel12
+            // dgvCurriculumCourse
             // 
-            this.tableLayoutPanel12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvCurriculumCourse.AllowUserToAddRows = false;
+            this.dgvCurriculumCourse.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel12.ColumnCount = 4;
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
-            this.tableLayoutPanel12.Controls.Add(this.cbxSearchCurriculumProgram, 1, 1);
-            this.tableLayoutPanel12.Controls.Add(this.lblSeachCurriculumYear, 0, 0);
-            this.tableLayoutPanel12.Controls.Add(this.cbxSeachCurriculumYear, 0, 1);
-            this.tableLayoutPanel12.Controls.Add(this.lblSearchCurriculumProgram, 1, 0);
-            this.tableLayoutPanel12.Controls.Add(this.btnSearchView, 2, 1);
-            this.tableLayoutPanel12.Controls.Add(this.btnSearchEdit, 3, 1);
-            this.tableLayoutPanel12.Location = new System.Drawing.Point(18, 13);
-            this.tableLayoutPanel12.Name = "tableLayoutPanel12";
-            this.tableLayoutPanel12.RowCount = 2;
-            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(675, 55);
-            this.tableLayoutPanel12.TabIndex = 0;
-            // 
-            // lblSeachCurriculumYear
-            // 
-            this.lblSeachCurriculumYear.AutoSize = true;
-            this.lblSeachCurriculumYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSeachCurriculumYear.Location = new System.Drawing.Point(3, 0);
-            this.lblSeachCurriculumYear.Name = "lblSeachCurriculumYear";
-            this.lblSeachCurriculumYear.Size = new System.Drawing.Size(134, 18);
-            this.lblSeachCurriculumYear.TabIndex = 0;
-            this.lblSeachCurriculumYear.Text = "Curriculum Year:";
-            this.lblSeachCurriculumYear.Visible = false;
-            // 
-            // lblSearchCurriculumProgram
-            // 
-            this.lblSearchCurriculumProgram.AutoSize = true;
-            this.lblSearchCurriculumProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSearchCurriculumProgram.Location = new System.Drawing.Point(240, 0);
-            this.lblSearchCurriculumProgram.Name = "lblSearchCurriculumProgram";
-            this.lblSearchCurriculumProgram.Size = new System.Drawing.Size(78, 18);
-            this.lblSearchCurriculumProgram.TabIndex = 1;
-            this.lblSearchCurriculumProgram.Text = "Program:";
-            this.lblSearchCurriculumProgram.Visible = false;
-            // 
-            // btnSearchView
-            // 
-            this.btnSearchView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchView.BackColor = System.Drawing.Color.Maroon;
-            this.btnSearchView.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSearchView.BorderRadius = 20;
-            this.btnSearchView.BorderSize = 0;
-            this.btnSearchView.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnSearchView.FlatAppearance.BorderSize = 0;
-            this.btnSearchView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearchView.ForeColor = System.Drawing.Color.White;
-            this.btnSearchView.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSearchView.Location = new System.Drawing.Point(477, 23);
-            this.btnSearchView.Name = "btnSearchView";
-            this.btnSearchView.Size = new System.Drawing.Size(94, 29);
-            this.btnSearchView.TabIndex = 16;
-            this.btnSearchView.Text = "View";
-            this.btnSearchView.TextColor = System.Drawing.Color.White;
-            this.btnSearchView.UseVisualStyleBackColor = false;
-            this.btnSearchView.Visible = false;
-            this.btnSearchView.Click += new System.EventHandler(this.btnSearchView_Click);
-            // 
-            // btnSearchEdit
-            // 
-            this.btnSearchEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchEdit.BackColor = System.Drawing.Color.Maroon;
-            this.btnSearchEdit.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSearchEdit.BorderRadius = 20;
-            this.btnSearchEdit.BorderSize = 0;
-            this.btnSearchEdit.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnSearchEdit.FlatAppearance.BorderSize = 0;
-            this.btnSearchEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearchEdit.ForeColor = System.Drawing.Color.White;
-            this.btnSearchEdit.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSearchEdit.Location = new System.Drawing.Point(577, 23);
-            this.btnSearchEdit.Name = "btnSearchEdit";
-            this.btnSearchEdit.Size = new System.Drawing.Size(95, 29);
-            this.btnSearchEdit.TabIndex = 17;
-            this.btnSearchEdit.Text = "Edit";
-            this.btnSearchEdit.TextColor = System.Drawing.Color.White;
-            this.btnSearchEdit.UseVisualStyleBackColor = false;
-            this.btnSearchEdit.Visible = false;
-            this.btnSearchEdit.Click += new System.EventHandler(this.btnSearchEdit_Click);
+            this.dgvCurriculumCourse.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCurriculumCourse.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.dgvCurriculumCourse.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCurriculumCourse.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvCurriculumCourse.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCurriculumCourse.ContextMenuStrip = this.contextMenuStrip1;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCurriculumCourse.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvCurriculumCourse.EnableHeadersVisualStyles = false;
+            this.dgvCurriculumCourse.Location = new System.Drawing.Point(33, 73);
+            this.dgvCurriculumCourse.Margin = new System.Windows.Forms.Padding(10);
+            this.dgvCurriculumCourse.Name = "dgvCurriculumCourse";
+            this.dgvCurriculumCourse.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCurriculumCourse.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.dgvCurriculumCourse.RowHeadersVisible = false;
+            this.dgvCurriculumCourse.RowHeadersWidth = 51;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.dgvCurriculumCourse.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            this.dgvCurriculumCourse.RowTemplate.Height = 24;
+            this.dgvCurriculumCourse.Size = new System.Drawing.Size(638, 234);
+            this.dgvCurriculumCourse.TabIndex = 11;
+            this.dgvCurriculumCourse.TabStop = false;
+            this.dgvCurriculumCourse.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCurriculumCourse_CellClick);
             // 
             // frmCurriculum
             // 
@@ -1106,13 +1110,15 @@
             this.Text = "frmCurriculum";
             this.Load += new System.EventHandler(this.frmCurriculum_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel9.ResumeLayout(false);
-            this.pnlCurriculumHeader.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCurriculum)).EndInit();
-            this.pnlOffering.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCurriculumCourse)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel9.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            this.tableLayoutPanel11.ResumeLayout(false);
+            this.roundedShadowPanel1.ResumeLayout(false);
+            this.tableLayoutPanel12.ResumeLayout(false);
+            this.tableLayoutPanel12.PerformLayout();
             this.pnlYearLevelAndSem.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
@@ -1125,12 +1131,10 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            this.tableLayoutPanel11.ResumeLayout(false);
-            this.roundedShadowPanel1.ResumeLayout(false);
-            this.tableLayoutPanel12.ResumeLayout(false);
-            this.tableLayoutPanel12.PerformLayout();
+            this.pnlCurriculumHeader.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCurriculum)).EndInit();
+            this.pnlOffering.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCurriculumCourse)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -333,7 +333,10 @@ namespace PUP_RMS.Forms
             dgvCurriculumCourse.Rows.Clear();
             dgvCurriculumCourse.Columns.Clear();
 
-            
+            if (e.RowIndex <= -1)
+            {
+                return;
+            }
             dgvCurriculum.Rows[e.RowIndex].Selected = true;
             selectedCurriculumRow = e.RowIndex;
 
@@ -351,6 +354,7 @@ namespace PUP_RMS.Forms
             else 
             {
                 MessageBox.Show("Select Curriculum Details");
+                return;
             }
 
             AddingCurriculumCourse = false;
@@ -389,11 +393,12 @@ namespace PUP_RMS.Forms
                     deleteCurriculumCourse();
                 }
             }
-            
-            if (dgvCurriculumCourse.Rows.Count > 1)    
+            else
             {
                 dgvCurriculumCourse.Rows.Remove(dgvCurriculumCourse.Rows[selectedRow]);
             }
+
+            
             
 
         }
@@ -680,6 +685,8 @@ namespace PUP_RMS.Forms
                         da.Fill(dt);
 
                         dgvCurriculum.DataSource = dt;
+
+                        dgvCurriculum.Columns["CurriculumID"].Visible = false;
                     }
                     catch (Exception ex)
                     {
@@ -855,6 +862,10 @@ namespace PUP_RMS.Forms
                         da.Fill(dt);
 
                         dgvCurriculumCourse.DataSource = dt;
+
+                        dgvCurriculumCourse.Columns["OfferingID"].Visible = false;
+                        dgvCurriculumCourse.Columns["CurriculumID"].Visible = false;
+                        dgvCurriculumCourse.Columns["CourseID"].Visible = false;    
                     }
                     catch (Exception ex)
                     {
@@ -874,6 +885,8 @@ namespace PUP_RMS.Forms
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
+
+
                     cmd.Parameters.AddWithValue("@OfferingID", Convert.ToInt32(dgvCurriculumCourse.Rows[selectedRow].Cells["OfferingID"].Value));
                    
                     try
@@ -883,6 +896,7 @@ namespace PUP_RMS.Forms
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Successfully Deleted");
+                            dgvCurriculumCourse.Rows.Remove(dgvCurriculumCourse.Rows[selectedRow]);
                         }
                     }
                     catch (Exception ex)
@@ -1007,7 +1021,7 @@ namespace PUP_RMS.Forms
         private void btnSearchView_Click(object sender, EventArgs e)
         {
             frmSearchView viewSearchCurriculum = new frmSearchView(cbxSeachCurriculumYear.Text, Convert.ToInt32(cbxSearchCurriculumProgram.SelectedValue), cbxSearchCurriculumProgram.Text);
-            viewSearchCurriculum.Show();
+            viewSearchCurriculum.ShowDialog();
         }
 
     }
