@@ -1,6 +1,7 @@
 ﻿using PUP_RMS.Helper;
 using PUP_RMS.Model;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace PUP_RMS.Forms
@@ -85,6 +86,7 @@ namespace PUP_RMS.Forms
         {
             RefreshGrid();
             txtSearch.Text = "";
+            btnEdit.Visible = false;
         }
         private void btnSearch_Click_1(object sender, EventArgs e)
         {
@@ -199,11 +201,10 @@ namespace PUP_RMS.Forms
 
         private void dgvFaculty_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            selectedRow = dgvFaculty.Rows[e.RowIndex];
-
-            if (selectedRow != null)
+            if (e.RowIndex >=0)
             {
                 btnEdit.Visible = true;
+                selectedRow = dgvFaculty.Rows[e.RowIndex];
             }
         }
         
@@ -217,15 +218,23 @@ namespace PUP_RMS.Forms
             txtLastName.Enabled = state;
         }
 
-
-        private void dgvFaculty_CellMouseEnter(object sender, DataGridViewCellEventArgs e) { }
-        private void dgvFaculty_CellMouseLeave(object sender, DataGridViewCellEventArgs e) { }
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e) { }
-
-        private void cbxProgram_SelectedIndexChanged(object sender, EventArgs e)
+        // DATA GRID VIEW ROW HOVER COLOR CHANGE
+        private void dgvFaculty_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-
+            if (e.RowIndex >= 0)
+            {
+                dgvFaculty.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Goldenrod;
+            }
         }
+        private void dgvFaculty_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                dgvFaculty.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
+            }
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e) { }
 
         private void txtMiddleName_TextChanged(object sender, EventArgs e)
         {

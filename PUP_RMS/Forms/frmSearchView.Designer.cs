@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.lblHeader = new System.Windows.Forms.Label();
             this.flowCurriculumContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.gradientLabel1 = new GradientLabel();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,17 +47,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1159, 90);
             this.panelHeader.TabIndex = 23;
-            // 
-            // gradientLabel1
-            // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(228, 37);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "View Curriculum";
             // 
             // label10
             // 
@@ -77,9 +66,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblHeader.AutoSize = true;
+            this.lblHeader.BackColor = System.Drawing.Color.Transparent;
             this.lblHeader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeader.Location = new System.Drawing.Point(9, 104);
+            this.lblHeader.Location = new System.Drawing.Point(29, 111);
             this.lblHeader.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeader.Name = "lblHeader";
             this.lblHeader.Size = new System.Drawing.Size(419, 29);
@@ -88,20 +78,37 @@
             // 
             // flowCurriculumContainer
             // 
-            this.flowCurriculumContainer.Location = new System.Drawing.Point(9, 152);
+            this.flowCurriculumContainer.AutoScroll = true;
+            this.flowCurriculumContainer.BackColor = System.Drawing.Color.White;
+            this.flowCurriculumContainer.Location = new System.Drawing.Point(34, 152);
+            this.flowCurriculumContainer.Margin = new System.Windows.Forms.Padding(25);
             this.flowCurriculumContainer.Name = "flowCurriculumContainer";
-            this.flowCurriculumContainer.Size = new System.Drawing.Size(1132, 651);
+            this.flowCurriculumContainer.Size = new System.Drawing.Size(1089, 629);
             this.flowCurriculumContainer.TabIndex = 25;
+            // 
+            // gradientLabel1
+            // 
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(228, 37);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "View Curriculum";
             // 
             // frmSearchView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.BackgroundImage = global::PUP_RMS.Properties.Resources._619384472_920609864259422_4656079368386240362_n;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1157, 815);
             this.Controls.Add(this.flowCurriculumContainer);
             this.Controls.Add(this.lblHeader);
             this.Controls.Add(this.panelHeader);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmSearchView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmSearchView";

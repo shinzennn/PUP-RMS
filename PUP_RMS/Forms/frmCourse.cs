@@ -190,6 +190,7 @@ namespace PUP_RMS.Forms
         {
             Reset();
             txtSearch.Text = "";
+            btnEdit.Visible = false;
         }
 
         private void dgvCourse_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -222,15 +223,7 @@ namespace PUP_RMS.Forms
 
         private void dgvCourse_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-          
-                selectedRow = dgvCourse.Rows[e.RowIndex];
 
-                if (selectedRow != null)
-                {
-                    btnEdit.Visible = true;
-                }
-            
-          
         }
 
         private void btnEdit_Click(object sender, EventArgs e)

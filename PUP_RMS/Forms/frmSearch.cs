@@ -70,7 +70,6 @@ namespace PUP_RMS.Forms
                     ApplyDoubleBufferingRecursively(c.Controls);
             }
         }
-
         private static void SetDoubleBuffered(Control c)
         {
             if (System.Windows.Forms.SystemInformation.TerminalServerSession) return;
@@ -123,17 +122,10 @@ namespace PUP_RMS.Forms
             isLoading = false;
         }
 
-        private void frmSearch_Shown(object sender, EventArgs e)
-        {
-        }
 
         // =========================
         // DATAGRID EVENTS
         // =========================
-        private void dgvGradeSheets_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-        }
-
         private void dgvGradeSheets_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -153,8 +145,6 @@ namespace PUP_RMS.Forms
             btnSearch.PerformClick();
 
         }
-
-
         private void dgvGradeSheets_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (!isFormShown) return;
@@ -164,7 +154,6 @@ namespace PUP_RMS.Forms
                 dgvGradeSheets.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
             }
         }
-
         private void dgvGradeSheets_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
             // Ignore events fired during initialization before the form is shown
@@ -331,7 +320,6 @@ namespace PUP_RMS.Forms
             }
         }
 
-        // private void LoadCourses(int curriculumID)
         private void LoadCourses()
         {
             try
@@ -509,8 +497,6 @@ namespace PUP_RMS.Forms
         {
             if (isLoading) return;
 
-           
-
             selectedCourseID = GetSafeComboInt(cmbCourse);
             LoadProfessorForCourse(selectedCourseID);
 
@@ -593,6 +579,7 @@ namespace PUP_RMS.Forms
                 // Optional: clear selection
                 dgvGradeSheets.ClearSelection();
                 dgvGradeSheets.CurrentCell = null;
+                DataGridDesign();
             }
             catch (Exception ex)
             {
@@ -694,10 +681,9 @@ namespace PUP_RMS.Forms
                     dgvGradeSheets.AutoGenerateColumns = true;
                     dgvGradeSheets.DataSource = dt;
 
-                    DataGridDesign();
-
                     dgvGradeSheets.ClearSelection();
                     dgvGradeSheets.CurrentCell = null;
+                    DataGridDesign();
                 }
             }
             catch (Exception ex)
@@ -705,18 +691,6 @@ namespace PUP_RMS.Forms
                 MessageBox.Show("Error loading grade sheets: " + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void SearchGradeSheets()
-        {
-        }
-
-        private void RefreshGrid()
-        {
-        }
-
-        private void OpenGradeSheetDetails(int gradeSheetID)
-        {
         }
 
         // =========================
@@ -827,27 +801,27 @@ namespace PUP_RMS.Forms
 
             // (In this SP we no longer have GradeSheetID/Filepath, so no need to hide them)
 
-            // Set widths for better readability
+            //// Set widths for better readability
             SafeSetColumnWidth("Filename", 220);
-            SafeSetColumnWidth("SchoolYear", 80);
-            SafeSetColumnWidth("Program", 80);
-            SafeSetColumnWidth("Curriculum", 80);
-            SafeSetColumnWidth("Section", 50);
-            SafeSetColumnWidth("Semester", 60);
-            SafeSetColumnWidth("YearLevel", 50);
-            SafeSetColumnWidth("Course", 100);
-            SafeSetColumnWidth("Professor", 150);
-            SafeSetColumnWidth("PageNumber", 60);
+            //SafeSetColumnWidth("SchoolYear", 80);
+            //SafeSetColumnWidth("Program", 80);
+            //SafeSetColumnWidth("Curriculum", 80);
+            //SafeSetColumnWidth("Section", 50);
+            //SafeSetColumnWidth("Semester", 60);
+            //SafeSetColumnWidth("YearLevel", 50);
+            //SafeSetColumnWidth("Course", 100);
+            //SafeSetColumnWidth("Professor", 150);
+            SafeSetColumnWidth("PageNumber", 100);
 
             // Set user-friendly headers
             SafeSetHeaderText("Filename", "File Name");
             SafeSetHeaderText("SchoolYear", "School Year");
-            SafeSetHeaderText("Program", "Program");
-            SafeSetHeaderText("Curriculum", "Curriculum");
+            SafeSetHeaderText("ProgramCode", "Program");
+            SafeSetHeaderText("CurriculumYear", "Curriculum");
             SafeSetHeaderText("Section", "Section");
             SafeSetHeaderText("Semester", "Semester");
             SafeSetHeaderText("YearLevel", "Year Level");
-            SafeSetHeaderText("Course", "Course");
+            SafeSetHeaderText("CourseCode", "Course");
             SafeSetHeaderText("Professor", "Professor");
             SafeSetHeaderText("PageNumber", "Page No.");
 
@@ -886,7 +860,6 @@ namespace PUP_RMS.Forms
             if (!string.IsNullOrEmpty(found))
                 dgvGradeSheets.Columns[found].HeaderText = header;
         }
-
 
         private void DeselectComboText(ComboBox cmb)
         {
