@@ -65,6 +65,8 @@ namespace PUP_RMS.Forms
         private Label lblCurriculum;  // Curriculum Label
         private ComboBox cmbCurriculum;
 
+        private DataGridView dgvYearReport;
+
         public frmDistributionProgram()
         {
             InitializeComponent();
@@ -76,6 +78,7 @@ namespace PUP_RMS.Forms
 
             SetupForm();
             SetupFilterControls();
+            SetupYearLevelGrid();
             LoadMainData();
         }
 
@@ -91,6 +94,177 @@ namespace PUP_RMS.Forms
             this.MouseDown += Form_MouseDown;
             this.MouseMove += Form_MouseMove;
             this.MouseUp += Form_MouseUp;
+        }
+
+        private void SetupYearLevelGrid()
+        {
+            dgvYearReport = new DataGridView();
+            dgvYearReport.Visible = false;
+            dgvYearReport.BackgroundColor = Color.White;
+            dgvYearReport.BorderStyle = BorderStyle.None;
+            dgvYearReport.RowHeadersVisible = false;
+            dgvYearReport.AllowUserToAddRows = false;
+            dgvYearReport.AllowUserToDeleteRows = false;
+            dgvYearReport.AllowUserToResizeColumns = false; // Restriction: No resizing
+            dgvYearReport.AllowUserToResizeRows = false;    // Restriction: No resizing
+            dgvYearReport.ReadOnly = true;
+            dgvYearReport.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvYearReport.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvYearReport.EnableHeadersVisualStyles = false; // Required for custom maroon color
+            dgvYearReport.GridColor = Color.FromArgb(230, 230, 230);
+            dgvYearReport.MultiSelect = false;
+
+            // --- Header Styling (Light Maroon) ---
+            Color lightMaroon = Color.FromArgb(140, 60, 70); // A lighter variant of your ClrMaroon
+            dgvYearReport.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = lightMaroon,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI Semibold", 10),
+                Alignment = DataGridViewContentAlignment.MiddleCenter,
+                SelectionBackColor = lightMaroon, // Removes highlight color when clicking header
+                SelectionForeColor = Color.White,
+                Padding = new Padding(5)
+            };
+            dgvYearReport.ColumnHeadersHeight = 45;
+            dgvYearReport.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+            // --- Row Styling ---
+            dgvYearReport.DefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.White,
+                ForeColor = Color.Black,
+                Font = new Font("Segoe UI", 9),
+                SelectionBackColor = ClrGold, // Row highlight
+                SelectionForeColor = Color.Black,
+                Alignment = DataGridViewContentAlignment.MiddleCenter
+            };
+
+            // --- MANUALLY ADD COLUMNS HERE ---
+            dgvYearReport.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Year Level",
+                HeaderText = "Year",
+                Width = 60
+            });
+
+            dgvYearReport.Columns.Add(new DataGridViewProgressBarColumn
+            {
+                DataPropertyName = "Rate",
+                HeaderText = "Completion",
+                Width = 120
+            });
+
+            dgvYearReport.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Submitted/Total",
+                HeaderText = "Ratio",
+                Width = 80
+            });
+
+            dgvYearReport.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Status",
+                HeaderText = "Status",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            // Conditional Formatting for Status
+            dgvYearReport.CellFormatting += (s, e) => {
+                if (dgvYearReport.Columns[e.ColumnIndex].HeaderText == "Status" && e.Value != null)
+                {
+                    if (e.Value.ToString() == "Completed") e.CellStyle.ForeColor = Color.DarkGreen;
+                    else if (e.Value.ToString() == "Incomplete") e.CellStyle.ForeColor = Color.Firebrick;
+                    e.CellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+                }
+            };
+
+            this.Controls.Add(dgvYearReport);
+        }
+
+        private void LoadGridData()
+        {
+            if (cmbCurriculum.SelectedItem == null || cmbSchoolYear.SelectedItem == null) return;
+            if (string.IsNullOrEmpty(_drilledProgramName)) return;
+
+            string prog = _drilledProgramName;
+            string curr = cmbCurriculum.SelectedItem.ToString();
+            string sy = cmbSchoolYear.SelectedItem.ToString();
+
+            DataTable dtRaw = DashboardHelper.GetYearLevelAggregateStatus(prog, sy, curr);
+
+            if (dtRaw == null || dtRaw.Rows.Count == 0)
+            {
+                dgvYearReport.DataSource = null;
+                FillGridVerticalSpace();
+                return;
+            }
+
+            DataTable dtDisplay = new DataTable();
+            dtDisplay.Columns.Add("Year Level", typeof(string));
+            dtDisplay.Columns.Add("Rate", typeof(double));
+            dtDisplay.Columns.Add("Submitted/Total", typeof(string));
+            dtDisplay.Columns.Add("Status", typeof(string));
+
+            foreach (DataRow row in dtRaw.Rows)
+            {
+                double rate = Convert.ToDouble(row["YearlyCompletionRate"]);
+                dtDisplay.Rows.Add(
+                    "Year " + row["YearLevel"],
+                    rate,
+                    $"{row["TotalSubmitted"]} / {row["TotalSectionsCreated"]}",
+                    rate >= 100 ? "Completed" : (rate > 0 ? "In Progress" : "Incomplete")
+                );
+            }
+
+            dgvYearReport.DataSource = dtDisplay; // Bind the data
+        }
+
+        private void UpdateDGVLayout()
+        {
+            if (dgvYearReport == null) return;
+
+            if (_isDrilledDown)
+            {
+                float scale = GetScaleFactor();
+                int margin = (int)(20 * scale);
+                int gridWidth = (int)(400 * scale);
+                int gridHeight = (int)(280 * scale); // Fixed height for the grid area
+
+                dgvYearReport.Size = new Size(gridWidth, gridHeight);
+                dgvYearReport.Location = new Point(
+                    this.Width - gridWidth - margin,
+                    (this.Height / 2) - (gridHeight / 2) + (int)(30 * scale)
+                );
+
+                dgvYearReport.Visible = true;
+                dgvYearReport.BringToFront();
+
+                // Recalculate row heights for the new size
+                FillGridVerticalSpace();
+            }
+            else
+            {
+                dgvYearReport.Visible = false;
+            }
+        }
+
+        private void FillGridVerticalSpace()
+        {
+            if (dgvYearReport.Rows.Count == 0) return;
+
+            // Calculate total available height for the data rows
+            int totalHeight = dgvYearReport.Height - dgvYearReport.ColumnHeadersHeight;
+            int rowCount = dgvYearReport.Rows.Count;
+
+            // Calculate height per row
+            int targetHeight = totalHeight / rowCount;
+
+            // Set height for every row
+            foreach (DataGridViewRow row in dgvYearReport.Rows)
+            {
+                row.Height = targetHeight;
+            }
         }
 
         // =========================================================
@@ -196,6 +370,7 @@ namespace PUP_RMS.Forms
         {
             base.OnResize(e);
             RepositionFilterControls();
+            UpdateDGVLayout();
         }
 
         // =========================================================
@@ -396,6 +571,8 @@ namespace PUP_RMS.Forms
             }
 
             // 7. Redraw
+            LoadGridData();
+            UpdateDGVLayout();
             Invalidate();
         }
 
@@ -431,7 +608,6 @@ namespace PUP_RMS.Forms
             int headerHeight = (int)(50 * scale);
             if (headerHeight < 50) headerHeight = 50;
             Rectangle headerRect = new Rectangle(0, 0, Width, headerHeight);
-
             using (SolidBrush brush = new SolidBrush(ClrMaroon))
                 g.FillRectangle(brush, headerRect);
 
@@ -499,7 +675,8 @@ namespace PUP_RMS.Forms
             float chartSize = 380 * scale;
             float thickness = 70 * scale;
 
-            float chartX = _isDrilledDown ? (Width - chartSize) / 2f : 150 * scale;
+            // Shift chart to the left when drilled down to make room for DGV
+            float chartX = _isDrilledDown ? (Width * 0.30f) - (chartSize / 2f) : 150 * scale;
             float chartY = totalTopOffset + (contentRect.Height - chartSize) / 2;
 
             _lastChartBounds = new RectangleF(chartX, chartY, chartSize, chartSize);
@@ -507,9 +684,13 @@ namespace PUP_RMS.Forms
             DrawShadow(g, _lastChartBounds, scale);
             DrawDoughnutWithSpokes(g, _lastChartBounds, total, thickness, scale);
 
-            float legendX = _lastChartBounds.Right + (60 * scale);
-            float legendY = chartY + (30 * scale);
-            DrawLegendColumns(g, legendX, legendY, total, scale);
+            // --- CHANGE HERE: Only draw the legend if we are NOT drilled down ---
+            if (!_isDrilledDown)
+            {
+                float legendX = _lastChartBounds.Right + (60 * scale);
+                float legendY = chartY + (30 * scale);
+                DrawLegendColumns(g, legendX, legendY, total, scale);
+            }
 
             // 5. Draw Border
             using (Pen borderPen = new Pen(Color.FromArgb(150, 150, 150), 1))
@@ -858,6 +1039,7 @@ namespace PUP_RMS.Forms
             if (_backBtnRect.Contains(e.Location) && _isDrilledDown)
             {
                 _isDrilledDown = false;
+                dgvYearReport.Visible = false;
                 _drilledProgramName = "";
 
                 // Show the filters again
@@ -867,7 +1049,7 @@ namespace PUP_RMS.Forms
                 cmbSchoolYear.Visible = true;
 
                 LoadSchoolYearCombo();
-                LoadMainData();
+                LoadMainData(); // This will trigger Invalidate() naturally
                 return;
             }
 
@@ -1042,5 +1224,39 @@ namespace PUP_RMS.Forms
     {
         public RectangleF Bounds { get; set; }
         public ChartSegment Segment { get; set; }
+    }
+
+    public class DataGridViewProgressBarColumn : DataGridViewImageColumn
+    {
+        public DataGridViewProgressBarColumn() { CellTemplate = new DataGridViewProgressBarCell(); }
+    }
+
+    public class DataGridViewProgressBarCell : DataGridViewImageCell
+    {
+        // This tells the DGV: "Don't worry that the data is a number, I will handle drawing it"
+        protected override object GetFormattedValue(object value, int rowIndex, ref DataGridViewCellStyle cellStyle, TypeConverter valueTypeConverter, TypeConverter formattedValueTypeConverter, DataGridViewDataErrorContexts context)
+        {
+            return new Bitmap(1, 1);
+        }
+
+        protected override void Paint(Graphics g, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
+        {
+            // ... (Keep your existing Paint code here) ...
+            base.Paint(g, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts & ~DataGridViewPaintParts.ContentForeground);
+            double progressVal = 0;
+            if (value != null && value != DBNull.Value) progressVal = Convert.ToDouble(value);
+
+            int margin = 4;
+            Rectangle barRect = new Rectangle(cellBounds.X + 5, cellBounds.Y + margin, cellBounds.Width - 10, cellBounds.Height - (margin * 2));
+            g.FillRectangle(Brushes.LightGray, barRect);
+
+            float progressWidth = (float)((progressVal / 100.0) * barRect.Width);
+            if (progressWidth > 0)
+            {
+                using (SolidBrush sb = new SolidBrush(Color.FromArgb(229, 178, 66)))
+                    g.FillRectangle(sb, barRect.X, barRect.Y, progressWidth, barRect.Height);
+            }
+            TextRenderer.DrawText(g, $"{progressVal:0}%", cellStyle.Font, barRect, Color.Black, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+        }
     }
 }
