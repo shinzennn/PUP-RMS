@@ -1,4 +1,5 @@
 ﻿using PUP_RMS.Core;
+using PUP_RMS.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,33 +13,38 @@ using System.Windows.Forms;
 
 namespace PUP_RMS.Forms
 {
-    public partial class frmSearchView : Form
+    public partial class frmViewSection : Form
     {
         string curriculumYear = "";
-        int programID = 0;
         string programCode = "";
-        public frmSearchView(string receivedCurriculumYear, int receivedProgramID, string receivedProgramCode)
+        string schoolYear = "";
+        int section = 0;
+
+        public frmViewSection(string _curriculumYear, string _programCode, string _schoolYear, int _section)
         {
-            curriculumYear = receivedCurriculumYear;
-            programID = receivedProgramID;
-            programCode = receivedProgramCode;
+            curriculumYear = _curriculumYear;
+            programCode = _programCode;
+            schoolYear = _schoolYear;
+            section = _section;
+
             InitializeComponent();
         }
 
-        private void frmSearchView_Load(object sender, EventArgs e)
+        private void frmViewSection_Load(object sender, EventArgs e)
         {
-            lblHeader.Text = programCode + " - " + curriculumYear;
+            lblHeader.Text = programCode + " | " + schoolYear + " | Section: " + section.ToString();
 
-            
-            flowCurriculumContainer.Controls.Clear();
+            flowCourseFaculty.Controls.Clear();
 
             using (SqlConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
             {
-                using (SqlCommand cmd = new SqlCommand("sp_SearchViewCurriculum", conn))
+                using (SqlCommand cmd = new SqlCommand("sp_GetSubjectFacultyAssignment", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ProgramID", programID);
+                    cmd.Parameters.AddWithValue("@ProgramCode", programCode);
                     cmd.Parameters.AddWithValue("@CurriculumYear", curriculumYear);
+                    cmd.Parameters.AddWithValue("@SchoolYear", schoolYear);
+                    cmd.Parameters.AddWithValue("@Section", section);
 
                     try
                     {
@@ -49,7 +55,8 @@ namespace PUP_RMS.Forms
 
                         // 2. Get unique combinations of YearLevel and Semester from the data
                         var groupings = dt.AsEnumerable()
-                            .Select(row => new {
+                            .Select(row => new
+                            {
                                 Year = row.Field<int>("YearLevel"),
                                 Sem = row.Field<int>("Semester")
                             })
@@ -66,7 +73,7 @@ namespace PUP_RMS.Forms
                                 AutoSize = true,
                                 Margin = new Padding(0, 10, 0, 5)
                             };
-                            flowCurriculumContainer.Controls.Add(lblTitle);
+                            flowCourseFaculty.Controls.Add(lblTitle);
 
                             // 4. Create and Setup the Grid
                             DataGridView dgv = new DataGridView();
@@ -83,23 +90,19 @@ namespace PUP_RMS.Forms
                             dgv.Height = (dv.Count * rowHeight) + headerHeight + 5;
 
 
-                            flowCurriculumContainer.Controls.Add(dgv);
+                            flowCourseFaculty.Controls.Add(dgv);
 
-                            dgv.Columns["CourseID"].Visible = false;
                             dgv.Columns["YearLevel"].Visible = false;
                             dgv.Columns["Semester"].Visible = false;
                         }
-
-
-
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Failed to Find the Curriculum | Error:" + ex.Message);
                     }
+
                 }
             }
-
         }
 
         private void SetupGridProperties(DataGridView dgv)
@@ -120,7 +123,7 @@ namespace PUP_RMS.Forms
             dgv.DefaultCellStyle.Font = new Font("Segoe UI", 10f);
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12f, FontStyle.Bold);
 
-            dgv.Width = flowCurriculumContainer.Width - 25; // Account for scrollbar
+            dgv.Width = flowCourseFaculty.Width - 25; // Account for scrollbar
 
 
 

@@ -20,8 +20,6 @@ namespace PUP_RMS
 {
     public partial class frmSection : Form
     {
-        bool Editable = false;
-
         public frmSection()
         {
             // Anti-flicker settings
@@ -241,11 +239,34 @@ namespace PUP_RMS
                 ? now.Year
                 : now.Year - 1;
         }
-      
+
         //private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e){}
         //private void what(object sender, EventArgs e){}
 
         // BUTTON CLICK EVENTS
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            if (cbxCurriculum.SelectedItem == null ||
+                cbxProgram.SelectedItem == null ||
+                cbxYearLevel.SelectedItem == null ||
+                cbxSemester.SelectedItem == null ||
+                cbxSchoolYear.SelectedItem == null ||
+                cbxSection.SelectedItem == null)
+            {
+                MessageBox.Show("Please select all required fields before loading the worksheet.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            frmViewSection frm = new frmViewSection(
+                cbxCurriculum.Text,
+                cbxProgram.Text,
+                cbxSchoolYear.Text,
+                int.Parse(cbxSection.Text)
+            );
+
+            frm.ShowDialog();
+        }
+
         private void btnLoadCourse_Click(object sender, EventArgs e)
         {
             if(cbxCurriculum.SelectedItem == null ||
@@ -537,5 +558,6 @@ namespace PUP_RMS
             }
         }
 
+        
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace PUP_RMS.Forms
 {
-    partial class frmSearchView
+    partial class frmViewSection
     {
         /// <summary>
         /// Required designer variable.
@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.lblHeader = new System.Windows.Forms.Label();
-            this.flowCurriculumContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowCourseFaculty = new System.Windows.Forms.FlowLayoutPanel();
+            this.gradientLabel1 = new GradientLabel();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,17 +48,6 @@
             this.panelHeader.Size = new System.Drawing.Size(1159, 90);
             this.panelHeader.TabIndex = 23;
             // 
-            // gradientLabel1
-            // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(228, 37);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "View Curriculum";
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -67,9 +56,9 @@
             this.label10.ForeColor = System.Drawing.Color.White;
             this.label10.Location = new System.Drawing.Point(27, 51);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(243, 21);
+            this.label10.Size = new System.Drawing.Size(351, 21);
             this.label10.TabIndex = 8;
-            this.label10.Text = "View Curriculum in the database";
+            this.label10.Text = "View list of course and faculty in a class section";
             // 
             // lblHeader
             // 
@@ -87,17 +76,31 @@
             this.lblHeader.TabIndex = 24;
             this.lblHeader.Text = "_____________________________";
             // 
-            // flowCurriculumContainer
+            // flowCourseFaculty
             // 
-            this.flowCurriculumContainer.AutoScroll = true;
-            this.flowCurriculumContainer.BackColor = System.Drawing.Color.White;
-            this.flowCurriculumContainer.Location = new System.Drawing.Point(34, 152);
-            this.flowCurriculumContainer.Margin = new System.Windows.Forms.Padding(25);
-            this.flowCurriculumContainer.Name = "flowCurriculumContainer";
-            this.flowCurriculumContainer.Size = new System.Drawing.Size(1089, 629);
-            this.flowCurriculumContainer.TabIndex = 25;
+            this.flowCourseFaculty.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowCourseFaculty.AutoScroll = true;
+            this.flowCourseFaculty.BackColor = System.Drawing.Color.White;
+            this.flowCourseFaculty.Location = new System.Drawing.Point(34, 152);
+            this.flowCourseFaculty.Margin = new System.Windows.Forms.Padding(25);
+            this.flowCourseFaculty.Name = "flowCourseFaculty";
+            this.flowCourseFaculty.Size = new System.Drawing.Size(1089, 629);
+            this.flowCourseFaculty.TabIndex = 25;
             // 
-            // frmSearchView
+            // gradientLabel1
+            // 
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(182, 37);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "View Section";
+            // 
+            // frmViewSection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -105,16 +108,16 @@
             this.BackgroundImage = global::PUP_RMS.Properties.Resources._619384472_920609864259422_4656079368386240362_n;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1157, 815);
-            this.Controls.Add(this.flowCurriculumContainer);
+            this.Controls.Add(this.flowCourseFaculty);
             this.Controls.Add(this.lblHeader);
             this.Controls.Add(this.panelHeader);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmSearchView";
+            this.Name = "frmViewSection";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "View Curriculum";
-            this.Load += new System.EventHandler(this.frmSearchView_Load);
+            this.Text = "View Section";
+            this.Load += new System.EventHandler(this.frmViewSection_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
@@ -128,6 +131,6 @@
         private GradientLabel gradientLabel1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lblHeader;
-        private System.Windows.Forms.FlowLayoutPanel flowCurriculumContainer;
+        private System.Windows.Forms.FlowLayoutPanel flowCourseFaculty;
     }
 }
