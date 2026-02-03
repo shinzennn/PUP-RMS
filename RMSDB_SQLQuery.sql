@@ -806,6 +806,39 @@ BEGIN
 END
 GO
 
+-- 4.4.4. VIEW SECTION AND FACULTY ASSIGNMENT
+CREATE OR ALTER PROCEDURE sp_GetSubjectFacultyAssignment
+    @CurriculumYear VARCHAR(10),
+    @ProgramCode VARCHAR(20),
+    @SchoolYear VARCHAR(20),
+    @Section INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        Curr.YearLevel,
+        Curr.Semester,
+        C.CourseCode,
+        C.CourseDescription,
+        -- If no section/faculty exists for this filter, it shows 'No Faculty Assigned'
+        ISNULL(F.FirstName + ' ' + ISNULL(F.MiddleName + ' ', '') + F.LastName, 'No Faculty Assigned') AS Faculty
+    FROM Offering O
+    INNER JOIN Course C ON O.CourseID = C.CourseID
+    INNER JOIN Curriculum Curr ON O.CurriculumID = Curr.CurriculumID
+    INNER JOIN CurriculumHeader CH ON Curr.CurriculumHeaderID = CH.CurriculumHeaderID
+    INNER JOIN Program P ON CH.ProgramID = P.ProgramID
+    -- Logic: Join section only if it matches our specific filter
+    LEFT JOIN ClassSection CS ON O.OfferingID = CS.OfferingID 
+        AND CS.SchoolYear = @SchoolYear 
+        AND CS.Section = @Section
+    LEFT JOIN Faculty F ON CS.FacultyID = F.FacultyID
+    WHERE 
+        CH.CurriculumYear = @CurriculumYear
+        AND P.ProgramCode = @ProgramCode;
+END;
+GO
+
 --==================================================
 -- 5. GRADESHEET STORED PROCEDURE
 --==================================================
