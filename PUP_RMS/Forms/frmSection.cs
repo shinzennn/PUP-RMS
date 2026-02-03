@@ -97,11 +97,11 @@ namespace PUP_RMS
             cbxSchoolYear.SelectedItem = null;
             cbxSection.SelectedItem = null;
         }
-
         private void cbxCurriculum_Click(object sender, EventArgs e)
         {
             LoadCurriculumYear();
         }
+            
 
         private void LoadCurriculumYear()
         {
@@ -208,6 +208,7 @@ namespace PUP_RMS
             );
         }
 
+
         private void cbxSchoolYear_Click(object sender, EventArgs e)
         {
             LoadAcademicYears();
@@ -228,6 +229,9 @@ namespace PUP_RMS
 
             cbxSchoolYear.SelectedItem = $"{currentAYStart}-{currentAYStart + 1}";
         }
+      
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e){}
+        private void what(object sender, EventArgs e){}
 
         private int GetCurrentAcademicYearStart()
         {
@@ -238,8 +242,8 @@ namespace PUP_RMS
                 : now.Year - 1;
         }
       
-        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e){}
-        private void what(object sender, EventArgs e){}
+        //private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e){}
+        //private void what(object sender, EventArgs e){}
 
         // BUTTON CLICK EVENTS
         private void btnLoadCourse_Click(object sender, EventArgs e)
