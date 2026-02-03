@@ -1378,6 +1378,43 @@ BEGIN
 END
 GO
 
+-- 8.7.7. GET YEAR LEVEL AGGREGATE STATUS
+CREATE OR ALTER PROCEDURE sp_GetYearLevelAggregateStatus -- Renamed to match helper
+    @ProgramCode VARCHAR(20),
+    @CurriculumYear VARCHAR(10) = NULL, -- Allow NULL
+    @SchoolYear VARCHAR(20) = NULL      -- Allow NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        cur.YearLevel,
+        COUNT(DISTINCT o.OfferingID) AS SubjectsInCurriculum,
+        COUNT(DISTINCT cs.SectionID) AS TotalSectionsCreated,
+        COUNT(DISTINCT gs.GradeSheetID) AS TotalSubmitted,
+        (COUNT(DISTINCT cs.SectionID) - COUNT(DISTINCT gs.GradeSheetID)) AS TotalPending,
+        CASE 
+            WHEN COUNT(DISTINCT cs.SectionID) = 0 THEN 0 
+            ELSE CAST((COUNT(DISTINCT gs.GradeSheetID) * 100.0 / COUNT(DISTINCT cs.SectionID)) AS DECIMAL(5,2)) 
+        END AS YearlyCompletionRate
+    FROM Program p
+    INNER JOIN CurriculumHeader ch ON p.ProgramID = ch.ProgramID
+    INNER JOIN Curriculum cur ON ch.CurriculumHeaderID = cur.CurriculumHeaderID
+    LEFT JOIN Offering o ON cur.CurriculumID = o.CurriculumID
+    LEFT JOIN ClassSection cs ON o.OfferingID = cs.OfferingID 
+        -- Handle "All" logic here:
+        AND (@SchoolYear IS NULL OR cs.SchoolYear = @SchoolYear)
+    LEFT JOIN GradeSheet gs ON cs.SectionID = gs.SectionID
+    
+    WHERE p.ProgramCode = @ProgramCode
+      -- Handle "All" logic here:
+      AND (@CurriculumYear IS NULL OR ch.CurriculumYear = @CurriculumYear)
+    
+    GROUP BY cur.YearLevel
+    ORDER BY cur.YearLevel ASC;
+END;
+GO
+
 --------------------------------------------------
 -- 8.8. Distribution by PROFESSOR
 --------------------------------------------------
