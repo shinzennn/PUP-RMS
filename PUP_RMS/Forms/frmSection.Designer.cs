@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
@@ -41,8 +41,8 @@
             this.Faculty = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.headerPanelCard1 = new PUP_RMS.CustomControls.HeaderPanelCard();
-            this.btnView = new PUP_RMS.RoundedButton();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnView = new PUP_RMS.RoundedButton();
             this.label3 = new System.Windows.Forms.Label();
             this.cbxSchoolYear = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -209,15 +209,15 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(5, 10, 5, 10);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(5, 10, 5, 10);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Faculty});
@@ -227,12 +227,12 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 51;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(5, 10, 5, 10);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(5, 10, 5, 10);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(681, 659);
             this.dataGridView1.TabIndex = 42;
@@ -294,28 +294,6 @@
             this.headerPanelCard1.Size = new System.Drawing.Size(303, 403);
             this.headerPanelCard1.TabIndex = 67;
             // 
-            // btnView
-            // 
-            this.btnView.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnView.BackColor = System.Drawing.Color.Maroon;
-            this.btnView.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnView.BorderRadius = 20;
-            this.btnView.BorderSize = 0;
-            this.btnView.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnView.FlatAppearance.BorderSize = 0;
-            this.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.ForeColor = System.Drawing.Color.White;
-            this.btnView.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnView.Location = new System.Drawing.Point(51, 133);
-            this.btnView.Name = "btnView";
-            this.btnView.Size = new System.Drawing.Size(150, 30);
-            this.btnView.TabIndex = 2;
-            this.btnView.Text = "View";
-            this.btnView.TextColor = System.Drawing.Color.White;
-            this.btnView.UseVisualStyleBackColor = false;
-            this.btnView.Click += new System.EventHandler(this.btnView_Click);
-            // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -340,9 +318,31 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(253, 169);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(253, 216);
             this.tableLayoutPanel4.TabIndex = 1;
             this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
+            // 
+            // btnView
+            // 
+            this.btnView.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnView.BackColor = System.Drawing.Color.Maroon;
+            this.btnView.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnView.BorderRadius = 20;
+            this.btnView.BorderSize = 0;
+            this.btnView.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnView.FlatAppearance.BorderSize = 0;
+            this.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnView.ForeColor = System.Drawing.Color.White;
+            this.btnView.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnView.Location = new System.Drawing.Point(51, 181);
+            this.btnView.Name = "btnView";
+            this.btnView.Size = new System.Drawing.Size(150, 30);
+            this.btnView.TabIndex = 2;
+            this.btnView.Text = "View";
+            this.btnView.TextColor = System.Drawing.Color.White;
+            this.btnView.UseVisualStyleBackColor = false;
+            this.btnView.Click += new System.EventHandler(this.btnView_Click);
             // 
             // label3
             // 
@@ -351,7 +351,7 @@
             this.label3.Location = new System.Drawing.Point(2, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(105, 17);
+            this.label3.Size = new System.Drawing.Size(105, 18);
             this.label3.TabIndex = 51;
             this.label3.Text = "School Year:";
             // 
@@ -364,7 +364,7 @@
             this.cbxSchoolYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxSchoolYear.FormattingEnabled = true;
             this.cbxSchoolYear.IntegralHeight = false;
-            this.cbxSchoolYear.Location = new System.Drawing.Point(2, 19);
+            this.cbxSchoolYear.Location = new System.Drawing.Point(2, 29);
             this.cbxSchoolYear.Margin = new System.Windows.Forms.Padding(2);
             this.cbxSchoolYear.Name = "cbxSchoolYear";
             this.cbxSchoolYear.Size = new System.Drawing.Size(249, 28);
@@ -375,10 +375,10 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(2, 51);
+            this.label5.Location = new System.Drawing.Point(2, 75);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 17);
+            this.label5.Size = new System.Drawing.Size(70, 18);
             this.label5.TabIndex = 27;
             this.label5.Text = "Section:";
             // 
@@ -395,7 +395,7 @@
             "3",
             "4",
             "5"});
-            this.cbxSection.Location = new System.Drawing.Point(2, 70);
+            this.cbxSection.Location = new System.Drawing.Point(2, 104);
             this.cbxSection.Margin = new System.Windows.Forms.Padding(2);
             this.cbxSection.Name = "cbxSection";
             this.cbxSection.Size = new System.Drawing.Size(249, 28);
@@ -414,11 +414,11 @@
             this.btnLoadCourse.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoadCourse.ForeColor = System.Drawing.Color.White;
             this.btnLoadCourse.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnLoadCourse.Location = new System.Drawing.Point(51, 97);
+            this.btnLoadCourse.Location = new System.Drawing.Point(51, 145);
             this.btnLoadCourse.Name = "btnLoadCourse";
             this.btnLoadCourse.Size = new System.Drawing.Size(150, 30);
             this.btnLoadCourse.TabIndex = 53;
-            this.btnLoadCourse.Text = "Load Course";
+            this.btnLoadCourse.Text = "Load Courses";
             this.btnLoadCourse.TextColor = System.Drawing.Color.White;
             this.btnLoadCourse.UseVisualStyleBackColor = false;
             this.btnLoadCourse.Click += new System.EventHandler(this.btnLoadCourse_Click);

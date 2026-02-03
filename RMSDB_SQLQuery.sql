@@ -1412,20 +1412,32 @@ CREATE OR ALTER PROCEDURE sp_GetGradeSheetsByFacultyDetails
 AS
 BEGIN
     SELECT
-        gs.Filename AS [File Name],
+        cs.SchoolYear AS [School Year],
+        cur.Semester AS [Sem],
+        p.ProgramCode AS [Program],
+        cur.YearLevel AS [Year Level],
         c.CourseCode AS [Course Code],
-        gs.DateUploaded AS [Date Uploaded]
-    FROM GradeSheet gs
-    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+        CASE 
+            WHEN gs.GradeSheetID IS NOT NULL THEN 'Gradesheet uploaded' 
+            ELSE 'No Grade Sheet' 
+        END AS [Status]
+    FROM ClassSection cs
     INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
     INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
     INNER JOIN Course c ON o.CourseID = c.CourseID
     INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
     INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
-    WHERE (f.LastName + ', ' + f.FirstName) = @FacultyName
-      AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
-      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
-    ORDER BY gs.DateUploaded DESC;
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
+    -- Use LEFT JOIN so we still see sections even if no gradesheet exists
+    LEFT JOIN GradeSheet gs ON cs.SectionID = gs.SectionID
+    WHERE 
+        (f.LastName + ', ' + f.FirstName) = @FacultyName
+        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
+    ORDER BY 
+        cs.SchoolYear DESC, 
+        cur.Semester DESC, 
+        cur.YearLevel ASC;
 END
 GO
 
