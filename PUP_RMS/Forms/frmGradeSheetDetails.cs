@@ -1001,7 +1001,7 @@ namespace PUP_RMS.Forms
             DataTable dt = DbControl.GetData(query2);
 
             int gradeSheetID = dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["GradeSheetID"]) : 0;
-            MessageBox.Show(gradeSheetID.ToString());
+           
 
 
             DialogResult a = MessageBox.Show("Are you sure you want to delete this grade sheet?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -1015,6 +1015,7 @@ namespace PUP_RMS.Forms
 
                 DbControl.DeleteGradeSheet(gradeSheetID);
                 MessageBox.Show("Grade sheet deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
             else
             {

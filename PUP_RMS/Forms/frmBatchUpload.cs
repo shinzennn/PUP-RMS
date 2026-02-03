@@ -566,10 +566,37 @@ namespace PUP_RMS.Forms
         // =========================
 
 
+        private int GetOfferingID()
+        {
+            string query = @"
+           SELECT 
+             OfferingID 
+             FROM Offering AS O
+             INNER JOIN Curriculum AS C ON O.CurriculumID = C.CurriculumID
+             WHERE C.CurriculumID = @CurriculumID AND CourseID = @CourseID AND Semester = @Semester AND YearLevel = @YearLevel;";
+
+            int curriculumid = getCurriculumID(Convert.ToInt32(curriculumCmbox.SelectedValue), Convert.ToInt32(yearLevelCmbox.SelectedValue), Convert.ToInt32(semesterCmbox.SelectedValue));
+            DbControl.ClearParameters();
+            DbControl.AddParameter("@CurriculumID", curriculumid, SqlDbType.Int);
+            DbControl.AddParameter("@CourseID", courseCmbox.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@Semester", semesterCmbox.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@YearLevel", yearLevelCmbox.SelectedValue, SqlDbType.Int);
+
+            DataTable dt = DbControl.GetData(query);
+            return Convert.ToInt32(dt.Rows[0]["OfferingID"]);
+        }
+
         private int GetSectionID()
         {
-            string query = @"SELECT SectionID From ClassSection WHERE Section = @Section";
+            MessageBox.Show(professorCmbox.SelectedValue.ToString());
+            int offeringID = GetOfferingID();
+            string query = @"SELECT SectionID 
+                    From ClassSection 
+                    WHERE Section = @Section AND FacultyID = @FacultyID AND OfferingID = @OfferingID AND SchoolYear = @SchoolYear;";
             DbControl.AddParameter("@Section", sectionCmbox.Text, SqlDbType.VarChar);
+            DbControl.AddParameter("@FacultyID", professorCmbox.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@OfferingID", offeringID, SqlDbType.Int);
+            DbControl.AddParameter("@SchoolYear", yearCmbox.Text, SqlDbType.VarChar);
             DataTable dt = DbControl.GetData(query);
             return Convert.ToInt32(dt.Rows[0]["SectionID"]);
         }
@@ -607,6 +634,7 @@ namespace PUP_RMS.Forms
             try
             {
                 int sectionid = GetSectionID();
+                MessageBox.Show("Section ID: " + sectionid.ToString());
                 string sourcePath = toUpload.Items[0].Tag.ToString();
                 string extension = Path.GetExtension(sourcePath);
                 string folderPath = BuildImageFolderPath();
