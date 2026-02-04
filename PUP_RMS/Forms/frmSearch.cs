@@ -143,7 +143,7 @@ namespace PUP_RMS.Forms
                 frm.ShowDialog(this);
             }
 
-            btnSearch.PerformClick();
+           btnSearch.PerformClick();
 
         }
         private void dgvGradeSheets_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -294,17 +294,16 @@ namespace PUP_RMS.Forms
             try
             {
                
-                string query = "SELECT Section \r\nFROM ClassSection AS CS\r\nINNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID\r\nWHERE SchoolYear = @SchoolYear AND O.CourseID = @CourseID\r\nORDER BY Section ASC;";
+                string query = "SELECT Section, SectionID \r\nFROM ClassSection AS CS\r\nINNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID\r\nWHERE SchoolYear = @SchoolYear AND O.CourseID = @CourseID\r\nORDER BY Section ASC;";
                 DbControl.AddParameter("@SchoolYear", cmbSchoolYear.SelectedValue ?? DBNull.Value, SqlDbType.VarChar);
-                DbControl.AddParameter("@CourseID", selectedCourseID != 0 ? (object)selectedCourseID : DBNull.Value, SqlDbType.Int);
+                DbControl.AddParameter("@CourseID", cmbCourse.SelectedValue, SqlDbType.Int);
                 DataTable dt = DbControl.GetData(query);
-
                 DataRow placeholder = dt.NewRow();
                 if(dt != null && dt.Rows.Count > 0)
                 {
                     cmbSection.DataSource = dt;
                     cmbSection.DisplayMember = "Section";
-                    cmbSection.ValueMember = "Section";
+                    cmbSection.ValueMember = "SectionID";
                 }
                 else
                 {
@@ -346,47 +345,58 @@ namespace PUP_RMS.Forms
 
         }
 
-        private void LoadProfessorForCourse(int courseID)
+        private void LoadProfessorForCourse()
         {
-            if (courseID == 0)
+            if (cmbCourse.SelectedValue == null || cmbSection.SelectedValue == null)
             {
                 cmbProfessor.DataSource = null;
                 return;
             }
 
             // C#
-            using (SqlConnection con = new SqlConnection(DbControl.ConnString("RMSDB")))
-            using (SqlCommand cmd = new SqlCommand(@"
-                 SELECT 
+
+            string query = @"
+                  SELECT 
                  Distinct F.FacultyID,
                  F.LastName + ', ' + F.FirstName + ' ' + ISNULL(NULLIF(SUBSTRING(F.MiddleName, 1, 1), '') + '.', '') AS Professor
                  FROM Faculty as F
                  INNER JOIN ClassSection AS CS ON F.FacultyID = CS.FacultyID
                  INNER JOIN GradeSheet AS GS ON GS.SectionID = CS.SectionID
                  INNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID
-                 WHERE O.CourseID = @CourseID;", con))
-            {
-                cmd.Parameters.AddWithValue("@CourseID", courseID);
-                DataTable dt = new DataTable();
-                con.Open();
-                dt.Load(cmd.ExecuteReader());
+                 WHERE O.CourseID = @CourseID AND CS.SchoolYear = @SchoolYear AND CS.Section = @Section;";
+                
+            
+            //MessageBox.Show(cmbCourse.SelectedValue.ToString());
+            //MessageBox.Show(cmbSchoolYear.Text);
+            //MessageBox.Show(cmbSection.Text.ToString());
+            DbControl.ClearParameters();
+            DbControl.AddParameter("@CourseID", cmbCourse.SelectedValue, SqlDbType.Int);
+            DbControl.AddParameter("@SchoolYear", cmbSchoolYear.Text, SqlDbType.VarChar);
+            DbControl.AddParameter("@Section", Convert.ToInt32(cmbSection.Text), SqlDbType.Int);
+            DataTable dt = DbControl.GetData(query);
 
-                if (!dt.Columns.Contains("FacultyID") || !dt.Columns.Contains("Professor"))
-                {
-                    cmbProfessor.DataSource = null;
-                    return;
-                }
+            cmbProfessor.DataSource = dt;
+            cmbProfessor.DisplayMember = "Professor";
+            cmbProfessor.ValueMember = "FacultyID";
 
-                DataRow placeholder = dt.NewRow();
-                placeholder["FacultyID"] = 0;
-                placeholder["Professor"] = "Select Professor";
-                dt.Rows.InsertAt(placeholder, 0);
 
-                cmbProfessor.DataSource = dt;
-                cmbProfessor.DisplayMember = "Professor";
-                cmbProfessor.ValueMember = "FacultyID";
-                cmbProfessor.SelectedIndex = 0;
-            }
+            // MessageBox.Show(Convert.ToString(dt.Rows[0]["Professor"]));
+
+            //if (!dt.Columns.Contains("FacultyID") || !dt.Columns.Contains("Professor"))
+            //    {
+            //        cmbProfessor.DataSource = null;
+            //        return;
+            //    }
+
+            //    DataRow placeholder = dt.NewRow();
+            //    placeholder["FacultyID"] = 0;
+            //    placeholder["Professor"] = "Select Professor";
+            //    dt.Rows.InsertAt(placeholder, 0);
+
+            //    cmbProfessor.DataSource = dt;
+
+            //    cmbProfessor.SelectedIndex = 0;
+            
         }
 
         // =========================
@@ -410,7 +420,8 @@ namespace PUP_RMS.Forms
             cmbCourse.DataSource = null;
             cmbProfessor.DataSource = null;
 
-            btnSearch.PerformClick();
+         
+           btnSearch.PerformClick();
         }
 
         private void cmbCurriculum_SelectedIndexChanged(object sender, EventArgs e)
@@ -459,7 +470,8 @@ namespace PUP_RMS.Forms
             }
 
             // Trigger search
-            btnSearch.PerformClick();
+            
+           btnSearch.PerformClick();
         }
 
         private void cmbYearLevel_SelectedIndexChanged(object sender, EventArgs e)
@@ -489,17 +501,28 @@ namespace PUP_RMS.Forms
         {
             if (isLoading) return;
 
-            selectedSection = GetSafeComboInt(cmbSection);
-            // Refresh Courses whenever Section changes
-            cmbCurriculum_SelectedIndexChanged(sender, e);
+            
+
+
+            //selectedSection = GetSafeComboInt(cmbSection);
+            //// Refresh Courses whenever Section changes
+            //cmbCurriculum_SelectedIndexChanged(sender, e);
+
+            //selectedCourseID = GetSafeComboInt(cmbCourse);
+
+            //            LoadProfessorForCourse();
+
+
+
+
         }
 
         private void cmbCourse_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (isLoading) return;
 
-            selectedCourseID = GetSafeComboInt(cmbCourse);
-            LoadProfessorForCourse(selectedCourseID);
+            //selectedCourseID = GetSafeComboInt(cmbCourse);
+            //LoadProfessorForCourse(selectedCourseID);
 
             btnSearch.PerformClick();
         }
@@ -516,11 +539,12 @@ namespace PUP_RMS.Forms
         {
             if (isLoading) return;
             LoadSections();
-            LoadProfessorForCourse(selectedCourseID);
+            //LoadProfessorForCourse(selectedCourseID);
             selectedSchoolYear = cmbSchoolYear.SelectedIndex > 0 && cmbSchoolYear.SelectedValue != null
                 ? cmbSchoolYear.SelectedValue.ToString()
                 : null;
 
+            
             btnSearch.PerformClick();
         }
 
@@ -557,6 +581,8 @@ namespace PUP_RMS.Forms
                 int section = GetSafeComboInt(cmbSection);
                 int courseID = GetSafeComboInt(cmbCourse);
                 int facultyID = GetSafeComboInt(cmbProfessor);
+ 
+
 
                 // Clear previous parameters
                 DbControl.ClearParameters();
@@ -567,7 +593,7 @@ namespace PUP_RMS.Forms
                 DbControl.AddParameter("@ProgramID", programID != 0 ? (object)programID : DBNull.Value, SqlDbType.Int);
                 DbControl.AddParameter("@CurriculumYear", !string.IsNullOrEmpty(curriculumYear) ? (object)curriculumYear : DBNull.Value, SqlDbType.VarChar);
                 DbControl.AddParameter("@YearLevel", yearLevel != 0 ? (object)yearLevel : DBNull.Value, SqlDbType.Int);
-                DbControl.AddParameter("@Section", section != 0 ? (object)section : DBNull.Value, SqlDbType.Int);
+                DbControl.AddParameter("@Section", (!string.IsNullOrWhiteSpace(cmbSection.Text)) ? (object)Convert.ToInt32(cmbSection.Text) : DBNull.Value, SqlDbType.Int);
                 DbControl.AddParameter("@CourseID", courseID != 0 ? (object)courseID : DBNull.Value, SqlDbType.Int);
                 DbControl.AddParameter("@FacultyID", facultyID != 0 ? (object)facultyID : DBNull.Value, SqlDbType.Int);
 
@@ -618,7 +644,8 @@ namespace PUP_RMS.Forms
                 cmbCurriculum.DataSource = null;
                 cmbCourse.DataSource = null;
                 cmbProfessor.DataSource = null;
-                cmbSection = null;
+                cmbSection.DataSource = null;
+                
 
                 // Ensure any displayed selection text is cleared
                 DeselectComboText(cmbProgram);
@@ -943,6 +970,24 @@ namespace PUP_RMS.Forms
                 return Convert.ToInt32(cmb.SelectedValue);
             }
             catch { return 0; }
+        }
+
+        private void cmbSection_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            //if (cmbSection.SelectedValue != null)
+            //{
+            //    LoadProfessorForCourse();
+            //}
+            
+
+
+        }
+
+        private void cmbProfessor_Click(object sender, EventArgs e)
+        {
+            LoadProfessorForCourse();
+            btnSearch.PerformClick();
         }
 
         private void btnOpenDirectory_Click(object sender, EventArgs e)

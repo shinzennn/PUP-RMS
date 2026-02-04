@@ -102,7 +102,7 @@ namespace PUP_RMS.Forms
 
         private void frmBatchUpload_Load(object sender, EventArgs e)
         {
-           // LoadProfessors();
+            // LoadProfessors();
             LoadSemester();
             InitializeImageList();
             LoadPrograms();
@@ -112,14 +112,14 @@ namespace PUP_RMS.Forms
 
             LoadPageNumber();
             LoadAcademicYears();
-            yearCmbox.Text = ""; 
-          //  LoadSection();
+            yearCmbox.Text = "";
+            //  LoadSection();
 
         }
         public void loadData()
         {
             filenameTxtbox.Text = "";
-          //  LoadProfessors();
+            //  LoadProfessors();
             LoadSemester();
             InitializeImageList();
             LoadPrograms();
@@ -129,7 +129,7 @@ namespace PUP_RMS.Forms
             LoadPageNumber();
             LoadAcademicYears();
             yearCmbox.Text = "";
-          //  LoadSection();
+            //  LoadSection();
         }
 
         private void InitializeImageList()
@@ -150,7 +150,7 @@ namespace PUP_RMS.Forms
 
         private void LoadCourses()
         {
-            courseCmbox.DataSource = DbControl.GetCourse(Convert.ToInt32(yearLevelCmbox.SelectedValue), Convert.ToInt32(semesterCmbox.SelectedValue),Convert.ToInt32(programCmbox.SelectedValue));
+            courseCmbox.DataSource = DbControl.GetCourse(Convert.ToInt32(yearLevelCmbox.SelectedValue), Convert.ToInt32(semesterCmbox.SelectedValue), Convert.ToInt32(programCmbox.SelectedValue));
             courseCmbox.DisplayMember = "CourseCode";
             courseCmbox.ValueMember = "CourseID";
             courseCmbox.SelectedIndex = -1;
@@ -158,7 +158,7 @@ namespace PUP_RMS.Forms
 
         private void LoadProfessors()
         {
-          
+
             if (yearCmbox.Text == null ||
                 sectionCmbox.Text == null ||
                 courseCmbox.Text == null)
@@ -166,8 +166,8 @@ namespace PUP_RMS.Forms
                 MessageBox.Show("Please make sure Year, Section, and Course are selected.");
                 return;
             }
-              
-            
+
+
             string query = @"
             SELECT 
                 F.FacultyID,
@@ -181,7 +181,7 @@ namespace PUP_RMS.Forms
 
             DbControl.ClearParameters();
             DbControl.AddParameter("@SchoolYear", yearCmbox.Text, SqlDbType.VarChar);
-            DbControl.AddParameter("@Section", Convert.ToInt32(sectionCmbox.Text), SqlDbType.Int);
+            DbControl.AddParameter("@Section", Convert.ToInt32(sectionCmbox.SelectedValue), SqlDbType.Int);
             DbControl.AddParameter("@CourseID", Convert.ToInt32(courseCmbox.SelectedValue), SqlDbType.Int);
 
             DataTable dt = DbControl.GetData(query);
@@ -193,10 +193,10 @@ namespace PUP_RMS.Forms
             }
 
             professorCmbox.DataSource = dt;
-            professorCmbox.Text= dt.Rows[0]["FullName"].ToString();
+            professorCmbox.Text = dt.Rows[0]["FullName"].ToString();
             professorCmbox.DisplayMember = "FullName";
             professorCmbox.ValueMember = "FacultyID";
-           // professorCmbox.SelectedIndex = -1;
+            // professorCmbox.SelectedIndex = -1;
         }
 
         private void LoadSemester()
@@ -262,7 +262,7 @@ namespace PUP_RMS.Forms
                 return;
 
             int programId = Convert.ToInt32(programCmbox.SelectedValue);
-            
+
             curriculumCmbox.DataSource = DbControl.GetCurriculumsByProgram(programId);
             curriculumCmbox.DisplayMember = "CurriculumYear";
             curriculumCmbox.ValueMember = "CurriculumHeaderID";
@@ -273,7 +273,7 @@ namespace PUP_RMS.Forms
         private void LoadAcademicYears()
         {
 
-           
+
             // 1. Validation: Ensure all necessary filters are selected
             if (curriculumCmbox.SelectedValue == null ||
                 courseCmbox.SelectedValue == null ||
@@ -327,8 +327,17 @@ namespace PUP_RMS.Forms
             DataTable ddt = DbControl.GetData(query2);
             if (ddt.Rows.Count > 0)
             {
-                yearCmbox.Text = ddt.Rows[0]["SchoolYear"].ToString();
-                sectionCmbox.Text = ddt.Rows[0]["Section"].ToString();
+                yearCmbox.DataSource = ddt.Rows.Cast<DataRow>()
+                    .Select(r => r["SchoolYear"].ToString())
+                    .Distinct()
+                    .ToList();
+                sectionCmbox.DataSource = ddt.Rows.Cast<DataRow>()
+                    .Select(r => r["Section"].ToString())
+                    .Distinct()
+                    .ToList();
+
+                //yearCmbox.Text = ddt.Rows[0]["SchoolYear"].ToString();
+                //sectionCmbox.Text = ddt.Rows[0]["Section"].ToString();
                 LoadProfessors();
             }
         }
@@ -349,7 +358,7 @@ namespace PUP_RMS.Forms
 
 
         // filter program based on selected curriculum year
-        
+
 
         // =========================
         // NAMING CONVENTION LOGIC
@@ -712,7 +721,7 @@ namespace PUP_RMS.Forms
             }
         }
 
-        private bool checkGradeSheetDuplicate (string baseFileName)
+        private bool checkGradeSheetDuplicate(string baseFileName)
         {
             string query = "SELECT COUNT(*) AS Existing \r\nFROM GradeSheet\r\nWHERE Filename LIKE @Filename + '.%' OR Filename = @Filename;";
 
@@ -721,8 +730,8 @@ namespace PUP_RMS.Forms
             DataTable dt = DbControl.GetData(query);
             if (Convert.ToInt32(dt.Rows[0]["Existing"]) > 0) {
                 return true;
-            }else { return false; }
-            
+            } else { return false; }
+
         }
 
         private int getCurriculumID(string curriculumYear, int progID, int yearLevel, int sem)
@@ -736,11 +745,11 @@ namespace PUP_RMS.Forms
             DbControl.AddParameter("@Semester", sem, SqlDbType.Int);
 
             DataTable dt = DbControl.GetData(query);
-            if(dt != null)
+            if (dt != null)
             {
-                
+
                 currID = Convert.ToInt32(dt.Rows[0]["CurriculumID"]);
-                
+
             }
 
             return currID;
@@ -752,7 +761,7 @@ namespace PUP_RMS.Forms
         //wa
         private string BuildImageFolderPath()
         {
-           
+
             string year = SanitizePath(yearCmbox.Text);
             string semester = SanitizePath(semesterCmbox.Text);
             string program = SanitizePath(programCmbox.Text);
@@ -764,7 +773,7 @@ namespace PUP_RMS.Forms
             return Path.Combine(
                 baseImagePath,
                 year,
-                semester, 
+                semester,
                 program,
                 yearlevel,
                 section,
@@ -840,10 +849,10 @@ namespace PUP_RMS.Forms
         {
 
             LoadCourses();
-          
+
 
         }
-        
+
 
         private void curriculumCmbox_Click(object sender, EventArgs e)
         {
@@ -852,8 +861,8 @@ namespace PUP_RMS.Forms
 
         private void courseCmbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-         
-           
+
+
 
         }
 
@@ -867,7 +876,7 @@ namespace PUP_RMS.Forms
         }
 
         private void currentImage_Click(object sender, EventArgs e)
-        {  
+        {
 
         }
 
@@ -905,12 +914,12 @@ namespace PUP_RMS.Forms
 
         private void sectionCmbox_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void sectionCmbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void sectionCmbox_SelectedValueChanged(object sender, EventArgs e)
@@ -922,7 +931,7 @@ namespace PUP_RMS.Forms
         private void sectionCmbox_TextUpdate(object sender, EventArgs e)
         {
 
-            LoadProfessors();
+           // LoadProfessors();
         }
 
         private void pageCmbox_SelectedIndexChanged(object sender, EventArgs e)
@@ -932,14 +941,14 @@ namespace PUP_RMS.Forms
 
         private void courseCmbox_TextUpdate(object sender, EventArgs e)
         {
-           
+
         }
 
         private void courseCmbox_SelectedValueChanged(object sender, EventArgs e)
         {
             yearCmbox.Text = "";
             sectionCmbox.Text = "";
-           professorCmbox.Text = "";
+            professorCmbox.Text = "";
             LoadAcademicYears();
         }
 
@@ -949,6 +958,15 @@ namespace PUP_RMS.Forms
             yearCmbox.Text = "";
             sectionCmbox.Text = "";
             professorCmbox.Text = "";
+        }
+
+        private void yearCmbox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (courseCmbox.SelectedValue != null || yearCmbox.SelectedValue != null || sectionCmbox.SelectedValue != null)
+            {
+                LoadProfessors();
+            }
+                
         }
     }
 
