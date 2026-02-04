@@ -309,6 +309,38 @@ namespace PUP_RMS.Forms
 
         //COMBO BOX DATA ADDING
 
+        int lastIndexComboBox(ComboBox comboBox1)
+        {
+            int highestValue = int.MinValue;
+
+            // 1. Check if there are actually items to avoid errors
+            if (comboBox1.Items.Count > 0 && !string.IsNullOrEmpty(comboBox1.ValueMember))
+            {
+                foreach (object item in comboBox1.Items)
+                {
+                    // 2. Use the system's built-in "TypeDescriptor" to find the ValueMember property
+                    // This avoids the 'FilterItemOnProperty' access error
+                    var property = System.ComponentModel.TypeDescriptor.GetProperties(item)[comboBox1.ValueMember];
+
+                    if (property != null)
+                    {
+                        // 3. Get the value from the item
+                        object rawValue = property.GetValue(item);
+
+                        if (rawValue != null && int.TryParse(rawValue.ToString(), out int current))
+                        {
+                            // 4. Compare to find the maximum
+                            if (current > highestValue)
+                            {
+                                highestValue = current;
+                            }
+                        }
+                    }
+                }
+            }
+            return highestValue;
+        }
+
         private void btnAddCourse_Click(object sender, EventArgs e)
         {
             frmNewCourse openCouse = new frmNewCourse();
@@ -317,8 +349,9 @@ namespace PUP_RMS.Forms
             if (openCouse.DialogResult == DialogResult.OK)
             {
                 LoadCourse();
-                cbxCourse.SelectedIndex = cbxCourse.Items.Count - 1;
-                
+                int courseIndex = lastIndexComboBox(cbxCourse);
+                cbxCourse.SelectedValue = courseIndex;
+
             }
         }
 
@@ -329,7 +362,8 @@ namespace PUP_RMS.Forms
             if (newPrograms.DialogResult == DialogResult.OK)
             {
                 LoadProgram();
-                cbxProgram.SelectedIndex = cbxProgram.Items.Count - 1;  
+                int programIndex = lastIndexComboBox(cbxProgram);
+                cbxProgram.SelectedValue = programIndex;
             }
         }
 
