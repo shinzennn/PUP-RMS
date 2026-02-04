@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
@@ -942,6 +943,20 @@ namespace PUP_RMS.Forms
                 return Convert.ToInt32(cmb.SelectedValue);
             }
             catch { return 0; }
+        }
+
+        private void btnOpenDirectory_Click(object sender, EventArgs e)
+        {
+            string baseImagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RecordsManagementSystem", "GradeSheets");
+
+            if (Directory.Exists(baseImagePath))
+            {
+                System.Diagnostics.Process.Start("explorer.exe", baseImagePath);
+            }
+            else
+            {
+                MessageBox.Show("Grade Sheets directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

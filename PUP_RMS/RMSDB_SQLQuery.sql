@@ -274,6 +274,139 @@ BEGIN
 END 
 GO
 
+IF NOT EXISTS (SELECT 1 FROM CurriculumHeader)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[CurriculumHeader] ON 
+    INSERT [dbo].[CurriculumHeader] ([CurriculumHeaderID], [ProgramID], [CurriculumYear]) VALUES (1, 1, N'2022-2023')
+    SET IDENTITY_INSERT [dbo].[CurriculumHeader] OFF
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM Curriculum)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[Curriculum] ON 
+    INSERT [dbo].[Curriculum] ([CurriculumID], [CurriculumHeaderID], [YearLevel], [Semester]) VALUES (1, 1, 1, 1)
+    INSERT [dbo].[Curriculum] ([CurriculumID], [CurriculumHeaderID], [YearLevel], [Semester]) VALUES (2, 1, 1, 2)
+    INSERT [dbo].[Curriculum] ([CurriculumID], [CurriculumHeaderID], [YearLevel], [Semester]) VALUES (3, 1, 2, 1)
+    INSERT [dbo].[Curriculum] ([CurriculumID], [CurriculumHeaderID], [YearLevel], [Semester]) VALUES (4, 1, 2, 2)
+    INSERT [dbo].[Curriculum] ([CurriculumID], [CurriculumHeaderID], [YearLevel], [Semester]) VALUES (5, 1, 3, 1)
+    INSERT [dbo].[Curriculum] ([CurriculumID], [CurriculumHeaderID], [YearLevel], [Semester]) VALUES (6, 1, 3, 2)
+    INSERT [dbo].[Curriculum] ([CurriculumID], [CurriculumHeaderID], [YearLevel], [Semester]) VALUES (7, 1, 3, 3)
+    INSERT [dbo].[Curriculum] ([CurriculumID], [CurriculumHeaderID], [YearLevel], [Semester]) VALUES (8, 1, 4, 1)
+    INSERT [dbo].[Curriculum] ([CurriculumID], [CurriculumHeaderID], [YearLevel], [Semester]) VALUES (9, 1, 4, 2)
+    SET IDENTITY_INSERT [dbo].[Curriculum] OFF
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM Offering)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[Offering] ON 
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (1, 1, 1)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (2, 1, 2)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (3, 1, 3)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (4, 1, 4)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (5, 1, 5)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (6, 1, 6)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (7, 1, 7)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (8, 1, 8)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (9, 2, 9)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (10, 2, 10)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (11, 2, 11)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (12, 2, 12)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (13, 2, 13)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (14, 2, 14)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (15, 2, 15)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (16, 2, 16)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (17, 3, 17)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (18, 3, 18)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (19, 3, 19)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (20, 3, 20)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (21, 3, 21)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (22, 3, 22)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (23, 3, 23)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (24, 3, 24)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (25, 4, 25)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (26, 4, 26)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (27, 4, 27)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (28, 4, 28)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (29, 4, 29)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (30, 4, 30)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (31, 4, 31)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (32, 4, 32)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (33, 5, 33)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (34, 5, 34)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (35, 5, 35)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (36, 5, 36)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (37, 5, 37)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (38, 5, 38)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (39, 5, 39)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (40, 6, 40)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (41, 6, 41)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (42, 6, 42)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (43, 6, 19)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (44, 6, 44)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (45, 6, 45)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (46, 6, 46)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (47, 7, 47)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (48, 7, 48)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (49, 8, 49)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (50, 8, 50)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (51, 8, 51)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (52, 8, 52)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (53, 8, 53)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (54, 8, 54)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (55, 9, 55)
+    INSERT [dbo].[Offering] ([OfferingID], [CurriculumID], [CourseID]) VALUES (56, 9, 56)
+    SET IDENTITY_INSERT [dbo].[Offering] OFF
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM ClassSection)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[ClassSection] ON 
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (2, 1, 4, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (3, 2, 5, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (4, 3, 6, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (5, 4, 7, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (6, 5, 8, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (7, 6, 9, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (8, 7, 11, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (9, 8, 10, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (10, 9, 6, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (11, 10, 12, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (12, 11, 13, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (13, 12, 14, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (14, 13, 15, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (15, 14, 16, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (16, 15, 18, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (17, 16, 17, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (18, 17, 19, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (19, 18, 5, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (20, 19, 5, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (21, 20, 20, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (22, 21, 21, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (23, 22, 22, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (24, 23, 23, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (25, 24, 24, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (26, 25, 6, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (27, 26, 6, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (28, 27, 25, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (29, 28, 26, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (30, 29, 28, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (31, 30, 27, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (32, 31, 29, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (33, 32, 24, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (34, 33, 5, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (35, 34, 30, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (36, 35, 26, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (37, 36, 6, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (38, 37, 29, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (39, 38, 22, 1, N'2023-2024')
+    INSERT [dbo].[ClassSection] ([SectionID], [OfferingID], [FacultyID], [Section], [SchoolYear]) VALUES (41, 39, 25, 1, N'2023-2024')
+    SET IDENTITY_INSERT [dbo].[ClassSection] OFF
+END
+GO
+
 --==================================================
 -- 1. COURSE STORED PROCEDURES                   
 --==================================================

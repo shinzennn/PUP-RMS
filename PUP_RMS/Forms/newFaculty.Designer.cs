@@ -28,18 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(newFaculty));
             this.roundedShadowPanel4 = new PUP_RMS.RoundedShadowPanel();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.roundedShadowPanel3 = new PUP_RMS.RoundedShadowPanel();
             this.txtMiddleName = new System.Windows.Forms.TextBox();
             this.roundedShadowPanel2 = new PUP_RMS.RoundedShadowPanel();
+            this.txtLastName = new System.Windows.Forms.TextBox();
             this.btnCancel = new PUP_RMS.RoundedButton();
             this.btnSave = new PUP_RMS.RoundedButton();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.headerPanelCard1 = new PUP_RMS.CustomControls.HeaderPanelCard();
-            this.txtLastName = new System.Windows.Forms.TextBox();
             this.roundedShadowPanel4.SuspendLayout();
             this.roundedShadowPanel3.SuspendLayout();
             this.roundedShadowPanel2.SuspendLayout();
@@ -138,6 +139,19 @@
             this.roundedShadowPanel2.ShadowShift = 5;
             this.roundedShadowPanel2.Size = new System.Drawing.Size(390, 64);
             this.roundedShadowPanel2.TabIndex = 0;
+            // 
+            // txtLastName
+            // 
+            this.txtLastName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLastName.BackColor = System.Drawing.Color.LightGray;
+            this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtLastName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLastName.Location = new System.Drawing.Point(24, 18);
+            this.txtLastName.Name = "txtLastName";
+            this.txtLastName.Size = new System.Drawing.Size(344, 19);
+            this.txtLastName.TabIndex = 2;
             // 
             // btnCancel
             // 
@@ -252,19 +266,6 @@
             this.headerPanelCard1.Size = new System.Drawing.Size(440, 457);
             this.headerPanelCard1.TabIndex = 0;
             // 
-            // txtLastName
-            // 
-            this.txtLastName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLastName.BackColor = System.Drawing.Color.LightGray;
-            this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtLastName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLastName.Location = new System.Drawing.Point(24, 18);
-            this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(344, 19);
-            this.txtLastName.TabIndex = 2;
-            // 
             // newFaculty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -272,6 +273,7 @@
             this.ClientSize = new System.Drawing.Size(464, 481);
             this.Controls.Add(this.headerPanelCard1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "newFaculty";

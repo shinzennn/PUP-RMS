@@ -47,6 +47,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>rms_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.1.66\lib\net461\Dapper.dll</HintPath>
@@ -204,12 +207,6 @@
     <Compile Include="Forms\frmDistributionYear_Sem.Designer.cs">
       <DependentUpon>frmDistributionYear_Sem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmEditCourse.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmEditCourse.Designer.cs">
-      <DependentUpon>frmEditCourse.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\frmGradeSheetDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -349,6 +346,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmSection.resx">
       <DependentUpon>frmSection.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\currentpicturePreview.resx">
       <DependentUpon>currentpicturePreview.cs</DependentUpon>
@@ -385,9 +383,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDistributionYear_Sem.resx">
       <DependentUpon>frmDistributionYear_Sem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmEditCourse.resx">
-      <DependentUpon>frmEditCourse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmGradeSheetDetails.resx">
       <DependentUpon>frmGradeSheetDetails.cs</DependentUpon>
@@ -488,9 +483,11 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Icons\rms_icon.ico" />
     <Content Include="RMSDB_SQLQuery.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="rms_icon.ico" />
     <None Include="Resources\magnifying-glass.png" />
     <None Include="Resources\AccountIcon.png" />
     <None Include="Resources\Icons\account %281%29.png" />

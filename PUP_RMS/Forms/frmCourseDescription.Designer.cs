@@ -32,6 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCourseDescription));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.roundedShadowPanel1 = new PUP_RMS.RoundedShadowPanel();
             this.roundedShadowPanel4 = new PUP_RMS.RoundedShadowPanel();
@@ -199,9 +200,9 @@
             this.label1.Location = new System.Drawing.Point(200, 15);
             this.label1.Margin = new System.Windows.Forms.Padding(20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(167, 31);
+            this.label1.Size = new System.Drawing.Size(163, 31);
             this.label1.TabIndex = 23;
-            this.label1.Text = "Subject List";
+            this.label1.Text = "Course List";
             // 
             // dgvCourseYear
             // 
@@ -285,7 +286,8 @@
             this.ClientSize = new System.Drawing.Size(660, 676);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btnEdit);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCourseDescription";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
