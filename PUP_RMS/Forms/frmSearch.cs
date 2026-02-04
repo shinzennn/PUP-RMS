@@ -357,7 +357,7 @@ namespace PUP_RMS.Forms
             using (SqlConnection con = new SqlConnection(DbControl.ConnString("RMSDB")))
             using (SqlCommand cmd = new SqlCommand(@"
                  SELECT 
-                 F.FacultyID,
+                 Distinct F.FacultyID,
                  F.LastName + ', ' + F.FirstName + ' ' + ISNULL(NULLIF(SUBSTRING(F.MiddleName, 1, 1), '') + '.', '') AS Professor
                  FROM Faculty as F
                  INNER JOIN ClassSection AS CS ON F.FacultyID = CS.FacultyID
