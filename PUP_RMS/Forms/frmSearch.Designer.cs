@@ -172,7 +172,7 @@
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.07747F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.75965F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-            this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
+            this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
             this.tlpControls.Controls.Add(this.label8, 7, 0);
             this.tlpControls.Controls.Add(this.label4, 3, 0);
             this.tlpControls.Controls.Add(this.btnSearch, 8, 1);
@@ -207,7 +207,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(688, 2);
+            this.label8.Location = new System.Drawing.Point(683, 2);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(88, 18);
             this.label8.TabIndex = 37;
@@ -219,7 +219,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Location = new System.Drawing.Point(278, 0);
+            this.label4.Location = new System.Drawing.Point(277, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 20);
             this.label4.TabIndex = 33;
@@ -239,7 +239,7 @@
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.White;
             this.btnSearch.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSearch.Location = new System.Drawing.Point(816, 23);
+            this.btnSearch.Location = new System.Drawing.Point(811, 23);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(69, 33);
             this.btnSearch.TabIndex = 6;
@@ -262,9 +262,9 @@
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.Color.White;
             this.btnClear.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnClear.Location = new System.Drawing.Point(891, 23);
+            this.btnClear.Location = new System.Drawing.Point(886, 23);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(82, 33);
+            this.btnClear.Size = new System.Drawing.Size(87, 33);
             this.btnClear.TabIndex = 7;
             this.btnClear.Text = "Clear";
             this.btnClear.TextColor = System.Drawing.Color.White;
@@ -279,7 +279,7 @@
             this.cmbProfessor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbProfessor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbProfessor.FormattingEnabled = true;
-            this.cmbProfessor.Location = new System.Drawing.Point(687, 22);
+            this.cmbProfessor.Location = new System.Drawing.Point(682, 22);
             this.cmbProfessor.Margin = new System.Windows.Forms.Padding(2);
             this.cmbProfessor.Name = "cmbProfessor";
             this.cmbProfessor.Size = new System.Drawing.Size(124, 28);
@@ -297,10 +297,10 @@
             this.cmbSemester.Items.AddRange(new object[] {
             "1st",
             "2nd"});
-            this.cmbSemester.Location = new System.Drawing.Point(277, 22);
+            this.cmbSemester.Location = new System.Drawing.Point(276, 22);
             this.cmbSemester.Margin = new System.Windows.Forms.Padding(2);
             this.cmbSemester.Name = "cmbSemester";
-            this.cmbSemester.Size = new System.Drawing.Size(68, 28);
+            this.cmbSemester.Size = new System.Drawing.Size(67, 28);
             this.cmbSemester.TabIndex = 1;
             this.cmbSemester.SelectedIndexChanged += new System.EventHandler(this.cmbSemester_SelectedIndexChanged);
             // 
@@ -384,7 +384,7 @@
             this.cmbYearLevel.Location = new System.Drawing.Point(206, 22);
             this.cmbYearLevel.Margin = new System.Windows.Forms.Padding(2);
             this.cmbYearLevel.Name = "cmbYearLevel";
-            this.cmbYearLevel.Size = new System.Drawing.Size(67, 28);
+            this.cmbYearLevel.Size = new System.Drawing.Size(66, 28);
             this.cmbYearLevel.TabIndex = 3;
             this.cmbYearLevel.SelectedIndexChanged += new System.EventHandler(this.cmbYearLevel_SelectedIndexChanged);
             // 
@@ -394,7 +394,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(350, 2);
+            this.label7.Location = new System.Drawing.Point(348, 2);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 18);
             this.label7.TabIndex = 36;
@@ -408,10 +408,10 @@
             this.cmbCourse.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbCourse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCourse.FormattingEnabled = true;
-            this.cmbCourse.Location = new System.Drawing.Point(349, 22);
+            this.cmbCourse.Location = new System.Drawing.Point(347, 22);
             this.cmbCourse.Margin = new System.Windows.Forms.Padding(2);
             this.cmbCourse.Name = "cmbCourse";
-            this.cmbCourse.Size = new System.Drawing.Size(125, 28);
+            this.cmbCourse.Size = new System.Drawing.Size(124, 28);
             this.cmbCourse.TabIndex = 4;
             this.cmbCourse.SelectedIndexChanged += new System.EventHandler(this.cmbCourse_SelectedIndexChanged);
             // 
@@ -421,7 +421,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(606, 2);
+            this.label6.Location = new System.Drawing.Point(602, 2);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(70, 18);
             this.label6.TabIndex = 35;
@@ -433,7 +433,7 @@
             this.lblSchoolYear.AutoSize = true;
             this.lblSchoolYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSchoolYear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblSchoolYear.Location = new System.Drawing.Point(479, 2);
+            this.lblSchoolYear.Location = new System.Drawing.Point(476, 2);
             this.lblSchoolYear.Name = "lblSchoolYear";
             this.lblSchoolYear.Size = new System.Drawing.Size(105, 18);
             this.lblSchoolYear.TabIndex = 30;
@@ -446,9 +446,9 @@
             this.cmbSection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.cmbSection.FormattingEnabled = true;
-            this.cmbSection.Location = new System.Drawing.Point(606, 23);
+            this.cmbSection.Location = new System.Drawing.Point(602, 23);
             this.cmbSection.Name = "cmbSection";
-            this.cmbSection.Size = new System.Drawing.Size(76, 28);
+            this.cmbSection.Size = new System.Drawing.Size(75, 28);
             this.cmbSection.TabIndex = 39;
             this.cmbSection.SelectedIndexChanged += new System.EventHandler(this.cmbSection_SelectedIndexChanged);
             this.cmbSection.SelectedValueChanged += new System.EventHandler(this.cmbSection_SelectedValueChanged);
@@ -623,10 +623,10 @@
             "2097-2098",
             "2098-2099",
             "2099-2100"});
-            this.cmbSchoolYear.Location = new System.Drawing.Point(478, 22);
+            this.cmbSchoolYear.Location = new System.Drawing.Point(475, 22);
             this.cmbSchoolYear.Margin = new System.Windows.Forms.Padding(2);
             this.cmbSchoolYear.Name = "cmbSchoolYear";
-            this.cmbSchoolYear.Size = new System.Drawing.Size(123, 28);
+            this.cmbSchoolYear.Size = new System.Drawing.Size(122, 28);
             this.cmbSchoolYear.TabIndex = 0;
             this.cmbSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cmbSchoolYear_SelectedIndexChanged);
             // 
