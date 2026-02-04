@@ -480,7 +480,7 @@ namespace PUP_RMS.Forms
             cmbCourse.Enabled = true;
             cmbProfessor.Enabled = true;
             cmbCurriculum.Enabled = true;
-            cmbSection.Enabled = true;
+            //cmbSection.Enabled = true;
 
             btnSaves.Visible = true;
             btnCancels.Visible = true;
@@ -501,7 +501,7 @@ namespace PUP_RMS.Forms
             cmbCourse.Enabled = false;
             cmbProfessor.Enabled = false;
             cmbCurriculum.Enabled = false;
-            cmbSection.Enabled = true;
+           // cmbSection.Enabled = true;
 
             btnSaves.Visible = false;
             btnCancels.Visible = false;
@@ -748,6 +748,29 @@ namespace PUP_RMS.Forms
             cmbSection.DataSource = dt;      // ✅ correct combo
             cmbSection.DisplayMember = "Name";
             cmbSection.ValueMember = "ID";
+            LoadComboBox(
+                        @"SELECT SectionID, Section
+                  FROM ClassSection
+                  GROUP BY SectionID, Section
+                  ORDER BY Section ASC",
+                cmbSection,
+                "Section",
+                "SectionID"
+            );
+
+
+
+            //string query = @"
+            //    SELECT Section FROM ClassSection WHERE FacultyID = @FacultyID AND SchoolYear = @SchoolYear";
+            //DbControl.AddParameter("@FacultyID", cmbProfessor.SelectedValue, SqlDbType.Int);
+            //DbControl.AddParameter("@SchoolYear", cmbSchoolYear.Text, SqlDbType.VarChar);
+            //DataTable dt = DbControl.GetData(query);
+            //MessageBox.Show(cmbProfessor.SelectedValue.ToString());
+            //MessageBox.Show(cmbSchoolYear.Text);
+            //MessageBox.Show(dt.Rows[0]["Section"].ToString());
+            //MessageBox.Show(dt.Rows[1]["Section"].ToString());
+            //cmbSection.Text = dt.Rows[0]["Section"].ToString();
+
         }
 
 
