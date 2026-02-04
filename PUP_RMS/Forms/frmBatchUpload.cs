@@ -807,7 +807,11 @@ namespace PUP_RMS.Forms
 
         private void undoBtn_Click(object sender, EventArgs e)
         {
-            if (undoHistory.Count == 0) return;
+            if (undoHistory.Count == 0)
+            {
+                MessageBox.Show("No actions to undo.");
+                return;
+            }
 
             UndoItem undo = undoHistory.Pop();
             DbControl.DeleteGradeSheet(undo.GradeSheetID);
