@@ -150,7 +150,44 @@ namespace PUP_RMS.Forms
 
         private void LoadCourses()
         {
-            courseCmbox.DataSource = DbControl.GetCourse(Convert.ToInt32(yearLevelCmbox.SelectedValue), Convert.ToInt32(semesterCmbox.SelectedValue), Convert.ToInt32(programCmbox.SelectedValue));
+            if (programCmbox.SelectedValue == null ||
+                curriculumCmbox.SelectedValue == null ||
+                yearLevelCmbox.SelectedValue == null ||
+                semesterCmbox.SelectedValue == null)
+            {
+                courseCmbox.DataSource = null;
+                return;
+            }
+
+            string query = @"SELECT 
+                co.CourseCode,
+                co.CourseID
+                FROM Program p
+                INNER JOIN CurriculumHeader ch ON p.ProgramID = ch.ProgramID
+                INNER JOIN Curriculum c ON ch.CurriculumHeaderID = c.CurriculumHeaderID
+                INNER JOIN Offering o ON c.CurriculumID = o.CurriculumID
+                INNER JOIN Course co ON o.CourseID = co.CourseID
+                 WHERE p.ProgramID = @ProgramID
+                 AND ch.CurriculumHeaderID = @CurriculumHeaderID
+                 AND c.YearLevel = @YearLevel
+                 AND c.Semester = @Semester
+";
+
+
+            DbControl.ClearParameters();
+
+            DbControl.AddParameter("@ProgramID", Convert.ToInt32(programCmbox.SelectedValue), SqlDbType.Int);
+            DbControl.AddParameter("@CurriculumHeaderID", Convert.ToInt32(curriculumCmbox.SelectedValue), SqlDbType.Int);
+            DbControl.AddParameter("@YearLevel", Convert.ToInt32(yearLevelCmbox.SelectedValue), SqlDbType.Int);
+            DbControl.AddParameter("@Semester", Convert.ToInt32(semesterCmbox.SelectedValue), SqlDbType.Int);
+
+            DataTable dt = DbControl.GetData(query);
+            if (dt.Rows.Count == 0)
+            {
+                courseCmbox.DataSource = null;
+                return;
+            }
+            courseCmbox.DataSource = dt;
             courseCmbox.DisplayMember = "CourseCode";
             courseCmbox.ValueMember = "CourseID";
             courseCmbox.SelectedIndex = -1;
