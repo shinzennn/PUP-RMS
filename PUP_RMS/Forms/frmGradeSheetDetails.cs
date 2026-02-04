@@ -737,39 +737,37 @@ namespace PUP_RMS.Forms
         }
         private void LoadSections()
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ID", typeof(int));
-            dt.Columns.Add("Name", typeof(string));
+            //DataTable dt = new DataTable();
+            //dt.Columns.Add("ID", typeof(int));
+            //dt.Columns.Add("Name", typeof(string));
 
-            dt.Rows.Add(1, "1");
-            dt.Rows.Add(2, "2");
-            dt.Rows.Add(3, "3");
+            //dt.Rows.Add(1, "1");
+            //dt.Rows.Add(2, "2");
+            //dt.Rows.Add(3, "3");
 
-            cmbSection.DataSource = dt;      // ✅ correct combo
-            cmbSection.DisplayMember = "Name";
-            cmbSection.ValueMember = "ID";
-            LoadComboBox(
-                        @"SELECT SectionID, Section
-                  FROM ClassSection
-                  GROUP BY SectionID, Section
-                  ORDER BY Section ASC",
-                cmbSection,
-                "Section",
-                "SectionID"
-            );
+            //cmbSection.DataSource = dt;      // ✅ correct combo
+            //cmbSection.DisplayMember = "Name";
+            //cmbSection.ValueMember = "ID";
+            //LoadComboBox(
+            //            @"SELECT SectionID, Section
+            //      FROM ClassSection
+            //      GROUP BY SectionID, Section
+            //      ORDER BY Section ASC",
+            //    cmbSection,
+            //    "Section",
+            //    "SectionID"
+            //);
 
 
 
-            //string query = @"
-            //    SELECT Section FROM ClassSection WHERE FacultyID = @FacultyID AND SchoolYear = @SchoolYear";
-            //DbControl.AddParameter("@FacultyID", cmbProfessor.SelectedValue, SqlDbType.Int);
-            //DbControl.AddParameter("@SchoolYear", cmbSchoolYear.Text, SqlDbType.VarChar);
-            //DataTable dt = DbControl.GetData(query);
-            //MessageBox.Show(cmbProfessor.SelectedValue.ToString());
-            //MessageBox.Show(cmbSchoolYear.Text);
-            //MessageBox.Show(dt.Rows[0]["Section"].ToString());
-            //MessageBox.Show(dt.Rows[1]["Section"].ToString());
-            //cmbSection.Text = dt.Rows[0]["Section"].ToString();
+            string query = @"
+                SELECT Section 
+                FROM ClassSection as CS 
+                INNER JOIN GradeSheet AS GS ON CS.SectionID = GS.SectionID
+                WHERE GradeSheetID = @GradeSheetID";
+            DbControl.AddParameter("@GradeSheetID", GradeSheetID, SqlDbType.Int);
+            DataTable dt = DbControl.GetData(query);
+            cmbSection.Text = dt.Rows[0]["Section"].ToString();
 
         }
 
