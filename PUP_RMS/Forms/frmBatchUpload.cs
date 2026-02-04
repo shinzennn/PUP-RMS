@@ -53,9 +53,9 @@ namespace PUP_RMS.Forms
             toUpload.SelectedIndexChanged += toUpload_SelectedIndexChanged;
             removeItemMenu.Click += removeItemMenu_Click;
             toUpload.MouseDown += toUpload_MouseDown;
-            uploadBtn.Click += uploadBtn_Click;
+            //uploadBtn.Click += uploadBtn_Click;
             saveBtn.Click += saveBtn_Click;
-            undoBtn.Click += undoBtn_Click;
+            //undoBtn.Click += undoBtn_Click;
 
             // Add these to your constructor or Load method
             yearLevelCmbox.SelectedIndexChanged += (s, e) => LoadAcademicYears();
@@ -588,7 +588,6 @@ namespace PUP_RMS.Forms
 
         private int GetSectionID()
         {
-            MessageBox.Show(professorCmbox.SelectedValue.ToString());
             int offeringID = GetOfferingID();
             string query = @"SELECT SectionID 
                     From ClassSection 
@@ -634,7 +633,6 @@ namespace PUP_RMS.Forms
             try
             {
                 int sectionid = GetSectionID();
-                MessageBox.Show("Section ID: " + sectionid.ToString());
                 string sourcePath = toUpload.Items[0].Tag.ToString();
                 string extension = Path.GetExtension(sourcePath);
                 string folderPath = BuildImageFolderPath();
