@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmViewSection));
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.lblHeader = new System.Windows.Forms.Label();
             this.flowCourseFaculty = new System.Windows.Forms.FlowLayoutPanel();
-            this.gradientLabel1 = new GradientLabel();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +48,17 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1159, 90);
             this.panelHeader.TabIndex = 23;
+            // 
+            // gradientLabel1
+            // 
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(182, 37);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "View Section";
             // 
             // label10
             // 
@@ -89,17 +101,6 @@
             this.flowCourseFaculty.Size = new System.Drawing.Size(1089, 629);
             this.flowCourseFaculty.TabIndex = 25;
             // 
-            // gradientLabel1
-            // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(182, 37);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "View Section";
-            // 
             // frmViewSection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -111,6 +112,7 @@
             this.Controls.Add(this.flowCourseFaculty);
             this.Controls.Add(this.lblHeader);
             this.Controls.Add(this.panelHeader);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;

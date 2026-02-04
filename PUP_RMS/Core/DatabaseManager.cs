@@ -7,14 +7,7 @@ using System.Windows.Forms;
 
 namespace PUP_RMS.Core
 {
-    /// <summary>
-    /// DatabaseManager - Handles RMSDB initialization with progress reporting
-    /// 
-    /// Usage:
-    ///   In Program.cs Main():
-    ///   var setupForm = new DatabaseSetupForm();
-    ///   setupForm.ShowDialog();
-    /// </summary>
+
     public static class DatabaseManager
     {
         // Connection to master database (for creating RMSDB)
@@ -29,10 +22,7 @@ namespace PUP_RMS.Core
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "RMSDB_App", "DatabaseSetup.log");
 
-        /// <summary>
         /// Initialize database on application startup
-        /// Call this in App.xaml.cs before showing main window
-        /// </summary>
         public static void InitializeDatabase()
         {
             try
@@ -94,9 +84,7 @@ namespace PUP_RMS.Core
             }
         }
 
-        /// <summary>
         /// Check if SQL Server (localdb) is running and accessible
-        /// </summary>
         private static bool CanConnectToSqlServer()
         {
             try
@@ -119,9 +107,7 @@ namespace PUP_RMS.Core
             }
         }
 
-        /// <summary>
         /// Check if RMSDB database exists
-        /// </summary>
         private static bool CheckDatabaseExists()
         {
             try
@@ -145,9 +131,7 @@ namespace PUP_RMS.Core
             }
         }
 
-        /// <summary>
         /// Verify database is healthy and accessible
-        /// </summary>
         private static bool VerifyDatabaseHealth()
         {
             try
@@ -170,9 +154,7 @@ namespace PUP_RMS.Core
             }
         }
 
-        /// <summary>
         /// Execute SQL script file, splitting by GO batches
-        /// </summary>
         private static void ExecuteScript(Action<string> progressCallback = null)
         {
             // Get script path
@@ -269,10 +251,7 @@ namespace PUP_RMS.Core
                 MessageBoxIcon.Information);
         }
 
-        /// <summary>
-        /// Find SQL script in application directory
-        /// Tries multiple locations for flexibility
-        /// </summary>
+        /// Find SQL script in application directory Tries multiple locations for flexibility
         private static string GetScriptPath()
         {
             // Try multiple possible locations
@@ -307,10 +286,7 @@ namespace PUP_RMS.Core
                 string.Join("\n", possiblePaths));
         }
 
-        /// <summary>
-        /// Get application connection string from config
-        /// Falls back to hardcoded default if not found in config
-        /// </summary>
+        /// Get application connection string from config Falls back to hardcoded default if not found in config
         private static string GetConnectionString()
         {
             try
@@ -335,10 +311,7 @@ namespace PUP_RMS.Core
             }
         }
 
-        /// <summary>
-        /// Log message to file
-        /// Creates AppData\RMSDB_App\DatabaseSetup.log
-        /// </summary>
+        /// Log message to file Creates AppData\RMSDB_App\DatabaseSetup.log
         private static void Log(string message)
         {
             try
@@ -359,10 +332,7 @@ namespace PUP_RMS.Core
             }
         }
 
-        /// <summary>
-        /// Get the path to the log file
-        /// Useful for showing to user after errors
-        /// </summary>
+        /// Get the path to the log file Useful for showing to user after errors
         public static string GetLogPath() => LogFilePath;
     }
 }

@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGradeSheetDetails));
             this.tlpEdit = new System.Windows.Forms.TableLayoutPanel();
             this.tlpEditControls = new System.Windows.Forms.TableLayoutPanel();
             this.btnCancels = new PUP_RMS.RoundedButton();
             this.btnSaves = new PUP_RMS.RoundedButton();
             this.headerPanelCard1 = new PUP_RMS.CustomControls.HeaderPanelCard();
+            this.deleteBtn = new PUP_RMS.RoundedButton();
             this.roundedShadowPanel12 = new PUP_RMS.RoundedShadowPanel();
             this.cmbProfessor = new System.Windows.Forms.ComboBox();
             this.btnEdit = new PUP_RMS.RoundedButton();
@@ -75,7 +77,7 @@
             this.btnCancel = new PUP_RMS.RoundedButton();
             this.btnUpload = new PUP_RMS.RoundedButton();
             this.btnClose = new PUP_RMS.RoundedButton();
-            this.deleteBtn = new PUP_RMS.RoundedButton();
+            this.label4 = new System.Windows.Forms.Label();
             this.tlpEdit.SuspendLayout();
             this.tlpEditControls.SuspendLayout();
             this.headerPanelCard1.SuspendLayout();
@@ -179,6 +181,7 @@
             this.headerPanelCard1.BorderRadius = 10;
             this.headerPanelCard1.BorderThickness = 1;
             this.headerPanelCard1.ContentBackColor = System.Drawing.Color.White;
+            this.headerPanelCard1.Controls.Add(this.deleteBtn);
             this.headerPanelCard1.Controls.Add(this.roundedShadowPanel12);
             this.headerPanelCard1.Controls.Add(this.btnEdit);
             this.headerPanelCard1.Controls.Add(this.roundedShadowPanel11);
@@ -220,6 +223,28 @@
             this.headerPanelCard1.ShowShadow = true;
             this.headerPanelCard1.Size = new System.Drawing.Size(526, 708);
             this.headerPanelCard1.TabIndex = 29;
+            // 
+            // deleteBtn
+            // 
+            this.deleteBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.deleteBtn.BackColor = System.Drawing.Color.Maroon;
+            this.deleteBtn.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.deleteBtn.BorderRadius = 20;
+            this.deleteBtn.BorderSize = 0;
+            this.deleteBtn.ButtonColor = System.Drawing.Color.Maroon;
+            this.deleteBtn.FlatAppearance.BorderSize = 0;
+            this.deleteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deleteBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deleteBtn.ForeColor = System.Drawing.Color.White;
+            this.deleteBtn.HoverColor = System.Drawing.Color.Red;
+            this.deleteBtn.Location = new System.Drawing.Point(419, 642);
+            this.deleteBtn.Name = "deleteBtn";
+            this.deleteBtn.Size = new System.Drawing.Size(81, 40);
+            this.deleteBtn.TabIndex = 39;
+            this.deleteBtn.Text = "Delete";
+            this.deleteBtn.TextColor = System.Drawing.Color.White;
+            this.deleteBtn.UseVisualStyleBackColor = false;
+            this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
             // 
             // roundedShadowPanel12
             // 
@@ -267,7 +292,7 @@
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.ForeColor = System.Drawing.Color.White;
             this.btnEdit.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnEdit.Location = new System.Drawing.Point(419, 644);
+            this.btnEdit.Location = new System.Drawing.Point(419, 598);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(81, 38);
             this.btnEdit.TabIndex = 30;
@@ -792,12 +817,11 @@
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 5;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 168F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 264F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 181F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
-            this.tableLayoutPanel5.Controls.Add(this.deleteBtn, 2, 0);
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 115F));
             this.tableLayoutPanel5.Controls.Add(this.roundedButton1, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnSave, 3, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnCancel, 4, 0);
@@ -823,7 +847,7 @@
             this.roundedButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.roundedButton1.ForeColor = System.Drawing.Color.White;
             this.roundedButton1.HoverColor = System.Drawing.Color.DarkRed;
-            this.roundedButton1.Location = new System.Drawing.Point(25, 4);
+            this.roundedButton1.Location = new System.Drawing.Point(13, 4);
             this.roundedButton1.Name = "roundedButton1";
             this.roundedButton1.Size = new System.Drawing.Size(100, 40);
             this.roundedButton1.TabIndex = 38;
@@ -845,7 +869,7 @@
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSave.Location = new System.Drawing.Point(626, 4);
+            this.btnSave.Location = new System.Drawing.Point(638, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 40);
             this.btnSave.TabIndex = 36;
@@ -868,7 +892,7 @@
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.HoverColor = System.Drawing.Color.Maroon;
-            this.btnCancel.Location = new System.Drawing.Point(732, 4);
+            this.btnCancel.Location = new System.Drawing.Point(744, 4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 40);
             this.btnCancel.TabIndex = 37;
@@ -891,7 +915,7 @@
             this.btnUpload.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpload.ForeColor = System.Drawing.Color.White;
             this.btnUpload.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnUpload.Location = new System.Drawing.Point(131, 4);
+            this.btnUpload.Location = new System.Drawing.Point(119, 4);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(100, 40);
             this.btnUpload.TabIndex = 35;
@@ -904,7 +928,7 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnClose.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnClose.BackColor = System.Drawing.Color.Maroon;
             this.btnClose.BorderColor = System.Drawing.Color.PaleVioletRed;
             this.btnClose.BorderRadius = 20;
             this.btnClose.BorderSize = 0;
@@ -913,47 +937,38 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnClose.Location = new System.Drawing.Point(1332, 818);
+            this.btnClose.HoverColor = System.Drawing.Color.Red;
+            this.btnClose.Location = new System.Drawing.Point(1376, 818);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(118, 31);
+            this.btnClose.Size = new System.Drawing.Size(74, 31);
             this.btnClose.TabIndex = 33;
             this.btnClose.Text = "Close";
             this.btnClose.TextColor = System.Drawing.Color.White;
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click_1);
             // 
-            // deleteBtn
+            // label4
             // 
-            this.deleteBtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.deleteBtn.BackColor = System.Drawing.Color.Goldenrod;
-            this.deleteBtn.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.deleteBtn.BorderRadius = 20;
-            this.deleteBtn.BorderSize = 0;
-            this.deleteBtn.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.deleteBtn.FlatAppearance.BorderSize = 0;
-            this.deleteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.deleteBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteBtn.ForeColor = System.Drawing.Color.White;
-            this.deleteBtn.HoverColor = System.Drawing.Color.DarkRed;
-            this.deleteBtn.Location = new System.Drawing.Point(287, 4);
-            this.deleteBtn.Name = "deleteBtn";
-            this.deleteBtn.Size = new System.Drawing.Size(100, 40);
-            this.deleteBtn.TabIndex = 39;
-            this.deleteBtn.Text = "Delete";
-            this.deleteBtn.TextColor = System.Drawing.Color.White;
-            this.deleteBtn.UseVisualStyleBackColor = false;
-            this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(98, 818);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 34;
+            this.label4.Text = "label4";
             // 
             // frmGradeSheetDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1484, 861);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.tlpPreview);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tlpEdit);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmGradeSheetDetails";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Grade Sheet Details";
@@ -979,6 +994,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1032,5 +1048,6 @@
         private System.Windows.Forms.PictureBox pbPreview;
         private CustomControls.HeaderPanelCard headerPanelCard1;
         private RoundedButton deleteBtn;
+        private System.Windows.Forms.Label label4;
     }
 }

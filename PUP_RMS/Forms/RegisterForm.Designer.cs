@@ -141,6 +141,7 @@
             // 
             this.comboBoxAccountType.BackColor = System.Drawing.Color.White;
             this.comboBoxAccountType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAccountType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.comboBoxAccountType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxAccountType.FormattingEnabled = true;
             this.comboBoxAccountType.Items.AddRange(new object[] {
@@ -156,11 +157,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(49, 240);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 20);
+            this.label3.Size = new System.Drawing.Size(94, 18);
             this.label3.TabIndex = 35;
             this.label3.Text = "Last Name:";
             // 
@@ -234,22 +235,22 @@
             // lblAccountType
             // 
             this.lblAccountType.AutoSize = true;
-            this.lblAccountType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAccountType.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAccountType.ForeColor = System.Drawing.Color.White;
             this.lblAccountType.Location = new System.Drawing.Point(49, 465);
             this.lblAccountType.Name = "lblAccountType";
-            this.lblAccountType.Size = new System.Drawing.Size(123, 20);
+            this.lblAccountType.Size = new System.Drawing.Size(115, 18);
             this.lblAccountType.TabIndex = 46;
             this.lblAccountType.Text = "Account Type:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(49, 165);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 20);
+            this.label1.Size = new System.Drawing.Size(96, 18);
             this.label1.TabIndex = 50;
             this.label1.Text = "First Name:";
             // 
@@ -334,11 +335,11 @@
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPassword.ForeColor = System.Drawing.Color.White;
             this.lblPassword.Location = new System.Drawing.Point(49, 390);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(91, 20);
+            this.lblPassword.Size = new System.Drawing.Size(88, 18);
             this.lblPassword.TabIndex = 34;
             this.lblPassword.Text = "Password:";
             this.lblPassword.Click += new System.EventHandler(this.lblPassword_Click);
@@ -346,11 +347,11 @@
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsername.ForeColor = System.Drawing.Color.White;
             this.lblUsername.Location = new System.Drawing.Point(49, 315);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(96, 20);
+            this.lblUsername.Size = new System.Drawing.Size(90, 18);
             this.lblUsername.TabIndex = 33;
             this.lblUsername.Text = "Username:";
             this.lblUsername.Click += new System.EventHandler(this.lblUsername_Click);
@@ -481,7 +482,9 @@
             this.Controls.Add(this.roundedShadowPanelSignUp);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "RegisterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.RegisterForm_Load);

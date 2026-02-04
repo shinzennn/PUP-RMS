@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSearchView));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
@@ -108,6 +109,7 @@
             this.Controls.Add(this.flowCurriculumContainer);
             this.Controls.Add(this.lblHeader);
             this.Controls.Add(this.panelHeader);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;

@@ -186,6 +186,7 @@ namespace PUP_RMS.Forms
 
                     currentFilePath = originalImagePath;
                     LoadThumbnail(originalImagePath);
+                    label4.Text = originalImagePath;
                 }
             }
         }

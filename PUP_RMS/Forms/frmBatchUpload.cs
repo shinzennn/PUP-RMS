@@ -21,7 +21,7 @@ namespace PUP_RMS.Forms
     public partial class frmBatchUpload : Form
     {
         private int loggedInAdminId = 1;
-        private readonly string baseImagePath = Path.Combine(Application.StartupPath, "GradeSheets");
+        private readonly string baseImagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RecordsManagementSystem", "GradeSheets");
         private Stack<UndoItem> undoHistory = new Stack<UndoItem>();
         private ImageList uploadImageList;
 

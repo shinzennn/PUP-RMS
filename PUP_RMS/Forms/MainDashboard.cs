@@ -566,6 +566,9 @@ namespace PUP_RMS.Forms
 
         }
 
-        
+        private void MainDashboard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
