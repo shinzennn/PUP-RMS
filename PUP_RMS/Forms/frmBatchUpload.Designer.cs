@@ -613,6 +613,7 @@
             this.yearCmbox.Size = new System.Drawing.Size(134, 28);
             this.yearCmbox.TabIndex = 6;
             this.yearCmbox.Text = "Year";
+            this.yearCmbox.SelectedValueChanged += new System.EventHandler(this.yearCmbox_SelectedValueChanged);
             // 
             // label12
             // 
