@@ -84,6 +84,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DatabaseManager.cs" />
     <Compile Include="Core\DbControl.cs" />
     <Compile Include="CustomControls\AdminToolCardButton.cs">
       <SubType>Component</SubType>
@@ -487,7 +488,9 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RMSDB_SQLQuery.sql" />
+    <Content Include="RMSDB_SQLQuery.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\magnifying-glass.png" />
     <None Include="Resources\AccountIcon.png" />
     <None Include="Resources\Icons\account %281%29.png" />

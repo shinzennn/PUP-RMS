@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PUP_RMS.Core;
+using PUP_RMS.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +18,9 @@ namespace PUP_RMS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            DatabaseManager.InitializeDatabase();
+
             Application.Run(new LoginForm());
         }
     }
