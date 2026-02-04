@@ -72,11 +72,11 @@ namespace PUP_RMS.Core
                 Log("✓ Database is healthy");
 
                 Log("=== Database Initialization Completed Successfully ===\n");
-                MessageBox.Show(
-                    "Database setup completed successfully.",
-                    "Success",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                //MessageBox.Show(
+                //    "Database setup completed successfully.",
+                //    "Success",
+                //    MessageBoxButtons.OK,
+                //    MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -262,6 +262,11 @@ namespace PUP_RMS.Core
             }
 
             Log("✓ All batches executed successfully");
+            MessageBox.Show(
+                "Database created successfully.",
+                "Success",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         /// <summary>
