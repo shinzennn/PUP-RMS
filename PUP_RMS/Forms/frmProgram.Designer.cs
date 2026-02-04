@@ -28,12 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.roundedShadowPanel3 = new PUP_RMS.RoundedShadowPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbxCurriculum = new System.Windows.Forms.ComboBox();
+            this.btnRefresh = new PUP_RMS.RoundedButton();
+            this.panelSearch = new PUP_RMS.RoundedShadowPanel();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnSearch = new PUP_RMS.RoundedButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.gradientLabel1 = new GradientLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutForm = new System.Windows.Forms.TableLayoutPanel();
@@ -49,15 +57,9 @@
             this.btnEdit = new PUP_RMS.RoundedButton();
             this.headerPanelCard1 = new PUP_RMS.CustomControls.HeaderPanelCard();
             this.dgvProgram = new System.Windows.Forms.DataGridView();
-            this.roundedShadowPanel3 = new PUP_RMS.RoundedShadowPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbxCurriculum = new System.Windows.Forms.ComboBox();
-            this.btnRefresh = new PUP_RMS.RoundedButton();
-            this.panelSearch = new PUP_RMS.RoundedShadowPanel();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.btnSearch = new PUP_RMS.RoundedButton();
-            this.gradientLabel1 = new GradientLabel();
             this.tableLayoutPanel1.SuspendLayout();
+            this.roundedShadowPanel3.SuspendLayout();
+            this.panelSearch.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutMain.SuspendLayout();
             this.tableLayoutForm.SuspendLayout();
@@ -66,8 +68,6 @@
             this.roundedShadowPanel2.SuspendLayout();
             this.headerPanelCard1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProgram)).BeginInit();
-            this.roundedShadowPanel3.SuspendLayout();
-            this.panelSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -79,7 +79,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.54499F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.45501F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
             this.tableLayoutPanel1.Controls.Add(this.roundedShadowPanel3, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnRefresh, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelSearch, 1, 0);
@@ -91,6 +91,139 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1002, 64);
             this.tableLayoutPanel1.TabIndex = 22;
+            // 
+            // roundedShadowPanel3
+            // 
+            this.roundedShadowPanel3.BackColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel3.BorderColor = System.Drawing.Color.Transparent;
+            this.roundedShadowPanel3.BorderRadius = 20;
+            this.roundedShadowPanel3.BorderSize = 0;
+            this.roundedShadowPanel3.Controls.Add(this.label4);
+            this.roundedShadowPanel3.Controls.Add(this.cbxCurriculum);
+            this.roundedShadowPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.roundedShadowPanel3.Location = new System.Drawing.Point(5, 0);
+            this.roundedShadowPanel3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.roundedShadowPanel3.Name = "roundedShadowPanel3";
+            this.roundedShadowPanel3.PanelColor = System.Drawing.Color.White;
+            this.roundedShadowPanel3.PanelImage = null;
+            this.roundedShadowPanel3.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.roundedShadowPanel3.ShadowDepth = 10;
+            this.roundedShadowPanel3.ShadowEnabled = true;
+            this.roundedShadowPanel3.ShadowShift = 5;
+            this.roundedShadowPanel3.Size = new System.Drawing.Size(234, 64);
+            this.roundedShadowPanel3.TabIndex = 28;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(20, 20);
+            this.label4.Name = "label4";
+            this.label4.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label4.Size = new System.Drawing.Size(84, 18);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Curriculum:";
+            // 
+            // cbxCurriculum
+            // 
+            this.cbxCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxCurriculum.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbxCurriculum.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbxCurriculum.BackColor = System.Drawing.Color.White;
+            this.cbxCurriculum.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxCurriculum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxCurriculum.FormattingEnabled = true;
+            this.cbxCurriculum.Location = new System.Drawing.Point(109, 17);
+            this.cbxCurriculum.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
+            this.cbxCurriculum.Name = "cbxCurriculum";
+            this.cbxCurriculum.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cbxCurriculum.Size = new System.Drawing.Size(103, 28);
+            this.cbxCurriculum.TabIndex = 16;
+            this.cbxCurriculum.SelectedIndexChanged += new System.EventHandler(this.cbxCurriculum_SelectedIndexChanged);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.BackColor = System.Drawing.Color.Maroon;
+            this.btnRefresh.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnRefresh.BorderRadius = 20;
+            this.btnRefresh.BorderSize = 0;
+            this.btnRefresh.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefresh.ForeColor = System.Drawing.Color.White;
+            this.btnRefresh.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnRefresh.Location = new System.Drawing.Point(906, 8);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(8);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(88, 48);
+            this.btnRefresh.TabIndex = 27;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.TextColor = System.Drawing.Color.White;
+            this.btnRefresh.UseVisualStyleBackColor = false;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // panelSearch
+            // 
+            this.panelSearch.BackColor = System.Drawing.Color.Transparent;
+            this.panelSearch.BorderColor = System.Drawing.Color.Transparent;
+            this.panelSearch.BorderRadius = 20;
+            this.panelSearch.BorderSize = 0;
+            this.panelSearch.Controls.Add(this.txtSearch);
+            this.panelSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSearch.Location = new System.Drawing.Point(254, 0);
+            this.panelSearch.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.panelSearch.Name = "panelSearch";
+            this.panelSearch.PanelColor = System.Drawing.Color.White;
+            this.panelSearch.PanelImage = null;
+            this.panelSearch.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.panelSearch.ShadowDepth = 10;
+            this.panelSearch.ShadowEnabled = true;
+            this.panelSearch.ShadowShift = 5;
+            this.panelSearch.Size = new System.Drawing.Size(534, 64);
+            this.panelSearch.TabIndex = 23;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearch.BackColor = System.Drawing.Color.White;
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(22, 23);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtSearch.Size = new System.Drawing.Size(492, 19);
+            this.txtSearch.TabIndex = 4;
+            this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearch.BackColor = System.Drawing.Color.Maroon;
+            this.btnSearch.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSearch.BorderRadius = 20;
+            this.btnSearch.BorderSize = 0;
+            this.btnSearch.ButtonColor = System.Drawing.Color.Maroon;
+            this.btnSearch.FlatAppearance.BorderSize = 0;
+            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.ForeColor = System.Drawing.Color.White;
+            this.btnSearch.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnSearch.Location = new System.Drawing.Point(806, 8);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(8);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(84, 48);
+            this.btnSearch.TabIndex = 23;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.TextColor = System.Drawing.Color.White;
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // panel1
             // 
@@ -104,6 +237,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1120, 90);
             this.panel1.TabIndex = 21;
+            // 
+            // gradientLabel1
+            // 
+            this.gradientLabel1.AutoSize = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(315, 37);
+            this.gradientLabel1.TabIndex = 9;
+            this.gradientLabel1.Text = "Program Management ";
             // 
             // label10
             // 
@@ -392,8 +536,8 @@
             this.dgvProgram.AllowUserToDeleteRows = false;
             this.dgvProgram.AllowUserToResizeColumns = false;
             this.dgvProgram.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            this.dgvProgram.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvProgram.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -403,15 +547,15 @@
             this.dgvProgram.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvProgram.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvProgram.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProgram.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProgram.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvProgram.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProgram.EnableHeadersVisualStyles = false;
             this.dgvProgram.GridColor = System.Drawing.SystemColors.ControlLightLight;
@@ -421,175 +565,31 @@
             this.dgvProgram.Name = "dgvProgram";
             this.dgvProgram.ReadOnly = true;
             this.dgvProgram.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(10);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProgram.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProgram.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvProgram.RowHeadersVisible = false;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.Goldenrod;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProgram.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 20, 10, 20);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Goldenrod;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProgram.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvProgram.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvProgram.Size = new System.Drawing.Size(442, 604);
             this.dgvProgram.TabIndex = 2;
             this.dgvProgram.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProgram_CellClick);
             this.dgvProgram.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProgram_CellMouseEnter);
             this.dgvProgram.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProgram_CellMouseLeave);
-            // 
-            // roundedShadowPanel3
-            // 
-            this.roundedShadowPanel3.BackColor = System.Drawing.Color.Transparent;
-            this.roundedShadowPanel3.BorderColor = System.Drawing.Color.Transparent;
-            this.roundedShadowPanel3.BorderRadius = 20;
-            this.roundedShadowPanel3.BorderSize = 0;
-            this.roundedShadowPanel3.Controls.Add(this.label4);
-            this.roundedShadowPanel3.Controls.Add(this.cbxCurriculum);
-            this.roundedShadowPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedShadowPanel3.Location = new System.Drawing.Point(5, 0);
-            this.roundedShadowPanel3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.roundedShadowPanel3.Name = "roundedShadowPanel3";
-            this.roundedShadowPanel3.PanelColor = System.Drawing.Color.White;
-            this.roundedShadowPanel3.PanelImage = null;
-            this.roundedShadowPanel3.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.roundedShadowPanel3.ShadowDepth = 10;
-            this.roundedShadowPanel3.ShadowEnabled = true;
-            this.roundedShadowPanel3.ShadowShift = 5;
-            this.roundedShadowPanel3.Size = new System.Drawing.Size(234, 64);
-            this.roundedShadowPanel3.TabIndex = 28;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(20, 20);
-            this.label4.Name = "label4";
-            this.label4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label4.Size = new System.Drawing.Size(84, 18);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "Curriculum:";
-            // 
-            // cbxCurriculum
-            // 
-            this.cbxCurriculum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxCurriculum.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cbxCurriculum.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbxCurriculum.BackColor = System.Drawing.Color.White;
-            this.cbxCurriculum.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxCurriculum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbxCurriculum.FormattingEnabled = true;
-            this.cbxCurriculum.Location = new System.Drawing.Point(109, 17);
-            this.cbxCurriculum.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
-            this.cbxCurriculum.Name = "cbxCurriculum";
-            this.cbxCurriculum.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbxCurriculum.Size = new System.Drawing.Size(103, 28);
-            this.cbxCurriculum.TabIndex = 16;
-            this.cbxCurriculum.SelectedIndexChanged += new System.EventHandler(this.cbxCurriculum_SelectedIndexChanged);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.BackColor = System.Drawing.Color.Maroon;
-            this.btnRefresh.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnRefresh.BorderRadius = 20;
-            this.btnRefresh.BorderSize = 0;
-            this.btnRefresh.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnRefresh.FlatAppearance.BorderSize = 0;
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefresh.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnRefresh.Location = new System.Drawing.Point(908, 8);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(8);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(86, 48);
-            this.btnRefresh.TabIndex = 27;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.TextColor = System.Drawing.Color.White;
-            this.btnRefresh.UseVisualStyleBackColor = false;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // panelSearch
-            // 
-            this.panelSearch.BackColor = System.Drawing.Color.Transparent;
-            this.panelSearch.BorderColor = System.Drawing.Color.Transparent;
-            this.panelSearch.BorderRadius = 20;
-            this.panelSearch.BorderSize = 0;
-            this.panelSearch.Controls.Add(this.txtSearch);
-            this.panelSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSearch.Location = new System.Drawing.Point(254, 0);
-            this.panelSearch.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.panelSearch.Name = "panelSearch";
-            this.panelSearch.PanelColor = System.Drawing.Color.White;
-            this.panelSearch.PanelImage = null;
-            this.panelSearch.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.panelSearch.ShadowDepth = 10;
-            this.panelSearch.ShadowEnabled = true;
-            this.panelSearch.ShadowShift = 5;
-            this.panelSearch.Size = new System.Drawing.Size(536, 64);
-            this.panelSearch.TabIndex = 23;
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.BackColor = System.Drawing.Color.White;
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.Location = new System.Drawing.Point(22, 23);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtSearch.Size = new System.Drawing.Size(494, 19);
-            this.txtSearch.TabIndex = 4;
-            this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearch.BackColor = System.Drawing.Color.Maroon;
-            this.btnSearch.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSearch.BorderRadius = 20;
-            this.btnSearch.BorderSize = 0;
-            this.btnSearch.ButtonColor = System.Drawing.Color.Maroon;
-            this.btnSearch.FlatAppearance.BorderSize = 0;
-            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.ForeColor = System.Drawing.Color.White;
-            this.btnSearch.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSearch.Location = new System.Drawing.Point(808, 8);
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(8);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(84, 48);
-            this.btnSearch.TabIndex = 23;
-            this.btnSearch.Text = "Search";
-            this.btnSearch.TextColor = System.Drawing.Color.White;
-            this.btnSearch.UseVisualStyleBackColor = false;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // gradientLabel1
-            // 
-            this.gradientLabel1.AutoSize = true;
-            this.gradientLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.gradientLabel1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabel1.Location = new System.Drawing.Point(24, 14);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(315, 37);
-            this.gradientLabel1.TabIndex = 9;
-            this.gradientLabel1.Text = "Program Management ";
             // 
             // frmProgram
             // 
@@ -607,6 +607,10 @@
             this.Text = "frmProgram";
             this.Load += new System.EventHandler(this.frmProgram_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.roundedShadowPanel3.ResumeLayout(false);
+            this.roundedShadowPanel3.PerformLayout();
+            this.panelSearch.ResumeLayout(false);
+            this.panelSearch.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tableLayoutMain.ResumeLayout(false);
@@ -619,10 +623,6 @@
             this.roundedShadowPanel2.PerformLayout();
             this.headerPanelCard1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProgram)).EndInit();
-            this.roundedShadowPanel3.ResumeLayout(false);
-            this.roundedShadowPanel3.PerformLayout();
-            this.panelSearch.ResumeLayout(false);
-            this.panelSearch.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Dapper;
+using PUP_RMS.Core;
+using PUP_RMS.Helper;
+using PUP_RMS.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Reflection; // Required for Double Buffer logic
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PUP_RMS.Helper;
-using PUP_RMS.Model;
 
 namespace PUP_RMS.Forms
 {
@@ -130,8 +134,6 @@ namespace PUP_RMS.Forms
                 dgvProgram.Columns["ProgramCode"].Width = 180;
         }
 
-        
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             // VALIDATION
@@ -247,12 +249,6 @@ namespace PUP_RMS.Forms
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             Reset();
-        }
-
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void cbxCurriculum_SelectedIndexChanged(object sender, EventArgs e)

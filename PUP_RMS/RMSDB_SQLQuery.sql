@@ -1532,6 +1532,43 @@ BEGIN
 END
 GO
 
+-- 8.7.7. GET YEAR LEVEL AGGREGATE STATUS
+CREATE OR ALTER PROCEDURE sp_GetYearLevelAggregateStatus -- Renamed to match helper
+    @ProgramCode VARCHAR(20),
+    @CurriculumYear VARCHAR(10) = NULL, -- Allow NULL
+    @SchoolYear VARCHAR(20) = NULL      -- Allow NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        cur.YearLevel,
+        COUNT(DISTINCT o.OfferingID) AS SubjectsInCurriculum,
+        COUNT(DISTINCT cs.SectionID) AS TotalSectionsCreated,
+        COUNT(DISTINCT gs.GradeSheetID) AS TotalSubmitted,
+        (COUNT(DISTINCT cs.SectionID) - COUNT(DISTINCT gs.GradeSheetID)) AS TotalPending,
+        CASE 
+            WHEN COUNT(DISTINCT cs.SectionID) = 0 THEN 0 
+            ELSE CAST((COUNT(DISTINCT gs.GradeSheetID) * 100.0 / COUNT(DISTINCT cs.SectionID)) AS DECIMAL(5,2)) 
+        END AS YearlyCompletionRate
+    FROM Program p
+    INNER JOIN CurriculumHeader ch ON p.ProgramID = ch.ProgramID
+    INNER JOIN Curriculum cur ON ch.CurriculumHeaderID = cur.CurriculumHeaderID
+    LEFT JOIN Offering o ON cur.CurriculumID = o.CurriculumID
+    LEFT JOIN ClassSection cs ON o.OfferingID = cs.OfferingID 
+        -- Handle "All" logic here:
+        AND (@SchoolYear IS NULL OR cs.SchoolYear = @SchoolYear)
+    LEFT JOIN GradeSheet gs ON cs.SectionID = gs.SectionID
+    
+    WHERE p.ProgramCode = @ProgramCode
+      -- Handle "All" logic here:
+      AND (@CurriculumYear IS NULL OR ch.CurriculumYear = @CurriculumYear)
+    
+    GROUP BY cur.YearLevel
+    ORDER BY cur.YearLevel ASC;
+END;
+GO
+
 --------------------------------------------------
 -- 8.8. Distribution by PROFESSOR
 --------------------------------------------------
@@ -1566,20 +1603,32 @@ CREATE OR ALTER PROCEDURE sp_GetGradeSheetsByFacultyDetails
 AS
 BEGIN
     SELECT
-        gs.Filename AS [File Name],
+        cs.SchoolYear AS [School Year],
+        cur.Semester AS [Sem],
+        p.ProgramCode AS [Program],
+        cur.YearLevel AS [Year Level],
         c.CourseCode AS [Course Code],
-        gs.DateUploaded AS [Date Uploaded]
-    FROM GradeSheet gs
-    INNER JOIN ClassSection cs ON gs.SectionID = cs.SectionID
+        CASE 
+            WHEN gs.GradeSheetID IS NOT NULL THEN 'Gradesheet uploaded' 
+            ELSE 'No Grade Sheet' 
+        END AS [Status]
+    FROM ClassSection cs
     INNER JOIN Faculty f ON cs.FacultyID = f.FacultyID
     INNER JOIN Offering o ON cs.OfferingID = o.OfferingID
     INNER JOIN Course c ON o.CourseID = c.CourseID
     INNER JOIN Curriculum cur ON o.CurriculumID = cur.CurriculumID
     INNER JOIN CurriculumHeader ch ON cur.CurriculumHeaderID = ch.CurriculumHeaderID
-    WHERE (f.LastName + ', ' + f.FirstName) = @FacultyName
-      AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
-      AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
-    ORDER BY gs.DateUploaded DESC;
+    INNER JOIN Program p ON ch.ProgramID = p.ProgramID
+    -- Use LEFT JOIN so we still see sections even if no gradesheet exists
+    LEFT JOIN GradeSheet gs ON cs.SectionID = gs.SectionID
+    WHERE 
+        (f.LastName + ', ' + f.FirstName) = @FacultyName
+        AND (@SchoolYear IS NULL OR @SchoolYear = 'All' OR cs.SchoolYear = @SchoolYear)
+        AND (@CurriculumYear IS NULL OR @CurriculumYear = 'All' OR ch.CurriculumYear = @CurriculumYear)
+    ORDER BY 
+        cs.SchoolYear DESC, 
+        cur.Semester DESC, 
+        cur.YearLevel ASC;
 END
 GO
 

@@ -143,6 +143,23 @@ namespace PUP_RMS.Helper
             return DbControl.ExecuteQuery("sp_GetYearLevelDistributionByProgram");
         }
 
+        public static DataTable GetYearLevelAggregateStatus(string programCode, string schoolYear = null, string curriculumYear = null)
+        {
+            DbControl.sqlParameters.Clear();
+            DbControl.AddParameter("@ProgramCode", programCode, SqlDbType.VarChar);
+
+            if (!string.IsNullOrEmpty(schoolYear) && schoolYear != "All")
+                DbControl.AddParameter("@SchoolYear", schoolYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@SchoolYear", DBNull.Value, SqlDbType.VarChar);
+
+            if (!string.IsNullOrEmpty(curriculumYear) && curriculumYear != "All")
+                DbControl.AddParameter("@CurriculumYear", curriculumYear, SqlDbType.VarChar);
+            else
+                DbControl.AddParameter("@CurriculumYear", DBNull.Value, SqlDbType.VarChar);
+            return DbControl.ExecuteQuery("sp_GetYearLevelAggregateStatus");
+        }
+
 
         // Add this inside DashboardHelper.cs
         public static DataTable GetProgramGradeSheetCounts(string programCode, string schoolYear = null, string curriculumYear = null)
