@@ -21,12 +21,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3143A21FC062409D8F0922EAE1A1EBF1"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_33C110A3F626FBB12CBEFF76146BA858"
         "OwnerKey" = "8:_F2CDBC8211118F9DD080ED89BD8C66AE"
         "MsmSig" = "8:_UNDEFINED"
@@ -70,6 +64,12 @@
         "Entry"
         {
         "MsmKey" = "8:_CCF9BA345C8345229DD1E28FA646F066"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E8D189C97A554772BBECBA605A5E5A58"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -189,6 +189,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -248,26 +256,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3143A21FC062409D8F0922EAE1A1EBF1"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\..\\Downloads\\rms_icon.ico"
-            "TargetName" = "8:rms_icon.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_3C76E18BFAFB4AAFA07150CE338B002D"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_33C110A3F626FBB12CBEFF76146BA858"
@@ -392,6 +380,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E8D189C97A554772BBECBA605A5E5A58"
+            {
+            "SourcePath" = "8:..\\PUP_RMS\\Resources\\Icons\\rms_icon.ico"
+            "TargetName" = "8:rms_icon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_3C76E18BFAFB4AAFA07150CE338B002D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F2CDBC8211118F9DD080ED89BD8C66AE"
@@ -602,7 +610,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_2508213A6BE64DF9B9037DAC33825BB3"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_884294FD182146E6947BB6B97DFD32B5"
             {
             "Name" = "8:RMS"
             "Arguments" = "8:"
@@ -613,10 +621,10 @@
             "Target" = "8:_CCF9BA345C8345229DD1E28FA646F066"
             "Folder" = "8:_C3BD0A850D6A4302B7E82AE2277AA93F"
             "WorkingFolder" = "8:_3C76E18BFAFB4AAFA07150CE338B002D"
-            "Icon" = "8:_3143A21FC062409D8F0922EAE1A1EBF1"
+            "Icon" = "8:_E8D189C97A554772BBECBA605A5E5A58"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9AB4D0433BFB499AA1A0946974C5CA43"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D64A54E0CE45485C827F337F89F9E9A7"
             {
             "Name" = "8:RMS"
             "Arguments" = "8:"
@@ -627,7 +635,7 @@
             "Target" = "8:_CCF9BA345C8345229DD1E28FA646F066"
             "Folder" = "8:_63143F129A664904806294AFEED76699"
             "WorkingFolder" = "8:_3C76E18BFAFB4AAFA07150CE338B002D"
-            "Icon" = "8:_3143A21FC062409D8F0922EAE1A1EBF1"
+            "Icon" = "8:_E8D189C97A554772BBECBA605A5E5A58"
             "Feature" = "8:"
             }
         }
