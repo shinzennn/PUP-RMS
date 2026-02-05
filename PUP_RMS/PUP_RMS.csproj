@@ -314,6 +314,7 @@
     </Compile>
     <Compile Include="Helper\AccountHelper.cs" />
     <Compile Include="Helper\ActivityLogger.cs" />
+    <Compile Include="Helper\CascadeFilterHelper.cs" />
     <Compile Include="Helper\CourseHelper.cs" />
     <Compile Include="Helper\DashboardHelper.cs" />
     <Compile Include="Helper\FacultyHelper.cs" />

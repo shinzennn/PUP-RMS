@@ -215,8 +215,8 @@ namespace PUP_RMS.Core
             }
         }
 
-        // THIS IS ADO.NET METHOD
-        // Method to GET data (for Login and Search)
+        // THIS IS ADO.NET METHOD FOR NON-STORED PROCEDURE QUERIES
+        // Method to GET data
         public static DataTable GetData(string query)
         {
             DataTable dt = new DataTable();
@@ -277,7 +277,7 @@ namespace PUP_RMS.Core
 
 
 
-        // ANOTHER METHOD
+        // METHOD FOR USING STORED PROCEDURES WITH PARAMETERS (BOTH FOR SELECT AND NON-SELECT)
         public static List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
         // USED THIS TO ADD PARAMETERS TO THE LIST

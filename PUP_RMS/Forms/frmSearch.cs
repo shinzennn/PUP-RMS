@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
 using PUP_RMS.Core;
+using PUP_RMS.Helper;
 using PUP_RMS.Model;
 
 namespace PUP_RMS.Forms
@@ -34,6 +35,8 @@ namespace PUP_RMS.Forms
         private int selectedCourseID = 0;
         private int selectedFacultyID = 0;
         private int selectedCurriculumID = 0;
+
+        private CascadeFilterHelper filter = new CascadeFilterHelper();
 
         // =========================
         // CONSTRUCTOR
@@ -88,15 +91,7 @@ namespace PUP_RMS.Forms
             isLoading = true;
 
             LoadPrograms();       // Program is independent
-            LoadSchoolYears();    // School Year is independent
-            LoadYearLevels();     // Year Level is independent
-            LoadSemesters();      // Semester is independent
-           // LoadSections();       // Section is independent
 
-            // Load dependent combos as empty / placeholders
-            cmbCurriculum.DataSource = null;
-            cmbCourse.DataSource = null;
-            cmbProfessor.DataSource = null;
 
             LoadAllGradeSheets(); // Populate the grid with all data initially
 
@@ -108,17 +103,18 @@ namespace PUP_RMS.Forms
             isLoading = true;
 
             LoadPrograms();       // Program is independent
-            LoadSchoolYears();    // School Year is independent
-            LoadYearLevels();     // Year Level is independent
-            LoadSemesters();      // Semester is independent
-           // LoadSections();       // Section is independent
+           // LoadSchoolYears();    // School Year is independent
+           // LoadYearLevels();     // Year Level is independent
+           // LoadSemesters();      // Semester is independent
+           //// LoadSections();       // Section is independent
 
-            // Load dependent combos as empty / placeholders
-            cmbCurriculum.DataSource = null;
-            cmbCourse.DataSource = null;
-            cmbProfessor.DataSource = null;
+           // // Load dependent combos as empty / placeholders
+           // cmbCurriculum.DataSource = null;
+           // cmbCourse.DataSource = null;
+           // cmbProfessor.DataSource = null;
 
             LoadAllGradeSheets(); // Populate the grid with all data initially
+            btnClear.PerformClick();
 
             isLoading = false;
         }
@@ -176,16 +172,19 @@ namespace PUP_RMS.Forms
         // =========================
         private void LoadPrograms()
         {
-            var dt = DbControl.GetData("SELECT ProgramID, ProgramCode FROM Program ORDER BY ProgramCode");
-            DataRow placeholder = dt.NewRow();
-            placeholder["ProgramID"] = 0;
-            placeholder["ProgramCode"] = "";
-            dt.Rows.InsertAt(placeholder, 0);
+            //var dt = DbControl.GetData("SELECT ProgramID, ProgramCode FROM Program ORDER BY ProgramCode");
+            //DataRow placeholder = dt.NewRow();
+            //placeholder["ProgramID"] = 0;
+            //placeholder["ProgramCode"] = "";
+            //dt.Rows.InsertAt(placeholder, 0);
 
-            cmbProgram.DataSource = dt;
-            cmbProgram.DisplayMember = "ProgramCode";
-            cmbProgram.ValueMember = "ProgramID";
-            cmbProgram.SelectedIndex = 0;
+            //cmbProgram.DataSource = dt;
+            //cmbProgram.DisplayMember = "ProgramCode";
+            //cmbProgram.ValueMember = "ProgramID";
+            //cmbProgram.SelectedIndex = 0;
+
+            DataTable dt = filter.GetPrograms();
+            filter.BindCombo(cmbProgram, dt, "ProgramCode", "ProgramID");
         }
 
         private void LoadCurriculumYears(int programID)
@@ -355,37 +354,37 @@ namespace PUP_RMS.Forms
 
         private void LoadProfessorForCourse()
         {
-            if (cmbCourse.SelectedValue == null || cmbSection.SelectedValue == null)
-            {
-                cmbProfessor.DataSource = null;
-                return;
-            }
+            //if (cmbCourse.SelectedValue == null || cmbSection.SelectedValue == null)
+            //{
+            //    cmbProfessor.DataSource = null;
+            //    return;
+            //}
 
-            // C#
+            //// C#
 
-            string query = @"
-                  SELECT 
-                 Distinct F.FacultyID,
-                 F.LastName + ', ' + F.FirstName + ' ' + ISNULL(NULLIF(SUBSTRING(F.MiddleName, 1, 1), '') + '.', '') AS Professor
-                 FROM Faculty as F
-                 INNER JOIN ClassSection AS CS ON F.FacultyID = CS.FacultyID
-                 INNER JOIN GradeSheet AS GS ON GS.SectionID = CS.SectionID
-                 INNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID
-                 WHERE O.CourseID = @CourseID AND CS.SchoolYear = @SchoolYear AND CS.Section = @Section;";
+            //string query = @"
+            //      SELECT 
+            //     Distinct F.FacultyID,
+            //     F.LastName + ', ' + F.FirstName + ' ' + ISNULL(NULLIF(SUBSTRING(F.MiddleName, 1, 1), '') + '.', '') AS Professor
+            //     FROM Faculty as F
+            //     INNER JOIN ClassSection AS CS ON F.FacultyID = CS.FacultyID
+            //     INNER JOIN GradeSheet AS GS ON GS.SectionID = CS.SectionID
+            //     INNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID
+            //     WHERE O.CourseID = @CourseID AND CS.SchoolYear = @SchoolYear AND CS.Section = @Section;";
                 
             
-            //MessageBox.Show(cmbCourse.SelectedValue.ToString());
-            //MessageBox.Show(cmbSchoolYear.Text);
-            //MessageBox.Show(cmbSection.Text.ToString());
-            DbControl.ClearParameters();
-            DbControl.AddParameter("@CourseID", cmbCourse.SelectedValue, SqlDbType.Int);
-            DbControl.AddParameter("@SchoolYear", cmbSchoolYear.Text, SqlDbType.VarChar);
-            DbControl.AddParameter("@Section", Convert.ToInt32(cmbSection.Text), SqlDbType.Int);
-            DataTable dt = DbControl.GetData(query);
+            ////MessageBox.Show(cmbCourse.SelectedValue.ToString());
+            ////MessageBox.Show(cmbSchoolYear.Text);
+            ////MessageBox.Show(cmbSection.Text.ToString());
+            //DbControl.ClearParameters();
+            //DbControl.AddParameter("@CourseID", cmbCourse.SelectedValue, SqlDbType.Int);
+            //DbControl.AddParameter("@SchoolYear", cmbSchoolYear.Text, SqlDbType.VarChar);
+            //DbControl.AddParameter("@Section", Convert.ToInt32(cmbSection.Text), SqlDbType.Int);
+            //DataTable dt = DbControl.GetData(query);
 
-            cmbProfessor.DataSource = dt;
-            cmbProfessor.DisplayMember = "Professor";
-            cmbProfessor.ValueMember = "FacultyID";
+            //cmbProfessor.DataSource = dt;
+            //cmbProfessor.DisplayMember = "Professor";
+            //cmbProfessor.ValueMember = "FacultyID";
 
 
             // MessageBox.Show(Convert.ToString(dt.Rows[0]["Professor"]));
@@ -412,149 +411,98 @@ namespace PUP_RMS.Forms
         // =========================
         private void cmbProgram_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isLoading) return;
+            if (isLoading || cmbProgram.SelectedValue == null || cmbProgram.SelectedValue is DataRowView) return;
+            int progID = Convert.ToInt32(cmbProgram.SelectedValue);
 
-            // store selected program id in the field for later lookups
-            selectedProgramID = GetSafeComboInt(cmbProgram);
+            filter.BindCombo(cmbCurriculum, filter.GetCurriculumYears(progID), "CurriculumYear", "CurriculumHeaderID");
+            filter.ClearCombos(cmbYearLevel, cmbSemester, cmbCourse, cmbSchoolYear, cmbSection, cmbProfessor);
 
-            // Reset curriculum selection state
-            selectedCurriculumYear = null;
-            selectedCurriculumID = 0;
-
-            // Load dependent Curriculum based on Program
-            LoadCurriculumYears(selectedProgramID);
-
-            // Reset downstream combos
-            cmbCourse.DataSource = null;
-            cmbProfessor.DataSource = null;
-
-         
-           btnSearch.PerformClick();
+            btnSearch.PerformClick();
         }
 
         private void cmbCurriculum_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isLoading) return;
+            if (isLoading || cmbCurriculum.SelectedValue == null || cmbCurriculum.SelectedValue is DataRowView) return;
+            int currHeadID = Convert.ToInt32(cmbCurriculum.SelectedValue);
 
-            if (cmbCurriculum.SelectedIndex <= 0 || cmbCurriculum.SelectedValue == null)
-            {
-                selectedCurriculumYear = null;
-                selectedCurriculumID = 0;
-               // cmbCourse.DataSource = null;
-                cmbProfessor.DataSource = null;
-                return;
-            }
+            filter.BindCombo(cmbYearLevel, filter.GetYearLevels(currHeadID), "YearLevel", "YearLevel");
+            filter.ClearCombos(cmbSemester, cmbCourse, cmbSchoolYear, cmbSection, cmbProfessor);
 
-            // SelectedValue is CurriculumYear (string) per new behavior
-            if (cmbCurriculum.SelectedValue is DataRowView drv)
-            {
-                // extract CurriculumYear column from the DataRowView if binding transient state occurs
-                if (drv.DataView != null && drv.DataView.Table.Columns.Contains("CurriculumYear"))
-                    selectedCurriculumYear = drv["CurriculumYear"]?.ToString();
-                else
-                    selectedCurriculumYear = drv.Row.ItemArray.Length > 0 ? drv.Row.ItemArray[0]?.ToString() : null;
-            }
-            else
-            {
-                selectedCurriculumYear = cmbCurriculum.SelectedValue.ToString();
-            }
-
-            // Resolve numeric CurriculumID for internal operations (LoadCourses)
-            selectedCurriculumID = ResolveCurriculumID();
-
-            // Clear downstream selections
-            cmbCourse.DataSource = null;
-            cmbProfessor.DataSource = null;
-
-          
-
-            // If we resolved an ID and year/section are chosen, attempt to load courses
-            if (selectedCurriculumID > 0)
-            {
-                
-                int curriculumid = frmBatchUpload.getCurriculumID(selectedCurriculumID, selectedYearLevel, selectedSection);
-                MessageBox.Show(curriculumid.ToString());
-                LoadCourses();
-            }
-
-            // Trigger search
-            
-           btnSearch.PerformClick();
+            btnSearch.PerformClick();
         }
 
         private void cmbYearLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isLoading) return;
+            if (isLoading || cmbYearLevel.SelectedValue == null || cmbYearLevel.SelectedValue is DataRowView || cmbCurriculum.SelectedValue == null || cmbCurriculum.SelectedValue is DataRowView) return;
+            int currHeadID = Convert.ToInt32(cmbCurriculum.SelectedValue);
+            int yearLevel = Convert.ToInt32(cmbYearLevel.SelectedValue);
 
-            // store selected year level
-            selectedYearLevel = GetSafeComboInt(cmbYearLevel);
-
-            // Refresh Courses whenever YearLevel changes
-            cmbCurriculum_SelectedIndexChanged(sender, e);
+            filter.BindCombo(cmbSemester, filter.GetSemesters(currHeadID, yearLevel), "Semester", "CurriculumID");
+            filter.ClearCombos(cmbCourse, cmbSchoolYear, cmbSection, cmbProfessor);
         }
 
         private void cmbSemester_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isLoading) return;
+            if (isLoading || cmbSemester.SelectedValue == null || cmbSemester.SelectedValue is DataRowView) return;
+            int currID = Convert.ToInt32(cmbSemester.SelectedValue);
 
-            LoadCourses();
-            
-
-            selectedSemester = GetSafeComboInt(cmbSemester);
-            // Semester affects resolution and search
-            //cmbCurriculum_SelectedIndexChanged(sender, e);
-        }
-
-        private void cmbSection_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (isLoading) return;
-
-            
-
-
-            //selectedSection = GetSafeComboInt(cmbSection);
-            //// Refresh Courses whenever Section changes
-            //cmbCurriculum_SelectedIndexChanged(sender, e);
-
-            //selectedCourseID = GetSafeComboInt(cmbCourse);
-
-            //            LoadProfessorForCourse();
-
-
-
+            filter.BindCombo(cmbCourse, filter.GetCourses(currID), "CourseCode", "OfferingID");
+            filter.ClearCombos(cmbSchoolYear, cmbSection, cmbProfessor);
 
         }
 
         private void cmbCourse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isLoading) return;
+            if (isLoading || cmbCourse.SelectedValue == null || cmbCourse.SelectedValue is DataRowView) return;
+            int offID = Convert.ToInt32(cmbCourse.SelectedValue);
 
-            //selectedCourseID = GetSafeComboInt(cmbCourse);
-            //LoadProfessorForCourse(selectedCourseID);
-            LoadSchoolYears();
-            btnSearch.PerformClick();
-        }
+            filter.BindCombo(cmbSchoolYear, filter.GetSchoolYears(offID), "SchoolYear", "SchoolYear");
+            filter.ClearCombos( cmbSection, cmbProfessor);
 
-        private void cmbProfessor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (isLoading) return;
-
-            selectedFacultyID = GetSafeComboInt(cmbProfessor);
             btnSearch.PerformClick();
         }
 
         private void cmbSchoolYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isLoading) return;
-            LoadSections();
-            //LoadProfessorForCourse(selectedCourseID);
-            selectedSchoolYear = cmbSchoolYear.SelectedIndex > 0 && cmbSchoolYear.SelectedValue != null
-                ? cmbSchoolYear.SelectedValue.ToString()
-                : null;
+            if (isLoading || cmbSchoolYear.SelectedValue == null || cmbSchoolYear.SelectedValue is DataRowView || cmbCourse.SelectedValue == null || cmbCourse.SelectedValue is DataRowView) return;
+            int offID = Convert.ToInt32(cmbCourse.SelectedValue);
+            string schoolYear = cmbSchoolYear.SelectedValue.ToString();
 
-            
+            DataTable dt = filter.GetSections(offID, schoolYear);
+            filter.BindCombo(cmbSection, dt, "Section", "SectionID");
+            filter.ClearCombos(cmbProfessor);
+
+
+
             btnSearch.PerformClick();
         }
+
+        private void cmbSection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isLoading || cmbSection.SelectedValue == null || cmbSection.SelectedValue is DataRowView) return;
+            int _sectionID = Convert.ToInt32(cmbSection.SelectedValue);
+
+            DataTable dt = filter.GetFaculty(_sectionID);
+            if (dt.Rows.Count > 0)
+            {
+                cmbProfessor.Text = dt.Rows[0]["FullName"].ToString();
+            }
+            else
+            {
+                cmbProfessor.DataSource = null;
+            }
+
+        }
+
+        private void cmbProfessor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //if (isLoading) return;
+
+            //selectedFacultyID = GetSafeComboInt(cmbProfessor);
+            //btnSearch.PerformClick();
+        }
+
+        
 
         // =========================
         // SEARCH / CLEAR
@@ -628,43 +576,16 @@ namespace PUP_RMS.Forms
         {
             try
             {
-                // Prevent change handlers from firing while we reset controls
-                isLoading = true;
-
-                // Reset selected state fields
-                selectedSchoolYear = null;
-                selectedCurriculumYear = null;
-                selectedProgramID = 0;
-                selectedYearLevel = 0;
-                selectedSemester = 0;
-                selectedSection = 0;
-                selectedCourseID = 0;
-                selectedFacultyID = 0;
-                selectedCurriculumID = 0;
-
-                // Safely reset combobox selections (ignore if not populated)
-                try { if (cmbProgram.Items.Count > 0) cmbProgram.SelectedIndex = 0; } catch { }
-                try { if (cmbSchoolYear.Items.Count > 0) cmbSchoolYear.SelectedIndex = 0; } catch { }
-                try { if (cmbYearLevel.Items.Count > 0) cmbYearLevel.SelectedIndex = 0; } catch { }
-                try { if (cmbSemester.Items.Count > 0) cmbSemester.SelectedIndex = 0; } catch { }
-                try { if (cmbSection.Items.Count > 0) cmbSection.SelectedIndex = 0; } catch { }
-
-                // Clear dependent combo data to match initial load state
+                cmbProgram.SelectedIndex = -1;
                 cmbCurriculum.DataSource = null;
+                cmbYearLevel.DataSource = null;
+                cmbSemester.DataSource = null;
                 cmbCourse.DataSource = null;
-                cmbProfessor.DataSource = null;
                 cmbSection.DataSource = null;
-                
+                cmbSchoolYear.DataSource = null;
+                cmbProfessor.DataSource = null;
+                    
 
-                // Ensure any displayed selection text is cleared
-                DeselectComboText(cmbProgram);
-                DeselectComboText(cmbSchoolYear);
-                DeselectComboText(cmbCurriculum);
-                DeselectComboText(cmbYearLevel);
-                DeselectComboText(cmbSemester);
-                DeselectComboText(cmbSection);
-                DeselectComboText(cmbCourse);
-                DeselectComboText(cmbProfessor);
 
                 // Reload full dataset into the grid (same behavior as initial load)
                 LoadAllGradeSheets();
