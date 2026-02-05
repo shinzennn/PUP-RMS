@@ -1,17 +1,19 @@
-﻿using System;
-using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
-using PUP_RMS.Core;
+﻿using PUP_RMS.Core;
 using PUP_RMS.Forms;
 using PUP_RMS.Helper;
 using PUP_RMS.Model;
+using System;
+using System.Data;
+using System.Drawing;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PUP_RMS
 {
     public partial class LoginForm : Form
     {
         private Timer tmrFadeIn;
+        private bool isLoginInProgress = false;
 
         public LoginForm()
         {
@@ -78,34 +80,95 @@ namespace PUP_RMS
 
         // Removed AdjustLayout and ScaleContents to preserve Designer-only coordinates
 
-        private void roundedButton_Click_1(object sender, EventArgs e)
+        private async void roundedButton_Click_1(object sender, EventArgs e)
         {
+            // Prevent multiple clicks
+            if (isLoginInProgress)
+                return;
+
             string user = textBox3.Text.Trim();
             string pass = textBox4.Text.Trim();
+
             if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
             {
                 new CustomMsgBox("⚠ Please enter Username and Password.").ShowDialog(this);
                 return;
             }
-            if (DbControl.GetAdmin(user, pass) != null)
+
+            // Set flag and disable button
+            isLoginInProgress = true;
+            Control loginButton = (Control)sender;
+            loginButton.Enabled = false;
+
+            try
             {
-                // SETS THE CURRENT ACCOUNT INSTANCE FROM THE DASHBOARD
-                MainDashboard.CurrentAccount = DbControl.GetAdmin(user, pass);
+                // Validate credentials on background thread
+                Model.Account account = await Task.Run(() => DbControl.GetAdmin(user, pass));
 
-                Properties.Settings.Default.SavedUsername = checkBoxRememberMe.Checked ? user : "";
-                Properties.Settings.Default.SavedPassword = checkBoxRememberMe.Checked ? pass : "";
-                Properties.Settings.Default.RememberMe = checkBoxRememberMe.Checked;
-                Properties.Settings.Default.Save();
+                if (account != null)
+                {
+                    MainDashboard.CurrentAccount = account;
 
-                MainDashboard dash = new MainDashboard();
-                dash.Show();
-                this.Hide();
+                    // Save login preferences
+                    Properties.Settings.Default.SavedUsername = checkBoxRememberMe.Checked ? user : "";
+                    Properties.Settings.Default.SavedPassword = checkBoxRememberMe.Checked ? pass : "";
+                    Properties.Settings.Default.RememberMe = checkBoxRememberMe.Checked;
+                    Properties.Settings.Default.Save();
 
-                ActivityLogger.LogUserLogin();
+                    // Create and show loading screen
+                    LoadingScreen loadingScreen = new LoadingScreen();
+                    MainDashboard.CurrentLoadingScreen = loadingScreen;
+                    loadingScreen.Show();
+                    Application.DoEvents();
+
+                    // Hide login form
+                    this.Hide();
+
+                    // Create and show MainDashboard
+                    MainDashboard dash = new MainDashboard();
+                    dash.Show();
+
+                    // Log activity
+                    ActivityLogger.LogUserLogin();
+
+                    // Wait a moment then close loading screen
+                    await Task.Delay(500);
+                    loadingScreen.Close();
+                    loadingScreen.Dispose();
+                }
+                else
+                {
+                    new CustomMsgBox("⚠ Wrong Username or Password!").ShowDialog(this);
+                    // Reset on error
+                    isLoginInProgress = false;
+                    loginButton.Enabled = true;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                new CustomMsgBox("⚠ Wrong Username or Password!").ShowDialog(this);
+                new CustomMsgBox($"⚠ An error occurred: {ex.Message}").ShowDialog(this);
+                // Reset on error
+                isLoginInProgress = false;
+                loginButton.Enabled = true;
+            }
+        }
+
+        private string GetProgressStatus(int progress)
+        {
+            switch (progress)
+            {
+                case 0:
+                    return "Initializing...";
+                case 20:
+                    return "Loading modules...";
+                case 40:
+                    return "Preparing forms...";
+                case 60:
+                    return "Setting up interface...";
+                case 80:
+                    return "Finalizing...";
+                default:
+                    return "Almost ready...";
             }
         }
 

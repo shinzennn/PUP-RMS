@@ -46,6 +46,8 @@ namespace PUP_RMS.Forms
 
         private readonly Color ChildFormBackgroundColor = Color.FromArgb(240, 240, 240);
 
+        public static LoadingScreen CurrentLoadingScreen { get; set; }
+
 
         // ==========================================
         // CONSTRUCTOR
@@ -78,38 +80,76 @@ namespace PUP_RMS.Forms
         // ==========================================
         private void MainDashboard_Load(object sender, EventArgs e)
         {
-            SetupAdminSubButtons();
-            // 1. Layout Calculation
-            ArrangeSidebar();
+            LoadingScreen loadingScreen = GetLoadingScreenReference(); // Method below
 
-            // PRE-LOAD ALL FORMS
-            InitializeAllForms();
-
-            // 3. Load Default View
-            if (_dashboardInstance == null || _dashboardInstance.IsDisposed)
+            try
             {
-                _dashboardInstance = new frmDashboard();
-                PrepareChildForm(_dashboardInstance);
+                SetupAdminSubButtons();
+                loadingScreen?.UpdateProgress(10, "Arranging interface...");
+
+                // 1. Layout Calculation
+                ArrangeSidebar();
+                loadingScreen?.UpdateProgress(25, "Loading modules...");
+
+                // 2. PRE-LOAD ALL FORMS - This is where most of the time is spent
+                InitializeAllFormsWithProgress(loadingScreen);
+                loadingScreen?.UpdateProgress(85, "Finalizing dashboard...");
+
+                // 3. Load Default View
+                if (_dashboardInstance == null || _dashboardInstance.IsDisposed)
+                {
+                    _dashboardInstance = new frmDashboard();
+                    PrepareChildForm(_dashboardInstance);
+                }
+                ActivateButton(btnDashboard);
+                ShowForm(_dashboardInstance);
+                loadingScreen?.UpdateProgress(95, "Almost ready...");
+
+                // 4. Start Animation
+                tmrFadeIn.Start();
+
+                if (CurrentAccount.AccountType == "User")
+                {
+                    pnlAdminSubMenu.Visible = false;
+                    btnAdminTool.Visible = false;
+                }
+
+                loadingScreen?.UpdateProgress(100, "Done!");
             }
-            ActivateButton(btnDashboard);
-            ShowForm(_dashboardInstance);
-
-            // 4. Start Animation
-            tmrFadeIn.Start();
-
-            if(CurrentAccount.AccountType == "User")
+            catch (Exception ex)
             {
-                pnlAdminSubMenu.Visible = false;
-                btnAdminTool.Visible = false;
+                MessageBox.Show($"Error loading dashboard: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void InitializeAllForms()
+
+        private void InitializeAllFormsWithProgress(LoadingScreen loadingScreen)
         {
+            int formIndex = 0;
+            int totalForms = 8;
+            int progressPerForm = 60 / totalForms; // Allocate 60% of progress to form loading
+
             // Initialize Dashboard
             if (_dashboardInstance == null)
             {
                 _dashboardInstance = new frmDashboard();
                 PrepareAndLoadChildForm(_dashboardInstance);
+                loadingScreen?.UpdateProgress(25 + (++formIndex * progressPerForm), "Loading Dashboard...");
+            }
+
+            // Initialize Search
+            if (_searchForm == null)
+            {
+                _searchForm = new frmSearch();
+                PrepareAndLoadChildForm(_searchForm);
+                loadingScreen?.UpdateProgress(25 + (++formIndex * progressPerForm), "Loading Search...");
+            }
+
+            // Initialize Batch Upload
+            if (_batchUploadForm == null)
+            {
+                _batchUploadForm = new frmBatchUpload();
+                PrepareAndLoadChildForm(_batchUploadForm);
+                loadingScreen?.UpdateProgress(25 + (++formIndex * progressPerForm), "Loading Batch Upload...");
             }
 
             // Initialize Curriculum
@@ -117,6 +157,7 @@ namespace PUP_RMS.Forms
             {
                 _curriculumForm = new frmCurriculum();
                 PrepareAndLoadChildForm(_curriculumForm);
+                loadingScreen?.UpdateProgress(25 + (++formIndex * progressPerForm), "Loading Curriculum...");
             }
 
             // Initialize Program
@@ -124,6 +165,7 @@ namespace PUP_RMS.Forms
             {
                 _programForm = new frmProgram();
                 PrepareAndLoadChildForm(_programForm);
+                loadingScreen?.UpdateProgress(25 + (++formIndex * progressPerForm), "Loading Programs...");
             }
 
             // Initialize Course
@@ -131,6 +173,7 @@ namespace PUP_RMS.Forms
             {
                 _courseForm = new frmCourse();
                 PrepareAndLoadChildForm(_courseForm);
+                loadingScreen?.UpdateProgress(25 + (++formIndex * progressPerForm), "Loading Courses...");
             }
 
             // Initialize Faculty
@@ -138,37 +181,31 @@ namespace PUP_RMS.Forms
             {
                 _facultyForm = new frmFaculty();
                 PrepareAndLoadChildForm(_facultyForm);
-            }
-            
-            // Initialize Search
-            if (_searchForm == null)
-            {
-                _searchForm = new frmSearch();
-                PrepareAndLoadChildForm(_searchForm);
-            }
-            
-            // Initialize Batch Upload
-            if (_batchUploadForm == null)
-            {
-                _batchUploadForm = new frmBatchUpload();
-                PrepareAndLoadChildForm(_batchUploadForm);
+                loadingScreen?.UpdateProgress(25 + (++formIndex * progressPerForm), "Loading Faculty...");
             }
 
             // Initialize Section
-            if (_searchForm == null)
+            if (_sectionForm == null)
             {
                 _sectionForm = new frmSection();
                 PrepareAndLoadChildForm(_sectionForm);
+                loadingScreen?.UpdateProgress(25 + (++formIndex * progressPerForm), "Loading Sections...");
             }
 
             // Initialize Account
             if (_accountForm == null)
-            { 
+            {
                 _accountForm = new frmAccount();
                 PrepareAndLoadChildForm(_accountForm);
+                loadingScreen?.UpdateProgress(25 + (++formIndex * progressPerForm), "Loading Accounts...");
             }
-
         }
+
+        private LoadingScreen GetLoadingScreenReference()
+        {
+            return CurrentLoadingScreen;
+        }
+
         // ======================================================
         // SECTION: LAYOUT LOGIC
         // ======================================================
