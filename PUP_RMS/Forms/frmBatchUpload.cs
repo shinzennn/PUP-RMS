@@ -107,7 +107,7 @@ namespace PUP_RMS.Forms
             InitializeImageList();
             LoadPrograms();
             LoadYearLevels();
-            LoadCourses();
+            //LoadCourses();
 
 
             LoadPageNumber();
@@ -124,7 +124,7 @@ namespace PUP_RMS.Forms
             InitializeImageList();
             LoadPrograms();
             LoadYearLevels();
-            LoadCourses();
+            //LoadCourses();
 
             LoadPageNumber();
             LoadAcademicYears();
@@ -150,16 +150,23 @@ namespace PUP_RMS.Forms
 
         private void LoadCourses()
         {
+
             if (programCmbox.SelectedValue == null ||
                 curriculumCmbox.SelectedValue == null ||
                 yearLevelCmbox.SelectedValue == null ||
                 semesterCmbox.SelectedValue == null)
             {
+                
                 courseCmbox.DataSource = null;
                 return;
             }
 
-            string query = @"SELECT 
+
+
+            try
+            {
+
+                string query = @"SELECT 
                 co.CourseCode,
                 co.CourseID
                 FROM Program p
@@ -174,23 +181,35 @@ namespace PUP_RMS.Forms
 ";
 
 
-            DbControl.ClearParameters();
+                DbControl.ClearParameters();
 
-            DbControl.AddParameter("@ProgramID", Convert.ToInt32(programCmbox.SelectedValue), SqlDbType.Int);
-            DbControl.AddParameter("@CurriculumHeaderID", Convert.ToInt32(curriculumCmbox.SelectedValue), SqlDbType.Int);
-            DbControl.AddParameter("@YearLevel", Convert.ToInt32(yearLevelCmbox.SelectedValue), SqlDbType.Int);
-            DbControl.AddParameter("@Semester", Convert.ToInt32(semesterCmbox.SelectedValue), SqlDbType.Int);
+                DbControl.AddParameter("@ProgramID", Convert.ToInt32(programCmbox.SelectedValue), SqlDbType.Int);
+                DbControl.AddParameter("@CurriculumHeaderID", Convert.ToInt32(curriculumCmbox.SelectedValue), SqlDbType.Int);
+                DbControl.AddParameter("@YearLevel", Convert.ToInt32(yearLevelCmbox.SelectedValue), SqlDbType.Int);
+                DbControl.AddParameter("@Semester", Convert.ToInt32(semesterCmbox.SelectedValue), SqlDbType.Int);
 
-            DataTable dt = DbControl.GetData(query);
-            if (dt.Rows.Count == 0)
+                DataTable dt = DbControl.GetData(query);
+                if (dt.Rows.Count == 0)
+                {
+                    courseCmbox.DataSource = null;
+                    return;
+                }
+                courseCmbox.DataSource = dt;
+                courseCmbox.DisplayMember = "CourseCode";
+                courseCmbox.ValueMember = "CourseID";
+                courseCmbox.SelectedIndex = -1;
+
+
+
+            }
+            catch (Exception ex)
             {
-                courseCmbox.DataSource = null;
+                MessageBox.Show("Error loading courses: " + ex.Message);
                 return;
             }
-            courseCmbox.DataSource = dt;
-            courseCmbox.DisplayMember = "CourseCode";
-            courseCmbox.ValueMember = "CourseID";
-            courseCmbox.SelectedIndex = -1;
+
+
+
         }
 
         private void LoadProfessors()
@@ -885,7 +904,7 @@ namespace PUP_RMS.Forms
         private void courseCmbox_Click(object sender, EventArgs e)
         {
 
-            LoadCourses();
+            //LoadCourses();
 
 
         }
@@ -939,7 +958,11 @@ namespace PUP_RMS.Forms
             DbControl.AddParameter("@YearLevel", yearLevel, SqlDbType.Int);
             DbControl.AddParameter("@Semester", semester, SqlDbType.Int);
             DataTable dt = DbControl.GetData(query);
-
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("No CurriculumID found for the given parameters.");
+                return -1;
+            }
             return Convert.ToInt32(dt.Rows[0]["CurriculumID"]);
 
         }
@@ -983,10 +1006,15 @@ namespace PUP_RMS.Forms
 
         private void courseCmbox_SelectedValueChanged(object sender, EventArgs e)
         {
+
             yearCmbox.Text = "";
             sectionCmbox.Text = "";
             professorCmbox.Text = "";
-            LoadAcademicYears();
+            //LoadAcademicYears();
+            if (courseCmbox.SelectedValue is int)
+            {
+                LoadAcademicYears();
+            }
         }
 
         private void semesterCmbox_SelectedValueChanged(object sender, EventArgs e)
@@ -995,6 +1023,7 @@ namespace PUP_RMS.Forms
             yearCmbox.Text = "";
             sectionCmbox.Text = "";
             professorCmbox.Text = "";
+            LoadCourses();
         }
 
         private void yearCmbox_SelectedValueChanged(object sender, EventArgs e)

@@ -280,7 +280,7 @@ namespace PUP_RMS.Forms
             try
             {
                
-                string query = "SELECT Section, SectionID \r\nFROM ClassSection AS CS\r\nINNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID\r\nWHERE SchoolYear = @SchoolYear AND O.CourseID = @CourseID\r\nORDER BY Section ASC;";
+                string query = "SELECT CS.Section, MIN(CS.SectionID) AS SectionID \r\nFROM ClassSection AS CS\r\nINNER JOIN Offering AS O ON CS.OfferingID = O.OfferingID\r\nWHERE SchoolYear = @SchoolYear AND O.CourseID = @CourseID\r\n GROUP BY CS.Section \r\n ORDER BY CS.Section ASC;";
                 DbControl.AddParameter("@SchoolYear", cmbSchoolYear.SelectedValue ?? DBNull.Value, SqlDbType.VarChar);
                 DbControl.AddParameter("@CourseID", cmbCourse.SelectedValue, SqlDbType.Int);
                 DataTable dt = DbControl.GetData(query);

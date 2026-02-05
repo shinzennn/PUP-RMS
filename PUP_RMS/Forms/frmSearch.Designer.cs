@@ -63,11 +63,11 @@
             this.lblSchoolYear = new System.Windows.Forms.Label();
             this.cmbSection = new System.Windows.Forms.ComboBox();
             this.cmbSchoolYear = new System.Windows.Forms.ComboBox();
-            this.btnView = new PUP_RMS.RoundedButton();
             this.dgvGradeSheets = new System.Windows.Forms.DataGridView();
-            this.rspSearch = new PUP_RMS.CustomControls.HeaderPanelCard();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnView = new PUP_RMS.RoundedButton();
             this.btnOpenDirectory = new PUP_RMS.RoundedButton();
+            this.rspSearch = new PUP_RMS.CustomControls.HeaderPanelCard();
             ((System.ComponentModel.ISupportInitialize)(this.rMSDBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rMSDBDataSet1)).BeginInit();
@@ -76,8 +76,8 @@
             this.tlpSearch.SuspendLayout();
             this.tlpControls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGradeSheets)).BeginInit();
-            this.rspSearch.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.rspSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // rMSDBDataSet
@@ -175,7 +175,7 @@
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.07747F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.75965F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-            this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
+            this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
             this.tlpControls.Controls.Add(this.label8, 7, 0);
             this.tlpControls.Controls.Add(this.label4, 3, 0);
             this.tlpControls.Controls.Add(this.btnSearch, 8, 1);
@@ -210,7 +210,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(683, 2);
+            this.label8.Location = new System.Drawing.Point(681, 2);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(88, 18);
             this.label8.TabIndex = 37;
@@ -222,7 +222,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Location = new System.Drawing.Point(277, 0);
+            this.label4.Location = new System.Drawing.Point(275, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 20);
             this.label4.TabIndex = 33;
@@ -242,7 +242,7 @@
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.White;
             this.btnSearch.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnSearch.Location = new System.Drawing.Point(811, 23);
+            this.btnSearch.Location = new System.Drawing.Point(808, 23);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(69, 33);
             this.btnSearch.TabIndex = 6;
@@ -265,9 +265,9 @@
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.Color.White;
             this.btnClear.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnClear.Location = new System.Drawing.Point(886, 23);
+            this.btnClear.Location = new System.Drawing.Point(883, 23);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(87, 33);
+            this.btnClear.Size = new System.Drawing.Size(90, 33);
             this.btnClear.TabIndex = 7;
             this.btnClear.Text = "Clear";
             this.btnClear.TextColor = System.Drawing.Color.White;
@@ -282,10 +282,10 @@
             this.cmbProfessor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbProfessor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbProfessor.FormattingEnabled = true;
-            this.cmbProfessor.Location = new System.Drawing.Point(682, 22);
+            this.cmbProfessor.Location = new System.Drawing.Point(680, 22);
             this.cmbProfessor.Margin = new System.Windows.Forms.Padding(2);
             this.cmbProfessor.Name = "cmbProfessor";
-            this.cmbProfessor.Size = new System.Drawing.Size(124, 28);
+            this.cmbProfessor.Size = new System.Drawing.Size(123, 28);
             this.cmbProfessor.TabIndex = 5;
             this.cmbProfessor.SelectedIndexChanged += new System.EventHandler(this.cmbProfessor_SelectedIndexChanged);
             this.cmbProfessor.Click += new System.EventHandler(this.cmbProfessor_Click);
@@ -300,7 +300,7 @@
             this.cmbSemester.Items.AddRange(new object[] {
             "1st",
             "2nd"});
-            this.cmbSemester.Location = new System.Drawing.Point(276, 22);
+            this.cmbSemester.Location = new System.Drawing.Point(274, 22);
             this.cmbSemester.Margin = new System.Windows.Forms.Padding(2);
             this.cmbSemester.Name = "cmbSemester";
             this.cmbSemester.Size = new System.Drawing.Size(67, 28);
@@ -330,7 +330,7 @@
             this.cmbProgram.Location = new System.Drawing.Point(2, 22);
             this.cmbProgram.Margin = new System.Windows.Forms.Padding(2);
             this.cmbProgram.Name = "cmbProgram";
-            this.cmbProgram.Size = new System.Drawing.Size(98, 28);
+            this.cmbProgram.Size = new System.Drawing.Size(97, 28);
             this.cmbProgram.TabIndex = 2;
             this.cmbProgram.SelectedIndexChanged += new System.EventHandler(this.cmbProgram_SelectedIndexChanged);
             // 
@@ -340,7 +340,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(105, 2);
+            this.label3.Location = new System.Drawing.Point(104, 2);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(95, 18);
             this.label3.TabIndex = 32;
@@ -353,9 +353,9 @@
             this.cmbCurriculum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCurriculum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.cmbCurriculum.FormattingEnabled = true;
-            this.cmbCurriculum.Location = new System.Drawing.Point(105, 23);
+            this.cmbCurriculum.Location = new System.Drawing.Point(104, 23);
             this.cmbCurriculum.Name = "cmbCurriculum";
-            this.cmbCurriculum.Size = new System.Drawing.Size(96, 28);
+            this.cmbCurriculum.Size = new System.Drawing.Size(95, 28);
             this.cmbCurriculum.TabIndex = 38;
             this.cmbCurriculum.SelectedIndexChanged += new System.EventHandler(this.cmbCurriculum_SelectedIndexChanged);
             // 
@@ -365,7 +365,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label5.Location = new System.Drawing.Point(207, 0);
+            this.label5.Location = new System.Drawing.Point(205, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 20);
             this.label5.TabIndex = 34;
@@ -384,7 +384,7 @@
             "3rd",
             "4th",
             "5th"});
-            this.cmbYearLevel.Location = new System.Drawing.Point(206, 22);
+            this.cmbYearLevel.Location = new System.Drawing.Point(204, 22);
             this.cmbYearLevel.Margin = new System.Windows.Forms.Padding(2);
             this.cmbYearLevel.Name = "cmbYearLevel";
             this.cmbYearLevel.Size = new System.Drawing.Size(66, 28);
@@ -397,7 +397,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(348, 2);
+            this.label7.Location = new System.Drawing.Point(346, 2);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 18);
             this.label7.TabIndex = 36;
@@ -411,7 +411,7 @@
             this.cmbCourse.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbCourse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCourse.FormattingEnabled = true;
-            this.cmbCourse.Location = new System.Drawing.Point(347, 22);
+            this.cmbCourse.Location = new System.Drawing.Point(345, 22);
             this.cmbCourse.Margin = new System.Windows.Forms.Padding(2);
             this.cmbCourse.Name = "cmbCourse";
             this.cmbCourse.Size = new System.Drawing.Size(124, 28);
@@ -424,7 +424,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(602, 2);
+            this.label6.Location = new System.Drawing.Point(600, 2);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(70, 18);
             this.label6.TabIndex = 35;
@@ -436,7 +436,7 @@
             this.lblSchoolYear.AutoSize = true;
             this.lblSchoolYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSchoolYear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblSchoolYear.Location = new System.Drawing.Point(476, 2);
+            this.lblSchoolYear.Location = new System.Drawing.Point(474, 2);
             this.lblSchoolYear.Name = "lblSchoolYear";
             this.lblSchoolYear.Size = new System.Drawing.Size(105, 18);
             this.lblSchoolYear.TabIndex = 30;
@@ -449,7 +449,7 @@
             this.cmbSection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.cmbSection.FormattingEnabled = true;
-            this.cmbSection.Location = new System.Drawing.Point(602, 23);
+            this.cmbSection.Location = new System.Drawing.Point(600, 23);
             this.cmbSection.Name = "cmbSection";
             this.cmbSection.Size = new System.Drawing.Size(75, 28);
             this.cmbSection.TabIndex = 39;
@@ -626,35 +626,12 @@
             "2097-2098",
             "2098-2099",
             "2099-2100"});
-            this.cmbSchoolYear.Location = new System.Drawing.Point(475, 22);
+            this.cmbSchoolYear.Location = new System.Drawing.Point(473, 22);
             this.cmbSchoolYear.Margin = new System.Windows.Forms.Padding(2);
             this.cmbSchoolYear.Name = "cmbSchoolYear";
             this.cmbSchoolYear.Size = new System.Drawing.Size(122, 28);
             this.cmbSchoolYear.TabIndex = 0;
             this.cmbSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cmbSchoolYear_SelectedIndexChanged);
-            // 
-            // btnView
-            // 
-            this.btnView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnView.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnView.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnView.BorderRadius = 10;
-            this.btnView.BorderSize = 0;
-            this.btnView.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnView.FlatAppearance.BorderSize = 0;
-            this.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.ForeColor = System.Drawing.Color.White;
-            this.btnView.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnView.Location = new System.Drawing.Point(832, 2);
-            this.btnView.Margin = new System.Windows.Forms.Padding(2);
-            this.btnView.Name = "btnView";
-            this.btnView.Size = new System.Drawing.Size(150, 31);
-            this.btnView.TabIndex = 8;
-            this.btnView.Text = "View";
-            this.btnView.TextColor = System.Drawing.Color.White;
-            this.btnView.UseVisualStyleBackColor = false;
-            this.btnView.Click += new System.EventHandler(this.btnView_Click);
             // 
             // dgvGradeSheets
             // 
@@ -724,6 +701,71 @@
             this.dgvGradeSheets.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGradeSheets_CellMouseEnter);
             this.dgvGradeSheets.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGradeSheets_CellMouseLeave);
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.btnView, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnOpenDirectory, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(1, 434);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 35);
+            this.tableLayoutPanel1.TabIndex = 11;
+            // 
+            // btnView
+            // 
+            this.btnView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnView.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnView.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnView.BorderRadius = 10;
+            this.btnView.BorderSize = 0;
+            this.btnView.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnView.FlatAppearance.BorderSize = 0;
+            this.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnView.ForeColor = System.Drawing.Color.White;
+            this.btnView.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnView.Location = new System.Drawing.Point(832, 2);
+            this.btnView.Margin = new System.Windows.Forms.Padding(2);
+            this.btnView.Name = "btnView";
+            this.btnView.Size = new System.Drawing.Size(150, 31);
+            this.btnView.TabIndex = 8;
+            this.btnView.Text = "View";
+            this.btnView.TextColor = System.Drawing.Color.White;
+            this.btnView.UseVisualStyleBackColor = false;
+            this.btnView.Click += new System.EventHandler(this.btnView_Click);
+            // 
+            // btnOpenDirectory
+            // 
+            this.btnOpenDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOpenDirectory.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnOpenDirectory.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnOpenDirectory.BorderRadius = 10;
+            this.btnOpenDirectory.BorderSize = 0;
+            this.btnOpenDirectory.ButtonColor = System.Drawing.Color.Goldenrod;
+            this.btnOpenDirectory.FlatAppearance.BorderSize = 0;
+            this.btnOpenDirectory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOpenDirectory.ForeColor = System.Drawing.Color.White;
+            this.btnOpenDirectory.HoverColor = System.Drawing.Color.DarkRed;
+            this.btnOpenDirectory.Location = new System.Drawing.Point(2, 2);
+            this.btnOpenDirectory.Margin = new System.Windows.Forms.Padding(2);
+            this.btnOpenDirectory.Name = "btnOpenDirectory";
+            this.btnOpenDirectory.Size = new System.Drawing.Size(180, 31);
+            this.btnOpenDirectory.TabIndex = 9;
+            this.btnOpenDirectory.Text = "Open Gradesheet Folder";
+            this.btnOpenDirectory.TextColor = System.Drawing.Color.White;
+            this.btnOpenDirectory.UseVisualStyleBackColor = false;
+            this.btnOpenDirectory.Click += new System.EventHandler(this.btnOpenDirectory_Click);
+            // 
             // rspSearch
             // 
             this.rspSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -754,48 +796,6 @@
             this.rspSearch.Size = new System.Drawing.Size(1052, 566);
             this.rspSearch.TabIndex = 23;
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.btnView, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnOpenDirectory, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(1, 434);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 35);
-            this.tableLayoutPanel1.TabIndex = 11;
-            // 
-            // btnOpenDirectory
-            // 
-            this.btnOpenDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOpenDirectory.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnOpenDirectory.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnOpenDirectory.BorderRadius = 10;
-            this.btnOpenDirectory.BorderSize = 0;
-            this.btnOpenDirectory.ButtonColor = System.Drawing.Color.Goldenrod;
-            this.btnOpenDirectory.FlatAppearance.BorderSize = 0;
-            this.btnOpenDirectory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenDirectory.ForeColor = System.Drawing.Color.White;
-            this.btnOpenDirectory.HoverColor = System.Drawing.Color.DarkRed;
-            this.btnOpenDirectory.Location = new System.Drawing.Point(2, 2);
-            this.btnOpenDirectory.Margin = new System.Windows.Forms.Padding(2);
-            this.btnOpenDirectory.Name = "btnOpenDirectory";
-            this.btnOpenDirectory.Size = new System.Drawing.Size(180, 31);
-            this.btnOpenDirectory.TabIndex = 9;
-            this.btnOpenDirectory.Text = "Open Gradesheet Folder";
-            this.btnOpenDirectory.TextColor = System.Drawing.Color.White;
-            this.btnOpenDirectory.UseVisualStyleBackColor = false;
-            this.btnOpenDirectory.Click += new System.EventHandler(this.btnOpenDirectory_Click);
-            // 
             // frmSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -820,8 +820,8 @@
             this.tlpControls.ResumeLayout(false);
             this.tlpControls.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGradeSheets)).EndInit();
-            this.rspSearch.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.rspSearch.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
