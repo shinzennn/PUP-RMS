@@ -39,7 +39,7 @@ namespace PUP_RMS.Forms
                      ControlStyles.ResizeRedraw, true);
 
             // 2. Define Path
-            _rootPath = Path.Combine(Application.StartupPath, "GradeSheets");
+            _rootPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RecordsManagementSystem", "GradeSheets");
 
             // 3. Setup Events
             this.Load += frmStorageDetails_Load;

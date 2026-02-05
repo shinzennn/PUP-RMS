@@ -399,7 +399,7 @@ namespace PUP_RMS.Forms
 
             try
             {
-                string folderPath = Path.Combine(Application.StartupPath, "GradeSheets");
+                string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RecordsManagementSystem", "GradeSheets");
 
                 long usedSpace = GetDirectorySize(folderPath);
                 string driveRoot = Path.GetPathRoot(folderPath);
