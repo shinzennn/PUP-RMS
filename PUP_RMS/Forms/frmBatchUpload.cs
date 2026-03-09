@@ -832,9 +832,8 @@ namespace PUP_RMS.Forms
                 semester,
                 program,
                 yearlevel,
-                section,
-                course,
-                professor
+                section
+                
 
             );
         }
@@ -894,6 +893,9 @@ namespace PUP_RMS.Forms
             DisplayCurrentImage();
             MessageBox.Show("Last upload undone.");
         }
+        //
+        //
+        //
 
         private void saveBtn_Click_1(object sender, EventArgs e)
         {

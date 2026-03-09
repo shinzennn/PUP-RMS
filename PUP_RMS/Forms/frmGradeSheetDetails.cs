@@ -1018,25 +1018,34 @@ namespace PUP_RMS.Forms
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            string query2 = "SELECT GradeSheetID FROM GradeSheet WHERE Filename = @Filename";
+            string query2 = "SELECT GradeSheetID, Filepath FROM GradeSheet WHERE Filename = @Filename";
             DbControl.AddParameter("@Filename", txtFilename.Text, SqlDbType.VarChar);
             DataTable dt = DbControl.GetData(query2);
 
             int gradeSheetID = dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["GradeSheetID"]) : 0;
-           
-
+            string filePath = dt.Rows.Count > 0 ? dt.Rows[0]["Filepath"].ToString() : null;
+            string fileName = txtFilename.Text;
 
             DialogResult a = MessageBox.Show("Are you sure you want to delete this grade sheet?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (a == DialogResult.Yes)
             {
-                if(pbPreview != null)
+                if(filePath != null)
                 {
-                    string filePath = pbPreview.ImageLocation;
-                    if (File.Exists(filePath)) File.Delete(filePath);
-                }
+                    
+                    string imageFilePath = Path.Combine(filePath, fileName);
+                    if (File.Exists(imageFilePath))
+                    {
+                        File.Delete(imageFilePath); // Delete image from disk
+                        DbControl.DeleteGradeSheet(gradeSheetID); // Delete DB record 
+                        MessageBox.Show("Grade sheet deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                DbControl.DeleteGradeSheet(gradeSheetID);
-                MessageBox.Show("Grade sheet deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("File not found: " + imageFilePath, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                
                 this.Close();
             }
             else

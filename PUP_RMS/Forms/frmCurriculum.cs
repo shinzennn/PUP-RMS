@@ -171,6 +171,9 @@ namespace PUP_RMS.Forms
 
             btnSaveCurriculum.Text = "SAVE";
             btnSaveCurriculumCourse.Visible = false;
+
+            btnAddCurriculumCourse.Text = "ADD";
+
         }
 
         private void btnSaveCurriculum_Click(object sender, EventArgs e)
@@ -182,9 +185,9 @@ namespace PUP_RMS.Forms
             }
             else
             {
-                if (!curriculumHeaderExist())
+                if (btnSaveCurriculum.Text == "EDIT")
                 {
-                    insertCurriculumHeader();
+                    editCurriculum();
                     pnlCurriculum.Enabled = false;
                     pnlYearLevelAndSem.Enabled = true;
 
@@ -192,11 +195,28 @@ namespace PUP_RMS.Forms
                     viewAllCurriculum();
 
                     pnlCurriculumHeader.HeaderLabel = cbxProgram.Text + " - " + txtCurriculumYear.Text;
+
+                    btnSearchCurriculum.PerformClick();
                 }
                 else
                 {
-                    MessageBox.Show("Curriculum Already Exists");
+                    if (!curriculumHeaderExist())
+                    {
+                        insertCurriculumHeader();
+                        pnlCurriculum.Enabled = false;
+                        pnlYearLevelAndSem.Enabled = true;
+
+                        selectCurriculumHeaderID();
+                        viewAllCurriculum();
+
+                        pnlCurriculumHeader.HeaderLabel = cbxProgram.Text + " - " + txtCurriculumYear.Text;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Curriculum Already Exists");
+                    }
                 }
+                
             }
 
         }
@@ -525,6 +545,37 @@ namespace PUP_RMS.Forms
 
         //DATABASE
 
+        
+        void editCurriculum()
+        {
+            string sql = "UPDATE CurriculumHeader SET ProgramID = @ProgramID, CurriculumYear = @CurriculumYear WHERE CurriculumHeaderID = @CurriculumHeaderID";
+            using (SqlConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+
+                    cmd.Parameters.AddWithValue("@ProgramID", Convert.ToInt32(cbxProgram.SelectedValue));
+                    cmd.Parameters.AddWithValue("@CurriculumYear", txtCurriculumYear.Text);
+                    cmd.Parameters.AddWithValue("@CurriculumHeaderID", curriculumHeaderID);
+
+                    try
+                    {
+                        conn.Open();
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Successfully Edited", "Successful");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to Add data | Error:" + ex.Message);
+                    }
+
+                }
+            }
+        }
+
         void insertCurriculumHeader()
         {
             using (SqlConnection conn = new SqlConnection(DbControl.ConnString("RMSDB")))
@@ -542,7 +593,7 @@ namespace PUP_RMS.Forms
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Successfully Added");
+                            MessageBox.Show("Successfully Added", "Successful");
                         }
                     }
                     catch (Exception ex)
@@ -1049,9 +1100,11 @@ namespace PUP_RMS.Forms
             }
 
             editing = true;
-            pnlCurriculum.Enabled = false;
+            pnlCurriculum.Enabled = true;
             pnlYearLevelAndSem.Enabled = true;
+
             btnSaveCurriculumCourse.Visible = false;
+            btnSaveCurriculum.Text = "EDIT";
 
             selectCurriculumHeaderID();
             viewAllCurriculum();
